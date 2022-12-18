@@ -1,6 +1,16 @@
 # VedaPortal
 To participate in the project go [here](get-involved.md)
 
+ॐ सह नाववतु ।
+
+सह नौ भुनक्तु ।
+
+सह वीर्यं करवावहै ।
+
+तेजस्वि नावधीतमस्तु मा विद्विषावहै ।
+
+ॐ शान्तिः शान्तिः शान्तिः ॥
+
 ## The big Vision
 To become a central location to enable students to learn Vedas. I want all the Vedic texts to be properly brought in, organised, error corrected with tools to have text, audio and visual gestures to learn the Vedas in the most authentic way possible.
 
