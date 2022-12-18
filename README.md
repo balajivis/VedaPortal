@@ -9,10 +9,11 @@ To participate in the project go [here](get-involved.md)
 ॐ शान्तिः शान्तिः शान्तिः ॥ <br>
   </td>
 <td>
-Together may we two Move (in our Studies, the Teacher and the Student), <br>
-Together may we two Relish (our Studies, the Teacher and the Student), <br>
-Together may we perform (our Studies) with Vigour (with deep Concentration), <br>
-May what has been Studied by us be filled with the Brilliance (of Understanding, leading to Knowledge); May it Not give rise to Hostility (due to lack of Understanding), <br>
+Together may we two Move (in our Studies), <br>
+Together may we two Relish (our Studies), <br>
+Together may we perform (our Studies) with Vigour, <br>
+May what has been Studied by us be filled with the Brilliance (of Understanding, leading to Knowledge); 
+May it Not give rise to Hostility (due to lack of Understanding), <br>
 Peace, Peace, Peace.
   </td>
 </tr>
