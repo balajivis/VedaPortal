@@ -1,5 +1,5 @@
 # VedaPortal
-To participate in the project go to the get-involved.txt
+To participate in the project go [here](get-involved.md)
 
 ## The big Vision
 To become a central location to enable students to learn Vedas. I want all the Vedic texts to be properly brought in, organised, error corrected with tools to have text, audio and visual gestures to learn the Vedas in the most authentic way possible.
