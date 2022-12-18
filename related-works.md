@@ -9,3 +9,5 @@ A lot of people have attempted something like this before. It is important to bo
 
 ## Open Source
 1. [Stotra Samhita](https://github.com/stotrasamhita)
+
+Note: This is an incomplete list. Kindly help identify more such projects.
