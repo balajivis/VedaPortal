@@ -1,0 +1,43 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  USER
+  ADMIN
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String
+  role      UserRole @default(USER)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  lastLoginAt DateTime?
+
+  // Documents uploaded by this user
+  documents Document[]
+}
+
+model Document {
+  id          String   @id @default(cuid())
+  name        String
+  path        String   @unique
+  category    String
+  subcategory String
+  size        Int
+  chunksAdded Int      @default(0)
+
+  uploadedBy   User     @relation(fields: [uploadedById], references: [id])
+  uploadedById String
+
+  createdAt DateTime @default(now())
+}
