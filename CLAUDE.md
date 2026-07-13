@@ -6,6 +6,33 @@ A digital gateway to India's Great Knowledge Traditions — the 18 Mahavidyas �
 
 > The Vedas are recited with total fidelity and almost no comprehension. Comprehension exists, partially, among people who cannot recite. Reattaching the two is the mission.
 
+## Non-negotiables (binding for all agents, every session)
+
+| Rule | Why |
+|---|---|
+| **NEVER squash, rebase-flatten, or force-push `main` history.** | The commit log is the multi-year provenance record. It is evidence, not bookkeeping. |
+| **No audio binaries in git. No git-lfs.** | Recordings run to tens of GB; audio lives in object storage, git tracks `_recordings.yaml` manifests only (see `recordings/README.md`). `.gitignore` blocks audio extensions as backstop. |
+| **Filesystem path and Prisma schema agree exactly.** | The `path` field *is* the join key between `sources/vedas/` and the DB. Two sources of truth = permanent reconciliation debt. |
+| **Never invent content to fill a node.** | Empty + honest status beats confident + hollow. This is the project's core discipline. |
+
+## The corpus is organized by ŚĀKHĀ, not by LAYER
+
+There is no such thing as "an Āraṇyaka" — there is the **Taittirīya Āraṇyaka** of the Taittirīya śākhā of the Kṛṣṇa Yajurveda. Layer (saṃhitā/brāhmaṇa/āraṇyaka/upaniṣad) is a **child of śākhā, never a peer**. Consequences:
+
+- `sources/vedas/` is śākhā-first: `veda/[organization/]shakha/layer/`. Never create a top-level layer directory.
+- **Kṛṣṇa/Śukla is an organizational tier ABOVE śākhā, Yajurveda only.** It is not itself a śākhā.
+- **The Atharvaveda has no āraṇyaka.** Do not create the directory; absence is encoded by absence.
+- **Embedded texts live once, in their home layer**, cross-referenced — never duplicated (Bṛhadāraṇyaka = end of Śatapatha; Taittirīya Up. = TA 7–9; Mahānārāyaṇa = TA 10).
+- **The gaps are data.** Attested-but-lost śākhās get a directory and an honest `_status.yaml`. That is a finding, not a to-do.
+
+### The status enum (used everywhere, at every level)
+
+`enumerated` (we know it exists — that is the entire claim) → `sourced` (editions identified) → `structured` (broken to praśna/anuvāka/mantra) → `voiced` (deep usable treatment). **This must be visible in the UI**: a reader who sees `enumerated` learns something true; a confident overview on a hollow node teaches something false. Nearly everything is `enumerated` today, and that is correct for year one.
+
+### Tier discipline
+
+Every node carries `tier`: `settled` / `multi_traditional` (name the lineages) / `contested`. Contested is **earned, not assumed** — ~5–6 hinge facts corpus-wide. `scripts/check-contested.mjs` (CI) warns past 6 and fails past 12.
+
 ## Content discipline (binding for all agents)
 
 1. **AI generates, tradition verifies.** Never present model output as a verified reading. "Correct" is defined by traditional scholars, not the model.
@@ -58,12 +85,15 @@ VedaPortal/
 │   ├── vidyas.ts                         # 18 Mahavidyas data + helpers
 │   └── practices.ts                      # Practices data
 ├── data/chunks.json                      # Search index
-├── prisma/schema.prisma                  # DB schema
-├── scripts/                              # build-index, extract-pdfs, process-upload, create-admin
-├── sources/                              # Public-domain source texts (vedas/, smriti/, shlokas/)
+├── prisma/schema.prisma                  # User/Document + corpus hierarchy (Veda→Shakha→Layer→…→Mantra)
+├── scripts/                              # build-index, extract-pdfs, process-upload, create-admin, check-contested
+├── sources/                              # Source texts — ŚĀKHĀ-FIRST (see sources/README.md)
+│   └── vedas/{rigveda,yajurveda,samaveda,atharvaveda}/…/_status.yaml
+├── recordings/                           # Recording architecture + manifest template — audio NEVER in git
+├── LICENSE                               # Code: GPL-3.0 (content: CC-BY-SA 4.0 in sources/ + content/; recordings: pending)
 ├── PROJECT-VISION.md                     # Mission — source of truth
 ├── todos.md                              # Build order (mission-aligned)
-└── get-involved.md                       # Contributor guide
+└── get-involved.md                       # Contribution protocol (status enum + tier discipline)
 ```
 
 ## Content Structure
