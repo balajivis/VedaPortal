@@ -1,0 +1,18 @@
+name: Contested-node tripwire
+
+on:
+  push:
+    paths: ['sources/**', 'content/**', 'scripts/check-contested.mjs']
+  pull_request:
+    paths: ['sources/**', 'content/**', 'scripts/check-contested.mjs']
+
+jobs:
+  tripwire:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Contested is a finding, not a fallback
+        run: node scripts/check-contested.mjs
