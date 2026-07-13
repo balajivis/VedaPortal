@@ -1,0 +1,17 @@
+# Copy next to the recorded node's texts as `_recordings.yaml`
+# e.g. sources/vedas/yajurveda/krishna/taittiriya/samhita/_recordings.yaml
+# One list entry per recorded unit (anuvaka-level preferred).
+# NEVER commit the audio itself — uri points at object storage.
+
+- id: ""              # e.g. tai-sam-1-1-anuvaka-1
+  path: ""            # corpus path — must match sources/vedas/ tree and DB `path` exactly
+  patha: samhita      # samhita | pada | krama | jata | ghana
+  reciter: ""
+  lineage: ""         # parampara — required
+  recorded: ""        # YYYY-MM-DD
+  location: ""
+  uri: ""             # s3://... / b2://...
+  sha256: ""
+  duration_sec: 0
+  consent_ref: ""     # consent/<batch>/<id>.pdf — required
+  license: "pending — see recordings/LICENSE"

@@ -4,3 +4,18 @@ node_modules/
 .DS_Store
 *.log
 node_modules
+
+# Audio never lives in git — object storage + _recordings.yaml manifests only
+# (see recordings/README.md). No git-lfs either.
+*.wav
+*.flac
+*.mp3
+*.m4a
+*.aac
+*.ogg
+*.opus
+*.aiff
+*.wma
+*.mp4
+*.mov
+*.mkv

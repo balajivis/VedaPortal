@@ -1,0 +1,18 @@
+RECORDINGS LICENSE — PENDING
+
+The license for audio/video recordings of Vedic recitation is NOT yet written.
+It will be a separate, explicit grant negotiated with the reciters themselves,
+and it must say the same thing as the consent form each scholar signs.
+
+Until that grant exists:
+
+  - No recording may be committed, distributed, or published from this project.
+  - Recording metadata (manifests) may be tracked in git; the recordings
+    themselves live in object storage under access control (see README.md
+    in this directory).
+  - Every recording must carry a consent_ref and lineage. A recording
+    without provenance is worth a fraction of one with it — and a recording
+    without consent is not ours to use at all.
+
+This placeholder exists so that nobody mistakes the code license (GPL-3.0)
+or the content license (CC-BY-SA 4.0) as covering recordings. They do not.
