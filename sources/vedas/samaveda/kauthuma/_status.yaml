@@ -1,0 +1,20 @@
+veda: samaveda
+organization: null
+shakha: kauthuma
+survival: living
+tier: settled
+reciting_communities:
+  - region: pan-India
+    note: "The dominant printed and recited Samaveda tradition — enumerate specific communities before claiming more"
+layers:
+  samhita:   { status: sourced,    note: "Gramageya-gana + Aranyaka-gana PDFs in repo. NOTE: the Aranyaka-GANA is a song collection of the Samhita corpus, NOT the aranyaka layer. Kauthuma attribution of these PDFs assumed (dominant printed tradition) — verify." }
+  brahmana:  { status: enumerated, note: "Panchavimsha (Tandya-Maha) Brahmana and others" }
+  aranyaka:  { status: enumerated }
+  upanishad: { status: enumerated, note: "Chandogya Upanishad; Kena associated with Jaiminiya-Talavakara — verify per-shakha placement" }
+apparatus:
+  pratishakhya: { status: enumerated, note: "Rk-tantra and related lakshana texts" }
+  anukramani:   { status: enumerated }
+  kalpa:        { status: enumerated }
+sources:
+  - "Sama Veda -- Gramegeya (Village songs).pdf (attribution to Kauthuma unverified)"
+  - "Sama Veda Aranyaka Ganam.pdf (attribution to Kauthuma unverified)"

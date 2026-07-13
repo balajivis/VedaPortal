@@ -1,0 +1,15 @@
+veda: samaveda
+organization: null
+shakha: jaiminiya
+survival: endangered
+tier: settled
+reciting_communities:
+  - region: Kerala / Tamil Nadu
+    note: "Nambudiri and Tamil Jaiminiya traditions; very few reciters remain — the priority recording target"
+layers:
+  samhita:   { status: enumerated, note: "Jaiminiya Samhita — gana tradition markedly different from Kauthuma" }
+  brahmana:  { status: enumerated, note: "Jaiminiya Brahmana — major un-mined text" }
+  aranyaka:  { status: enumerated }
+  upanishad: { status: enumerated, note: "Kena (Talavakara) embedded in Jaiminiya Upanishad Brahmana — cross-reference, do not duplicate" }
+apparatus: {}
+sources: []

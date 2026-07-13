@@ -1,0 +1,13 @@
+veda: yajurveda
+organization: krishna
+shakha: katha
+survival: endangered
+tier: settled
+reciting_communities:
+  - region: Kashmir
+    note: "Historically Kashmiri; living recitation nearly extinct — verify current state"
+layers:
+  samhita:   { status: enumerated, note: "Kathaka Samhita (Subramania Sarma's electronic edition exists — see sanskritweb.net)" }
+  upanishad: { status: enumerated, note: "Katha Upanishad" }
+apparatus: {}
+sources: []

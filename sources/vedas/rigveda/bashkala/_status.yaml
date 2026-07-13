@@ -1,0 +1,10 @@
+veda: rigveda
+organization: null
+shakha: bashkala
+survival: fragmentary
+tier: settled
+reciting_communities: []
+layers:
+  samhita: { status: enumerated, note: "Attested; associated with the Khilani (supplementary hymns). No complete text survives." }
+apparatus: {}
+sources: []

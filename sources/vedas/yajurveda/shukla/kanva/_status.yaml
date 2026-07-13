@@ -1,0 +1,14 @@
+veda: yajurveda
+organization: shukla
+shakha: kanva
+survival: living
+tier: settled
+reciting_communities:
+  - region: South India
+    note: "Kanva recitation continues, notably in Karnataka/Andhra — verify specifics before asserting"
+layers:
+  samhita:   { status: enumerated, note: "Vajasaneyi Samhita (Kanva recension)" }
+  brahmana:  { status: enumerated, note: "Shatapatha Brahmana (Kanva recension)" }
+  upanishad: { status: enumerated, note: "Brihadaranyaka (Kanva recension) — embedded in the Shatapatha, cross-referenced only" }
+apparatus: {}
+sources: []

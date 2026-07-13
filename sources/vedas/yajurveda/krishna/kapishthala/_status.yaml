@@ -1,0 +1,10 @@
+veda: yajurveda
+organization: krishna
+shakha: kapishthala
+survival: fragmentary
+tier: settled
+reciting_communities: []
+layers:
+  samhita: { status: enumerated, note: "Kapishthala-Katha Samhita — survives incomplete" }
+apparatus: {}
+sources: []

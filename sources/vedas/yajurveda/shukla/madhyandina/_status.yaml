@@ -1,0 +1,18 @@
+veda: yajurveda
+organization: shukla
+shakha: madhyandina
+survival: living
+tier: settled
+reciting_communities:
+  - region: North India
+    note: "Dominant Shukla Yajurveda tradition of the North — enumerate specific communities before claiming more"
+layers:
+  samhita:   { status: enumerated, note: "Vajasaneyi Samhita (Madhyandina recension)" }
+  brahmana:  { status: enumerated, note: "Shatapatha Brahmana (Madhyandina recension)" }
+  aranyaka:  { status: enumerated, note: "Aranyaka portion within the Shatapatha's closing books" }
+  upanishad: { status: enumerated, note: "Brihadaranyaka Upanishad = closing section of the Shatapatha Brahmana — embedded; lives with its home text, cross-referenced only. Also Isha = Samhita chapter 40." }
+apparatus:
+  pratishakhya: { status: enumerated, note: "Vajasaneyi Pratishakhya" }
+  anukramani:   { status: enumerated }
+  kalpa:        { status: enumerated, note: "Katyayana Shrautasutra tradition" }
+sources: []

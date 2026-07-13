@@ -1,0 +1,19 @@
+veda: rigveda
+organization: null
+shakha: shakala
+survival: living
+tier: settled
+reciting_communities: []          # known to exist across India — enumerate before claiming regions
+layers:
+  samhita:   { status: sourced,    note: "Devanagari samhita + Griffith translation + transliteration PDFs in repo" }
+  brahmana:  { status: enumerated, note: "Aitareya; Kaushitaki association with Shakala vs Bashkala/Shankhayana needs verification" }
+  aranyaka:  { status: enumerated, note: "Aitareya Aranyaka" }
+  upanishad: { status: enumerated, note: "Aitareya Upanishad — embedded in Aitareya Aranyaka (lives in aranyaka/, cross-referenced only)" }
+apparatus:
+  pratishakhya: { status: enumerated }
+  anukramani:   { status: enumerated }
+  kalpa:        { status: enumerated }
+sources:
+  - "Entire Rig Veda Samhita.pdf (edition unverified)"
+  - "Rig Veda English translation by Griffith (public domain)"
+  - "Rig Veda English transliteration.pdf (edition unverified)"

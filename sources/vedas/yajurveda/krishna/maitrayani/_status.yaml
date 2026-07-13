@@ -1,0 +1,13 @@
+veda: yajurveda
+organization: krishna
+shakha: maitrayani
+survival: endangered
+tier: settled
+reciting_communities:
+  - region: Maharashtra / Gujarat
+    note: "Small reciting pockets reported — verify before asserting"
+layers:
+  samhita:   { status: enumerated, note: "Maitrayani Samhita" }
+  upanishad: { status: enumerated, note: "Maitrayaniya Upanishad — attribution and textual history debated" }
+apparatus: {}
+sources: []

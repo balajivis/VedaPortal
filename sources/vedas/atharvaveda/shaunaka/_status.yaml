@@ -1,0 +1,17 @@
+veda: atharvaveda
+organization: null
+shakha: shaunaka
+survival: living
+tier: settled
+reciting_communities:
+  - region: Gujarat / Maharashtra
+    note: "Small living tradition — verify specifics before asserting"
+layers:
+  samhita:   { status: enumerated, note: "Shaunaka Samhita — the standard printed Atharvaveda" }
+  brahmana:  { status: enumerated, note: "Gopatha Brahmana" }
+  upanishad: { status: enumerated, note: "Mundaka, Mandukya per tradition. NO aranyaka layer exists in the Atharvaveda — deliberate absence, do not create one." }
+apparatus:
+  pratishakhya: { status: enumerated, note: "Shaunakiya Chaturadhyayika" }
+  anukramani:   { status: enumerated }
+  kalpa:        { status: enumerated, note: "Vaitana + Kaushika sutras" }
+sources: []

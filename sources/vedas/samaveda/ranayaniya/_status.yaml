@@ -1,0 +1,12 @@
+veda: samaveda
+organization: null
+shakha: ranayaniya
+survival: endangered
+tier: settled
+reciting_communities:
+  - region: Maharashtra / Karnataka
+    note: "Small reciting pockets reported (e.g. Gokarna) — verify before asserting"
+layers:
+  samhita: { status: enumerated, note: "Close to Kauthuma; differences mainly in gana tradition" }
+apparatus: {}
+sources: []

@@ -1,0 +1,14 @@
+veda: atharvaveda
+organization: null
+shakha: paippalada
+survival: rediscovered
+tier: settled
+reciting_communities:
+  - region: Odisha
+    note: "Manuscript tradition rediscovered in Odisha, 1957; living recitation status to verify"
+layers:
+  samhita:   { status: enumerated, note: "Paippalada Samhita — critical editions in progress internationally" }
+  upanishad: { status: sourced,    note: "Prashna Upanishad PDF in repo — traditionally associated with the Pippalada school; shakha attribution per tradition, verify scholarly placement" }
+apparatus: {}
+sources:
+  - "Prashna Upanishad - Swami Sarvanand [Sanskrit-English].pdf"

@@ -1,0 +1,22 @@
+veda: yajurveda
+organization: krishna
+shakha: taittiriya
+survival: living
+tier: settled
+reciting_communities:
+  - region: Tamil Nadu
+    note: "Dominant recited shakha of South India; also Andhra, Karnataka, Kerala"
+layers:
+  samhita:   { status: sourced,    note: "Kanda 1 PDF only — remaining kandas to source" }
+  brahmana:  { status: sourced,    note: "Taittiriya-Brahmanam.pdf (stotrasamhita-lineage typesetting; marked personal-use-only — see sources/README licensing caveat)" }
+  aranyaka:  { status: sourced,    note: "Taittiriya Aranyaka Sanskrit PDF + secondary essence. Embedded texts live HERE: Taittiriya Upanishad = TA prapathakas 7-9; Mahanarayana Upanishad = TA 10." }
+  upanishad: { status: enumerated, note: "Taittiriya + Mahanarayana are embedded in the Aranyaka — cross-reference, do not duplicate" }
+apparatus:
+  pratishakhya: { status: enumerated, note: "Taittiriya Pratishakhya" }
+  anukramani:   { status: enumerated }
+  kalpa:        { status: enumerated, note: "Apastamba, Baudhayana, and related sutra traditions" }
+sources:
+  - "Taittriya Samhita Kanda 1.pdf"
+  - "Taittiriya-Brahmanam.pdf (for personal use only — not redistributable; replace with a clean-licensed edition)"
+  - "Taittiriya-Aranyaka-Sanskrit.pdf"
+  - "Mahanarayana Upanishad — Swami Vimalananda (Sanskrit-English)"
