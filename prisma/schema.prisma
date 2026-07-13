@@ -41,3 +41,229 @@ model Document {
 
   createdAt DateTime @default(now())
 }
+
+// ─────────────────────────────────────────────────────────────────────────────
+// THE CORPUS — the schema IS the map, not scaffolding for it.
+//
+// The corpus is organized by SHAKHA, not by layer. Layer is a child of shakha,
+// never a peer of it. Krishna/Shukla is an organizational tier ABOVE shakha,
+// Yajurveda only (hence nullable). The Atharvaveda has no aranyaka — absence
+// is encoded by absence, never by an empty row invented to complete a pattern.
+//
+// `path` is the canonical filesystem path under sources/vedas/ and the join
+// key between repo and DB. Filesystem and schema must agree exactly.
+//
+// Never invent content to fill a node: everything starts ENUMERATED.
+// ─────────────────────────────────────────────────────────────────────────────
+
+// We know it exists → editions identified → broken to mantra → usable treatment
+enum NodeStatus {
+  ENUMERATED
+  SOURCED
+  STRUCTURED
+  VOICED
+}
+
+// CONTESTED is a FINDING, not a fallback. It must stay rare (~5-6 nodes
+// corpus-wide). scripts/check-contested.mjs trips past 12.
+enum NodeTier {
+  SETTLED
+  MULTI_TRADITIONAL
+  CONTESTED
+}
+
+enum Survival {
+  LIVING
+  ENDANGERED
+  FRAGMENTARY
+  LOST
+  REDISCOVERED
+}
+
+// Yajurveda only. Not itself a shakha.
+enum YvOrganization {
+  KRISHNA
+  SHUKLA
+}
+
+enum LayerType {
+  SAMHITA
+  BRAHMANA
+  ARANYAKA
+  UPANISHAD
+}
+
+// samhita | pada | krama | jata | ghana — the recitation mode of a text/recording
+enum Patha {
+  SAMHITA
+  PADA
+  KRAMA
+  JATA
+  GHANA
+}
+
+model Veda {
+  id     String     @id @default(cuid())
+  name   String     @unique // rigveda | yajurveda | samaveda | atharvaveda
+  path   String     @unique
+  status NodeStatus @default(ENUMERATED)
+  tier   NodeTier   @default(SETTLED)
+  korvai Int? // the tradition's own checksum (exact pada count) — verify ingests against it
+
+  shakhas Shakha[]
+}
+
+model Shakha {
+  id           String          @id @default(cuid())
+  veda         Veda            @relation(fields: [vedaId], references: [id])
+  vedaId       String
+  organization YvOrganization? // Yajurveda only; null elsewhere
+  name         String // taittiriya, shakala, kauthuma, ...
+  path         String          @unique
+  status       NodeStatus      @default(ENUMERATED)
+  tier         NodeTier        @default(SETTLED)
+  korvai       Int?
+
+  survival            Survival
+  recitingCommunities Json? // [{ region, note }] — the dimension text-only corpora drop
+
+  layers Layer[]
+
+  @@unique([vedaId, name])
+}
+
+model Layer {
+  id       String     @id @default(cuid())
+  shakha   Shakha     @relation(fields: [shakhaId], references: [id])
+  shakhaId String
+  type     LayerType
+  path     String     @unique
+  status   NodeStatus @default(ENUMERATED)
+  tier     NodeTier   @default(SETTLED)
+  korvai   Int?
+
+  // Embedded texts (Brihadaranyaka = end of Shatapatha; Taittiriya Up = TA 7-9)
+  // live ONCE in their home layer; this records the cross-reference, not a copy.
+  embeddedInPath String?
+
+  kandas Kanda[]
+
+  @@unique([shakhaId, type])
+}
+
+// Kanda / Ashtaka / Mandala — divisionLabel records the tradition's own term
+model Kanda {
+  id            String     @id @default(cuid())
+  layer         Layer      @relation(fields: [layerId], references: [id])
+  layerId       String
+  number        Int
+  divisionLabel String     @default("kanda") // kanda | ashtaka | mandala | ...
+  path          String     @unique
+  status        NodeStatus @default(ENUMERATED)
+  tier          NodeTier   @default(SETTLED)
+  korvai        Int?
+
+  prashnas Prashna[]
+
+  @@unique([layerId, number])
+}
+
+// Prashna / Adhyaya
+model Prashna {
+  id            String     @id @default(cuid())
+  kanda         Kanda      @relation(fields: [kandaId], references: [id])
+  kandaId       String
+  number        Int
+  divisionLabel String     @default("prashna") // prashna | adhyaya | ...
+  path          String     @unique
+  status        NodeStatus @default(ENUMERATED)
+  tier          NodeTier   @default(SETTLED)
+  korvai        Int?
+
+  anuvakas Anuvaka[]
+
+  @@unique([kandaId, number])
+}
+
+model Anuvaka {
+  id        String     @id @default(cuid())
+  prashna   Prashna    @relation(fields: [prashnaId], references: [id])
+  prashnaId String
+  number    Int
+  path      String     @unique
+  status    NodeStatus @default(ENUMERATED)
+  tier      NodeTier   @default(SETTLED)
+  korvai    Int? // pada-count checksum: mismatch = corrupt text or bad ingest — surface it
+
+  panchatis Panchati[]
+  mantras   Mantra[] // direct when the shakha does not subdivide into panchatis
+
+  @@unique([prashnaId, number])
+}
+
+// Not universal — some traditions subdivide anuvakas into panchatis, some don't.
+model Panchati {
+  id        String     @id @default(cuid())
+  anuvaka   Anuvaka    @relation(fields: [anuvakaId], references: [id])
+  anuvakaId String
+  number    Int
+  path      String     @unique
+  status    NodeStatus @default(ENUMERATED)
+  tier      NodeTier   @default(SETTLED)
+  korvai    Int?
+
+  mantras Mantra[]
+
+  @@unique([anuvakaId, number])
+}
+
+model Mantra {
+  id         String    @id @default(cuid())
+  anuvaka    Anuvaka   @relation(fields: [anuvakaId], references: [id])
+  anuvakaId  String
+  panchati   Panchati? @relation(fields: [panchatiId], references: [id])
+  panchatiId String? // set only where the tradition uses panchatis
+  number     Int
+
+  path   String     @unique
+  status NodeStatus @default(ENUMERATED)
+  tier   NodeTier   @default(SETTLED)
+  korvai Int?
+
+  // The pada-patha is what makes alignment and korvai verification possible.
+  samhitaPatha String? @db.Text
+  padaPatha    String? @db.Text
+  svara        String? @db.Text // svara markup (format documented with the ingest tooling)
+
+  // Where/when/why the mantra is used — first-class, never a note.
+  viniyogas Viniyoga[]
+
+  // Cross-shakha occurrence links: the same mantra in KYV / SYV / Rk / Sama / AV.
+  // This relation is the point of the whole database.
+  occurrences  MantraLink[] @relation("occurrence_from")
+  occurrenceOf MantraLink[] @relation("occurrence_to")
+
+  @@unique([anuvakaId, panchatiId, number])
+}
+
+model Viniyoga {
+  id       String  @id @default(cuid())
+  mantra   Mantra  @relation(fields: [mantraId], references: [id])
+  mantraId String
+  ritual   String // e.g. agnihotra, upanayana, sandhyavandana
+  context  String? @db.Text // where/when within the ritual
+  source   String // the shrauta/grihya text or acharya attesting it — every claim ships with its source
+  note     String? @db.Text
+}
+
+model MantraLink {
+  id           String  @id @default(cuid())
+  fromMantra   Mantra  @relation("occurrence_from", fields: [fromMantraId], references: [id])
+  fromMantraId String
+  toMantra     Mantra  @relation("occurrence_to", fields: [toMantraId], references: [id])
+  toMantraId   String
+  kind         String  @default("occurrence") // occurrence | variant | citation
+  note         String? @db.Text
+
+  @@unique([fromMantraId, toMantraId, kind])
+}
