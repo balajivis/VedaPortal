@@ -1,13 +1,16 @@
 # Get Involved
-Hey, you! Thanks for coming to this project. There are a lot of ways you can contribute to this.
 
-Some ideas:
-1. Collect Veda mantras in original Devanagari text with Vedic accent marks -- either manually or creating scripts
-2. Error corrections (mantras from many sources have issues -- if you have access to various gurujis, you can get it checked and fix the source)
-3. Generate images using GANs (or other Deep learning tools) of Vedic gods and rituals based on text descriptions in the Vedas
-4. Help translations (do it direct only if you have experience with Vedic Sanskrit) by collecting copyright expired content from various ancient sages --such as those of Adi Shankara and Madhwacharya.
-5. Help improve the website and themes
-6. Give feedback
-7. Spread the word around
+Hey, you! Thanks for coming to this project. Read [PROJECT-VISION.md](PROJECT-VISION.md) first — especially the guardrails (§8): **AI generates, tradition verifies**, and **every reading ships with its receipts**.
+
+Ways to contribute:
+
+1. **Collect Veda mantras** in original Devanagari with Vedic accent marks (svara) — manually or with scripts. Provenance matters: note the edition/śākhā for everything you add to [`sources/`](sources/README.md).
+2. **Error correction with the tradition in the loop** — mantras from many sources have issues. If you have access to traditional scholars (Ghanapāṭhis, ācāryas), get corrections verified there; the model never adjudicates correctness.
+3. **Deepen a node, don't add one** — the portal has 18 well-structured stubs. The most valuable contribution is taking one entity or vidya to full depth: every occurrence, layered readings, receipts.
+4. **Stories on-ramp** — retellings and structure for the itihāsa/purāṇa track (much easier than the mantra layer, and what brings families in the door).
+5. **Translations** — collect copyright-expired commentaries (Sāyaṇa, Adi Shankara, Madhwacharya, Griffith/Geldner-era philology). Direct translation only if you have Vedic Sanskrit experience — and always as a *layer*, never "the" answer.
+6. **Engineering** — audio/text/svara alignment, entity linking, search, the evidence-bundle views. See [todos.md](todos.md).
+7. **Feedback** — especially where a page asserts something without its receipts, or where "contested" is being used as a shrug instead of a finding.
+8. **Spread the word.**
 
 And more...

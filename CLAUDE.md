@@ -1,16 +1,27 @@
 # Veda Portal - CLAUDE.md
 
-A digital gateway to explore India's Great Knowledge Traditions — the 18 Mahavidyas.
+A digital gateway to India's Great Knowledge Traditions — the 18 Mahavidyas — in service of one mission: **reattaching Vedic recitation to comprehension.** Read [PROJECT-VISION.md](PROJECT-VISION.md) before making content or product decisions; it is the source of truth for scope and discipline.
 
-## Project Overview
+## The mission in one sentence
 
-**Veda Portal** is a browsing and educational platform for Vedic knowledge traditions, built with the same patterns as the Modern AI Pro class-platform.
+> The Vedas are recited with total fidelity and almost no comprehension. Comprehension exists, partially, among people who cannot recite. Reattaching the two is the mission.
+
+## Content discipline (binding for all agents)
+
+1. **AI generates, tradition verifies.** Never present model output as a verified reading. "Correct" is defined by traditional scholars, not the model.
+2. **Every reading ships with its receipts** — occurrences, sources, disagreements, and where the evidence underdetermines the answer. No confident assertions without an evidence bundle.
+3. **We show what is disputed. We do not show what we haven't done the work on. "Contested" is a FINDING, not a fallback.** Contested nodes are rare (~5–6 corpus-wide: Sarasvatī, soma, the horse, Vedic geography, Indus script, Ṛgveda dating). If you're tempted to mark something contested to avoid research, do the research or leave it unmarked.
+4. **Depth over breadth.** Do not add new stub nodes/vidyas/pages. Deepen existing ones. Ship the lesson, not the index.
+5. **No advocacy.** Out of scope: adjudicating the civilizational/origins debate or producing legitimacy claims for any camp. Show named readings side by side instead.
+6. **Node tiers are reader-visible**: `settled` · `multiple-readings` · `contested`. When adding entity/content data, tag the tier.
 
 ## Tech Stack
 
-- **Framework**: Next.js 15 with App Router
+- **Framework**: Next.js 15 (App Router) + React 19
 - **Styling**: Tailwind CSS 4 (dark theme)
 - **Language**: TypeScript
+- **Database**: Prisma 6 (`prisma/schema.prisma`) — auth, uploaded docs
+- **Search**: local chunk index (`data/chunks.json`, built by `scripts/build-index.mjs`)
 
 ## Development Commands
 
@@ -24,30 +35,40 @@ npm run lint          # Run ESLint
 ## Directory Structure
 
 ```
-veda-portal/
+VedaPortal/
 ├── app/
 │   ├── page.tsx                          # Home page
 │   ├── layout.tsx                        # Root layout
-│   ├── globals.css                       # Global styles
-│   └── library/
-│       ├── page.tsx                      # Library browsing page
-│       ├── [categoryId]/
-│       │   ├── page.tsx                  # Category listing
-│       │   └── [vidyaId]/
-│       │       └── page.tsx              # Individual vidya detail
-│       └── explainers/
-│           └── mahavidyas/
-│               └── page.tsx              # Interactive overview
+│   ├── library/                          # 18 Mahavidyas browsing
+│   │   ├── page.tsx
+│   │   ├── [categoryId]/page.tsx
+│   │   ├── [categoryId]/[vidyaId]/page.tsx
+│   │   └── explainers/mahavidyas/page.tsx
+│   ├── practices/                        # Practices browsing
+│   │   ├── page.tsx
+│   │   ├── [categoryId]/page.tsx
+│   │   └── [categoryId]/[practiceId]/page.tsx
+│   ├── search/page.tsx                   # Corpus search UI
+│   ├── docs/page.tsx                     # Uploaded source documents
+│   ├── login/page.tsx                    # Auth
+│   └── api/                              # auth, docs, search routes
 ├── components/
 │   └── MahavidyasDiagram.tsx             # Interactive 18 Mahavidyas diagram
 ├── content/
-│   └── vidyas.ts                         # All vidya data and helpers
-└── package.json
+│   ├── vidyas.ts                         # 18 Mahavidyas data + helpers
+│   └── practices.ts                      # Practices data
+├── data/chunks.json                      # Search index
+├── prisma/schema.prisma                  # DB schema
+├── scripts/                              # build-index, extract-pdfs, process-upload, create-admin
+├── sources/                              # Public-domain source texts (vedas/, smriti/, shlokas/)
+├── PROJECT-VISION.md                     # Mission — source of truth
+├── todos.md                              # Build order (mission-aligned)
+└── get-involved.md                       # Contributor guide
 ```
 
 ## Content Structure
 
-The 18 Mahavidyas are organized into 4 categories:
+The 18 Mahavidyas are organized into 4 categories — an **inherited** taxonomy (keep it; do not invent a new IA):
 
 | Category | Sanskrit | Count | Description |
 |----------|----------|-------|-------------|
@@ -72,17 +93,19 @@ The 18 Mahavidyas are organized into 4 categories:
 ```
 /                                    # Home page
 /library                             # Browse all 18 vidyas
-/library/vedas                       # 4 Vedas
-/library/vedangas                    # 6 Vedangas
-/library/upavedas                    # 4 Upavedas
-/library/darshanas                   # 4 Darshanas
+/library/[category]                  # vedas | vedangas | upavedas | darshanas
 /library/[category]/[vidya]          # Individual vidya detail
 /library/explainers/mahavidyas       # Interactive overview diagram
+/practices                           # Practices catalog
+/practices/[category]/[practice]     # Individual practice
+/search                              # Corpus search
+/docs                                # Source documents
+/login                               # Auth
 ```
 
 ## Adding New Content
 
-To add a new vidya or modify existing content, edit `content/vidyas.ts`:
+**Default to deepening, not adding** (Content discipline #4). To modify content, edit `content/vidyas.ts` or `content/practices.ts`:
 
 ```typescript
 {
@@ -96,6 +119,8 @@ To add a new vidya or modify existing content, edit `content/vidyas.ts`:
   relatedTo: ['other-vidya-id']
 }
 ```
+
+When writing `fullDescription` or lesson content: cite sources, present traditional and academic readings as named layers, and never flatten a disagreement into a single confident answer.
 
 ## Relationship to Class Platform
 
