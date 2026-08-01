@@ -1,0 +1,104 @@
+hymn.verses.seer.divinity.meter
+1.34.(1-2)ghauraḥ pragāthaḥ,(3-29)kāṇvau medhātithimedhyātithī,(30-33)plāyoṅgirāsaṅga,(34)āṅgirasī śaśvatī.(1-29)indraḥ,(30-34)asaṅgaḥ.(1-4)pragāthaḥ,(5-32)bṛhatī,(33-34)triṣṭup
+2.42.kāṇvo medhātithiḥ.(1-40)indraḥ,(41-42)dānastutiḥ.(1-27,29-42)gāyatrī,(28)anuṣṭup
+3.24.kāṇvo medhyātithiḥ.(1-20)indraḥ,(21-24)dānastutiḥ.(1-20)pragāthaḥ,(21)anuṣṭup,(22-23)gāyatrī,(24)bṛhatī
+4.21.kāṇvo devātithiḥ.(1-14)indraḥ,(15-18)pūṣā,(19-21)dānastutiḥ.(1-20)pragāthaḥ,(21)uṣṇik
+5.39.kāṇvaḥ brahmātithiḥ.(1-36)aśvinau,(37-39)dānastutiḥ.(1-36)gāyatrī,(37-38)bṛhatī,(39)anuṣṭup
+6.48.kāṇvo vatsaḥ.(1-45)indraḥ,(46-48)dānastutiḥ.gāyatrī
+7.36.kāṇvaḥ punarvatsaḥ.marutaḥ.gāyatrī
+8.23.kāṇvaḥ sadhvaṁsaḥ.aśvinau.anuṣṭup
+9.21.kāṇvaḥ śaśakarṇaḥ.aśvinau.(1,4,6,14-15)bṛhatī,(2-3,20-21)gāyatrī,(5)kakup,(7-9,13,16-19)anuṣṭup,(10)triṣṭup,(11)virāṭ,(12)jagatī
+10.6.ghauraḥ pragāthaḥ.aśvinau.(1)bṛhatī,(2)triṣṭup,(3)anuṣṭup,(4)paṅktiḥ,(5-6)pragāthaḥ
+11.10.kāṇvo vatsaḥ.agniḥ.(1-9)gāyatrī,(10)triṣṭup
+12.33.kāṇvaḥ parvataḥ.indraḥ.uṣṇik
+13.33.kāṇvo nāradaḥ.indraḥ.uṣṇik
+14.15.kāṇvāyanau goṣūktyaśvasūktinau.indraḥ.gāyatrī
+15.13.kāṇvāyanau goṣūktyaśvasūktinau.indraḥ.uṣṇik
+16.12.kāṇva irimbiṭhiḥ.indraḥ.gāyatrī
+17.15.kāṇva irimbiṭhiḥ.(1-13,15)indraḥ,(14)vāstoṣpatiḥ.(1-13)gāyatrī,(14-15)pragāthaḥ
+18.22.kāṇva irimbiṭhiḥ.(1-3,5,10-22)ādityāḥ,(4,6-7)aditiḥ,(8)aśvinau,(9)agnisūryānilāḥ.uṣṇik
+19.37.kāṇvaḥ sobhariḥ.(1-33)agniḥ,(34-35)ādityāḥ,(36-37)dānastutiḥ.(1-23,28-33)pragāthaḥ,(27)dvipadā virāṭ,(34)uṣṇik,(35)bṛhatī,(36)kakup,(37)paṅktiḥ
+20.26.kāṇvaḥ sobhariḥ.marutaḥ.pragāthaḥ
+21.18.kāṇvaḥ sobhariḥ.(1-16)indraḥ,(17-18)dānastutiḥ.pragāthaḥ
+22.18.kāṇvaḥ sobhariḥ.aśvinau.(1-6)pragāthaḥ,(7)bṛhatī,(8)anuṣṭup,(9-10,13-18)pragāthaḥ,(11)kakup,(12)triṣṭup
+23.30.vaiyaśvo viśvamanāḥ.agniḥ.uṣṇik
+24.30.vaiyaśvo viśvamanāḥ.(1-27)indraḥ,(28-30)dānastutiḥ.(1-29)uṣṇik,(30)anuṣṭup
+25.24.vaiyaśvo viśvamanāḥ.(1-9,13-24)mitrāvaruṇau,(10-12)viśvedevāḥ.uṣṇik
+26.25.vaiyaśvo viśvamanāḥ.(1-19)aśvinau,(20-25)vāyuḥ.(10-15,22-24)uṣṇik,(16-19,21,25)gāyatrī,(20)anuṣṭup
+27.22.vaivasvasto manuḥ.viśvedevāḥ.pragāthaḥ
+28.5.vaivasvasto manuḥ.viśvedevāḥ.(1-3,5)gāyatrī,(4)uṣṇik
+29.10.vaivasvasto manuḥ.viśvedevāḥ.dvipadā virāṭ
+30.4.vaivasvasto manuḥ.viśvedevāḥ.(1)gāyatrī,(2)uṣṇik,(3)bṛhatī,(4)anuṣṭup
+31.18.(1-4)yajñayajamānau,(5-9)dampatī,(10-18)dampatyāśipaḥ.(1-8,10-13)gāyatrī,(9,14)anuṣṭup,(15-18)paṅktiḥ
+32.30.kāṇvo medhātithiḥ.indraḥ.gāyatrī
+33.19.kāṇvo medhyātithiḥ.indraḥ.(1-15) bṛhatī,(13-18)gāyatrī,(19)anuṣṭup
+34.18.(1-15)kāṇvo nīpātithiḥ,(16-18)āṅgirasāḥ sahasraṁ vasurociṣaḥ.indraḥ.(1-15)anuṣṭup,(16-18)gāyatrī
+35.24.ātreyaḥ śyāvāśvaḥ.aśvinau.(1-21)jyotiḥ,(22,24)paṅktiḥ,(23)mahābṛhatī
+36.7.ātreyaḥ śyāvāśvaḥ.indraḥ.(1-6)śakvarī,(7)mahāpaṅktiḥ
+37.7.ātreyaḥ śyāvāśvaḥ.indraḥ.(1)atijagatī,(2-7)mahāpaṅktiḥ
+38.10.ātreyaḥ śyāvāśvaḥ.indrāgnī.gāyatrī
+39.10.kāṇvo nābhākaḥ.agniḥ.mahāpaṅktiḥ
+40.12.kāṇvo nābhākaḥ.indrāgnī.(1,3-11)mahāpaṅktiḥ,(2)śakvarī,(12)triṣṭup
+41.10.kāṇvo nābhākaḥ.varuṇaḥ.mahāpaṅktiḥ
+42.6.kāṇvo nābhākaḥ.(1-3)varuṇaḥ,(4-6)aśvinau.(1-3)triṣṭup,(4-6)anuṣṭup
+43.33.āṅgiraso virūpaḥ.agniḥ.gāyatrī
+44.30.āṅgiraso virūpaḥ.agniḥ.gāyatrī
+45.42.kāṇvastriśokaḥ.(1)agnīndrau,(2-42)indraḥ.gāyatrī
+46.33.āśvyo vaśaḥ.(1-20,29-31,33)indraḥ,(21-24)dānastutiḥ,(25-28,32)vāyuḥ.(1-4,6,10,23,29,33)gāyatrī,(5)kakup,(7,9,14,18-20)bṛhatī,(8)anuṣṭup,(11-12,25-28)pragāthaḥ,(13,17)jagatī,(15)kakumnyaṅkuśirā,(16,30)virāṭ,(21-22,24,32)paṅktiḥ,(25-28)pragāthaḥ,(31)uṣṇik
+47.18.āptyastritaḥ.(1-13)ādityāḥ,(14-18)ādityoṣasaḥ.mahāpaṅktiḥ
+48.15.kāṇvaḥ pragāthaḥ.somaḥ.(1-4,6-15)triṣṭup,(5)jagatī
+49.10.kāṇvaḥ praskaṇvaḥ.indraḥ.pragāthaḥ
+50.10.kāṇvaḥ puṣṭiguḥ.indraḥ.pragāthaḥ
+51.10.kāṇvaḥ śruṣṭiguḥ.indraḥ.pragāthaḥ
+52.10.kāṇva āyuḥ.indraḥ.pragāthaḥ
+53.8.kāṇvo medhyaḥ.indraḥ.pragāthaḥ
+54.8.kāṇvo mātariśvā.(1-2,5-8)indraḥ,(3-4)viśvedevāḥ.pragāthaḥ
+55.5.kāṇvaḥ kṛśaḥ.dānastutiḥ.(1-2,4)gāyatrī,(3,5)anuṣṭup
+56.5.kāṇvaḥ pṛṣadhraḥ.(1-4)dānastutiḥ,(5)agnisūyau.(1-4)gāyatrī,(5)paṅktiḥ
+57.4.kāṇvo medhyaḥ.aśvinau.triṣṭup
+58.3.kāṇvo medhyaḥ.viśvedevāḥ.triṣṭup
+59.7.kāṇvaḥ suparṇaḥ.indrāvaruṇau.jagatī
+60.20.prāgātho bhargaḥ.agniḥ.pragāthaḥ
+61.18.prāgātho bhargaḥ.indraḥ.pragāthaḥ
+62.12.kāṇvaḥ pragāthaḥ.indraḥ.(1-6,10-12)paṅktiḥ,(7-9)bṛhatī
+63.12.kāṇvaḥ pragāthaḥ.indraḥ.(1,4-5,7)anuṣṭup,(2-3,6,8-11)gāyatrī,(12)triṣṭup
+64.12.kāṇvaḥ pragāthaḥ.indraḥ.gāyatrī
+65.12.kāṇvaḥ pragāthaḥ.indraḥ.gāyatrī
+66.15.prāgāthaḥ kaliḥ.indraḥ.(1-14)pragāthaḥ,(15)anuṣṭup
+67.21.sāmmado matysaḥ.ādityāḥ.gāyatrī
+68.19.āṅgirasaḥ priyamedhaḥ.(1-13)indraḥ,(14-19)dānastutiḥ.(1-12)pragāthaḥ,(13-19)gāyatrī
+69.18.āṅgirasaḥ priyamedhaḥ.(1-10,13-18)indraḥ,(11)viśvedevāḥ,(12)varuṇaḥ.(1,3,7-10,12-15)anuṣṭup,(2)uṣṇik,(4-6)gāyatrī,(11,16)paṅktiḥ,(17-18)bṛhatī
+70.15.āṅgirasaḥ puruhanmā.indraḥ.(1-6)pragāthaḥ,(7-12)bṛhatī,(13)uṣṇik,(14)anuṣṭup,(15)pura uṣṇik
+71.15.āṅgirasau sudītipurumīḻhau.agniḥ.(1-9)gāyatrī,(10-15)pragāthaḥ
+72.18.prāgātho haryataḥ.agniḥ.gāyatrī
+73.18.gopavanaḥ saptavadhriḥ.aśvinau.gāyatrī
+74.15.ātreyo gopavanaḥ.(1-12)agniḥ,(13-15)dānastutiḥ.(1-12)pragāthaḥ,(13-15)anuṣṭup
+75.16.āṅgiraso virūpaḥ.agniḥ.gāyatrī
+76.12.kāṇvaḥ kurusutiḥ.indraḥ.gāyatrī
+77.11.kāṇvaḥ kurusutiḥ.indraḥ.(1-9)gāyatrī,(10-11)pragāthaḥ
+78.10.kāṇvaḥ kurusutiḥ.indraḥ.(1-9)gāyatrī,(10)bṛhatī
+79.9.bhārgavaḥ kṛtnuḥ.somaḥ.(1-8)gāyatrī,(9)anuṣṭup
+80.10.naudhasa ekadyūḥ.indraḥ.(1-9)gāyatrī,(10)triṣṭup
+81.9.kāṇvaḥ kusīdī.indraḥ.gāyatrī
+82.9.kāṇvaḥ kusīdī.indraḥ.gāyatrī
+83.9.kāṇvaḥ kusīdī.viśvedevāḥ.gāyatrī
+84.9.kāvya uśanāḥ.agniḥ.gāyatrī
+85.9.āṅgirasaḥ kṛṣṇaḥ.aśvinau.gāyatrī
+86.5.āṅgirasaḥ kṛṣṇaḥ.aśvinau.jagatī
+87.6.vāsiṣṭho dyumnīkaḥ.aśvinau.pragāthaḥ
+88.6.gautamo nodhāḥ.indraḥ.pragāthaḥ
+89.7.āṅgirasau nṛmedhapurumedhau.indraḥ.(1-4)pragāthaḥ,(5-6)anuṣṭup,(7)bṛhatī
+90.6.āṅgirasau nṛmedhapurumedhau.indraḥ.pragāthaḥ
+91.7.ātreyyapālā.indraḥ.(1-2)paṅktiḥ,(3-7)anuṣṭup
+92.33.āṅgirasaḥ śrutakakṣaḥ.indraḥ.(1)anuṣṭup,(2-33)gāyatrī
+93.34.āṅgirasaḥ sukakṣaḥ.(1-33)indraḥ,(34)ṛbhavaḥ.gāyatrī
+94.12.āṅgiraso binduḥ.marutaḥ.gāyatrī
+95.9.āṅgirasas tiraścīḥ.indraḥ.anuṣṭup
+96.21.āṅgirasas tiraścīḥ.(1-13,16-21)indraḥ,(14)marutaḥ,(15)indrābṛhaspatī.(1-3,5-21)triṣṭup,(4)virāṭ
+97.15.kāśyapo rebhaḥ.indraḥ.(1-9)bṛhatī,(10,13)atijagatī,(11-12)bṛhatī,(14)triṣṭup,(15)jagatī
+98.12.āṅgiraso nṛmedhaḥ.indraḥ.(1-6,8-9,12)uṣṇik,(7,10-11)kakup
+99.8.āṅgiraso nṛmedhaḥ.indraḥ.pragāthaḥ
+100.12.(1-3,6-12)bhāgavo nemaḥ,(4-5)indraḥ.(1-9,12)indraḥ,(10-11)vāk.(1-5,10-12)triṣṭup,(6)jagatī,(7-9)anuṣṭup
+101.16.bhārgavo jamadagniḥ.(1-4,5)mitrāvaruṇau,(5-6)ādityāḥ,(7-8)aśvinau,(9-10)vāyuḥ,(11-12)sūryaḥ,(13)uṣāḥ,(14)pavamānaḥ,(15-16)gauḥ.(1-2,5-12)pragāthaḥ,(3)gāyatrī,(4,13)bṛhatī,(14-16)triṣṭup
+102.22.bhārgavaḥ prayogaḥ.agniḥ.gāyatrī
+103.14.kāṇvaḥ sobhariḥ.(1-13)agniḥ,(14)agnāmarutaḥ.(1-4,6-7,9,11,13)bṛhatī,(5)virāṭ,(8,12)kakup,(10)gāyatrī,(14)anuṣṭup

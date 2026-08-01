@@ -1,0 +1,59 @@
+hymn.verses.seer.divinity.meter
+1.20.gautamo vāmadevaḥ.agniḥ.(1)aṣṭiḥ,(2)atijagatī,(3)dhṛtiḥ,(4-20)triṣṭup
+2.20.gautamo vāmadevaḥ.agniḥ.triṣṭup
+3.16.gautamo vāmadevaḥ.agniḥ.triṣṭup
+4.15.gautamo vāmadevaḥ.agniḥ.triṣṭup
+5.15.gautamo vāmadevaḥ.agniḥ.triṣṭup
+6.11.gautamo vāmadevaḥ.agniḥ.triṣṭup
+7.11.gautamo vāmadevaḥ.agniḥ.(1)jagatī,(2-6)anuṣṭup,(7-11)triṣṭup
+8.8.gautamo vāmadevaḥ.agniḥ.gāyatrī
+9.8.gautamo vāmadevaḥ.agniḥ.gāyatrī
+10.8.gautamo vāmadevaḥ.agniḥ.(1-3,5)paṅktiḥ,(4,6,7,8)uṣnik
+11.6.gautamo vāmadevaḥ.agniḥ.triṣṭup
+12.6.gautamo vāmadevaḥ.agniḥ.triṣṭup
+13.5.gautamo vāmadevaḥ.agniḥ.triṣṭup
+14.5.gautamo vāmadevaḥ.agniḥ.triṣṭup
+15.10.gautamo vāmadevaḥ.(1-6)agniḥ,(7-8)sāhadevyaḥ somakaḥ,(9-10)aśvinau.gāyatrī
+16.21.gautamo vāmadevaḥ.indraḥ.triṣṭup
+17.21.gautamo vāmadevaḥ.indraḥ.(1-14,16-21)triṣṭup,(15)virāṭ
+18.13.(1)indraḥ,(2-4,8-13)gautamo vāmadevaḥ,(5-7)aditiḥ.(1,5-7)vāmadevaḥ,(2-4,8-13)indraḥ.triṣṭup
+19.11.gautamo vāmadevaḥ.indraḥ.triṣṭup
+20.11.gautamo vāmadevaḥ.indraḥ.triṣṭup
+21.11.gautamo vāmadevaḥ.indraḥ.triṣṭup
+22.11.gautamo vāmadevaḥ.indraḥ.triṣṭup
+23.11.gautamo vāmadevaḥ.indraḥ.triṣṭup
+24.11.gautamo vāmadevaḥ.indraḥ.(1-9,11)triṣṭup,(10)anuṣṭup
+25.8.gautamo vāmadevaḥ.indraḥ.triṣṭup
+26.7.(1-3)indraḥ,(4-7)gautamo vāmadevaḥ.(1-3)indraḥ,(4-7)śyenaḥ.triṣṭup
+27.5.gautamo vāmadevaḥ.(1-4)śyenaḥ,(5)indraḥ.(1-4)triṣṭup,(5)śakvarī
+28.5.gautamo vāmadevaḥ.indraḥ.triṣṭup
+29.5.gautamo vāmadevaḥ.indraḥ.triṣṭup
+30.24.gautamo vāmadevaḥ.(1-8,12-24)indraḥ,(9-11)indroṣasau.(1-7,9-23)gāyatrī,(8,24)anuṣṭup
+31.15.gautamo vāmadevaḥ.indraḥ.gāyatrī
+32.24.gautamo vāmadevaḥ.(1-22)indraḥ,(23-24)indrasyāśvau.gāyatrī
+33.11.gautamo vāmadevaḥ.ṛbhavaḥ.triṣṭup
+34.11.gautamo vāmadevaḥ.ṛbhavaḥ.triṣṭup
+35.9.gautamo vāmadevaḥ.ṛbhavaḥ.triṣṭup
+36.9.gautamo vāmadevaḥ.ṛbhavaḥ.(1-8)jagatī,(9)triṣṭup
+37.8.gautamo vāmadevaḥ.ṛbhavaḥ.(1-4)triṣṭup,(5-8)anuṣṭup
+38.10.gautamo vāmadevaḥ.(1)dyāvāpṛthivyau,(2-10)dadhikrāḥ.triṣṭup
+39.6.gautamo vāmadevaḥ.dadhikrāḥ.(1-5)triṣṭup,(6)anuṣṭup
+40.5.gautamo vāmadevaḥ.(1-4)dadhikrāḥ,(5)sūryaḥ.(1)triṣṭup,(2-5)jagatī
+41.11.gautamo vāmadevaḥ.indrāvaruṇau.triṣṭup
+42.10.paurukutsyastrasadasyuḥ.(1-6)ātmā,(7-10)indrāvaruṇau.triṣṭup
+43.7.sauhotro ajamīḻhaḥ,sauhotraḥ purumīḻhaḥ.aśvinau.triṣṭup
+44.7.sauhotro ajamīḻhaḥ,sauhotraḥ purumīḻhaḥ.aśvinau.triṣṭup
+45.7.gautamo vāmadevaḥ.aśvinau.(1-6)jagatī,(7)triṣṭup
+46.7.gautamo vāmadevaḥ.(1)vāyuḥ,(2-7)indravāyū.gāyatrī
+47.4.gautamo vāmadevaḥ.(1)vāyuḥ,(2-4)indravāyū.anuṣṭup
+48.5.gautamo vāmadevaḥ.vāyuḥ.anuṣṭup
+49.6.gautamo vāmadevaḥ.indrābṛhaspatī.gāyatrī
+50.11.gautamo vāmadevaḥ.(1-9)bṛhaspatiḥ,(10-11)indrābṛhaspatī.(1-9,11)triṣṭup,(10)jagatī
+51.11.gautamo vāmadevaḥ.uṣāḥ.triṣṭup
+52.7.gautamo vāmadevaḥ.uṣāḥ.gāyatrī
+53.7.gautamo vāmadevaḥ.savitā.jagatī
+54.6.gautamo vāmadevaḥ.savitā.(1-5)jagatī,(6)triṣṭup
+55.10.gautamo vāmadevaḥ.viṣve devāḥ.(1-7)triṣṭup,(8-10)gāyatrī
+56.7.gautamo vāmadevaḥ.dyāvāpṛthivyau.(1-4)triṣṭup,(5-7)gāyatrī
+57.8.gautamo vāmadevaḥ.(1-3)kṣetrapatiḥ,(4)śunaḥ,(5,8)śunāsīrau,(6-7)sītā.(1,4,6-7)anuṣṭup,(2-3,8)triṣṭup,(5)uṣnik
+58.11.gautamo vāmadevaḥ.agniḥ.(1-10)triṣṭup,(11)jagatī

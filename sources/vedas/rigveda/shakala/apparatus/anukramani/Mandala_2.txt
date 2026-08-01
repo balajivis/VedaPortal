@@ -1,0 +1,44 @@
+hymn.verses.seer.divinity.meter
+1.16.śaunako gṛtsamadaḥ.agniḥ.jagatī
+2.13.śaunako gṛtsamadaḥ.agniḥ.jagatī
+3.11.śaunako gṛtsamadaḥ.(1-3)agniḥ,(4)barhiḥ,(5)devīrdvāraḥ,(6)uṣāsānaktā,(7)daivyau hotārau,(8)sarasvatī-iḻā-bhāratī,(9)tvaṣṭā,(10)vanaspatiḥ,(11)svāhākṛtayaḥ.(1-6,8-11)triṣṭup,(7)jagatī
+4.9.bhārgavaḥ somāhutiḥ.agniḥ.triṣṭup
+5.8.bhārgavaḥ somāhutiḥ.agniḥ.anuṣṭup
+6.8.bhārgavaḥ somāhutiḥ.agniḥ.gāyatrī
+7.6.bhārgavaḥ somāhutiḥ.agniḥ.gāyatrī
+8.6.śaunako gṛtsamadaḥ.agniḥ.(1-5)gāyatrī,(6)anuṣṭup
+9.6.śaunako gṛtsamadaḥ.agniḥ.triṣṭup
+10.6.śaunako gṛtsamadaḥ.agniḥ.triṣṭup
+11.21.śaunako gṛtsamadaḥ.indraḥ.(1-20)virāṭ,(21)triṣṭup
+12.15.śaunako gṛtsamadaḥ.indraḥ.triṣṭup
+13.13.śaunako gṛtsamadaḥ.indraḥ.(1-12)jagatī,(13)triṣṭup
+14.12.śaunako gṛtsamadaḥ.indraḥ.triṣṭup
+15.10.śaunako gṛtsamadaḥ.indraḥ.triṣṭup
+16.9.śaunako gṛtsamadaḥ.indraḥ.(1-8)jagatī,(9)triṣṭup
+17.9.śaunako gṛtsamadaḥ.indraḥ.(1-7)jagatī,(8-9)triṣṭup
+18.9.śaunako gṛtsamadaḥ.indraḥ.triṣṭup
+19.9.śaunako gṛtsamadaḥ.indraḥ.triṣṭup
+20.9.śaunako gṛtsamadaḥ.indraḥ.(1-2,4-9)triṣṭup,(3)virāṭ
+21.6.śaunako gṛtsamadaḥ.indraḥ.(1-5)jagatī,(6)triṣṭup
+22.4.śaunako gṛtsamadaḥ.indraḥ.(1)aṣṭiḥ,(2-4)atiśakvarī
+23.19.śaunako gṛtsamadaḥ.(1,5,9,11,17,19)brahmaṇaspatiḥ,(2-4,6-8,10,12-16,18)bṛhaspatiḥ.(1-14,16-18)jagatī,(15,19)triṣṭup
+24.16.śaunako gṛtsamadaḥ.(1,10)bṛhaspatiḥ,(2-9,11,13-16)brahmaṇaspatiḥ,(12)indrābrahmaṇaspatī.(1-11,13-15)jagatī,(12,16)triṣṭup
+25.5.śaunako gṛtsamadaḥ.brahmaṇaspatiḥ.jagatī
+26.4.śaunako gṛtsamadaḥ.brahmaṇaspatiḥ.jagatī
+27.17.gārtsamadaḥ kūrmaḥ.ādityāḥ.triṣṭup
+28.11.gārtsamadaḥ kūrmaḥ.varuṇaḥ.triṣṭup
+29.7.gārtsamadaḥ kūrmaḥ.viśvedevāḥ.triṣṭup
+30.11.śaunako gṛtsamadaḥ.(1-5,7,8,10)indraḥ,(6)indrāsomau,(9)bṛhaspatiḥ,(11)marutaḥ.(1-10)triṣṭup,(11)jagatī
+31.7.śaunako gṛtsamadaḥ.viśvedevāḥ.(1-6)jagatī,(7)triṣṭup
+32.8.śaunako gṛtsamadaḥ.(1)dyāvāpṛthivyau,(2-3)indraḥ,(4-5)rākā,(6-7)sinīvālī,(8)liṅgoktāḥ.(1-5)jagatī,(6-8)anuṣṭup
+33.15.śaunako gṛtsamadaḥ.rudraḥ.triṣṭup
+34.15.śaunako gṛtsamadaḥ.marutaḥ.(1-14)jagatī,(15)triṣṭup
+35.15.śaunako gṛtsamadaḥ.apāṁ napāt.triṣṭup
+36.6.śaunako gṛtsamadaḥ.(1)indraḥ,(2)marutaḥ,(3)tvaṣṭā,(4)agniḥ,(5)indraḥ,(6)mitrāvaruṇau.jagatī
+37.6.śaunako gṛtsamadaḥ.(1-4)draviṇodāḥ,(5)aśvinau,(6)agniḥ.jagatī
+38.11.śaunako gṛtsamadaḥ.savitā.triṣṭup
+39.8.śaunako gṛtsamadaḥ.aśvinau.triṣṭup
+40.6.śaunako gṛtsamadaḥ.somāpūṣāṇau.triṣṭup
+41.21.śaunako gṛtsamadaḥ.(1-2)vāyuḥ,(3)indravāyū,(4-6)mitrāvaruṇau,(7-9)aśvinau,(10-12)indraḥ,(13-15)viśvedevāḥ,(16-18)sarasvatī,(19-21)dyāvāpṛthivyau.(1-15,19-21)gāyatrī,(16-17)anuṣṭup,(18)bṛhatī
+42.3.śaunako gṛtsamadaḥ.śakuntaḥ.triṣṭup
+43.3.śaunako gṛtsamadaḥ.śakuntaḥ.triṣṭup

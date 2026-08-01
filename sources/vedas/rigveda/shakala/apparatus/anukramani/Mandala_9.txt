@@ -1,0 +1,115 @@
+hymn.verses.seer.divinity.meter
+1.10.vaiśvāmitro madhucchandāḥ.pavamānaḥ somaḥ.gāyatrī
+2.10.kāṇvo medhātithiḥ.pavamānaḥ somaḥ.gāyatrī
+3.10.ājīgartiḥ śunaḥśepaḥ.pavamānaḥ somaḥ.gāyatrī
+4.10.āṅgiraso hiraṇyastūpaḥ.pavamānaḥ somaḥ.gāyatrī
+5.11.kāśyapo asitaḥ.(1,2,3)agniḥ,(4)barhiḥ,(5)devīrdvāraḥ,(6)uṣāsānaktā,(7)daivyau hotārau,(8)sarasvatī-iḻā-bhāratī,(9)tvaṣṭā,(10)vanaspatiḥ,(11)svāhākṛtayaḥ.(1-7)gāyatrī,(8-11)anuṣṭup
+6.9.kāśyapo asitaḥ.pavamānaḥ somaḥ.gāyatrī
+7.9.kāśyapo asitaḥ.pavamānaḥ somaḥ.gāyatrī
+8.9.kāśyapo asitaḥ.pavamānaḥ somaḥ.gāyatrī
+9.9.kāśyapo asitaḥ.pavamānaḥ somaḥ.gāyatrī
+10.9.kāśyapo asitaḥ.pavamānaḥ somaḥ.gāyatrī
+11.9.kāśyapo asitaḥ.pavamānaḥ somaḥ.gāyatrī
+12.9.kāśyapo asitaḥ.pavamānaḥ somaḥ.gāyatrī
+13.9.kāśyapo asitaḥ.pavamānaḥ somaḥ.gāyatrī
+14.8.kāśyapo asitaḥ.pavamānaḥ somaḥ.gāyatrī
+15.8.kāśyapo asitaḥ.pavamānaḥ somaḥ.gāyatrī
+16.8.kāśyapo asitaḥ.pavamānaḥ somaḥ.gāyatrī
+17.8.kāśyapo asitaḥ.pavamānaḥ somaḥ.gāyatrī
+18.7.kāśyapo asitaḥ.pavamānaḥ somaḥ.gāyatrī
+19.7.kāśyapo asitaḥ.pavamānaḥ somaḥ.gāyatrī
+20.7.kāśyapo asitaḥ.pavamānaḥ somaḥ.gāyatrī
+21.7.kāśyapo asitaḥ.pavamānaḥ somaḥ.gāyatrī
+22.7.kāśyapo asitaḥ.pavamānaḥ somaḥ.gāyatrī
+23.7.kāśyapo asitaḥ.pavamānaḥ somaḥ.gāyatrī
+24.7.kāśyapo asitaḥ.pavamānaḥ somaḥ.gāyatrī
+25.6.āgastyo dṛḻhacyutaḥ.pavamānaḥ somaḥ.gāyatrī
+26.6.dārḻhacyuta idhmavāhaḥ.pavamānaḥ somaḥ.gāyatrī
+27.6.āṅgiraso nṛmedhaḥ.pavamānaḥ somaḥ.gāyatrī
+28.6.āṅgiraso priyamedhaḥ.pavamānaḥ somaḥ.gāyatrī
+29.6.āṅgiraso nṛmedhaḥ.pavamānaḥ somaḥ.gāyatrī
+30.6.āṅgiraso binduḥ.pavamānaḥ somaḥ.gāyatrī
+31.6.rāhūgaṇo gotamaḥ.pavamānaḥ somaḥ.gāyatrī
+32.6.ātreyaḥ śyāvāśvaḥ.pavamānaḥ somaḥ.gāyatrī
+33.6.āptyastritaḥ.pavamānaḥ somaḥ.gāyatrī
+34.6.āptyastritaḥ.pavamānaḥ somaḥ.gāyatrī
+35.6.āṅgirasaḥ prabhūvasuḥ.pavamānaḥ somaḥ.gāyatrī
+36.6.āṅgirasaḥ prabhūvasuḥ.pavamānaḥ somaḥ.gāyatrī
+37.6.āṅgiraso rahūgaṇaḥ.pavamānaḥ somaḥ.gāyatrī
+38.6.āṅgiraso rahūgaṇaḥ.pavamānaḥ somaḥ.gāyatrī
+39.6.āṅgiraso bṛhanmatiḥ.pavamānaḥ somaḥ.gāyatrī
+40.6.āṅgiraso bṛhanmatiḥ.pavamānaḥ somaḥ.gāyatrī
+41.6.kāṇvo medhyātithiḥ.pavamānaḥ somaḥ.gāyatrī
+42.6.kāṇvo medhyātithiḥ.pavamānaḥ somaḥ.gāyatrī
+43.6.kāṇvo medhyātithiḥ.pavamānaḥ somaḥ.gāyatrī
+44.6.āṅgirasa ayāsyaḥ.pavamānaḥ somaḥ.gāyatrī
+45.6.āṅgirasa ayāsyaḥ.pavamānaḥ somaḥ.gāyatrī
+46.6.āṅgirasa ayāsyaḥ.pavamānaḥ somaḥ.gāyatrī
+47.5.bhārgavaḥ kaviḥ.pavamānaḥ somaḥ.gāyatrī
+48.5.bhārgavaḥ kaviḥ.pavamānaḥ somaḥ.gāyatrī
+49.5.bhārgavaḥ kaviḥ.pavamānaḥ somaḥ.gāyatrī
+50.5.āṅgirasa ucathyaḥ.pavamānaḥ somaḥ.gāyatrī
+51.5.āṅgirasa ucathyaḥ.pavamānaḥ somaḥ.gāyatrī
+52.5.āṅgirasa ucathyaḥ.pavamānaḥ somaḥ.gāyatrī
+53.4.kāśyapo avatsāraḥ.pavamānaḥ somaḥ.gāyatrī
+54.4.kāśyapo avatsāraḥ.pavamānaḥ somaḥ.gāyatrī
+55.4.kāśyapo avatsāraḥ.pavamānaḥ somaḥ.gāyatrī
+56.4.kāśyapo avatsāraḥ.pavamānaḥ somaḥ.gāyatrī
+57.4.kāśyapo avatsāraḥ.pavamānaḥ somaḥ.gāyatrī
+58.4.kāśyapo avatsāraḥ.pavamānaḥ somaḥ.gāyatrī
+59.4.kāśyapo avatsāraḥ.pavamānaḥ somaḥ.gāyatrī
+60.4.kāśyapo avatsāraḥ.pavamānaḥ somaḥ.(1-2,4)gāyatrī,(3)uṣṇik
+61.30.āṅgiraso amahīyuḥ.pavamānaḥ somaḥ.gāyatrī
+62.30.bhārgavo jamadagniḥ.pavamānaḥ somaḥ.gāyatrī
+63.30.kāśyapo nidhruviḥ.pavamānaḥ somaḥ.gāyatrī
+64.30.mārīcāḥ kaśyapaḥ.pavamānaḥ somaḥ.gāyatrī
+65.30.vāruṇirbhṛguḥ.pavamānaḥ somaḥ.gāyatrī
+66.30.śataṁ vaikhānasāḥ.(1-18,22-30)pavamānaḥ somaḥ,(19-21)pavamāno agniḥ.(1-17,19-30)gāyatrī,(18)anuṣṭup
+67.32.saptarṣayaḥ.(1-22,28-30)pavamānaḥ somaḥ,(23-27)pavamāno agniḥ,(31-32)adhyetṛstutiḥ.(1-26,28-29)gāyatrī,(27,31-32)anuṣṭup,(30)uṣṇik
+68.10.bhālandano vatsapriḥ.pavamānaḥ somaḥ.(1-9)jagatī,(10)triṣṭup
+69.10.āṅgiraso hiraṇyastūpaḥ.pavamānaḥ somaḥ.(1-8)jagatī,(9-10)triṣṭup
+70.10.vaiśvāmitro reṇuḥ.pavamānaḥ somaḥ.(1-9)jagatī,(10)triṣṭup
+71.9.vaiśvāmitra ṛbhavaḥ.pavamānaḥ somaḥ.(1-8)jagatī,(9)triṣṭup
+72.9.āṅgiraso harimantaḥ.pavamānaḥ somaḥ.jagatī
+73.9.āṅgirasaḥ pavitraḥ.pavamānaḥ somaḥ.jagatī
+74.9.dairghatamasaḥ kakṣīvān.pavamānaḥ somaḥ.(1-7,9)jagatī,(8)triṣṭup
+75.5.bhārgavaḥ kaviḥ.pavamānaḥ somaḥ.jagatī
+76.5.bhārgavaḥ kaviḥ.pavamānaḥ somaḥ.jagatī
+77.5.bhārgavaḥ kaviḥ.pavamānaḥ somaḥ.jagatī
+78.5.bhārgavaḥ kaviḥ.pavamānaḥ somaḥ.jagatī
+79.5.bhārgavaḥ kaviḥ.pavamānaḥ somaḥ.jagatī
+80.5.bhāradvājo vasuḥ.pavamānaḥ somaḥ.jagatī
+81.5.bhāradvājo vasuḥ.pavamānaḥ somaḥ.(1-4)jagatī,(5)triṣṭup
+82.5.bhāradvājo vasuḥ.pavamānaḥ somaḥ.(1-4)jagatī,(5)triṣṭup
+83.5.āṅgirasaḥ pavitraḥ.pavamānaḥ somaḥ.jagatī
+84.5.vācyaḥ prajāpatiḥ.pavamānaḥ somaḥ.jagatī
+85.12.bhārgavo venaḥ.pavamānaḥ somaḥ.(1-10)jagatī,(11-12)triṣṭup
+86.48.(1-10)akṛṣṭā māṣāḥ,(11-20)sikatā nivāvarī,(21-30)pṛśnayo ajāḥ,(31-40)atreyaḥ,(41-45)bhaumo atriḥ,(46-48)śaunako gṛtsamadaḥ.pavamānaḥ somaḥ.jagatī
+87.9.kāvya uśanāḥ.pavamānaḥ somaḥ.triṣṭup
+88.8.kāvya uśanāḥ.pavamānaḥ somaḥ.triṣṭup
+89.7.kāvya uśanāḥ.pavamānaḥ somaḥ.triṣṭup
+90.6.maitrāvaruṇirvasiṭḥaḥ.pavamānaḥ somaḥ.triṣṭup
+91.6.mārīcaḥ kaśyapaḥ.pavamānaḥ somaḥ.triṣṭup
+92.6.mārīcaḥ kaśyapaḥ.pavamānaḥ somaḥ.triṣṭup
+93.5.gautamo nodhāḥ.pavamānaḥ somaḥ.triṣṭup
+94.5.āṅgirasaḥ kaṇvaḥ.pavamānaḥ somaḥ.triṣṭup
+95.5.kāṇvaḥ praskaṇvaḥ.pavamānaḥ somaḥ.triṣṭup
+96.24.daivodāsiḥ pratardanaḥ.pavamānaḥ somaḥ.triṣṭup
+97.58.(1-3)maitrāvaruṇirvasiṭḥaḥ,(4-6)vāsiṣṭha indrapramatiḥ,(7-9)vāsiṣṭho vṛṣagaṇaḥ,(10-12)vāsiṣṭho manyuḥ,(13-15)vāsiṣṭho upamanyuḥ,(16-18)vāsiṣṭho vyāghrapāt,(19-21)vāsiṣṭhaḥ śaktiḥ,(22-24)vāsiṣṭhaḥ karṇaśrut,(25-27)vāsiṣṭho mṛḻīkaḥ,(28-30)vāsiṣṭho vasukraḥ,(31-44)śāktyaḥ parāśaraḥ,(45-58)āṅgirasaḥ kutsaḥ.pavamānaḥ somaḥ.triṣṭup
+98.12.vārṣāgiro ambarīṣaḥ.pavamānaḥ somaḥ.(1-10,12)anuṣṭup,(11)bṛhatī
+99.8.kāśyapau rebhasūnū.pavamānaḥ somaḥ.(1)bṛhatī,(2-8)anuṣṭup
+100.9.kāśyapo rebhasūnū.pavamānaḥ somaḥ.anuṣṭup
+101.16.(1-3)śyāvāśvirandhīguḥ,(4-6)nāhuṣo yayāti,(7-9)mānavo nahuṣaḥ,(10-12)sāṁvaraṇo manuḥ,(13-16)vaiśvāmitro vācyaḥ.pavamānaḥ somaḥ.(1,4-16)anuṣṭup,(2-3)gāyatrī
+102.8.āptyastritaḥ.pavamānaḥ somaḥ.uṣṇik
+103.6.āptyastritaḥ.pavamānaḥ somaḥ.uṣṇik
+104.6.kāṇvau parvatanāradau.pavamānaḥ somaḥ.uṣṇik
+105.6.kāṇvau parvatanāradau.pavamānaḥ somaḥ.uṣṇik
+106.14.(1-3,10-14)cākṣuṣo agniḥ,(4-6)mānavaścakṣuḥ,(7-9)cāpsavo manuḥ.pavamānaḥ somaḥ.uṣṇik
+107.26.saptarṣayaḥ.pavamānaḥ somaḥ.(1-2,4-7,10-15,17-26)pragāthaḥ,(3)dvipadā virāṭ,(8-9)bṛhatī,(16)dvipadā virāṭ
+108.16.(1-2)śāktyo gaurivītiḥ,(3,14-16)vāsiṣṭhaḥ śaktiḥ,(4-5)āṅgirasa uruḥ,(6-7)bhāradvāja ṛjiśvā,(8-9)āṅgirasa ūrdhvasadmā,(10-11)āṅgirasaḥ kṛtayaśāḥ,(12-13)ṛṇañcayaḥ.pavamānaḥ somaḥ.(1-12,14-16)pragāthaḥ,(13)gāyatrī
+109.22.aiśvarayo dhiśṇyāgnayaḥ.pavamānaḥ somaḥ.dvipadā virāṭ
+110.12.traivṛṣṇastryaruṇaḥ paurukutsastrasadasyuḥ.pavamānaḥ somaḥ.(1-3)anuṣṭup,(4-9)bṛhatī,(10-12)virāṭ
+111.3.pārucchepiranānataḥ.pavamānaḥ somaḥ.atyaṣtiḥ
+112.4.āṅgirasaḥ śiśuḥ.pavamānaḥ somaḥ.paṅktiḥ
+113.11.mārīcaḥ kaśyapaḥ.pavamānaḥ somaḥ.paṅktiḥ
+114.4.mārīcaḥ kaśyapaḥ.pavamānaḥ somaḥ.paṅktiḥ
