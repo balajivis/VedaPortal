@@ -1,0 +1,197 @@
+# P0-b — Font-remap `Entire Rig Veda Samhita.pdf` from legacy encoding to Unicode
+# Schema: COLLECTION-PROTOCOL.md §1. Staging only — do not merge by hand; see _collection/README.md.
+# Collector: agent. Every number below was measured on the file in the repo and on ground-truth
+# text actually downloaded. Method is recorded inline. Nothing here is estimated.
+#
+# NOTE: no derived corpus was produced and no converter was committed. Reasons in `verdict`.
+
+summary:
+  packet: P0-b
+  date: 2026-08-01
+  verdict: ABANDON — do not remap, do not OCR
+  one_line: >
+    The remap is technically sound and the svaras are provably recoverable (99.90% of 173,980
+    marks, validated against independent Unicode ground truth) — but the source is R.L. Kashyap /
+    SAKSI, which COLLECTION-PROTOCOL §4 bans outright, and P0-a has already secured a complete
+    accented Ṛgveda Saṃhitā that needs no conversion at all. The work is feasible and worthless.
+
+  font_identified:
+    names: [DV-Sanskrit-Normal, DV-Sanskrit-Bold, DV2-Sanskrit-Normal, DV2-Sanskrit-Bold]
+    type: >
+      Type 1C (bare CFF), subset-embedded, custom /Encoding /Differences, no /BaseEncoding.
+      Ten independent subsets of each base font across the 654 pages. The `DV-` prefix and the
+      base/overflow pairing (DV- + DV2-) are the Modular InfoTech "DV" series convention
+      (the Shree-Lipi family, of which DV-TTYogesh / DV-TTSurekh are the widely-converted members).
+      It is NOT Sanskrit99, Sanskrt, Xdvng, Shusha or Vedic97.
+    published_mapping_table: >
+      NOT FOUND. Searched for a DV-Sanskrit / DV2-Sanskrit table specifically. Converters exist
+      for DV-TTSurekh, DV/DVB-Yogesh and DV-TT-Vedic (LTRC-IIIT, nukkadh, fontconverter.in,
+      sanskritdocuments/processing_tools) but none names these two faces, and the DV series does
+      not share one codepage across faces, so none of them can be assumed to transfer. Any
+      converter would have to be built from the embedded outlines — which is tractable; see
+      `remaining_work`.
+    tounicode_cmap: >
+      Present on every font object and USELESS for this purpose. Registry is `T1UV`, Ordering
+      `T1UV` — it maps each code back to the Unicode of its *Latin glyph name*
+      (/parenleft → U+0028, /ellipsis → U+2026), i.e. it round-trips to the legacy byte, not to
+      Devanāgarī. This is why extraction yields `@ÒM¥…‰n˘ ∫…∆ Ω˛i……` and zero Devanāgarī.
+      The corollary is useful: extraction is glyph-name-driven and therefore STABLE across the
+      ten differing subsets, so the extracted byte stream is a faithful glyph stream.
+
+  hypothesis_confirmed: >
+    YES, and rigorously. Extracted every FontFile3 from all font objects, decompiled each with
+    FreeType, and hashed the raw outline (points + tags + contours) of every glyph in every
+    subset. Result: 138 distinct glyph names in DV-Sanskrit-Normal, 97 in DV2-Sanskrit-Normal,
+    49 in DV-Sanskrit-Bold, 6 in DV2-Sanskrit-Bold — and ZERO glyph names carrying more than one
+    outline, across all ten subsets of each face. The byte→glyph relationship is a fixed
+    single-byte mapping. There is no CMap that resists inversion.
+
+  but_it_is_a_glyph_encoding_not_a_character_encoding: >
+    This is the real cost, and it is why "codepage remap" understates the job. DV-Sanskrit holds
+    independent vowels, HALF-FORM consonants, and a bare vertical stem glyph (/ellipsis) which
+    both completes a half-form into a full consonant AND, when repeated, serves as ā-mātrā;
+    the i-mātrā is pre-posed as in print. DV2-Sanskrit is the overflow face and holds several
+    hundred PRE-COMPOSED CONJUNCT LIGATURES (क्क क्र क्त ङ्क ङ्ख ङ्ग ङ्घ छ्न छ्ल ल्ल द्व ह्व …)
+    alongside the svara marks. So `¥…` = व, `¥……` = वा, `∫¥…` = स्व, `FÊ` = ग्नि, `cÊ` = त्न.
+    Converting the TEXT therefore needs ~235 glyph identifications plus a composition engine
+    (half-form+stem merge, pre-posed i-mātrā reordering, reph, ligature expansion, accent
+    re-attachment). Converting the ACCENTS needs none of that — see below.
+
+  svara_survives: >
+    YES — and this is the packet's one genuinely valuable finding. The svaras are not fused into
+    the consonant glyphs; they are four discrete ZERO-WIDTH glyphs in DV2-Sanskrit, emitted
+    inline in the content stream immediately after the akṣara they mark:
+      anudātta ॒ (U+0952)  =  /ordmasculine (86,961) + /Omega (12,787)      — two width variants
+      svarita  ॑ (U+0951)  =  /guillemotright (56,699) + /nbspace (17,388)  — two width variants
+      paired/independent svarita = /currency (664)
+    They can therefore be lifted WITHOUT solving the consonant layer, and their ordinal position
+    relative to word and pāda boundaries is preserved exactly.
+
+  accuracy_measured:
+    ground_truth: >
+      sanskritdocuments.org/mirrors/rigveda/sanskrit03/RV03{01..10}.html — the Itranslator 2003
+      (Omkarananda Ashram) accented Devanāgarī Unicode Ṛgveda, all ten maṇḍalas, downloaded and
+      counted here: 10,552 verses (the canonical Śākala count), 1,079,927 Devanāgarī characters,
+      173,980 svara marks = 99,844 × U+0952 + 74,136 × U+0951. Independent of the PDF.
+    aggregate_counts: >
+      PDF anudātta candidates 99,748 vs 99,844 (99.904%); svarita 74,087 vs 74,136 (99.934%);
+      combined 173,835 vs 173,980 (99.917%). The paired mark matched EXACTLY: 664 /currency in
+      the PDF against 664 + 664 private-use marks in the ground truth.
+    ordered_sequence_validation: >
+      The real test, and held-out — not a count but an ORDERED alignment. Located the ten maṇḍala
+      boundaries in the PDF by its own headings (pages 0/127/158/200/241/287/337/397/476/534),
+      reduced each maṇḍala to its accent string (A=anudātta, S=svarita) in reading order, and
+      difflib-aligned it against the same reduction of the ground truth:
+        M1  99.80% recall  M2  99.94%  M3  99.95%  M4  99.96%  M5  99.93%
+        M6  99.94%  M7  99.93%  M8  99.92%  M9  99.92%  M10 99.91%
+        ALL 173,808 of 173,980 marks matched in order — RECALL 99.90%, PRECISION 99.98%.
+    rv_1_1_1: >
+      PDF page 0. Extracted accent sequence A S A S A S A A S S A S — 12 of 12 marks, correct
+      type, correct order, against ground truth
+      अ॒ग्निमी॑ळे पु॒रोहि॑तं य॒ज्ञस्य॑ दे॒वमृ॒त्विज॑म्। होता॑रं रत्न॒धात॑मम्॥
+      Raw legacy bytes for the same line begin `$ +º FÊ®…“ ≥‰˝ {…÷Ω Æ˙…‰ Ω»˛i…∆ ™…ºY…∫™…» …`.
+    rv_3_53_12: >
+      PDF page 191, confirmed visually (विश्वामित्रस्य रक्षति ब्रह्मेदं भारतं जनम्). The verse is set as
+      two half-lines; extracted accent sequences A S A A A S then A S A A S A S — 13 of 13 marks,
+      correct type, correct order, against ground truth
+      य इ॒मे रोद॑सी उ॒भे अ॒हमिन्द्र॒मतु॑ष्टवम्। वि॒श्वामि॑त्रस्य रक्षति॒ ब्रह्मे॒दं भार॑तं॒ जन॑म्॥
+    caveat: >
+      These figures are for the SVARA LAYER ONLY. No accuracy figure is claimed for the
+      consonant/vowel layer, because no converter for it was built. Do not read 99.90% as a
+      text-conversion accuracy — it is not.
+
+  why_abandon_anyway:
+    1_licence_binding: >
+      The PDF's own metadata: Title "Rigveda-Samhita edited by R.L. Kashyap — Complete Text in
+      Devanagari", Author "Prof. R.L. Kashyap and Prof. S. Sadagopan", Subject "Sri Aurobindo
+      Kapali Sastry Institute (www.veda.com)". That is precisely the source COLLECTION-PROTOCOL
+      §4 bans: "Do not ingest: Kashyap/SAKSI … Reference by citation only." The host states the
+      terms in his own words: "Professor Kashyap granted to U.Stiehl permission to offer the PDF
+      files for download BY STUDENTS so that they may print out the Rigveda hymns selected by
+      their professors FOR STUDY PURPOSES. Students specializing in Vedic literature should buy
+      the printed edition." That is a narrow personal-study permission to one host — not a
+      redistribution licence and not a derivative-works licence. The file is additionally
+      RC4-encrypted with copy:no, an explicit technical assertion against text extraction.
+    2_redundant: >
+      P0-a already logged an accented Ṛgveda Saṃhitā that needs no conversion: VedaWeb
+      rigveda/versions/eichler.csv, 10,552/10,552 stanzas, 175,308 svara marks, CC-BY-NC-SA-4.0.
+      The Itranslator-2003 text used as ground truth in this packet is a second one. The remap
+      would buy a THIRD copy of a text we already hold twice, at the cost of the only copy whose
+      licence forbids it.
+    3_no_reuse: >
+      Surveyed the fonts of all 21 PDFs under sources/. DV-Sanskrit / DV2-Sanskrit appear in
+      exactly ONE file — this one. A converter would be single-use dead code. (The other legacy
+      faces in the repo are Sanskrt, Sanskrit99 and BRHDevanagari — different families, and a
+      DV-Sanskrit table would not transfer to them.)
+
+  remaining_work_if_a_human_overrules_this:
+    - >
+      ~235 glyph→Unicode identifications (138 DV-Sanskrit-Normal + 97 DV2-Sanskrit-Normal). All
+      glyphs render cleanly from the embedded CFFs — labelled contact sheets were generated and
+      are legible, so this is bounded manual work, not research. Estimate 1–2 hours.
+    - >
+      A composition engine: half-form + stem → full consonant; stem after full consonant → ā;
+      pre-posed i-mātrā reordering; reph; conjunct-ligature expansion; accent re-attachment.
+      Standard for this font family. Estimate 2–3 hours including validation.
+    - >
+      Nothing else is unknown. The encoding is solved; only the labour is outstanding.
+    - >
+      Working tooling (font extraction, per-subset outline-consistency check, CFF glyph contact
+      sheets, and the svara-layer validator that produced the 99.90% figure) is in the session
+      scratchpad, not the repo — deliberately, since it targets a banned source.
+
+  flag_for_human_review: >
+    The PDF ITSELF sits in the repo at sources/vedas/rigveda/shakala/samhita/. Given §4 and the
+    student-printout-only permission above, that placement is in tension with §1 ("Link, don't
+    host … A folder of pirated PDFs is worse than nothing"). Recommend it be replaced by the URL
+    and a citation. NOT actioned here — a collector does not delete another packet's material,
+    and this packet was scoped to conversion, not curation.
+
+records:
+
+- node_path: sources/vedas/rigveda/shakala/samhita
+  veda: rigveda
+  organization: null
+  shakha: shakala
+  layer: samhita
+  edition: >
+    RIG VEDA MANTRA SAMHITA — Complete text in Devanāgarī. Editors: Prof. R.L. Kashyap and
+    Prof. S. Sadagopan. 1st edition 1998, Sri Aurobindo Kapali Sastry Institute of Vedic Culture
+    (SAKSI), Bangalore. The PDF is the 1998 typesetting; the 2nd edition 2005
+    (ISBN 81-7994-015-2) was re-set in a different typeface and is NOT what this file contains.
+    654 pages, A4, produced with Acrobat Distiller 4.0 for Windows, 2005-01-13.
+  url: http://www.sanskritweb.net/rigveda/
+  script: devanagari-legacy-font
+  svara_source?: >
+    yes — MEASURED, and the measurement is the deliverable of this packet. The svaras are present
+    as four discrete zero-width glyphs in the DV2-Sanskrit face (/ordmasculine + /Omega =
+    anudātta; /guillemotright + /nbspace = svarita; /currency = paired svarita) and were
+    recovered as an ordered sequence at 99.90% recall / 99.98% precision — 173,808 of 173,980
+    marks — validated maṇḍala by maṇḍala against the independent Itranslator-2003 accented
+    Unicode text at sanskritdocuments.org. RV 1.1.1 (12/12 marks) and RV 3.53.12 (13/13 marks)
+    both reproduce exactly, in order. Accent recoverability is NOT the reason this node is
+    unusable; licence is.
+  svara_verified?: pending — BV
+  text_layer: legacy-encoding
+  license: copyright-link-only
+  status: found-complete
+  where_i_looked: n/a
+  notes: >
+    COMPLETE and of high typographic quality — 654 pages, full Śākala Saṃhitā, fully accented,
+    with per-sūkta ṛṣi / chandas / devatā headers and aṣṭaka-adhyāya-varga apparatus. Text layer
+    is intact and faithful (1,535,814 extracted characters; 1,270,217 in DV-Sanskrit-Normal,
+    233,506 in DV2-Sanskrit-Normal). It is NOT a scan and NOT failed OCR; sending it to OCR would
+    be strictly worse than the text layer it already has.
+    .
+    DO NOT INGEST. COLLECTION-PROTOCOL §4 names Kashyap/SAKSI explicitly, and the host's stated
+    permission covers students printing selected hymns for study — not redistribution, not
+    derivative corpora. The file is also RC4-encrypted with copy:no. Reference by citation only.
+    .
+    Attribution is NOT in doubt here (the edition is named in the PDF metadata and on the host
+    page) — the doubt is licence, which is a different field.
+    .
+    Superseded for every practical purpose by the accented Unicode editions logged in P0-a
+    (VedaWeb eichler.csv, CC-BY-NC-SA-4.0, 10,552/10,552 stanzas) and by the Itranslator-2003
+    text used as ground truth here. Keep this record so the next collector does not re-open the
+    remap: the encoding question is SOLVED and the answer is that solving it does not help.
+  date_logged: 2026-08-01

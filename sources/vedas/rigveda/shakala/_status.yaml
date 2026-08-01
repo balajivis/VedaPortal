@@ -5,15 +5,27 @@ survival: living
 tier: settled
 reciting_communities: []          # known to exist across India — enumerate before claiming regions
 layers:
-  samhita:   { status: sourced,    note: "Devanagari samhita + Griffith translation + transliteration PDFs in repo" }
-  brahmana:  { status: enumerated, note: "Aitareya; Kaushitaki association with Shakala vs Bashkala/Shankhayana needs verification" }
-  aranyaka:  { status: enumerated, note: "Aitareya Aranyaka" }
-  upanishad: { status: enumerated, note: "Aitareya Upanishad — embedded in Aitareya Aranyaka (lives in aranyaka/, cross-referenced only)" }
+  samhita:   { status: sourced, note: "Accented Unicode: sanskritdocuments r01-r10 (4,678 svara marks per 30pp sampled) — the clean replacement for the SAKSI/Kashyap PDF. Second accented witness: VedaWeb eichler.csv, 10552/10552 stanzas, 175,308 marks (CC-BY-NC-SA; mula text PD per rule 9)." }
+  brahmana:  { status: sourced, note: "TWO Brahmanas, not one. Aitareya: TITUS/Aufrecht 1879, 285 units (ab286 does not exist) + Wikisource Devanagari; NOT on GRETIL. Kausitaki/Sankhayana: GRETIL/Tokunaga, 30 adhyayas, self-declared 'not proofread', period word-separators. Kausitaki shakha attribution unsettled — see bashkala/_status.yaml, decide both together." }
+  aranyaka:  { status: sourced, note: "Aitareya Aranyaka: TITUS/Doyama from Keith 1909, carries Keith's page AND line numbers inline — joins to print mechanically. Sankhayana Aranyaka: GRETIL/Kummel, 15 adhyayas/146 khandas, marks the Kausitaki Upanisad concordance in its own reference strings (sa 3,1 = ku 1,1)." }
+  upanishad: { status: sourced, note: "Aitareya Upanisad = AiA II.4-6 — embedded, lives in aranyaka/, cross-referenced only. ACCENTED digital text exists for it alone: sanskritdocuments aitareyopaniShatsasvarA, 329 U+0951/0952 + 33 Vedic Extensions. Kausitaki Upanisad = SA 3-6." }
 apparatus:
-  pratishakhya: { status: enumerated }
-  anukramani:   { status: enumerated }
-  kalpa:        { status: enumerated }
+  anukramani:   { status: sourced, note: "MIRRORED at apparatus/anukramani/ — WSC2023, Apache-2.0, 1028/1028 hymns verified, verse-sum 10552 exact. The ONLY machine-readable Anukramani of any Veda. Sarvanukramani itself has no clean digital text — only dirty OCR of Macdonell 1886." }
+  brhaddevata:  { status: sourced, note: "Sanskrit Wikisource, complete, 8 adhyayas, CC-BY-SA-4.0. The tradition's OTHER devata index — assigns deities independently of Katyayana. Third labelling alongside WSC2023 and Geldner's addressees; a better validation set than one." }
+  padapatha:    { status: sourced, note: "GRETIL sa_RgvedasaMhitApadapATha — complete, 2.64MB, RV addresses inline. THE ONLY MACHINE-READABLE PADAPATHA OF ANY SAKHA. But UNACCENTED, as is VedaWeb's padapatha.csv — useless for the accent argument. For accent: detlef108.de (no licence stated)." }
+  pratishakhya: { status: sourced, note: "Rgveda-Pratisakhya with Uvata's commentary, ed. Mangal Deva Shastri, 3 vols, verified DLI identifiers. Also VedicReserve legacy-font copy." }
+  kalpa:        { status: sourced, note: "ALL FOUR machine-readable on GRETIL: Asvalayana Srauta+Grhya, Sankhayana Srauta+Grhya. Tokunaga's Asvalayana Srauta carries INLINE RITUAL LABELS — already annotated with ritual-position metadata." }
+  bhashya:      { status: sourced, note: "Sayana on RV complete (Muller 1849-75; VSM Poona ed. Sontakke). Sayana on Aitareya Br. (Samasrami 1895-96) and Aitareya Ar. (Mitra). H.H. Wilson's 6-vol English FOLLOWS Sayana throughout — the open cross-check. NOTE: Sayana never commented on the Kausitaki Brahmana; Vinayaka (unpublished) and Udaya (printed) did." }
+audio:
+  status: sourced
+  note: "268 khanda-aligned Kausitaki recitation MP4s at vedicheritage.gov.in/Kaushitaki_Brahmana/RVKB-{aa}.{kk}.mp4 — full grid HEAD-probed; aligns to GRETIL in 27 of 30 adhyayas, diverges at 3, 6, 29."
+findings:
+  - "THE RGVEDIC BRAHMANA SVARA IS EXTINCT, NOT UNDIGITISED. Zero accent marks across ~940,000 chars. Keith p.96: it 'originally was duly accented, but the accents have not been preserved by the tradition.' Haug 1863 heard the Aitareya chanted 'quite monotonously, whilst the Brahmanas of the Yajurveda are recited with the proper accents.' The one accented prose survivor is the Aitareya UPANISAD — the section that kept being recited. The boundary falls inside one text and tracks liturgical use. No accent-aware OCR is needed for RV prose; there are no accents left to recover."
+  - "CITATION CONVENTION (AB): store pancika.adhyaya.khanda (native to the colophons, unambiguous); display pancika.khanda (what Haug, Keith and all secondary lit use). Aufrecht prints both numerals at every khanda, so the mapping is read, not reconstructed. VIII.21 / 8.23 / 8.4.7-9 are not conflicting citations — all three point at TITUS units 278-280, the aindra mahabhiseka king-list: opening khanda, closing khanda, whole span."
+  - "285 khandas, four independent witnesses. The '235' in one source is a PAGE NUMBER — the running head of Aufrecht's last text page reads 'Adhyaya 40, 5. 235'."
+  - "vedicheritage.gov.in states each pancika has eight adhyayas totalling forty (8x8=64). Confirmed verbatim. Second error on the same site: KB '226 khandas' against its own nav table summing to 271. Its other pages check out and it hosts free complete scans of all four texts — calibrate, do not dismiss."
 sources:
-  - "Entire Rig Veda Samhita.pdf (edition unverified)"
+  - "Entire Rig Veda Samhita.pdf — IDENTIFIED: ed. R.L. Kashyap, Sri Aurobindo Kapali Sastry Institute (SAKSI). Legacy DV-Sanskrit font; accents recoverable at 99.90% recall / 99.98% precision but RC4-encrypted (copy:no) and permission is student-printout-only. RETAINED LOCALLY, NOT COMMITTED (.gitignore). Superseded."
   - "Rig Veda English translation by Griffith (public domain)"
   - "Rig Veda English transliteration.pdf (edition unverified)"
+  - "apparatus/anukramani/ — WSC2023 Anukramani, Apache-2.0, mirrored and verified 2026-08-01"

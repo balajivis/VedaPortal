@@ -1,0 +1,41 @@
+type: manuscript-register
+status: enumerated
+purpose: >
+  A map of what manuscript material is REACHABLE, so a triage layer can later be pointed at it.
+  Framed by two facts: the Paippalada Atharvaveda — an entire recension believed lost — was
+  rediscovered in a manuscript in a village in 1957; and India's National Mission for Manuscripts
+  has catalogued on the order of millions, of which under 5% are critically edited. The
+  bottleneck is not evidence. It is readers.
+bulk_queryable:
+  kritisampada:
+    endpoint: "pandulipipatala.nic.in — CSRF form POST, unbounded limit, detail records enumerable by base64 integer ID, NO AUTH"
+    vedic_yield: "87,207 subject=Veda; 2,429 digitised and public"
+    images: "yes — verified a 476 MB Yajurvedabhasya PDF over plain unauthenticated HTTP"
+    license: "all-rights-reserved — ASK NAMAMI before ingest"
+    conditions:
+      - "mrc_id is the SURVEYING CENTRE, not the holder. Institution counts derived from it are badly inflated."
+      - "IT EXPLICITLY INDEXES PRIVATE COLLECTIONS. The Institute Name column MUST be institution-filtered on ingest. Record institution to holding, never person to holding — aggregation creates exposure that no single fact does."
+      - "no sakha field at all"
+  ignca_vedic_heritage:
+    endpoint: "undocumented POST /wp-content/themes/vedic/fetch.php"
+    vedic_yield: "65,672, all Vedic, SAKHA IN THE TITLES"
+  ngmcp:
+    endpoint: "Solr with wt=csv + cursorMark; MyCoRe REST"
+    vedic_yield: "2,349 Veda / 150,298 folios — whole subset pulled as a 273 KB CSV in ONE request"
+    note: "4 of 117,406 records name a sakha"
+  qalamos:
+    endpoint: "OAI-PMH /oai2 (TEI), open Solr /select"
+    vedic_yield: "1,151 'Veda'; 651 under a distinct VEDIC SANSKRIT language code; mostly CC0"
+  others: "Berlin, BnF, Cambridge, Nepal NAK, archive.org — via OAI-PMH, SRU, IIIF"
+findings:
+  - "SAKHA IS ESSENTIALLY ABSENT FROM THE MODERN DATABASES BUT STATED ROUTINELY IN PRINTED CATALOGUES. Adyar Library's Vedic volume names manuscripts for EVERY sakha this repo records as empty: Madhyandina 5, Kanva 21, Saunaka 4, Katha 15, Jaiminiya 3, Maitrayani 2. The three empty target sakhas and half the endangered set are not absent — they are UNINDEXED ON THE ONE AXIS THIS PROJECT IS BUILT AROUND. The printed catalogues are better data than the databases here, which inverts the digitisation-first instinct."
+  - "Odisha State Museum's 1973 catalogue states TEN Paippalada manuscripts, against ONE in the national database."
+  - "Two Maitrayani PADAPATHA manuscripts survive at BORI and the Vaidika Samsodhana Mandala, both in Pune, covering four kandas — a lost padapatha that is recoverable."
+  - "A dated Whish Collection palm-leaf Taittiriya Pratisakhya + Tribhasyaratna is at the Royal Asiatic Society."
+not_verified:
+  - "Kritisampada's ~5.2M total (only the Veda facet was checked)"
+  - "the Tubingen Sarada Paippalada shelfmark"
+  - "whether Asha Archives holds Vedic material at all"
+  - "Berlin's terms page (JS-only)"
+  - "NVLI is GEO-WALLED — needs retesting from India"
+  - "the sweep's own search budget ran out partway; this is a floor, not a ceiling"

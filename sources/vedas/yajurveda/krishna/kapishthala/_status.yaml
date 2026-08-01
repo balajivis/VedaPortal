@@ -5,6 +5,7 @@ survival: fragmentary
 tier: settled
 reciting_communities: []
 layers:
-  samhita: { status: enumerated, note: "Kapishthala-Katha Samhita — survives incomplete" }
-apparatus: {}
+  samhita: { status: enumerated, note: "Kapisthala-Katha Samhita — survives incomplete. Accented Unicode exists at TITUS, all-rights-reserved; nothing fetched. No other open source located." }
+apparatus:
+  padapatha: { status: enumerated, note: "Does not exist. No traditional word-boundary authority for this sakha." }
 sources: []

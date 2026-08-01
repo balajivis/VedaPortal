@@ -1,0 +1,1757 @@
+# P2-a — Endangered set: Jaiminīya · Rāṇāyanīya · Kaṭha · Maitrāyaṇī · Bāṣkala · Kapiṣṭhala
+#
+# Schema: COLLECTION-PROTOCOL.md §1. One record per node (śākhā → layer).
+# Staging only. Nothing here is authoritative. Do not merge without review.
+# `svara_verified?` is BV's field and is left `pending — BV` everywhere, untouched.
+#
+# Two schema notes for the merge pass, flagged rather than decided:
+#   (a) AUDIO. The packet brief asks for recitation audio per śākhā, but §1's `layer`
+#       enum has no slot for it. Audio records below use `layer: audio` and a node_path
+#       of `<shakha>/_audio`. This is an extension, not an existing convention — the
+#       merge pass should either bless it or fold these into the śākhā `_status.yaml`
+#       under a new `recordings:` key. Either way the FINDINGS stand; only the shape is open.
+#   (b) NEW LAYER NODES. Several records propose layers that the current `_status.yaml`
+#       files do not list (Bāṣkala brāhmaṇa/āraṇyaka/upaniṣad, Kapiṣṭhala brāhmaṇa,
+#       Maitrāyaṇī brāhmaṇa/āraṇyaka). Each is flagged `proposes_new_node: true` with the
+#       attribution question stated. Per binding rule 7 the doubt is in `notes`, never
+#       silently in `shakha`. The merge pass decides whether the node gets created.
+
+summary:
+
+  method:
+    accent_test: >
+      Protocol §3 test run on every PDF actually downloaded, plus — per the P0-a
+      correction relayed mid-packet — NFC normalisation before counting, and counting
+      U+0951/U+0952/U+1CD0–1CFF *specifically* rather than any combining mark. The trap
+      is real: GRETIL's Maitrāyaṇī plain text returns 25,195 combining diacritics under
+      NFD and ZERO Vedic accents; those 25k are decomposed ṛ/ṣ/ā, not svaras.
+      For Sāmaveda nodes digits were counted as well (numeric gāna notation).
+      Where OCR was untrustworthy (all DLI scans are), accents were settled by rendering
+      the page to an image and reading it. Three findings below were overturned that way.
+    the_search_lesson: >
+      THE MOST TRANSFERABLE RESULT IN THIS PACKET, and it cost me a wrong answer to learn.
+      I logged Rāṇāyanīya as having no text and no audio after searching vedicheritage,
+      GRETIL, TITUS, sanskritdocuments, sanskritweb and a title-keyed archive.org query.
+      Both conclusions were wrong. Five CC0 editions and ~2.7 GB of recitation existed the
+      whole time, in archive.org COMMUNITY uploads, indexed under transliterated Sanskrit
+      (`rANAyanIya`, `sAmavedaH`) that no English-language query reaches.
+      The curated Sanskrit-digital ecosystem is Kauthuma-and-Taittirīya shaped. For a
+      minority śākhā its silence is WEAK EVIDENCE OF ABSENCE — which is precisely the
+      inversion this packet exists to catch, since these six are minority śākhās by
+      definition. P1-a reached the same conclusion from the other direction: it found no
+      Śatapatha anywhere in the accented-Devanāgarī publisher ecosystem, in either
+      recension, which means that ecosystem's coverage collapses outside Taittirīya.
+      CONSEQUENCE, applied honestly to my own file: every remaining `not-found` here rests
+      partly on those same sources and should be re-run against the community tier with
+      transliterated spellings before being treated as settled. The Jaiminīya audio record
+      is the one where this matters most, and it says so in its own `where_i_looked`.
+    ignca_portal_correction: >
+      A CLAIM I MADE REPEATEDLY IN THIS FILE WAS WRONG, AND IT WAS WRONG IN A WAY THAT
+      MATTERS FOR EVERY `not-found` AUDIO RECORD HERE.
+      I asserted, in six records, that vedicheritage.gov.in "attaches Audio/Video child
+      links to exactly two saṃhitās site-wide — Taittirīya and Śaunaka". That was inferred
+      from the portal's navigation markup. It is FALSE.
+      The portal hosts **191 MP4 files of Jaiminīya recitation** — a Richā (recitation) tab
+      and a Gāna (chant) tab — on `/samhitas/samaveda-samhitas/jaiminiya-samhita-2/`.
+      They are invisible to scraping because the page's `<video>` element ships with
+      `src=""` and is populated at runtime by JavaScript. I verified the files directly by
+      HTTP rather than trusting the page: `Jaiminiya_Samhita/Gaan_mp4/1_Gramgeya_Gaan/
+      Agneya/Samjssg_01_01.mp4` → 200, video/mp4, 118,565,670 bytes;
+      `Jaiminiya_Samhita/Richa_mp4/1_Agneya/Samjsr_01_01.mp4` → 200, 19,548,603 bytes.
+      I further probed the Aindra series and found `Samjsr_02_01` through `Samjsr_02_36`
+      all 200 and `Samjsr_02_37` a 404 — i.e. the enumerated section boundaries are real.
+      CONSEQUENCE FOR THE REST OF THIS FILE: a "no audio on the portal" finding for the
+      other five śākhās rests on their navigation entries being dead `#` links, which is
+      still true and still meaningful. But it can NO LONGER rest on "the portal only has
+      two". Those records have been corrected. The Rāṇāyanīya negative in particular was
+      established by reading three page levels and finding no player — exactly the method
+      that failed here — and is now explicitly marked as lower-confidence.
+      GENERAL RULE EARNED TWICE OVER: for this portal, and for any JS-driven site, probe
+      the media paths by HTTP. Do not conclude absence from rendered HTML.
+      LICENCE, quoted from https://vedicheritage.gov.in/copyright-policy/ : "The contents
+      of this website can not be reproduced partially or fully, without written permission
+      from Indira Gandhi National Center for the Arts or the contributor." Stream and cite;
+      do not mirror.
+    accent_marker_sets: >
+      Per P1-a: where a source is in Baraha or a similar transliteration scheme, the accent
+      marker set is SIX, not two — `q` and `#` map to U+0952 and U+0951, but `$`, `&`,
+      `~M` and `(gg)` need Vedic Extensions (U+1CD0–1CFF), and a two-mark reading silently
+      drops data. No Baraha-format source was encountered in this packet, so the note is
+      carried rather than applied. The equivalent trap DID bite here in two other forms,
+      both recorded at the node: the Kāṭhaka udātta-bar convention, which inverts the
+      meaning of U+0951 relative to Taittirīya practice; and Rāṇāyanīya gāna notation,
+      which uses superscript digits AND subscript akṣaras and is not expressible in the
+      accent-mark model at all. The general rule: record the marker set you OBSERVED in
+      each source, never the scheme you assumed.
+    what_i_did_not_do: >
+      No bulk content was fetched from TITUS. Its holdings are catalogued from the index
+      page and each text's index header only, per the coordinator's hold-the-line
+      instruction while a permission request is pending at the human level.
+      No individual reciters, contacts, addresses or phone numbers were recorded, from any
+      source — including the IGNCA pāṭhaśālā PDFs, several rows of which are individuals
+      rather than institutions. Those rows were skipped, not anonymised.
+
+  headline: >
+    ALL SIX have real text, and that is not what I expected to be able to write. Four have
+    free accented or notated editions today (Kāṭhaka, Maitrāyaṇī, Rāṇāyanīya gāna,
+    Jaiminīya); Kapiṣṭhala is free but permanently incomplete and permanently unaccented;
+    Bāṣkala's saṃhitā is genuinely lost while its other layers may survive under a
+    contested attribution.
+    On AUDIO: Jaiminīya is the best recorded (191 IGNCA files, 1933 Nambudiri wax
+    cylinders at the British Library, Staal/Levy Kerala 1957–62, ~2 GB on archive.org),
+    Rāṇāyanīya has ~2.7 GB free, and Maitrāyaṇī is recited on a published schedule to
+    2034. The other three — Kaṭha, Kapiṣṭhala, Bāṣkala — are terminally silent: no
+    community remains to record.
+    READ THE NEGATIVES IN THIS FILE WITH CARE. I logged three `not-found` audio results
+    that later proved false — Rāṇāyanīya, Jaiminīya, then Nambudiri Jaiminīya specifically
+    — each time by inferring absence from a rendered page or a keyword query instead of
+    probing the resource. All three are corrected in place with the error recorded rather
+    than tidied away; see `the_search_lesson` and `ignca_portal_correction`. The remaining
+    negatives are stronger than those were, but they are not all equally strong and each
+    says so.
+    THREE FINDINGS THAT OUTLIVE THIS PACKET: the Kaṭha pointer in `_status.yaml` is a
+    misidentification, though the accented Kāṭhaka it reached for exists and is free;
+    the Kāṭhaka accent convention INVERTS the meaning of U+0951 relative to Taittirīya;
+    and the Jaiminīya gāna carries NO notation of any kind, so for that śākhā the
+    recording is not a supplement to the text — it is the only carrier of the melody.
+
+  per_shakha:
+
+    jaiminiya:
+      audio_correction: >
+        WRONG TWICE, IN OPPOSITE DIRECTIONS. First I logged Jaiminīya audio `not-found`;
+        an archive.org community-tier search overturned that with ~2 GB of TAMIL/ANDHRA
+        material. Then I concluded the KERALA NAMBUDIRI tradition was unrecorded and built
+        the packet's recommendation on it — and that was wrong too. Verified since:
+        the IGNCA portal holds 191 Jaiminīya MP4 files behind JavaScript; the British
+        Library holds Nambudiri Jaiminīya WAX CYLINDERS RECORDED AT KOTTAYAM IN NOVEMBER
+        1933 (Bake's own slip notes read "[Samaveda, Nambudiri (Jaiminiya)]"); and
+        Staal and Levy recorded Jaiminīya in Kerala in 1957 and 1962, commercially issued
+        by Folkways in 1969. Jaiminīya is in fact the BEST-recorded śākhā in this packet.
+      text: >
+        STRONG — much better than the śākhā's endangered status suggests, and the best
+        text position of the four Sāmaveda/Yajurveda endangered nodes. SAṂHITĀ: the
+        coordinator's lead resolved and free — "Jaiminīyasāmavedasaṃhitā: Text of Kerala
+        Tradition (Ārcika, Sāma and Candrasāma Portions)", ed. K. A. Ravindran, National
+        Mission for Manuscripts Prakāśikā series with Nag Publishers, 2013, 2 vols, and it
+        prints the text in DEVANĀGARĪ AND MALAYALAM, preserving the Kerala script
+        transmission rather than normalising it. Caland 1907 and Raghu Vira 1938 also exist.
+        BRĀHMAṆA: Raghu Vira & Lokesh Chandra (1954) and Caland's 1919 Auswahl free on
+        archive.org, five scans in all, plus the Ārṣeya Brāhmaṇa in Burnell's and
+        B. R. Sharma's editions; TITUS holds a JB e-text (members-only).
+        ĀRAṆYAKA: the Jaiminīya Upaniṣad Brāhmaṇa — where the Kena lives — is on TITUS
+        OPENLY, and Oertel's 1896 editio princeps is free.
+      audio: >
+        THE BEST-RECORDED ŚĀKHĀ HERE, across four bodies: IGNCA's 191 MP4s (Richā + Gāna,
+        JS-hidden, restrictive licence); the British Library's 1933 Bake wax cylinders of
+        NAMBUDIRI Jaiminīya from Kottayam, several "almost inaudible… heavy mould",
+        listenable in person only; Staal/Levy's Kerala 1957 and 1962 recordings issued by
+        Folkways in 1969; and ~2 GB of Tamil/Andhra material on archive.org. Exactly one
+        item carries a clean open licence (an IGNCA Media Centre video, CC BY-NC 4.0).
+        UNPUBLISHED AND OBTAINABLE: Sree Sankaracharya University of Sanskrit, Kalady
+        recorded Kerala Jaiminīya chanting 1995–2015, available on request.
+      genuinely_lost: >
+        Nothing in the Jaiminīya text tradition is lost. And the gāna is no longer
+        undocumented — it is documented in fragile, restricted, mostly ninety-year-old
+        form. What is at risk is the LIVING transmission: Gerety (2016) finds Nambudiri
+        Sāmaveda reduced to a single active line of normative transmission, with most
+        modern lineages a blend of survival and REVIVAL rather than continuous descent.
+        Howard (1977, 1988) established that Nambudiri and Tamil Jaiminīya chant differ
+        from each other and both from Kauthuma, so none substitutes for another.
+      capture_urgency: >
+        STILL THE HIGHEST — but the task has changed shape. It is no longer "capture an
+        unrecorded tradition"; it is "secure and consolidate a tradition recorded in four
+        incompatible, fragile, mostly inaccessible places, while a single active line of
+        transmission still exists to record against."
+
+    ranayaniya:
+      text: >
+        MUCH BETTER THAN IT FIRST APPEARED — and the correction is instructive. The four
+        curated corpora (GRETIL, TITUS, sanskritdocuments, sanskritweb) hold ZERO
+        Rāṇāyanīya between them, and IGNCA's Rāṇāyanīya pages give structure but no text.
+        On that evidence I logged the node dark. It is not: five free CC0 editions sit in
+        archive.org community uploads — the Dvārakā Sāmagānam, the Tirupati Veyagānam in
+        two volumes, the Phullapotam, and a Kāśī Agniṣṭoma prayoga. Stevenson (1842) and
+        Benfey (1848), the two earliest printed Sāmavedas, were Rāṇāyanīya as well.
+        What is still genuinely missing is the ĀRCIKA — the saṃhitā layer itself.
+      audio: >
+        ~2.7 GB, FREE, TODAY. Three archive.org items: 42 tracks marked "Courtesy IGNCA,
+        Government of India"; 16 long-form tracks foldered saṃhitā/āraṇyaka/ūha at
+        80–140 minutes each; and a gāna specimen. Licence unresolved on all three —
+        none carries a rights field. Link, do not mirror.
+      genuinely_lost: >
+        Nothing is lost. Not the śākhā, not the gāna, not the audio. What was missing was
+        our ability to find it: the material is in the community tier, indexed under
+        transliterated Sanskrit, invisible to a search of the curated corpora.
+      capture_urgency: >
+        LOW-MODERATE, and downgraded from my first assessment. The recording that would
+        have justified an expedition largely exists. The remaining gaps are an ĀRCIKA text
+        and an encoding decision for two incompatible gāna notations — desk work, not
+        fieldwork.
+
+    katha:
+      text: >
+        Good, and better than expected. An ACCENTED Devanāgarī Kāṭhaka Saṃhitā exists and is
+        free: Śrīpāda Śarmā's Svādhyāya Maṇḍala edition (1943), scanned from the Gurukul
+        Kāṅgṛī collection and marked CC-0 on the page. von Schroeder's Kāṭhakam (1900–10)
+        is also accented and free. TITUS holds a KS e-text openly, plus Books 19–22 in both
+        saṃhitā- and pada-pāṭha (members-only). Brāhmaṇa and Āraṇyaka survive only in part.
+      audio: >
+        NOTHING FOUND, and there is good reason to believe nothing exists. Published report:
+        Kashmir today has not one saṃhitā-pāṭhī of the Kaṭha śākhā; what survives is the
+        ritual and the ritual manuals, not the recitation.
+      genuinely_lost: >
+        GENUINELY LOST: most of the Kaṭha Brāhmaṇa (remnants only — Witzel's Kaṭha
+        material at Harvard is 45 chapters, largely gṛhya). PARTLY LOST: the Āraṇyaka,
+        surviving in a single Kashmiri birch-bark manuscript. NOT LOST, merely
+        under-served: the Saṃhitā, which is complete and accented and free right now.
+      capture_urgency: >
+        The recitation is already gone. This is an ARCHIVAL problem, not a recording one —
+        nothing to send a recordist to. The urgent object here is the ritual tradition,
+        which is a different project.
+
+    maitrayani:
+      text: >
+        The strongest of the six. Satavalekar's Maitrāyaṇī Saṃhitā (1941) is fully accented
+        Devanāgarī, complete, free, and visually verified page-by-page — anudātta underline
+        and svarita vertical both present, with cross-references to Taittirīya, Kāṭhaka,
+        Vājasaneyi and Kāṇva printed in the footers. von Schroeder (1881–86) and Vedkumari
+        Vidyalankar (1986) also free. TITUS holds an MS e-text openly. GRETIL holds one too
+        but has DROPPED THE ACCENTS and says so.
+      audio: >
+        THE ONE LIVE FIND IN THIS PACKET. Krishna Yajurveda Maitrāyaṇī Śākhā groups recite
+        in the Śrī Viśvamaṅgala Lakṣmī Narasiṃha Nitya Mahāyajña at Śrī Lakṣmī Narasiṃha
+        Kṣetram, Belagola (Karnataka) — a daily yajña running 13 May 2022 to 1 May 2034,
+        streamed to YouTube with individually titled Maitrāyaṇī sessions. This is not an
+        archive recording. It is a live, ongoing, dated, locatable stream.
+      genuinely_lost: >
+        GENUINELY LOST: the Maitrāyaṇī Brāhmaṇa as a separate work — the Maitrāyaṇīya
+        Upaniṣad is described in the tradition as the closing portion of a Brāhmaṇa of that
+        śākhā which no longer survives. The Saṃhitā carries brāhmaṇa-type prose internally,
+        Taittirīya-fashion, which is why the separate work was dispensable.
+      capture_urgency: >
+        MODERATE — and it is the only one of the six where the window is currently OPEN
+        rather than closing. Something is being recited on a known day at a known place.
+        Fieldwork here is scheduling, not searching.
+
+    bashkala:
+      text: >
+        The node needs restating. The Bāṣkala SAṂHITĀ does not survive — but the Bāṣkala
+        śākhā's other layers arguably do, through the Kauṣītaki / Śāṅkhāyana line, and are
+        all free and complete: Kauṣītaki (Śāṅkhāyana) Brāhmaṇa in Lindner's and Sreekrishna
+        Sarma's editions, Śāṅkhāyana Āraṇyaka in Keith's, and the Kauṣītaki Upaniṣad inside
+        it. The Bāṣkalamantra Upaniṣad is openly on TITUS. The Khilāni — the 98 hymns
+        recorded in Bāṣkala and not in Śākala — are edited (Scheftelowitz 1906) and on
+        GRETIL. This is a lot of surviving Bāṣkala for a śākhā logged as "fragmentary".
+      audio: >
+        NOTHING FOUND, and the question is close to meaningless — there is no reciting
+        Bāṣkala community to record. The recordable object would be the Khilāni within
+        a Śākala reciter's repertoire, which is a different ask.
+      genuinely_lost: >
+        GENUINELY LOST: the Bāṣkala Saṃhitā. No complete text; the Khilāni are its
+        surviving trace and reach us via one Kashmiri manuscript. NOT LOST: brāhmaṇa,
+        āraṇyaka, upaniṣad — IF the Kauṣītaki attribution holds, which is exactly the
+        thing to be careful about (see the record's `notes`).
+      capture_urgency: >
+        NONE, for recording. The gap here is scholarly-attributional, not oral. Nobody
+        should be sent anywhere; somebody should settle whether Kauṣītaki is Bāṣkala's
+        brāhmaṇa or a sibling śākhā's.
+
+    kapishthala:
+      text: >
+        Exists, is free, and is INCOMPLETE BY NATURE. Raghu Vira's 1932 edition
+        (multiple free scans) rests on a single imperfect manuscript: aṣṭaka 1 complete,
+        2 damaged, chapters 9–24 lost, 32 lost, 33 lost, 43 lost. TITUS holds a KapS e-text
+        openly (Fushimi), and Fushimi's mantra index is free at EJVS. The text is
+        UNACCENTED — verified visually, not inferred.
+      audio: >
+        NOTHING FOUND. No reciting community is recorded anywhere for this śākhā.
+      genuinely_lost: >
+        GENUINELY LOST: roughly a quarter of the Saṃhitā, chapter by chapter, listed above.
+        This is real textual loss, not a digitisation gap, and no edition will fix it.
+        The brāhmaṇa layer is attested by name only.
+      capture_urgency: >
+        NONE. Nothing to record. What this node needs is the manuscript question, which
+        belongs to P2-c.
+
+  cross_packet_notes:
+    - "P2-c (manuscript catalogues): three leads, logged not chased —
+       (1) the single Kashmiri Śāradā manuscript behind the Kāṭhaka Saṃhitā;
+       (2) the Tübingen birch-bark Kaṭha Āraṇyaka manuscript, ~500 years old, sole witness;
+       (3) the single imperfect Kapiṣṭhala manuscript, whose lacunae ARE the text's limits.
+       Each is a one-manuscript text. That is a preservation fact, not a cataloguing detail."
+    - "P2-b (apparatus): Kāṭhaka-Gṛhyasūtra (Laugākṣi) and Jaimini-Gṛhyasūtra are both
+       openly on TITUS; Khila-Anukramaṇī is inside Scheftelowitz 1906. Not logged here."
+    - "P2-b, HIGH VALUE AND EASY TO MISS: Asko Parpola's 2023 critical editions of the
+       Jaiminīya apparatus WITH the Kerala commentaries of Bhavatrāta and Jayanta (c. 700
+       CE) — Śrautasūtra, Gṛhyasūtra, Jaimini-Kalpa 1–5, Paryadhyāya — are ALL OPEN ACCESS
+       in the Electronic Journal of Vedic Studies vol. 27, e.g.
+       hasp.ub.uni-heidelberg.de/journals/ejvs/article/view/21907. Open-licensed critical
+       editions of an endangered śākhā's apparatus, published recently, by the field's
+       leading authority on it. Also Caland's Jaimini-Gṛhyasūtra (Lahore 1922) and
+       Premnidhi Shastri's Jaiminīya Śrautasūtra Vṛtti of Bhavatrāta (IAIC 1966), both
+       free on archive.org."
+    - "P2-b / P2-c: the Jaiminīya ŪHA- and ŪHYA-GĀNA have NO edition in any script
+       anywhere. Parpola published only INDEXES to both (EJVS 27.6). They are
+       manuscript-only — e.g. Cambridge MS Or. 2365, which also carries the JAIMINĪYA
+       DHĀRAṆALAKṢAṆA, the śākhā's own notation treatise, unedited. Given that the
+       Jaiminīya gāna is printed without notation, an unedited notation treatise for that
+       śākhā is a disproportionately important object. CUDL 403s to scripts; a human
+       needs to open it."
+    - "P1-a (accented-Devanāgarī publishers): the Svādhyāya Maṇḍala sweep is theirs, but
+       two of its editions are the single best sources for two of MY śākhās — flagging so
+       the Kāṭhaka 1943 and Maitrāyaṇī 1941 volumes are not treated as already-covered."
+    - "P0-a: TITUS holdings for Maitrāyaṇī, Kāṭhaka and Kapiṣṭhala catalogued below at
+       index level only. No bulk fetch. Access pending the permission decision."
+
+  highest_priority_recording_target: >
+    JAIMINĪYA SĀMAVEDA GĀNA OF THE KERALA NAMBUDIRI TRADITION — still the answer, but
+    NOT AS A FIRST-CAPTURE EXPEDITION. Do the acquisitions first; they are cheaper, faster,
+    and two of them are decaying.
+
+    THE ORDER MATTERS, so stating it as a sequence rather than a target:
+    (1) ASK KALADY. Sree Sankaracharya University of Sanskrit recorded Kerala Jaiminīya
+        chanting 1995–2015 and the recordings are available on request and unpublished.
+        This is an email. It is plausibly the largest single body of modern Nambudiri
+        Jaiminīya audio in existence and nobody has to travel.
+    (2) DIGITISE OR OBTAIN THE BAKE CYLINDERS. British Library C52, Kottayam, November
+        1933, Nambudiri Jaiminīya Āraṇyakagāna and Grāmageyagāna. Several are catalogued
+        "almost inaudible… heavy mould on cylinder". These are ninety-three years old and
+        degrading; they are also the earliest known recording of this tradition and
+        predate every published analysis of it. If nothing else in this packet is acted
+        on, this should be.
+    (3) EMAIL INDIANA. Whether Wayne Howard's field tapes were deposited at the Archives
+        of Traditional Music is unresolved — their catalogue blocks automated clients.
+        Howard's 1988 chant analyses are the most detailed published account of Nambudiri
+        Jaiminīya; the tapes behind them, if they exist publicly, are the matching audio.
+    (4) ONLY THEN RECORD. And record against a known baseline rather than blind.
+
+    Why Jaiminīya and not one of the other five — the elimination is now clean, and three
+    of the five fell away during the packet rather than before it.
+    THREE ARE NOT RECORDABLE AT ALL. Kaṭha's saṃhitā recitation is extinct in Kashmir by
+    published report and IGNCA lists zero Kaṭha institutions nationally; Bāṣkala and
+    Kapiṣṭhala have no reciting community at all. For those three the loss has already
+    happened and the remaining work is archival and manuscript work, not fieldwork.
+    ONE IS ALREADY RECORDED. Rāṇāyanīya — which I first logged as silent — has ~2.7 GB
+    freely downloadable, including a set marked courtesy of IGNCA.
+    ONE IS OPEN RATHER THAN CLOSING. Maitrāyaṇī is recited at a known kṣetram on a daily
+    yajña scheduled to 2034 and streamed. Scheduling problem, not a race.
+
+    THAT LEAVES JAIMINĪYA, and what makes it urgent is no longer absence of recording but
+    FRAGILITY AND DISPERSAL of what exists, against a living tradition that Gerety finds
+    reduced to a single active line of normative transmission. The recordings are in four
+    places under four incompatible rights regimes: IGNCA's 191 files behind a written-
+    permission policy, the BL's mouldy cylinders behind an appointment desk, Folkways in
+    copyright, and archive.org community uploads with no stated rights at all. Exactly one
+    Jaiminīya item anywhere carries a clean open licence. A tradition can be well recorded
+    and still effectively unavailable, and that is the actual situation here.
+
+    And the asymmetry that produced this packet still holds. The Jaiminīya TEXT is SAFE —
+    Ravindran's Kerala edition, Raghu Vira, Lokesh Chandra, Caland, Oertel, Burnell,
+    B. R. Sharma, Parpola's open-access 2023 commentaries. Editing it again adds nothing.
+    The gāna is the fragile object, and — the finding that surprised me most — it CANNOT
+    be reconstructed from the printed page, because the Jaiminīya gāna is printed with no
+    numeric notation at all. Kauthuma writes digits above syllables; the written Kerala
+    Jaiminīya tradition never did. The melody lives in vowel prolongations, stobhas, and
+    oral transmission. For this śākhā, more than any other in the corpus, the recording
+    IS the text.
+
+    Why this and not one of the other five — and the elimination is now clean, because
+    two of the five fell away during the packet rather than before it.
+    THREE ARE NOT RECORDABLE AT ALL. Kaṭha's saṃhitā recitation is extinct in Kashmir by
+    published report and IGNCA lists zero Kaṭha institutions nationally; Bāṣkala and
+    Kapiṣṭhala have no reciting community at all. For those three the loss has already
+    happened and the remaining work is archival and manuscript work, not fieldwork.
+    Sending a recordist would be sending them nowhere.
+    ONE HAS ALREADY BEEN RECORDED. Rāṇāyanīya — which I initially logged as silent and
+    which I would have ranked second — turns out to have ~2.7 GB of freely downloadable
+    recitation, including a 16-track set foldered saṃhitā/āraṇyaka/ūha and a 42-track set
+    marked courtesy of IGNCA. Its remaining gaps are an ārcika text and an encoding
+    decision, both desk work.
+    ONE IS OPEN RATHER THAN CLOSING. Maitrāyaṇī is recited at a known kṣetram on a daily
+    yajña scheduled to 2034 and streamed. That is a scheduling problem, not a race.
+
+    THAT LEAVES ONE. Nambudiri Jaiminīya is the only node in the packet where the thing at
+    risk is BOTH irreplaceable AND actively disappearing AND still capturable.
+    Irreplaceable, because Sāmavedic meaning lives in the melody, Jaiminīya melody is not
+    Kauthuma melody, and — the point that survived every correction in this packet —
+    Howard's fieldwork established that the NAMBUDIRI and TAMIL Jaiminīya traditions differ
+    markedly from each other. The ~2 GB now available is entirely Tamil: choḷīya style and
+    the Paravastu TN-AP lineage. It does not cover the śākhā, and treating it as though it
+    does would be the single most expensive mistake available here — it would look like
+    coverage while the uncovered half went silent.
+    Actively disappearing, because IGNCA's own Schools of Vedic Learning list — the Indian
+    state's best inventory of who still teaches what — names Jaiminīya at ONE institution
+    nationally against twenty-plus for Kauthuma, and the Kerala entry is a single
+    pāṭhaśālā at Kodunthirapully, Palakkad.
+    Still capturable, unlike Kaṭha, Bāṣkala and Kapiṣṭhala, where there is nobody left.
+
+    And the asymmetry that produced this packet holds hardest here. The Jaiminīya TEXT is
+    SAFE — Raghu Vira, Lokesh Chandra, Caland, Oertel, TITUS, five free scans of the
+    Brāhmaṇa alone. Editing it again adds nothing that is not already in a library. The
+    Nambudiri gāna is safe nowhere. A recordist sent to Palakkad captures something no
+    amount of later funding can reconstruct; a philologist sent to the Jaiminīya Brāhmaṇa
+    captures something that will still be there in fifty years.
+
+    ONE CAVEAT, STATED BECAUSE THIS PACKET WAS WRONG TWICE ALREADY IN EXACTLY THIS WAY:
+    "no Nambudiri recording exists" is a claim about what is ONLINE. Staal's 1975 Panjal
+    Atirātra recordings, Howard's fieldwork tapes, and the British Library, Smithsonian
+    Folkways and Finnish Oriental Society collections were never queried — the search
+    budget ran out first. Those are precisely the archives likely to hold 1960s–70s
+    Nambudiri material. CHECK THEM BEFORE FUNDING A TRIP. If a Staal or Howard tape exists
+    and is obtainable, acquisition is cheaper than fieldwork and fifty years older —
+    and the trip should then be scoped as re-recording a documented tradition against a
+    known baseline rather than as first capture.
+
+records:
+
+# ─────────────────────────────────────────────────────────────────────────────
+# SĀMAVEDA · JAIMINĪYA
+# ─────────────────────────────────────────────────────────────────────────────
+
+- node_path: vedas/samaveda/jaiminiya/samhita
+  veda: samaveda
+  organization: null
+  shakha: jaiminiya
+  layer: samhita
+  edition: >
+    PRIMARY, AND THE COORDINATOR'S LEAD RESOLVED — "Jaiminīyasāmavedasaṃhitā: Text of
+    Kerala Tradition (Ārcika, Sāma and Candrasāma Portions)", ed. K. A. Ravindran,
+    2 volumes. Published by the NATIONAL MISSION FOR MANUSCRIPTS, New Delhi (Prakāśikā
+    series), co-published by Nag Publishers, Delhi. First published India 2013.
+    ISBN 978-93-80829-02-9 (series), 978-93-80829-20-3 (volume). ₹600 for the 2-vol set.
+    FREELY AVAILABLE as a scan on archive.org — all bibliographic details below read
+    directly off the title page and copyright page of that scan, not from a catalogue.
+    ALSO — W. Caland, "Die Jaiminīya-Saṃhitā mit einer Einleitung über die
+    Sāmavedaliteratur", Breslau 1907 (Indische Forschungen 2); Raghu Vira,
+    "Jaiminīya-saṃhitā Sāmavedīya", 1938. Both attested; neither opened here.
+  url: https://archive.org/details/jaiminiya-samaveda-samhita
+  script: devanagari-unicode
+  svara_source?: >
+    NO — AND THIS IS A RECENSION FACT, NOT A PRINTING SHORTCUT. THE MOST CONSEQUENTIAL
+    NOTATIONAL FINDING IN THE PACKET.
+    Ārcika portion: verified visually by me (page 40 of the scan, sections 32–33 rendered
+    to image and read). Verse text printed plain — no accent marks, no superscript
+    numerals, mantra numbers in the right margin only.
+    Sāma and Candrasāma portions — i.e. THE GĀNA, the song-books, the Jaiminīya analogues
+    of Grāmageya- and Āraṇyageyagāna: also printed with NO NUMERIC NOTATION AT ALL. Page
+    528 is headed षोडशं गानम् with the gāna text written out in full, stobhas (हाबु,
+    हौहोवा, ओयिळा…) and `×` parvan separators — and no svara-aṅka digits over syllables,
+    no accent marks. Independently confirmed for the Paravastu Telugu-script books.
+    WHY THIS MATTERS MORE THAN IT LOOKS: Kauthuma writes digits 1/2/3 above syllables and
+    the written Kerala Jaiminīya tradition never did. The melody is carried entirely by
+    WRITTEN-OUT VOWEL PROLONGATIONS PLUS STOBHA SYLLABLES, with the rest in oral
+    transmission. So protocol §3's guidance for Sāmaveda — "digits high ⇒ numeric Sāma
+    notation; zero accents does not mean unaccented, count digits" — gives the WRONG
+    answer here: a Jaiminīya gāna file legitimately has zero accents AND zero notation
+    digits. You cannot parse Jaiminīya melody from digits, because there are none.
+    Contrast Rāṇāyanīya, which has two different notation systems, and Kauthuma, which has
+    digits. Three Sāmaveda śākhās, three incompatible answers to "how is the melody
+    written". §3 currently models one.
+    Protocol §3 counts are useless on this particular file for a second reason — it is a
+    clean scan with NO text layer at all (chars=567 over the sampled range, all Latin page
+    furniture). Visual inspection is the only evidence available.
+  svara_verified?: pending — BV
+  text_layer: scanned-no-text
+  license: public-domain
+  status: found-complete
+  where_i_looked: >
+    archive.org advancedsearch API on title:(jaiminiya samhita) — which is how the NMM
+    edition surfaced, under identifier `jaiminiya-samaveda-samhita`, creator K. A.
+    Ravindran, described as "Samaveda samhita of the Jaiminiya sakha in 2 vols published
+    by National Mission for Manuscripts in their Prakashika series";
+    Open Library (Caland 1907 and Raghu Vira 1938 as catalogue records, no scans);
+    GRETIL (no Jaiminīya Saṃhitā); TITUS Vedic index (JB and JUB present, Saṃhitā ABSENT);
+    sanskritweb (Kauthuma gānas only); vedicheritage.gov.in Jaiminīya Saṃhitā page
+    (navigation only, no text or media);
+    Google Books API, Exotic India, Bing and DuckDuckGo — all returned nothing useful for
+    this title, which is why the archive.org identifier search was the one that worked.
+  notes: >
+    THE COORDINATOR'S UNRESOLVED LEAD IS CLOSED, and it closed better than asked: the
+    2-volume Kerala-tradition critical edition not only exists with full bibliographic
+    detail, it is FREE. I had logged it as un-run-down after Google Books, Open Library,
+    DuckDuckGo, Bing, academia.edu and Exotic India all failed; the archive.org
+    advancedsearch API found it in one query. Same lesson as `the_search_lesson`.
+    THE FINDING THAT MATTERS MOST, and I did not expect it: THE EDITION PRINTS THE TEXT IN
+    TWO SCRIPTS. Page 40 sets section 32 in DEVANĀGARĪ and section 33 in MALAYALAM, running
+    consecutively. That is not decoration — the Nambudiri transmission of the Jaiminīya
+    Sāmaveda is carried in Malayalam script, and this edition preserves that transmission
+    rather than silently normalising it into Devanāgarī. For a project organised around
+    śākhā fidelity this is exactly the kind of thing that must not be flattened on ingest:
+    `script: devanagari-unicode` above is INCOMPLETE and is flagged here rather than
+    quietly recorded. The schema's `script` field has no way to say "Devanāgarī AND
+    Malayalam, both load-bearing". The merge pass should decide whether `script` becomes
+    a list.
+    THIS IS ALSO THE TEXT THAT PAIRS WITH THE RECORDING TARGET. It is the Kerala tradition,
+    it covers the Candrasāma portion, and it is the printed counterpart to precisely the
+    Nambudiri gāna that this packet identifies as unrecorded.
+    LICENCE, per binding rule 9: the copyright page carries "© National Mission for
+    Manuscripts, New Delhi" and "All rights reserved, No part of this publication may be
+    reproduced or transmitted in any form or by any means…" — recorded verbatim as the
+    rule requires. That notice does not attach to the mūla text, which is ancient and
+    public domain; typesetting it creates no new copyright. What IS Ravindran's and NMM's
+    is the introduction, editorial matter and any apparatus. Two objects, one file.
+    FLAG, NOT ADJUDICATED: if the volumes turn out to involve manuscript collation and
+    conjectural emendation — plausible for an NMM Prakāśikā edition drawn from Kerala
+    manuscripts — this moves toward rule 9's genuine critical-edition edge case. I did not
+    read the introduction and cannot say. Someone should, before this is treated as
+    straightforwardly reusable.
+    CREDIT, owed regardless of licence: K. A. Ravindran, editor; the National Mission for
+    Manuscripts; Nag Publishers. And W. Caland and Raghu Vira for the earlier editions.
+  date_logged: 2026-08-01
+
+- node_path: vedas/samaveda/jaiminiya/brahmana
+  veda: samaveda
+  organization: null
+  shakha: jaiminiya
+  layer: brahmana
+  edition: >
+    PRIMARY — Jaiminīya Brāhmaṇa, ed. Raghu Vira & Lokesh Chandra, Sarasvati Vihara Series,
+    1954 (538 pp). ALSO — Lokesh Chandra, JB II.1–80 Gavāmayana, 1950; W. Caland,
+    "Das Jaiminīya-Brāhmaṇa in Auswahl", Johannes Müller, 1919 (selection with German).
+    SEPARATE TEXT, SAME LAYER — Jaiminīya Ārṣeya Brāhmaṇa: (i) ed. A.C. Burnell,
+    Mangalore 1878 ("The Jaiminīya text of the Ārsheyabrāhmaṇa of the Sāma Veda"), Roman;
+    (ii) ed. B. R. Sharma, Tirupati 1967, Devanāgarī, free at
+    archive.org/details/jaiminiya-arsheya-brahmanam.
+  url: https://archive.org/details/in.ernet.dli.2015.326228
+  script: devanagari-unicode
+  svara_source?: >
+    unknown — not opened. Same numeric-notation caveat as the saṃhitā node. Do not log
+    this as unaccented on an accent-mark count alone.
+  svara_verified?: pending — BV
+  text_layer: scanned-no-text
+  license: public-domain
+  status: found-complete
+  where_i_looked: >
+    archive.org (five distinct JB items located: in.ernet.dli.2015.326228 Raghu Vira 1954;
+    in.ernet.dli.2015.226836 Raghu Vira & Lokesh Chandra; in.ernet.dli.2015.485980 Lokesh
+    Chandra; dli.ernet.496215; jaiminiyabrahman014906mbp; plus in.ernet.dli.2015.80952
+    for Caland 1919 and /details/jaiminiyabrahmana for an English rendering of Book 1);
+    vedicheritage.gov.in/brahmanas/jaiminiya-brhamana/ (links out to DLI, no media);
+    TITUS Vedic index; Open Library.
+  notes: >
+    The project's own note calls the Jaiminīya Brāhmaṇa "a major un-mined text" and the
+    sourcing situation supports that: five free scans, no shortage of editions, and
+    apparently nobody working it. The scarcity is of ATTENTION, not of copies.
+    TITUS also holds a JB e-text and a JB index (jb.htm, jbx.htm, jb.txt), data entry by
+    M. Kobayashi (Kyōtō) and G. Ehlers (Berlin) — all three marked "TITUS members only".
+    Catalogued, not fetched; see the TITUS licence note on the Maitrāyaṇī saṃhitā record.
+    Bodewitz's translations of JB 1 are modern scholarship — cite, never ingest.
+    Credit as printed: Raghu Vira and Lokesh Chandra; A.C. Burnell for the Ārṣeya.
+  date_logged: 2026-08-01
+
+- node_path: vedas/samaveda/jaiminiya/aranyaka
+  veda: samaveda
+  organization: null
+  shakha: jaiminiya
+  layer: aranyaka
+  edition: >
+    Jaiminīya Upaniṣad Brāhmaṇa (= Talavakāra Brāhmaṇa / Talavakāra Āraṇyaka).
+    EDITIO PRINCEPS — Hanns Oertel, text with English translation, JAOS 16, 1896.
+    ALSO — ed. Rāma Deva, D.A.V. College, LAHORE, 1921, Devanāgarī
+    (archive.org/details/jaiminiyaupanisa00rmaduoft; also in.ernet.dli.2015.424526,
+    in.gov.ignca.8172 and in.ernet.dli.2015.273879). NOTE: this is the D.A.V. College
+    Lahore imprint, NOT Vishveshvaranand — a common miscitation.
+    E-TEXT — TITUS, data entry by Masato Fujii and Mieko Kajihara (Kyōtō).
+  url: https://titus.uni-frankfurt.de/texte/etcs/ind/aind/ved/sv/jub/jub.htm
+  script: transliteration
+  svara_source?: >
+    unknown — not fetched. TITUS transliteration files for other Vedic texts carry accent
+    diacritics, but I did not measure this one and will not assume it. Oertel 1896 is
+    a Roman-transliteration edition; the Rāmdeva edition is Devanāgarī.
+  svara_verified?: pending — BV
+  text_layer: unicode
+  license: copyright-link-only
+  status: found-complete
+  where_i_looked: >
+    TITUS Vedic index (listed OPENLY — "HTML version (UTF-8) with index available", with no
+    members-only restriction, unlike the Jaiminīya Brāhmaṇa alongside it);
+    archive.org (Oertel's JAOS text at /details/jstor-592488, his Extracts at
+    /details/jstor-592357, Rāmdeva at /details/in.ernet.dli.2015.424526);
+    vedicheritage.gov.in/brahmanas/jaiminiyopanishad-brahmana/ and /aranyakas/talavakararanyaka/
+    (both are real pages on that portal, unlike the Kaṭha and Maitrāyaṇī entries which are
+    dead `#` links); GRETIL (absent).
+  notes: >
+    LAYER PLACEMENT, deliberate — and now positively confirmed rather than merely argued.
+    THERE IS NO SEPARATE JAIMINĪYA ĀRAṆYAKA, because in this śākhā the Āraṇyaka IS the
+    Jaiminīya Upaniṣad Brāhmaṇa (Talavakāra Āraṇyaka). Corroborating evidence: no separate
+    edition of a "Jaiminīya Āraṇyaka" exists in any script, and the Vedic Heritage
+    Portal's own `/aranyakas/jaiminiya-aranyaka/` returns 404 while its
+    `/aranyakas/talavakararanyaka/` is a live page.
+    So the JUB is filed here as ĀRAṆYAKA despite its name. IGNCA lists it under both
+    Āraṇyakas and Brāhmaṇas, and the Kena sits inside it — exactly the embedded-text
+    pattern the README describes (Taittirīya Up. inside TA 7–9). Filing it as brāhmaṇa
+    would break the cross-reference to the Kena and would leave the śākhā with no āraṇyaka
+    at all, which would be false. If the merge pass prefers `brahmana`, the Kena cross-ref
+    must move with it.
+    On the name: TITUS titles it "Jaiminīya-Upaniṣad-Brāhmaṇa (Talavakāra-Brāhmaṇa)".
+    Attribution of the Jaiminīya/Talavakāra equivalence is standard and not in doubt.
+    Credit as printed: Hanns Oertel (1896); Fujii and Kajihara for the e-text.
+  date_logged: 2026-08-01
+
+- node_path: vedas/samaveda/jaiminiya/upanishad
+  veda: samaveda
+  organization: null
+  shakha: jaiminiya
+  layer: upanishad
+  edition: >
+    Kena (Talavakāra) Upaniṣad. EMBEDDED — lives inside the Jaiminīya Upaniṣad Brāhmaṇa
+    and is not a separate transmission. Accented standalone text at sanskritdocuments.org.
+  url: https://sanskritdocuments.org/doc_upanishhat/kena.html
+  script: devanagari-unicode
+  svara_source?: >
+    yes — sanskritdocuments.org classifies Kena in its "upanishhat with svara" set,
+    i.e. an accented text is offered. NOT independently measured here: the file was not
+    downloaded and byte-counted, so this is the site's classification, not my reading.
+    Downgrade to `unknown` if the merge pass wants a measured answer.
+  svara_verified?: pending — BV
+  text_layer: unicode
+  license: public-domain
+  status: found-complete
+  where_i_looked: >
+    sanskritdocuments.org upaniṣad index and its svara sub-index; TITUS (JUB, which contains
+    it); vedicheritage.gov.in/upanishads/ (Kenopaniṣad listed).
+  notes: >
+    DO NOT DUPLICATE. Per the README's embedded-texts rule this text lives once, in its home
+    layer — the Jaiminīya Upaniṣad Brāhmaṇa record above — and is cross-referenced from here.
+    This record exists to carry the cross-reference and the standalone accented URL, not to
+    create a second copy of the text.
+    Worth stating plainly because it is easy to miss: the Kena is one of the principal
+    Upaniṣads, and its home is an ENDANGERED śākhā. The Upaniṣad is in no danger; the
+    tradition that transmits it is.
+  date_logged: 2026-08-01
+
+- node_path: vedas/samaveda/jaiminiya/_audio
+  veda: samaveda
+  organization: null
+  shakha: jaiminiya
+  layer: audio
+  edition: >
+    JAIMINĪYA IS THE BEST-RECORDED ŚĀKHĀ IN THIS PACKET, INCLUDING THE NAMBUDIRI
+    TRADITION. Four independent bodies of recording, in descending order of size:
+
+    (A) IGNCA VEDIC HERITAGE PORTAL — **191 MP4 files**, a Richā (recitation) tab and a
+        Gāna (chant) tab, at /samhitas/samaveda-samhitas/jaiminiya-samhita-2/. Media is
+        JS-injected and invisible to scrapers; I verified files by direct HTTP.
+        Richā: Āgneya, Aindra (36, boundary confirmed — 36 → 200, 37 → 404), Pāvamāna,
+        Dvādaśāha, Uttara. Grāmageyagāna and Āraṇyageyagāna (Vrata, Arka, Dvandva).
+        Files are large: a single Grāmageya track measured 118,565,670 bytes.
+        DOCUMENTED GAP: four Āraṇyageyagāna sections — Mahāsāmamani, Ādityasāma,
+        Mahānāmnyam, Jyeṣṭhasāma — have live endpoints and ZERO files.
+        Licence RESTRICTIVE — see notes.
+    (B) BRITISH LIBRARY, ARNOLD BAKE COLLECTION C52 — **wax cylinders of NAMBUDIRI
+        JAIMINĪYA, recorded at Kottayam, 6–7 November 1933.** Verified by me in the BL's
+        own catalogue; Bake's slip notes read verbatim: "[Samaveda, Nambudiri (Jaiminiya)]
+        [Kottayam 6/11/'33 Aranyakagana]", "unaccompanied male vocal solo", catalogued as
+        Bake India II Nos. 333, 333bis, 334, 334bis, 335, 335bis. Āraṇyakagāna
+        (C52/1992–1997) and Grāmageyagāna (C52/1987–1991). Also film C52/FO/32,
+        "Samaveda hand gestures" (1925) — recitation with mudrās.
+        CONDITION WARNINGS ARE REAL: several catalogued as "almost inaudible… heavy mould
+        on cylinder". Nothing streams; in-person listening by appointment.
+    (C) SMITHSONIAN FOLKWAYS / ASCH — "The Four Vedas", Asch AHM 4126, 1969, recorded by
+        John Levy and J.F. Staal. Staal's liner notes identify Record I/Side II bands 4–5
+        (Tanjore, 1962) and Record II/Side II bands 1–3 (KERALA, 1957 and 1962) as
+        JAIMINĪYA. In-copyright; on archive.org via Unlocked Recordings, no CC licence.
+    (D) ARCHIVE.ORG COMMUNITY, TAMIL/ANDHRA — ~2 GB, verified by me via the metadata API:
+    (a) `sAmavedaH-jaiminIya-shAkhA` — 20 files (10 tracks × MP3+OGG), 1,715.4 MB,
+        khaṇḍa-foldered. Described as a "vedamu copy of sāmavedaḥ jaiminīya-śākhā gāna
+        (choḷīya style — probably smārta type)". CHOḶĪYA = Cōḻa-country, i.e. TAMIL.
+    (b) `jaiminIya-sAma-gAna-paravastu-tradition` and ~11 sibling items — the PARAVASTU
+        tradition, self-described as "TN-AP", from Āḷvārtirunagari, with a core
+        compilation of recitations made around 1974 (18 files, 276.9 MB) and further
+        santhā (teaching-session) recordings dated 2014, 2015 and 2018. Ritual-occasion
+        sāmāni: prokṣaṇa, udaka-śānti, vivāha/upanayana.
+    BEST-LICENSED SINGLE ITEM — archive.org `dni.ncaa.IGNCA-IG_11_DV_60_1303-MDV`,
+    "Jaiminiya Sama Veda Pathsala", IGNCA Media Centre, **CC BY-NC 4.0**. The only
+    Jaiminīya media located anywhere with a clear open licence.
+  url: https://vedicheritage.gov.in/samhitas/samaveda-samhitas/jaiminiya-samhita-2/
+  script: null
+  svara_source?: n/a — audio
+  svara_verified?: pending — BV
+  text_layer: null
+  license: copyright-link-only
+  status: found-complete
+  where_i_looked: >
+    vedicheritage.gov.in — the `-2` page, with media paths probed by direct HTTP rather
+    than read off the rendered HTML. See `summary.ignca_portal_correction`. The non-`-2`
+    page `/jaiminiya-samhita/` is a navigation stub with no media, which is what misled
+    my first pass.
+    BRITISH LIBRARY — `sounds.bl.uk` is DNS-dead and the main catalogue exposes no audio,
+    but the post-cyberattack interim catalogue IS live at sami.bl.uk. Query verified by
+    me: `sami.bl.uk/uhtbin/cgisirsi/x/0/0/5?searchdata1=jaiminiya` returns 12 titles, of
+    which the Bake cylinders are items 2–7+. Related counts: `samaveda` 38, `nambudiri` 29.
+    archive.org COMMUNITY tier via the advancedsearch API with transliterated spellings —
+    `jaiminIya AND mediatype:audio` → 14 items, 13 of them Jaiminīya recitation.
+    DOCUMENTED ABSENCES, searched and empty: Online Archive of California ("No entries
+    found" for Agnicayana and for Samaveda; no Staal collection at Bancroft/Hearst);
+    Library of Congress /audio/ (empty for samaveda and jaiminiya); BL SAMI (no match for
+    "agnicayana"); SOAS Digital Collections (full A–Z, no Veda collection); AIIS ARCE
+    (no online catalogue at all).
+    STAAL'S ~80 HOURS OF PANJAL TAPE ARE TRACEABLE TO NO PUBLIC DEPOSIT ANYWHERE — only
+    the 2 CDs bundled with "Agni" (Motilal, still in print). His FILM is at the
+    Smithsonian Human Studies Film Archives, HSFA.1976.02.
+    STILL UNRESOLVED, and now the single highest-value remaining lead: whether Wayne
+    Howard's field tapes were deposited at Indiana University's Archives of Traditional
+    Music. Their catalogue 403s to automated clients; this needs a human email to
+    atmusic@iu.edu. Several other hosts BOT-BLOCK rather than lack content —
+    academia.edu, eap.bl.uk, Indiana ATM, Cambridge CUDL, si.edu — and are recorded as
+    UNVERIFIED, not absent.
+  notes: >
+    I LOGGED THIS NODE `not-found` AND I WAS WRONG. Recording the error rather than
+    quietly overwriting it, because the correction is worth more than the record.
+    The first pass searched vedicheritage, sanskritweb, GRETIL, TITUS and a title-keyed
+    archive.org query and concluded there was no Jaiminīya audio. There are thirteen items.
+    They were invisible because they are community uploads indexed under transliterated
+    Sanskrit — `jaiminIya`, not "Jaiminiya" — which no English-language query reaches.
+    See `summary.the_search_lesson`; the same miss happened independently on Rāṇāyanīya.
+    THEN I WAS WRONG A SECOND TIME, IN THE OPPOSITE DIRECTION. Having found only
+    Tamil/Andhra material, I wrote that the Kerala Nambudiri tradition was unrecorded and
+    built the packet's headline recommendation on it. That is also false:
+      · the IGNCA portal holds 191 Jaiminīya MP4s, hidden behind JS;
+      · the British Library holds NAMBUDIRI JAIMINĪYA WAX CYLINDERS FROM 1933;
+      · Staal and Levy recorded Jaiminīya in KERALA in 1957 and 1962, commercially issued.
+    Both errors came from the same habit — concluding absence from a rendered page or a
+    keyword query instead of probing the actual resource. Recorded in full rather than
+    tidied away, because the packet's value depends on its negatives being trustworthy and
+    two of mine were not.
+    WHAT THE NAMBUDIRI MATERIAL ACTUALLY IS, stated carefully so it is not over-read:
+    the 1933 Bake holdings are roughly a dozen wax-cylinder items, several catalogued as
+    "almost inaudible… heavy mould on cylinder", none online, listenable only in person by
+    appointment. That is a fragile fragment, not a corpus. It establishes that the
+    Nambudiri gāna WAS captured; it does not mean the tradition is documented.
+    ALSO WORTH NOTING about the Tamil material: the Paravastu items are largely
+    RITUAL-OCCASION sāmāni (prokṣaṇa, udaka-śānti, vivāha, upanayana) plus teaching
+    sessions — valuable, but not a systematic traversal of the gāna corpus. The 1,715 MB
+    khaṇḍa-foldered item is closer to that. The 1974 date on the core compilation means
+    the most complete Tamil material is itself over fifty years old.
+    LICENCE — THREE DIFFERENT REGIMES, none of them simply open:
+      · IGNCA portal: "The contents of this website can not be reproduced partially or
+        fully, without written permission from Indira Gandhi National Center for the Arts
+        or the contributor" (copyright-policy page, quoted verbatim). Stream and cite.
+      · Folkways/Asch 1969: in copyright, no CC licence, on archive.org only through the
+        Unlocked Recordings programme. Cite, do not relicense.
+      · archive.org community items: no `licenseurl` or `rights` field on any of the
+        thirteen. Unresolved.
+      · THE ONE CLEAN EXCEPTION: `dni.ncaa.IGNCA-IG_11_DV_60_1303-MDV`, IGNCA Media
+        Centre, CC BY-NC 4.0. If anything Jaiminīya is to be embedded, it is this.
+    PERSON-LEVEL CONSTRAINT: several archive.org identifiers embed personal names. They
+    are reproduced here only as the URLs required to locate the resource, and nothing
+    further about any individual is recorded, here or anywhere in this packet. "Paravastu"
+    is treated as a lineage/tradition designation, which is what the uploader uses it as.
+    THE SCHOLARSHIP THAT LOCATES THE TRADITION — full citation, since the packet brief
+    asked for it: Finnian M. M. Gerety, "Survivals and Revivals: The Transmission of
+    Jaiminīya Sāmaveda in Modern South India", in Jan Houben, Julieta Rotaru and Michael
+    Witzel (eds.), "The Vedic Śākhās: Past, Present and Future", Harvard Oriental Series
+    Opera Minora 9, 2016. Author page with photographs and video:
+    finnian-gerety.squarespace.com/survivalsandrevivals/ (academia.edu 403s to automated
+    clients). ITS CENTRAL FINDING, and it is sobering: Nambudiri Sāmaveda has declined to
+    A SINGLE ACTIVE LINE OF NORMATIVE TRANSMISSION, and most modern lineages are a blend
+    of survival and REVIVAL rather than unbroken survival. That distinction is precisely
+    the kind this project exists to keep visible — a revived lineage and a continuous one
+    are not the same evidence, and flattening them would be a content-discipline failure.
+    ALSO: Wayne Howard, "Naṃpūtiri Jaiminīya: Chant analyses", Studia Orientalia 63 (1988),
+    pp. 18–169 — FREELY READABLE at journal.fi/store/article/view/51600, and the single
+    most detailed published analysis of Nambudiri Jaiminīya chant.
+    Asko Parpola, "The Literature and Study of the Jaiminīya Sāmaveda in Retrospect and
+    Prospect", Studia Orientalia — journal.fi/store/article/view/49825 — still the
+    authoritative survey of what is edited versus manuscript-only.
+    STRENGTH OF TRADITION, aggregate figures only: from an original ~21 Nambudiri families,
+    roughly FIVE families in Panjal (Thrissur district) retain the practice, with active
+    teaching down to a handful of students — low single- to low double-digit practitioners
+    in Kerala. Sree Sankaracharya University of Sanskrit, Kalady RECORDED Kerala Jaiminīya
+    chanting between 1995 and 2015; the recordings are available on request and have never
+    been published. That is a concrete, institutional, unpublished corpus and it is
+    probably the cheapest large win available to this project.
+    Institutional location (institution level only, no individuals):
+      · Panjal village, Thrissur district, Kerala — the centre of Nambudiri practice.
+      · Sree Sankaracharya University of Sanskrit, Kalady — holds unpublished recordings.
+      · Jaimini Sāma Veda Pāṭhaśālā, Kodunthirapully village, Palakkad, Kerala
+        — IGNCA "List of Pathasalas in Kerala".
+      · Jaimini Sāma Veda Pāṭhaśālā — IGNCA "List of Pathasalas in Tamilnadu", row 36.
+      · Jaimini Sāma Veda Pāṭhaśālā, Thogoor, Thanjavur — appears in the IGNCA Karnataka
+        list but is marked TN; a list-keeping artefact, noted so it is not double-counted.
+      · Vedavedant Gurukul Mahāvidyālaya, Madipadu, Aachampet Mandal, Guntur, Andhra
+        Pradesh — IGNCA "Schools of Vedic Learning: Samaveda", recension column reads
+        "Kauthum and Gemini". "Gemini" is an OCR corruption of "Jaimini". Flagged as
+        PROBABLE, not asserted — the PDF is machine-read and I did not confirm elsewhere.
+    THE NUMBER THAT MATTERS: on IGNCA's own national Sāmaveda list of 30+ schools,
+    Kauthuma appears at twenty-plus institutions and Jaiminīya at ONE.
+    Rows in these PDFs that name individuals rather than institutions were skipped
+    entirely, per the packet's person-level constraint. Several such rows exist.
+  date_logged: 2026-08-01
+
+# ─────────────────────────────────────────────────────────────────────────────
+# SĀMAVEDA · RĀṆĀYANĪYA
+# ─────────────────────────────────────────────────────────────────────────────
+
+- node_path: vedas/samaveda/ranayaniya/samhita
+  veda: samaveda
+  organization: null
+  shakha: ranayaniya
+  layer: samhita
+  edition: >
+    NO EDITION OF THE RĀṆĀYANĪYA ĀRCIKA (the saṃhitā proper) LOCATED IN DIGITAL FORM.
+    WHAT DOES EXIST, and it is substantial — the GĀNA books, all free and CC0 on archive.org:
+    (a) "Rāṇāyanīya-śākhīya Sāmagānam", ed. Dr. Vijaya Kumar Sharma and Pt. Shambhu Lal
+        Sharma, Śrī Śāradā Pīṭha Vidyā Sabhā, Dvārakā. (Same book as the Exotic India
+        listing credited to Swami Sadanand Saraswati, Sri Dwarkadheesh Sanskrit Academy /
+        Śāradā Pīṭha, Dwarka, 2012, 534 pp — the scan credits the working editors, the
+        trade listing credits the maṭha head. Same volume.)
+    (b) "Sāmavedīya-Rāṇāyanīya Varga-paribhāṣā-dhārita Veyagānam", Pt. 1 (2010) and Pt. 2
+        (2013), Shivarama Bhatt et al., Rāṇāyanīya Saṃśodhana Pratiṣṭhāna, Tirupati.
+        In print as a 2-vol set, ISBN 9789350873106.
+    (c) "Phullapotam" (Puṣpasūtra commentary), ed. Girijaprasad Shadangi, Tirupati, 2013.
+    (d) "Kāśī Rāṇāyanīya Agniṣṭoma Sāma Prayoga" — ritual prayoga.
+    HISTORICAL: Stevenson (1842) and Benfey (1848) both edited the RĀṆĀYANĪYA recension —
+    per Macdonell's history — which makes the two earliest printed Sāmavedas Rāṇāyanīya.
+  url: https://archive.org/details/ROdl_ranayaniya-shakhiya-samaganam-by-dr.-vijaya-kumar-sharma-and-pt.-shambhu-lal-sha
+  script: devanagari-unicode
+  svara_source?: >
+    YES — NUMERIC, and with a SECOND ANNOTATION TIER that a digit count alone will miss.
+    VERIFIED VISUALLY by me, page n120 of the Sāmagānam rendered to image and read
+    (Aindra Parva, "Svāra Kautsam" and "Saumedham"). What is actually on the page:
+      · SUPERSCRIPT DEVANĀGARĪ DIGITS (१–६) above syllables — classic Sāma numeric svara,
+        dense and systematic;
+      · SUBSCRIPT DEVANĀGARĪ AKṢARAS below syllables (पा चं कि से ते का जि चु ति कः ची शे) —
+        a second, independent notational tier;
+      · a dash "—" used as a further marker in places;
+      · stobha-extended sung text with ऽ and inline numerals (आ२३४, ५६) — i.e. the gāna
+        form, not the ārcika form;
+      · right-margin cross-references to the ārcika (दी.६|प.७|मा.१०)५(खौ|२८६).
+    ENCODING CONSEQUENCE, and it is a real one for this project: none of this is
+    expressible with U+0951/U+0952. A superscript digit plus a subscript akṣara over and
+    under a Devanāgarī base is not a Vedic-accent-mark problem at all — it needs a
+    deliberate encoding decision before any Sāma gāna is ingested. Protocol §3's
+    "digits high ⇒ numeric Sāma notation" row is correct but incomplete: it catches the
+    digits and is silent on the subscript tier, which carries equal information.
+    NOTATION IS NOT EVEN UNIFORM WITHIN THE ŚĀKHĀ: the Dvārakā Sāmagānam uses numeric
+    notation; the Tirupati Veyagānam uses varga-paribhāṣā LETTER notation (superscript
+    consonants उ ग ण ख र ट instead of digits) — as its own title declares. Two
+    incompatible encodings for one śākhā. Do not assume one parser will read both.
+  svara_verified?: pending — BV
+  text_layer: scanned-no-text
+  license: public-domain
+  status: found-partial
+  where_i_looked: >
+    archive.org (the five items above; the Sāmagānam item carries an explicit CC0
+    licenseurl — creativecommons.org/publicdomain/zero/1.0/ — confirmed via the metadata
+    API, not inferred);
+    vedicheritage.gov.in Rāṇāyanīya Saṃhitā page and its Pūrvārcika and deepest
+    Āgneya-kāṇḍa children — checked at all three levels: headings and transliterated
+    citations only, NO Devanāgarī mantra text, no PDF, no media;
+    GRETIL (one Sāmaveda file, header-marked Kauthuma — zero Rāṇāyanīya);
+    TITUS Vedic index (swept the whole Sāmaveda section — Rāṇāyanīya entirely absent);
+    sanskritweb Sāmaveda page (explicitly "Ganas of the Kauthumas");
+    sanskritdocuments.org (entire accented corpus is Kauthuma);
+    Muktabodha, including its Gokarna collection (Kṛṣṇa-Yajurveda only);
+    Vaidika Saṃśodhana Maṇḍala Pune publication list and its 46-title distributor list
+    (NO Sāmaveda of any recension — worth recording, since VSM was the most likely
+    candidate and it comes back empty); Motilal; Chaukhamba; Exotic India; Open Library.
+  notes: >
+    THIS RECORD REVERSES MY OWN FIRST FINDING and the reversal is the useful part.
+    On a first pass — vedicheritage, GRETIL, TITUS, sanskritweb, sanskritdocuments — this
+    node looked like the darkest in the packet. It is not. It has five free editions.
+    The lesson generalises to the whole packet: the mainstream Sanskrit-digital ecosystem
+    (GRETIL / TITUS / sanskritdocuments / sanskritweb) is Kauthuma-and-Taittirīya shaped,
+    and its silence about a minority śākhā is WEAK EVIDENCE OF ABSENCE. The material was
+    sitting in community uploads on archive.org the whole time. Any `not-found` in this
+    packet resting only on those four sources should be treated as provisional.
+    WHAT IS STILL GENUINELY MISSING: the RāṇĀYANĪYA ĀRCIKA — the saṃhitā text itself — in
+    any digital form. Everything located is gāna, sūtra or prayoga. `found-partial`, and
+    the missing part is the layer this node is named for.
+    IGNCA CORRECTION — worth recording because it is an easy trap: the Sātavalekara
+    flipbook offered on the portal's Rāṇāyanīya page is NOT a Rāṇāyanīya edition. The
+    Rāṇāyanīya page and the KAUTHUMA page link the identical URL with the identical anchor;
+    the book is "Sāmaveda kā Subodha Bhāṣya", Svādhyāya Maṇḍala, Pardi, 1985, Hindi, 10
+    vols — a generic Kauthuma-based Hindi translation reused under both headings. Anyone
+    citing it as the Rāṇāyanīya text would be citing Kauthuma.
+    RELATION TO KAUTHUMA — the brief's premise needs correcting, in our favour. The claim
+    "same mantras, different recitation" is widely repeated and UNCITED. Caland (1931) is
+    the citable authority and he is agnostic, not gāna-only: "we have, as yet, no certainty
+    … whether the Saṃhitā … of the Kauthumas were also in use with the Rāṇāyanīyas
+    precisely in the same form", while noting that what IS certain is a different
+    Śrautasūtra (Drāhyāyaṇa) and Gṛhyasūtra (Khādira). Howard, Witzel, Staal and
+    Kashikar–Parpola all treat "Kauthuma-Rāṇāyanīya" as ONE textual unit opposed to
+    Jaiminīya. So the saṃhitā-identity question is OPEN, not settled — and the gāna
+    divergence is demonstrable in print and in notation system. Both facts point the same
+    way: the recording and the gāna encoding are the irreplaceable objects here.
+    CREDIT: Vijaya Kumar Sharma and Shambhu Lal Sharma; Shivarama Bhatt; Girijaprasad
+    Shadangi; Śrī Śāradā Pīṭha Vidyā Sabhā, Dvārakā and Rāṇāyanīya Saṃśodhana
+    Pratiṣṭhāna, Tirupati.
+  date_logged: 2026-08-01
+
+- node_path: vedas/samaveda/ranayaniya/_audio
+  veda: samaveda
+  organization: null
+  shakha: ranayaniya
+  layer: audio
+  edition: >
+    THREE archive.org audio items, all community uploads, all verified by me through the
+    archive.org metadata API (file counts and byte totals below are measured, not quoted):
+    (a) `sAmaveda-rANAyanIya-ignca` — 84 files (42 tracks × MP3+OGG), 959.7 MB.
+        Track naming `samrp<kāṇḍa>_<adhyāya>_<NNN>` plus a `Samveda_Intro`.
+        Item description states: "Courtsey IGNCA, Government of India".
+    (b) `sAmavedaH-rANAyanIya-shAkhA` — 32 files (16 tracks × 2 formats), 1,757.2 MB,
+        foldered SAṂHITĀ / ĀRAṆYAKA / ŪHA with adhyāya+kāṇḍa granularity, tracks running
+        80–140 minutes. Described as a "vedamu copy". The fullest coverage of the three.
+    (c) `rANAyanIya-gAnodAharaNAni` — `mahAdivAkIrtyAni.mp3`, 3.9 MB, ~8 min gāna specimen.
+        Description: "राणायणीयगानानि कानिचित्। यथा- दिवाकीर्त्यानि।"
+    TOTAL: ~2.7 GB of Rāṇāyanīya recitation, freely downloadable today.
+  url: https://archive.org/details/sAmavedaH-rANAyanIya-shAkhA
+  script: null
+  svara_source?: n/a — audio
+  svara_verified?: pending — BV
+  text_layer: null
+  license: unknown
+  status: found-complete
+  where_i_looked: >
+    archive.org (the three items above); vedicheritage.gov.in (checked at all three page
+    levels — no audio or video player on any Rāṇāyanīya page; the portal's `/audio-video/`
+    path 404s. LOWER-CONFIDENCE: the Jaiminīya media on this same portal turned out to be JS-injected and invisible to exactly this method — see `summary.ignca_portal_correction`. The Rāṇāyanīya media paths were never probed by HTTP and should be, before this negative is trusted);
+    Rashtriya Sanskrit Sansthan "Rāṇāyanīyam Sāma Gānam" MP3 edition — a real commercial
+    release, currently OUT OF STOCK at Exotic India;
+    Indiana University Archives of Traditional Music, for Wayne Howard's field recordings —
+    repository exists at libraries.indiana.edu/archives-traditional-music but the indexed
+    item record 404s and catalogue search returns 403. UNRESOLVED, not absent.
+    NOT CHECKED: YouTube, for Rāṇāyanīya specifically — the session's web-search budget was
+    exhausted. Given that YouTube is exactly where the Maitrāyaṇī find came from, this is
+    the one channel that could still add to an already-good result.
+  notes: >
+    THIS RECORD REVERSES A `not-found` I HAD ALREADY WRITTEN, and the reversal is the most
+    important methodological result in the packet.
+    My first pass searched vedicheritage, archive.org, sanskritdocuments, sanskritweb,
+    GRETIL and TITUS and concluded no Rāṇāyanīya audio existed. That was WRONG. ~2.7 GB
+    of it sits in archive.org community uploads — invisible to a title-keyed search of the
+    curated collections, findable only by searching the community tier directly.
+    THE GENERALISABLE LESSON, and it should be applied to the rest of this packet before
+    any `not-found` here is trusted: for minority śākhās the material is disproportionately
+    likely to be in COMMUNITY uploads rather than institutional corpora, because the
+    institutions curate what the mainstream studies. Every `not-found` audio record in this
+    file — Jaiminīya above all — should be re-run against the archive.org community tier
+    with transliterated-Sanskrit spellings (`rANAyanIya`, `sAmavedaH`) before being
+    treated as settled. The naming convention alone defeats an English-language search.
+    LICENCE IS GENUINELY UNRESOLVED AND MATTERS HERE. Unlike the text scans — where the
+    Sāmagānam carries an explicit CC0 licenseurl I confirmed via the API — NONE of the
+    three audio items carries a `licenseurl` or `rights` field. Item (a) asserts IGNCA
+    courtesy without a licence grant, which is an attribution, not a permission. Link and
+    reference; do NOT mirror or redistribute until this is settled. Recorded as `unknown`
+    rather than assumed-open.
+    Institutional location, from IGNCA "Schools of Vedic Learning: Samaveda"
+    (institution level only — individual-named rows in the same PDF were skipped):
+      · Samarath Vedvidyālaya, Dhalegaon, Vishnupuri, Parbhani, Maharashtra — "Ranayani"
+      · Śrī Munikul Brahmacharya Veda Sansthan, Barundani, Bhilwara, Rajasthan
+      · Guru Shikhar Ved Vidyalaya, Limri House, Mount Abu, Rajasthan
+      · Ācārya Patabhiram Shastri Ved Mimansa Anusandhan Kendra, Hanuman Ghat, Varanasi, UP
+      · Jagadguru Śaṅkarācārya Swami [name truncated in source PDF], UP
+    Plus, from the publication record: Rāṇāyanīya Saṃśodhana Pratiṣṭhāna, TIRUPATI —
+    an institution existing specifically to publish this śākhā, with four titles since 2010.
+    THREE CORRECTIONS TO THE PACKET BRIEF'S GEOGRAPHY, all evidenced:
+      · KERALA/THRISSUR IS WRONG for Rāṇāyanīya. Kerala Sāmaveda is Jaiminīya — Staal,
+        Witzel, Howard and Gerety all agree. Do not look for Rāṇāyanīya there.
+      · TRICHY / TAMIL NADU IS UNSUPPORTED. The largest pāṭhaśālā directory has zero
+        occurrences of "Rāṇāyanīya"; Rajaveda Patasala Thanjavur is explicitly Kauthuma.
+      · GOKARNA / KARNATAKA is attested but thin. Tarlekar's fieldwork ("Sāman Chants in
+        Theory and Present Practice") places followers in KARWAR (Uttara Kannada) and
+        ANDHRA, with Gokarna as a contact point. IGNCA's national list names no Karnataka
+        Rāṇāyanīya institution at all. The `_status.yaml` note "verify before asserting"
+        was well placed; the centre of gravity is ANDHRA (Tirupati), not Karnataka.
+    STRENGTH OF TRADITION — the most citable negative available: "Rāṇāyanīya" appears ZERO
+    times in Kashikar–Parpola's catalogue of śrauta performers, and is absent from Witzel's
+    surviving-schools list. A śākhā with four active publications and no śrauta performers
+    is a text tradition outliving its ritual one.
+    LEAD NOT EXHAUSTED: Houben/Rotaru/Witzel eds., "Vedic Śākhās: Past, Present, Future"
+    (HOS Opera Minora 9) contains three Sāmaveda papers, only one identifiable online
+    (Gerety, on Jaiminīya). If published Rāṇāyanīya fieldwork exists, it is most likely one
+    of the other two. No full table of contents is online.
+  date_logged: 2026-08-01
+
+# ─────────────────────────────────────────────────────────────────────────────
+# KṚṢṆA YAJURVEDA · KAṬHA
+# ─────────────────────────────────────────────────────────────────────────────
+
+- node_path: vedas/yajurveda/krishna/katha/samhita
+  veda: yajurveda
+  organization: krishna
+  shakha: katha
+  layer: samhita
+  edition: >
+    PRIMARY, ACCENTED, FREE — "Yajurvedīya Kāṭhaka Saṃhitā", ed. Śrīpāda Śarmā [Śrīpāda
+    Dāmodara Sātavalekara], published by Svādhyāya Maṇḍala, 1943. Scanned from the Gurukul
+    Kāṅgṛī Collection, Haridwar; digitised by Arya Samaj Foundation Chennai and eGangotri.
+    ALSO ACCENTED, FREE — Leopold von Schroeder, "Kāṭhakam: Die Saṃhitā der Kaṭha-Śākhā",
+    Leipzig, Book I 1900, Book II 1909, Book III 1910.
+  url: https://archive.org/details/WNYe_yajurvediya-kathaka-samhita-edited-by-shripada-sharma-1943-published-by-swadhyay-mandal
+  script: devanagari-unicode
+  svara_source?: >
+    YES — but in the KĀṬHAKA system, and this distinction is load-bearing for the project.
+    HOW I CHECKED: rendered pages to image and read them directly, because the OCR lies here.
+    Sātavalekara 1943 — page n200 (Śatarudriya section) shows a superscript vertical stroke
+    over a large proportion of syllables, dense and systematic. Page n80 (a sthānaka prose
+    passage) shows none. Accentuation is therefore PRESENT BUT PARTIAL across the volume.
+    von Schroeder — page 212 (KS XV.4–5) likewise shows systematic superscript strokes.
+    THE ENCODING TRAP, flagged for whoever builds on this: the Kāṭhaka convention marks
+    UDĀTTA with a superscript bar. That is the opposite convention from Ṛgveda/Taittirīya
+    practice, where the marked syllables are anudātta (underline) and svarita (vertical).
+    A U+0951 count will happily return a healthy number from a Kāṭhaka text — and it will
+    MEAN something different. Any pipeline that maps "U+0951 present ⇒ svarita" will
+    silently invert the accentuation of this entire śākhā.
+    Also relevant to the partiality: the reported Kashmiri Śāradā manuscript behind the KS
+    is imperfect and does not show accents throughout — so "partial" is a property of the
+    TRANSMISSION, not a defect of the edition.
+  svara_verified?: pending — BV
+  text_layer: scanned-no-text
+  license: public-domain
+  status: found-complete
+  where_i_looked: >
+    sanskritweb.net/yajurveda/ (see the correction in notes); archive.org advanced search
+    on title:(kathaka samhita) — returned the Svādhyāya Maṇḍala 1943 item under two
+    identifiers, WNYe_… and WSQy_…; archive.org DLI item in.ernet.dli.2015.487463 for von
+    Schroeder; TITUS Vedic index; GRETIL; vedicheritage.gov.in; vedapeetha.org.
+  notes: >
+    CORRECTION TO THE ŚĀKHĀ'S EXISTING `_status.yaml` — the single most important line in
+    this packet. The current note reads: "Kathaka Samhita (Subramania Sarma's electronic
+    edition exists — see sanskritweb.net)". THIS IS A MISIDENTIFICATION. sanskritweb's
+    "Kāṭhakam" (files ka-1.pdf, ka-2.pdf, ka-3.pdf) is NOT the Kāṭhaka Saṃhitā of the Kaṭha
+    śākhā. It is chapters 10–12 of Book 3 of the TAITTIRĪYA Brāhmaṇa, which are conventionally
+    printed as a separate book under the title "Kāṭhakam". Verified directly: I downloaded
+    ka-1.pdf, and its own first line reads "Kāṭhakam, Praśna 1 (= Taittirīya-Brāhmaṇa,
+    Book 3, Chapter 10), Edited by Subramania Sarma, Chennai". sanskritweb's own page says
+    the same, and further notes those files are superseded by tb-3-10/11/12.
+    So: the file belongs to the TAITTIRĪYA node, and the Kaṭha node was pointing at a
+    Taittirīya text. The name collision is the whole cause. Two consequences —
+    (1) the Kaṭha `_status.yaml` note must be corrected at merge;
+    (2) sanskritweb holds NOTHING for the Kaṭha śākhā, which is worth recording explicitly
+    since P1-a is sweeping that site and would otherwise re-tread this.
+    THE GOOD NEWS: the accented Kāṭhaka Saṃhitā the note was reaching for genuinely exists —
+    it is the Svādhyāya Maṇḍala 1943 edition, and it is free.
+    LICENCE: the archive.org page image carries "CC-0. Gurukul Kangri Collection, Haridwar"
+    printed on it — an affirmative dedication, so no rule-9 argument is even needed here.
+    von Schroeder 1900–10 is out of copyright by age.
+    CREDIT, owed independently of licence: Śrīpāda Śarmā / Sātavalekara and the Svādhyāya
+    Maṇḍala; Leopold von Schroeder; Arya Samaj Foundation Chennai and eGangotri for the scan.
+    TITUS additionally holds a Kāṭhaka-Saṃhitā e-text (ks.htm, open) plus Books 19–22 in
+    saṃhitā-pāṭha and pada-pāṭha and a KS-Brāhmaṇa portion (members-only). Not fetched.
+    A PADA-PĀṬHA for KS 19–22 existing in machine-readable form is a notable asset and
+    should be part of any TITUS permission request.
+  date_logged: 2026-08-01
+
+- node_path: vedas/yajurveda/krishna/katha/brahmana
+  veda: yajurveda
+  organization: krishna
+  shakha: katha
+  layer: brahmana
+  edition: >
+    Kāṭhaka-Brāhmaṇa (remnants). E-text under preparation at TITUS, data entry by
+    S.J. Rosenfield and M. Witzel (Harvard). Manuscript material of ~45 chapters published
+    on the CDs accompanying Witzel, "The Veda in Kashmir" (Harvard Oriental Series).
+  url: https://titus.uni-frankfurt.de/texte/etcc/ind/aind/ved/yvs/kathbcal/kathb.htm
+  script: transliteration
+  svara_source?: unknown — not fetched (members-only, and under preparation)
+  svara_verified?: pending — BV
+  text_layer: unicode
+  license: copyright-link-only
+  status: found-partial
+  where_i_looked: >
+    TITUS Vedic index (listed explicitly as "Kāṭhaka-Brāhmaṇa (remnants) … under
+    preparation", members-only); vedicheritage.gov.in (a "Kathaka Brahmana" entry EXISTS in
+    the portal's navigation but its href is `#` — there is no page behind it);
+    archive.org; GRETIL (absent).
+  notes: >
+    GENUINELY LOST, not merely undigitised — and the record should say which, because that
+    distinction is the point of this packet. The Kaṭha Brāhmaṇa does not survive as a
+    complete work. What survives is remnants, and the ~45 chapters in Witzel's Kashmir
+    material are reported to pertain almost entirely to gṛhya ceremonies rather than to the
+    śrauta brāhmaṇa proper. No edition will recover the rest; it is gone.
+    Witzel's "The Veda in Kashmir" (HOS, 2 vols) is in copyright — cite, link, never ingest.
+    Its accompanying DVD is reported to contain texts, rituals, sound recordings and films
+    from 1973 and 1979. FLAGGED FOR THE AUDIO QUESTION: that DVD is the most likely
+    surviving recorded material for anything Kaṭha, and it is a published scholarly work,
+    not fieldwork to be redone. Acquisition, not expedition.
+  date_logged: 2026-08-01
+
+- node_path: vedas/yajurveda/krishna/katha/aranyaka
+  veda: yajurveda
+  organization: krishna
+  shakha: katha
+  layer: aranyaka
+  edition: >
+    Michael Witzel, "Kaṭha Āraṇyaka: Critical Edition with a Translation into German and an
+    Introduction", Harvard Oriental Series vol. 65, Harvard University Press, 2004.
+    ISBN 9780674018068. Also a TITUS e-text of the Brāhmaṇa sections (Witzel, under
+    preparation, members-only).
+  url: https://www.hup.harvard.edu/books/9780674018068
+  script: devanagari-unicode
+  svara_source?: unknown — book not opened; no accessible copy located
+  svara_verified?: pending — BV
+  text_layer: scanned-no-text
+  license: copyright-link-only
+  status: found-partial
+  where_i_looked: >
+    Harvard University Press catalogue; TITUS Vedic index ("Kāṭhaka-Āraṇyaka (Brāhmaṇa
+    sections) … under preparation", members-only); archive.org (no free scan);
+    academia.edu listing for the 2004 edition; vedicheritage.gov.in (no Kaṭha Āraṇyaka page).
+  notes: >
+    THE GENUINE CRITICAL-EDITION EDGE CASE that binding rule 9 tells us to flag rather than
+    adjudicate — so: FLAGGED, NOT ADJUDICATED. This is a true critical edition — manuscript
+    collation, apparatus, editorial judgement, plus an original German translation and an
+    English introduction. The mūla text remains public domain on rule 9's reasoning; the
+    collation, apparatus, translation and introduction are Witzel's and HUP's. Do not
+    treat the volume as a whole as PD, and do not treat the mūla as encumbered. Link only.
+    PARTLY LOST: the text rests on a single ~500-year-old Kashmiri birch-bark manuscript,
+    restored, held at Tübingen since 1895. It is reported to contain the pravargya and its
+    brāhmaṇa, while pieces attributed to the Kaṭha school that surface in the Taittirīya
+    tradition (aruṇa-praśna, svādhyāya-brāhmaṇa) are absent from it — so it is unresolved
+    whether we have the complete Kāṭhaka Āraṇyaka or only what one manuscript preserved.
+    Record that as open, not settled.
+    MANUSCRIPT LEAD FOR P2-c: Tübingen, birch-bark, sole witness. Logged, not chased.
+  date_logged: 2026-08-01
+
+- node_path: vedas/yajurveda/krishna/katha/upanishad
+  veda: yajurveda
+  organization: krishna
+  shakha: katha
+  layer: upanishad
+  edition: >
+    Kaṭha Upaniṣad. Accented Devanāgarī text at sanskritdocuments.org; TITUS e-text
+    (etcs/…/upanisad/kathup/kathu.htm, open), data entry N. Abhyankar, adapted by
+    M. Albino and J. Narten (Erlangen).
+  url: https://sanskritdocuments.org/doc_upanishhat/katha.html
+  script: devanagari-unicode
+  svara_source?: >
+    yes — sanskritdocuments.org classifies Kaṭha in its "upanishhat with svara" set.
+    Site classification, NOT independently byte-counted by me. Same caveat as the Kena.
+  svara_verified?: pending — BV
+  text_layer: unicode
+  license: public-domain
+  status: found-complete
+  where_i_looked: >
+    sanskritdocuments.org upaniṣad and svara indexes; TITUS Vedic index;
+    vedicheritage.gov.in/upanishads/kathopanishad/ (a real page, unlike the portal's
+    Kāṭhaka Saṃhitā and Kāṭhaka Brāhmaṇa entries).
+  notes: >
+    THE SHARPEST ILLUSTRATION OF THIS PACKET'S THESIS, and worth stating in one line:
+    the Kaṭha Upaniṣad is one of the most widely read, translated and recited texts in the
+    entire corpus — while the śākhā that carries it has, by published report, not one
+    surviving saṃhitā-pāṭhī. A layer's popularity says nothing whatever about its śākhā's
+    survival. Anyone auditing "how well covered is Kaṭha?" by looking at this node will get
+    a badly wrong answer.
+  date_logged: 2026-08-01
+
+- node_path: vedas/yajurveda/krishna/katha/_audio
+  veda: yajurveda
+  organization: krishna
+  shakha: katha
+  layer: audio
+  edition: null
+  url: null
+  script: null
+  svara_source?: n/a
+  svara_verified?: pending — BV
+  text_layer: null
+  license: unknown
+  status: not-found
+  where_i_looked: >
+    (1) vedicheritage.gov.in — no Kāṭhaka Saṃhitā page exists at all; the navigation entry
+    is a dead `#` link, as are "Kathaka Brahmana" and "Katha-Kapisthala Samhita". The portal
+    carries audio for two śākhās only, neither of them Kaṭha. THAT SECOND CLAUSE IS RETRACTED — the portal does hold Jaiminīya media, JS-injected; see `summary.ignca_portal_correction`. The Kaṭha dead-`#`-link finding stands, but the media paths were not probed by HTTP.
+    (2) sanskritdocuments.org veda-pāṭhaśālā directory — no institution teaching Kaṭha.
+    (3) IGNCA "Schools of Vedic Learning: Yajurveda" PDF — swept the recension column
+    across the whole file. Values found: Mādhyandina (227), Kāṇva (34), Tattiriya (29).
+    Kāṭhaka: ZERO. Not one institution in the national list.
+    (4) archive.org; (5) YouTube via search.
+    NOT EXHAUSTED: the DVD accompanying Witzel's "The Veda in Kashmir" is reported to
+    contain sound recordings and films from 1973 and 1979 and was NOT obtained. If any
+    Kaṭha audio exists anywhere, that is where it is.
+  notes: >
+    THE DELIVERABLE HERE IS A NEGATIVE, and it is a firm one. Published report, consistent
+    across sources: Kashmir today has not a single saṃhitā-pāṭhī of the Kaṭha śākhā. What
+    survives is the ritual and the ritual manuals — and those manuals are themselves
+    reported to have contracted over roughly the last 150 years, from forefathers'
+    manuscripts of 150–200 pages to taught manuals of 90–100.
+    Corroborated independently by IGNCA's own numbers: zero institutions, nationally.
+    CONSEQUENCE FOR PLANNING — say it plainly: there is nobody to record. Kaṭha is not a
+    capture problem, it is an archival and ritual-documentation problem, and the two need
+    different people, different budgets and different timelines. Filing Kaṭha alongside
+    Jaiminīya under "endangered, go record it" would waste the trip.
+    The śākhā's `_status.yaml` says "living recitation nearly extinct — verify current
+    state". Verified as far as public sources allow, and the honest reading is stronger
+    than "nearly": for the saṃhitā, extinct.
+  date_logged: 2026-08-01
+
+# ─────────────────────────────────────────────────────────────────────────────
+# KṚṢṆA YAJURVEDA · MAITRĀYAṆĪ
+# ─────────────────────────────────────────────────────────────────────────────
+
+- node_path: vedas/yajurveda/krishna/maitrayani/samhita
+  veda: yajurveda
+  organization: krishna
+  shakha: maitrayani
+  layer: samhita
+  edition: >
+    PRIMARY, ACCENTED, FREE — "Maitrāyaṇī Saṃhitā", ed. Pt. Śrīpāda Dāmodara Sātavalekara,
+    1941 (archive.org metadata gives Government Press, Bombay; a companion 1942 printing is
+    credited to Bharat Press, and other copies to Svādhyāya Maṇḍala, Pardi. The exact
+    imprint varies between copies — recorded as printed on each, not harmonised).
+    ALSO FREE — Leopold von Schroeder, "Maitrāyaṇī Saṃhitā", Leipzig 1881–1886, 4 vols.
+    ALSO — Dr. Vedkumari Vidyalankar, 1986, Banke Bihari Prakashan, Agra (Sanskrit-Hindi).
+  url: https://archive.org/details/maitrayanisamhit015004mbp
+  script: devanagari-unicode
+  svara_source?: >
+    YES — fully accented, in the STANDARD system (anudātta underline + svarita vertical),
+    unlike Kāṭhaka. VERIFIED VISUALLY, page 130 rendered to image and read: accent marks
+    are dense and systematic across both mantra and prose, including the compound marks.
+    The page header reads "काण्ड १, प्रपा० ११, अनु० ९-१०  वाजपेयः" and the footer carries
+    parallels to Taittirīya, Kāṭhaka, Vājasaneyi and Kāṇva — confirming both that this is
+    the Maitrāyaṇī Saṃhitā and that the edition is cross-referenced.
+    Protocol §3 numbers on the same file: pages 100–160 gave dev=96,248 svara=2,185
+    dig=3,521. The svara ratio understates what the eye sees because the DLI OCR drops
+    most accent marks — which is exactly why the visual check was done.
+    CONTRAST, and this is the finding that matters most for a build: GRETIL's Maitrāyaṇī
+    e-text is UNACCENTED, and GRETIL says so in the file header — "Unless indicated
+    otherwise, accents have been dropped in order to facilitate word search." Measured
+    directly, NFC-normalised: 0 U+0951, 0 U+0952, 0 Vedic Extensions across 191,591 chars.
+    The 25,195 combining marks an NFD count returns are decomposed ṛ/ṣ/ā, not svaras —
+    precisely the trap P0-a flagged. So the accented Maitrāyaṇī is the 1941 SCAN, and the
+    machine-readable Maitrāyaṇī is UNACCENTED. Those are two different objects and the
+    project needs both.
+  svara_verified?: pending — BV
+  text_layer: mixed
+  license: public-domain
+  status: found-complete
+  where_i_looked: >
+    archive.org advanced search on title:(maitrayani samhita) — 19 items, including
+    maitrayanisamhit015004mbp (Sātavalekara 1941), in.ernet.dli.2015.407434 and .407940
+    (Sātavalekara 1941), CBnC_… (Sātavalekara 1942, Bharat Press),
+    djnr_…paradi-swadhyay-mandala, in.ernet.dli.2015.487094 and .344491 (von Schroeder
+    vols 3–4), india.history.resource.92648 (von Schroeder vol. 1, 1881),
+    in.ernet.dli.2015.401097 / .403458 and ietv_… (Vedkumari Vidyalankar 1986);
+    GRETIL maitrs_pu.htm and maitrs_au.htm (measured, see above);
+    TITUS Vedic index; sanskritweb (nothing — Taittirīya only).
+  notes: >
+    `text_layer: mixed` is deliberate and does not fit the protocol §3 table cleanly.
+    The §3 table has no row for "scan whose OCR layer exists but is garbage". Raw counts
+    look like `unicode` (chars high, Devanāgarī high); usability is `scanned-no-text`.
+    Recording it as `mixed` with this note rather than picking a misleading row — and
+    flagging that §3 may want a fifth row, since every DLI scan in this packet behaves
+    the same way and a future collector reading counts alone will be misled every time.
+    LICENCE, stated precisely because it is not the simple case. The mūla text is public
+    domain (binding rule 9, and it is an ancient text). Sātavalekara died in 1968, so under
+    India's life+60 term his ORIGINAL editorial matter — introduction, notes, apparatus —
+    plausibly remains in copyright until roughly 2029. Two distinct objects in one file,
+    exactly as the README's worked case describes: take the mūla, leave the apparatus.
+    Nothing here is a critical edition in rule 9's edge-case sense.
+    CREDIT, owed regardless: Pt. Śrīpāda Dāmodara Sātavalekara and the Svādhyāya Maṇḍala;
+    Leopold von Schroeder; Dr. Vedkumari Vidyalankar.
+    TITUS also holds a Maitrāyaṇī e-text openly (ms.htm), data entry M. Fushimi (Ōsaka).
+    Terms recorded verbatim from the file's own index header: "Copyright TITUS Project,
+    Frankfurt a/M, 9.5.2016. No parts of this document may be republished in any form
+    without prior permission by the copyright holder." Catalogued at index level only;
+    NO bulk content fetched, per the coordinator's instruction while permission is pending.
+    Note for the permission discussion, offered as observation not adjudication: TITUS's
+    files are data entry OF public-domain printed editions, which is the same category
+    rule 9 addresses. That does not settle it, and this packet deliberately does not act
+    on it. It is a point the human conversation may want.
+    OVERLAP: P1-a owns the Svādhyāya Maṇḍala sweep. Recorded here because this edition is
+    the best source for this śākhā and should not fall between the two packets.
+  date_logged: 2026-08-01
+
+- node_path: vedas/yajurveda/krishna/maitrayani/brahmana
+  veda: yajurveda
+  organization: krishna
+  shakha: maitrayani
+  layer: brahmana
+  proposes_new_node: true
+  edition: null
+  url: null
+  script: null
+  svara_source?: not applicable — no text survives to test
+  svara_verified?: pending — BV
+  text_layer: null
+  license: unknown
+  status: not-found
+  where_i_looked: >
+    vedicheritage.gov.in (a "Maitrayani Brahmana" entry exists in the portal navigation but
+    resolves to `#` — no page); GRETIL; TITUS Vedic index (no Maitrāyaṇī Brāhmaṇa; the
+    Maitrāyaṇīya-Mānava-Gṛhyasūtra is present, which is a different layer);
+    archive.org; Open Library.
+  notes: >
+    GENUINELY LOST — this is the record that exists to say so, which is why it is filed at
+    all despite `_status.yaml` not listing the layer.
+    The tradition holds that the Maitrāyaṇīya Upaniṣad formed the closing portion of a
+    Brāhmaṇa of this śākhā, preceded by a karma section in four books. That Brāhmaṇa does
+    not survive. The Maitrāyaṇī Saṃhitā carries brāhmaṇa-type prose internally in the
+    Taittirīya manner, which is the likeliest reason a separate work was not preserved.
+    THE DISTINCTION THIS PACKET EXISTS TO DRAW: this is loss, not a digitisation gap.
+    Contrast the Rāṇāyanīya Saṃhitā — also `not-found`, but merely undigitised and
+    recoverable by anyone with a camera. Same status value, opposite meaning. If those two
+    records ever get read as equivalent, the packet has failed at its one job.
+    PROPOSES A NEW NODE: `maitrayani/_status.yaml` currently lists only samhita and
+    upanishad. Per the README's gaps-are-data rule an attested-but-lost layer is a finding
+    worth encoding, but node creation is the merge pass's call, not mine. Flagged.
+    Third-party web summaries asserting a surviving "Maitrāyaṇī Brāhmaṇa" exist; I found no
+    edition, manuscript or e-text behind any of them. Treat as unsupported.
+  date_logged: 2026-08-01
+
+- node_path: vedas/yajurveda/krishna/maitrayani/aranyaka
+  veda: yajurveda
+  organization: krishna
+  shakha: maitrayani
+  layer: aranyaka
+  proposes_new_node: true
+  edition: >
+    "Maitrāyaṇī Āraṇyakam" — Devanāgarī printed edition, scanned. Editor, publisher and
+    year NOT established: the archive.org item carries no creator, publisher or date in its
+    metadata, and I did not locate a title page.
+  url: https://archive.org/details/maitrayani-aranyakam
+  script: devanagari-unicode
+  svara_source?: >
+    NOT ESTABLISHED. The distributed PDF has effectively no text layer (chars=35 over the
+    sampled range), so the §3 count returns nothing meaningful and no visual page check was
+    run on this item. Recorded as untested rather than unaccented — the difference matters
+    and I am not going to blur it to fill the field.
+  svara_verified?: pending — BV
+  text_layer: scanned-no-text
+  license: public-domain
+  status: found-partial
+  where_i_looked: >
+    archive.org (item maitrayani-aranyakam; the plain PDF has no usable text layer, though
+    an OCR sidecar `_djvu.txt` exists and confirms the content is Devanāgarī and opens with
+    "अथ यजुर्वेदीय मैत्रायणीयमारण्यकम्" followed by the śānti-pāṭha);
+    GRETIL; TITUS (Maitrāyaṇa-Upaniṣad listed as "under preparation" by T. Ježić, with no
+    link — i.e. announced, not available); vedicheritage.gov.in.
+  notes: >
+    ATTRIBUTION AND EDITION BOTH UNRESOLVED, and going in `notes` rather than into the
+    fields, per binding rule 7. The content is confirmed Maitrāyaṇīya Āraṇyaka from its own
+    opening line. The EDITION is not — no editor, no publisher, no year. Do not cite this
+    as a sourced edition; it is a scan of an unidentified printing.
+    Its relationship to the Maitrāyaṇīya Upaniṣad also needs settling before this node is
+    promoted: van Buitenen (1962) argued the text received as the Maitrāyaṇīya Upaniṣad
+    results from an ancient conflation of an original Maitrāyaṇīya Upaniṣad with a
+    separately transmitted South Indian Maitreya/Maitrī Upaniṣad. If that holds, the
+    āraṇyaka/upaniṣad boundary for this śākhā is not a clean cut and the embedded-text
+    rule needs applying with care here, not mechanically.
+    PROPOSES A NEW NODE — same caveat as the brāhmaṇa record; merge pass decides.
+  date_logged: 2026-08-01
+
+- node_path: vedas/yajurveda/krishna/maitrayani/upanishad
+  veda: yajurveda
+  organization: krishna
+  shakha: maitrayani
+  layer: upanishad
+  edition: >
+    J.A.B. van Buitenen, "The Maitrāyaṇīya Upaniṣad: A Critical Essay, with Text,
+    Translation and Commentary", Mouton, The Hague, 1962 — the standard scholarly edition.
+    TITUS lists a Maitrāyaṇa-Upaniṣad e-text as under preparation (T. Ježić, Zagreb),
+    with no link.
+  url: https://philpapers.org/rec/RAJTMU
+  script: transliteration
+  svara_source?: >
+    no — van Buitenen's is a Roman-transliteration scholarly edition. No accented
+    Devanāgarī Maitrāyaṇīya Upaniṣad located. Recorded as a measured absence for this
+    edition specifically, not as a claim that none exists anywhere.
+  svara_verified?: pending — BV
+  text_layer: scanned-no-text
+  license: copyright-link-only
+  status: found-partial
+  where_i_looked: >
+    PhilPapers; Cambridge Digital Library (a Maitrāyaṇīya Upaniṣad manuscript, MS-ADD-01103
+    — logged for P2-c, not chased); vedicheritage.gov.in/upanishads/maitrayani-upanishad/
+    (a real page, unlike the same portal's Maitrāyaṇī Saṃhitā entry, which is a dead `#`);
+    sanskritdocuments.org; TITUS; archive.org; sacred-texts.com (Max Müller SBE 15).
+  notes: >
+    van Buitenen 1962 is modern scholarship — critical essay, translation, commentary.
+    Cite and link; do not ingest. The mūla text within it remains PD on rule 9's reasoning,
+    but this is close to the rule-9 edge case and is flagged, not adjudicated.
+    TEXTUAL HISTORY IS GENUINELY UNSETTLED and the existing `_status.yaml` note
+    ("attribution and textual history debated") is correct and should be kept: van Buitenen
+    argues the received text is a conflation of two originally distinct works. That is a
+    real scholarly disagreement, not a gap in our sourcing — the kind of thing the project
+    shows side by side rather than resolving.
+    Max Müller's SBE 15 translation is free and PD but is a translation, not a text.
+  date_logged: 2026-08-01
+
+- node_path: vedas/yajurveda/krishna/maitrayani/_audio
+  veda: yajurveda
+  organization: krishna
+  shakha: maitrayani
+  layer: audio
+  edition: >
+    Śrī Viśvamaṅgala Lakṣmī Narasiṃha Nitya Mahāyajña — a daily yajña running 13 May 2022
+    to 1 May 2034 at Śrī Viśvamaṅgala Lakṣmī Narasiṃha Swamy Devasthanam ("Śrī Lakṣmī
+    Narasiṃha Kṣetram — Dakṣiṇa Naimiśāraṇyam"), Belagola, Karnataka, on the Kāverī.
+    Sessions are livestreamed and archived to YouTube, with Kṛṣṇa Yajurveda Maitrāyaṇī
+    Śākhā sessions individually titled and dated.
+  url: https://lakshmi-narasimha.org/yajna/
+  script: null
+  svara_source?: n/a — audio
+  svara_verified?: pending — BV
+  text_layer: null
+  license: unknown
+  status: found-partial
+  where_i_looked: >
+    YouTube search (multiple dated videos titled "Krishna Yajurveda - Maitrayani Shakha"
+    within the "Day N : Nth Poornahuti" series — instances observed across 2023, 2024 and
+    2025, plus a series playlist); the kṣetram's own site lakshmi-narasimha.org;
+    vedicheritage.gov.in (nothing — the Maitrāyaṇī Saṃhitā navigation entry is a dead `#`
+    link; my earlier 'portal covers only two śākhās' reasoning is retracted per `summary.ignca_portal_correction`, and Maitrāyaṇī media paths were not HTTP-probed);
+    IGNCA "Schools of Vedic Learning: Yajurveda" (recension column across the whole file:
+    Mādhyandina 227, Kāṇva 34, Tattiriya 29, Maitrāyaṇī ZERO);
+    sanskritdocuments.org pāṭhaśālā directory (no Maitrāyaṇī institution); archive.org.
+  notes: >
+    THE ONE LIVE AUDIO FIND IN THIS PACKET, and the only one of the six śākhās where
+    something is currently being recited that we can point at, on a date, at an address.
+    STATUS IS DELIBERATELY `found-partial`, NOT `found-complete`. What exists is
+    incidental-to-ritual streaming video, not a systematic recitation recording. It is
+    yajña-length liturgical use, not a saṃhitā recital, and it does not cover the text.
+    Recording it as a located recitation tradition, not as a corpus of the Maitrāyaṇī
+    Saṃhitā. Anyone treating it as the latter will be disappointed.
+    LICENCE genuinely unknown — no terms located for the stream. Link, do not mirror.
+    THE ASYMMETRY, sharply: IGNCA's national inventory shows ZERO Maitrāyaṇī institutions,
+    while a Maitrāyaṇī group demonstrably recites on a published schedule in Karnataka.
+    The state's list is not measuring what we need measured, and its zeroes should be read
+    as "not on the list" rather than "does not exist" — including for the other five.
+    Corroborating published context, region only: the Maitrāyaṇī oral tradition is reported
+    to have persisted around Nagpur and Nashik into the mid-20th century, dwindling to a
+    few saṃhitā-cognisant Brahmins by the 1970s. Existing `_status.yaml` says
+    "Maharashtra / Gujarat — small reciting pockets reported — verify before asserting":
+    Maharashtra corroborated historically; KARNATAKA is new and is the live one.
+    WINDOW: the yajña is scheduled to 2034. This is the one node in the packet where the
+    window is open rather than closing, and where fieldwork is a scheduling problem.
+    STRICTLY INSTITUTION-LEVEL. Named reciters appear in the video titles and metadata and
+    are deliberately not recorded here, in this file or anywhere in this packet.
+  date_logged: 2026-08-01
+
+# ─────────────────────────────────────────────────────────────────────────────
+# KṚṢṆA YAJURVEDA · KAPIṢṬHALA
+# ─────────────────────────────────────────────────────────────────────────────
+
+- node_path: vedas/yajurveda/krishna/kapishthala/samhita
+  veda: yajurveda
+  organization: krishna
+  shakha: kapishthala
+  layer: samhita
+  edition: >
+    "Kapiṣṭhala-Kaṭha-Saṃhitā: A Text of the Black Yajurveda", ed. Raghu Vira,
+    Lahore 1932 (Mehar Chand Lachhman Das / Meharchand Lachhmandas, Delhi in later
+    printings; reissued by Motilal Banarsidass). The only edition; reprinted, not superseded.
+  url: https://archive.org/details/in.ernet.dli.2015.424388
+  script: devanagari-unicode
+  svara_source?: >
+    NO — UNACCENTED, and verified visually rather than inferred. Page 140 of the scan
+    (printed p. 97, "कपिष्ठलकठसंहिता", XXV.4) rendered to image and read: continuous
+    Devanāgarī with no accent marks of any kind, with Raghu Vira's English textual
+    footnotes below comparing KS, MS, TS and RV readings.
+    Protocol §3 count corroborates: pages 120–170 gave dev=49,984 svara=43 dig=4,711 —
+    43 marks across 50 pages is OCR noise, not accentuation.
+    Independently corroborated in the literature: Raghu Vira's edition does not have accents.
+    THIS IS A PROPERTY OF THE SOURCE, NOT OF THE EDITOR — the sole surviving manuscript is
+    unaccented, so no future edition can add accents without conjecture. There will never
+    be an accented Kapiṣṭhala. Worth recording once, permanently, so nobody re-searches for
+    one.
+  svara_verified?: pending — BV
+  text_layer: scanned-no-text
+  license: public-domain
+  status: found-partial
+  where_i_looked: >
+    archive.org — six items located: in.ernet.dli.2015.424388, in.gov.ignca.27174,
+    in.ernet.dli.2015.552477, KapisthalaKathaSamhita (SUVRATSUT 2017 — inspected, it is a
+    rescan of the same Raghu Vira text, not a new edition), rauf_… and JcAB_… (Meherchand
+    Lachhmandas printings); indianculture.gov.in ebooks; ebharatisampat.in;
+    Motilal Banarsidass catalogue (in print, ISBN 9789359663753 / 9789359661759);
+    SOAS Research Online and ProQuest (a doctoral thesis on the text);
+    TITUS Vedic index; GRETIL (absent); vedicheritage.gov.in ("Katha-Kapisthala Samhita"
+    appears in the navigation but resolves to `#` — no page exists).
+    Also located: an item titled kapiShThala-kaTha-saMhitA-hans-oertel — inspected and it is
+    NOT the text. It is Hanns Oertel's German study (Latin script, 0 Devanāgarī across the
+    sampled range). Recorded so the next collector does not re-open it expecting an edition.
+  notes: >
+    GENUINELY AND PERMANENTLY INCOMPLETE — the defining fact of this node, and it is
+    textual loss, not a sourcing gap. The single surviving manuscript covers 64 chapters
+    across 8 aṣṭakas, and it is damaged. As reported: aṣṭaka 1 complete (8 chapters);
+    aṣṭaka 2 damaged and incomplete; aṣṭaka 3 — chapters 9–24 LOST; aṣṭaka 4 — chapters
+    25–31 intact, chapter 32 LOST; aṣṭaka 5 — all recovered except chapter 33; aṣṭaka 6 —
+    chapter 43 LOST, remaining seven available. Roughly a quarter of the text is gone and
+    no edition will recover it.
+    `status: found-partial` is therefore the correct and permanent value for this node.
+    It should NOT be read as "we have not finished looking". We have. This is all there is.
+    TITUS holds a Kapiṣṭhala-Kāṭha-Saṃhitā e-text openly (kaps.htm), data entry
+    M. Fushimi (Ōsaka), under the same all-rights-reserved notice quoted on the Maitrāyaṇī
+    record. Catalogued at index level; not fetched.
+    GENUINELY OPEN AND USEFUL: Fushimi's mantra index for the Kapiṣṭhala-Kāṭha-Saṃhitā is
+    freely available at http://www.ejvs.laurasianacademy.com/Fushimi-Kps.pdf via the
+    Electronic Journal of Vedic Studies — an open venue, unlike TITUS itself. For a text
+    this fragmentary a mantra index is disproportionately valuable, since it is what lets
+    surviving mantras be matched against KS, MS and TS parallels.
+    MANUSCRIPT LEAD FOR P2-c: one imperfect manuscript, and its lacunae ARE the text's
+    limits. Logged, not chased.
+    CREDIT: Raghu Vira (1902–1963); Masato Fushimi for the e-text and mantra index.
+  date_logged: 2026-08-01
+
+- node_path: vedas/yajurveda/krishna/kapishthala/brahmana
+  veda: yajurveda
+  organization: krishna
+  shakha: kapishthala
+  layer: brahmana
+  proposes_new_node: true
+  edition: null
+  url: null
+  script: null
+  svara_source?: not applicable — no text located
+  svara_verified?: pending — BV
+  text_layer: null
+  license: unknown
+  status: not-found
+  where_i_looked: >
+    vedicheritage.gov.in (a "Katha-Kapisthala Brahmana" entry exists in the portal's
+    navigation but resolves to `#` — the name is attested by the national portal's own
+    taxonomy while no page, text or edition sits behind it); TITUS Vedic index; GRETIL;
+    archive.org; Open Library; Motilal and Indian Culture catalogues.
+  notes: >
+    ATTESTED BY NAME, NOTHING BEHIND IT. IGNCA's taxonomy lists a Kaṭha-Kapiṣṭhala
+    Brāhmaṇa, and a scholarly discussion thread on a Kapiṣṭhala Brāhmaṇa and Āraṇyaka was
+    seen in passing; no edition, manuscript or e-text was located for either.
+    Filed as a documented absence so that the next collector does not spend the hours I
+    spent confirming it — which is the entire value of this record.
+    PROPOSES A NEW NODE: `kapishthala/_status.yaml` lists only samhita. Whether an
+    attested-but-unlocated layer earns a directory is the merge pass's call. Given the
+    README's gaps-are-data rule I lean yes, but I am not making that change.
+    LOST vs UNDIGITISED: cannot currently be determined for this layer, and I am recording
+    that honestly rather than guessing. Unlike the Maitrāyaṇī Brāhmaṇa — where the
+    tradition itself tells us a Brāhmaṇa once existed and no longer survives — I found no
+    positive statement either way here. Genuinely open.
+  date_logged: 2026-08-01
+
+- node_path: vedas/yajurveda/krishna/kapishthala/_audio
+  veda: yajurveda
+  organization: krishna
+  shakha: kapishthala
+  layer: audio
+  edition: null
+  url: null
+  script: null
+  svara_source?: n/a
+  svara_verified?: pending — BV
+  text_layer: null
+  license: unknown
+  status: not-found
+  where_i_looked: >
+    vedicheritage.gov.in (no Kapiṣṭhala page exists — dead `#` link; portal audio covers
+    dead `#` link — though my 'only two śākhās' reasoning is retracted, see `summary.ignca_portal_correction`); IGNCA "Schools of Vedic Learning: Yajurveda" (recension
+    column swept across the file — Mādhyandina, Kāṇva and Tattiriya only; Kapiṣṭhala ZERO);
+    sanskritdocuments.org pāṭhaśālā directory (nothing); archive.org; YouTube via search.
+  notes: >
+    NOT-FOUND, and unlike the Jaiminīya and Rāṇāyanīya audio records this one is not a
+    to-do — nothing is expected to be found. `_status.yaml` records
+    `reciting_communities: []` for this śākhā, and nothing encountered in this packet
+    contradicts it. There is no community, therefore no recording, therefore no target.
+    The right response to this node is archival and manuscript work (P2-c), and no part
+    of a recording budget should be pointed at it.
+    Recorded explicitly so that "Kapiṣṭhala has no audio" is a settled finding in the
+    repository rather than a question that gets re-asked every time someone reviews the
+    endangered set.
+  date_logged: 2026-08-01
+
+# ─────────────────────────────────────────────────────────────────────────────
+# ṚGVEDA · BĀṢKALA
+# ─────────────────────────────────────────────────────────────────────────────
+
+- node_path: vedas/rigveda/bashkala/samhita
+  veda: rigveda
+  organization: null
+  shakha: bashkala
+  layer: samhita
+  edition: >
+    NO EDITION OF A BĀṢKALA ṚGVEDA SAṂHITĀ EXISTS — the saṃhitā does not survive.
+    WHAT DOES EXIST, as its surviving trace: the Khilāni, 98 supplementary hymns recorded
+    in Bāṣkala and absent from Śākala. Edited by J. Scheftelowitz, "Die Apokryphen des
+    Ṛgveda (Khilāni)", Breslau 1906, from a Kashmiri manuscript. E-text on GRETIL
+    (Ṛgveda-Khilāni) and TITUS (data entry Carlos Jordán Cólera and F.J. Martínez García).
+  url: https://archive.org/details/apokryphen-des-rgveda
+  script: transliteration
+  svara_source?: >
+    NO, for the GRETIL e-text — measured directly, NFC-normalised: 0 U+0951, 0 U+0952,
+    0 Vedic Extensions across 130,272 characters of the analytic file. Roman
+    transliteration; the 11,184 combining marks an NFD count returns are decomposed
+    ṛ/ṣ/ā etc., not accents. GRETIL's own header states accents have been dropped.
+    Scheftelowitz's 1906 printed edition was NOT opened and is untested — a printed
+    Devanāgarī or transliterated edition of this period may well carry accents.
+    That is the obvious next check for anyone who needs an accented Khila text.
+  svara_verified?: pending — BV
+  text_layer: unicode
+  license: public-domain
+  status: not-found
+  where_i_looked: >
+    archive.org (Scheftelowitz 1906 at /details/apokryphen-des-rgveda and at
+    in.ernet.dli.2015.134238, both free); GRETIL (Ṛgveda-Khilāni, TEI XML plus HTML and
+    plaintext transformations — measured); TITUS Vedic index (Ṛgveda-Khilāni, preliminary
+    HTML, open); vedicheritage.gov.in; Exotic India.
+  notes: >
+    `status: not-found` refers to the BĀṢKALA SAṂHITĀ ITSELF, which is GENUINELY LOST —
+    no complete text survives, and no amount of searching will change that. The Khilāni are
+    logged here as its surviving trace, not as the saṃhitā. Do not let the Khila material
+    make this node look sourced; it is a fragment of a lost recension, and it reaches us
+    through a single Kashmiri manuscript now in Pune.
+    ATTRIBUTION DOUBT, into `notes` per binding rule 7, NOT into `shakha`: a printed volume
+    is currently in the trade titled "ऋग्वेदसंहिता: Rigveda Samhita (Bāṣkala-Āśvalāyana —
+    With Śāṅkhāyana)", Amaldhari Singh, Bharatiya Books, Varanasi 2024, ISBN 9789392974311,
+    1030 pp, Sanskrit only. I did NOT open it and cannot say what it actually contains.
+    Given that the Bāṣkala saṃhitā is not extant, a 2024 volume bearing that title is far
+    more likely a modern compilation or reconstruction than a recension text. TREAT AS
+    UNVERIFIED AND DO NOT CITE AS A BĀṢKALA SAṂHITĀ without inspection. Recorded because a
+    later collector will certainly find it and needs the warning attached, not because it
+    is a source.
+    OWNERSHIP: P0-a owns the GRETIL sweep. The Khila measurement above is recorded because
+    the node is mine; it is not a claim on GRETIL coverage.
+    CREDIT: J. Scheftelowitz (1875–1934); Jordán Cólera and Martínez García for the e-text.
+  date_logged: 2026-08-01
+
+- node_path: vedas/rigveda/bashkala/brahmana
+  veda: rigveda
+  organization: null
+  shakha: bashkala
+  layer: brahmana
+  proposes_new_node: true
+  edition: >
+    Kauṣītaki Brāhmaṇa (= Śāṅkhāyana Brāhmaṇa).
+    (a) Bruno Lindner, "Das Kauṣītaki Brāhmaṇa", ed. and German trans., I: Text, 1887.
+    (b) E.R. Sreekrishna Sarma (ed.), "Kauṣītaki (Śāṅkhāyana) Brāhmaṇam with the commentary
+        'Vyākhyā' of Udaya", 1968.
+    (c) A.B. Keith, "Rigveda Brahmanas: the Aitareya and Kauṣītaki Brāhmaṇas", trans., 1920.
+    (d) GRETIL and TITUS both hold a Kauṣītaki-Brāhmaṇa e-text.
+  url: https://archive.org/details/shankhayana-kaushitaki-brahmanam
+  script: devanagari-unicode
+  svara_source?: >
+    unknown — not opened. No accent claim is made for any of these editions.
+    GRETIL's Kauṣītaki e-text should be assumed unaccented until measured, given GRETIL's
+    blanket header policy of dropping accents, verified twice in this packet.
+  svara_verified?: pending — BV
+  text_layer: scanned-no-text
+  license: public-domain
+  status: found-complete
+  where_i_looked: >
+    archive.org (/details/shankhayana-kaushitaki-brahmanam for Sreekrishna Sarma;
+    kaushitakibrahma00linduoft for Lindner 1887; in.gov.ignca.23771 for Keith;
+    /details/shAkhAyana-kauShitaki-brAhmaNa); GRETIL (sa_kauSItakibrAhmaNa TEI XML plus
+    HTML and plaintext); TITUS; vedicheritage.gov.in/brahmanas/kausitaki-shankhyayana-brahmana/
+    (a real page).
+  notes: >
+    THE ATTRIBUTION QUESTION IS THE WHOLE POINT OF THIS RECORD, and it is stated here
+    rather than resolved, per binding rule 7.
+    The claim, widely repeated: the Kauṣītaki (Śāṅkhāyana) Brāhmaṇa belongs to the Bāṣkala
+    śākhā, giving Bāṣkala a complete surviving brāhmaṇa even though its saṃhitā is lost.
+    The complication: Śaunaka's Caraṇavyūha lists Śākala, Bāṣkala, Āśvalāyana, Śāṅkhāyana
+    and Māṇḍūkāyana as five separate Ṛgvedic śākhās — on which reading Śāṅkhāyana is a
+    SIBLING of Bāṣkala, not its brāhmaṇa. Other sources treat Kauṣītaki/Śāṅkhāyana as a
+    sub-śākhā or caraṇa OF Bāṣkala. Both readings are in circulation and I am not
+    adjudicating between them.
+    CONSEQUENCE FOR THE MERGE PASS, stated plainly: if the attribution holds, Bāṣkala's
+    survival is materially better than "fragmentary" — brāhmaṇa, āraṇyaka and upaniṣad all
+    extant and free, with only the saṃhitā lost. If it does not hold, Bāṣkala has a lost
+    saṃhitā and nothing else, and these records belong under a Kauṣītaki/Śāṅkhāyana node
+    that does not currently exist in the tree. That is a real structural decision about the
+    corpus, not a labelling detail, and it needs a human.
+    PROPOSES A NEW NODE, conditional on the above. Do not create it silently.
+    This is a candidate for `tier: multi_traditional` with both lineages named — precisely
+    the pattern the project reserves for exactly this kind of disagreement.
+  date_logged: 2026-08-01
+
+- node_path: vedas/rigveda/bashkala/aranyaka
+  veda: rigveda
+  organization: null
+  shakha: bashkala
+  layer: aranyaka
+  proposes_new_node: true
+  edition: >
+    Śāṅkhāyana Āraṇyaka (= Kauṣītaki Āraṇyaka). A.B. Keith, "The Śāṅkhāyana Āraṇyaka,
+    with an Appendix on the Mahāvrata", Royal Asiatic Society, 1908.
+  url: https://archive.org/details/sankhayanaaranya00keitrich
+  script: transliteration
+  svara_source?: unknown — not opened
+  svara_verified?: pending — BV
+  text_layer: scanned-no-text
+  license: public-domain
+  status: found-complete
+  where_i_looked: >
+    archive.org (/details/sankhayanaaranya00keitrich, full text available);
+    vedicheritage.gov.in/aranyakas/sankhyayana-aranyaka/ (a real page); GRETIL; TITUS.
+  notes: >
+    Carries the SAME attribution question as the brāhmaṇa record above and must be decided
+    with it, not separately. Do not resolve one and leave the other.
+    Structure, for the embedded-text rule: the Śāṅkhāyana Āraṇyaka runs to 15 chapters, of
+    which 3–6 constitute the Kauṣītaki Upaniṣad and 7–8 the Saṃhitopaniṣad. So the upaniṣad
+    lives HERE, in its home layer, and is cross-referenced — the same pattern as
+    Bṛhadāraṇyaka in Śatapatha and Taittirīya Up. in TA 7–9.
+    Keith 1908 is a translation with introduction. PD by age. The Sanskrit text itself is
+    PD regardless.
+    PROPOSES A NEW NODE, conditional on the attribution decision.
+  date_logged: 2026-08-01
+
+- node_path: vedas/rigveda/bashkala/upanishad
+  veda: rigveda
+  organization: null
+  shakha: bashkala
+  layer: upanishad
+  proposes_new_node: true
+  edition: >
+    TWO DISTINCT TEXTS, and they must not be conflated:
+    (a) Kauṣītaki Upaniṣad — embedded at Śāṅkhāyana Āraṇyaka 3–6. Lives in the āraṇyaka
+        record above; cross-referenced, not duplicated.
+    (b) Bāṣkalamantra Upaniṣad — a short independent text, c. 25 verses, attributed to the
+        Bāṣkala caraṇa. E-text on TITUS, data entry T. Ježić (Zagreb), OPEN.
+  url: https://titus.uni-frankfurt.de/texte/etcs/ind/aind/ved/postved/upanisad/baskmup/baskm.htm
+  script: transliteration
+  svara_source?: unknown — not fetched
+  svara_verified?: pending — BV
+  text_layer: unicode
+  license: copyright-link-only
+  status: found-complete
+  where_i_looked: >
+    TITUS Vedic index (Bāṣkalamantra-Upaniṣad listed openly under post-Vedic Upaniṣads);
+    archive.org; sanskritdocuments.org; secondary discussions of the minor Upaniṣads.
+  notes: >
+    THE BĀṢKALAMANTRA UPANIṢAD IS THE ONE TEXT IN THIS PACKET THAT BEARS THE ŚĀKHĀ'S OWN
+    NAME and survives independently — which makes it disproportionately important to a
+    node whose saṃhitā is lost. It is the only place "Bāṣkala" attaches to a living text
+    without an attribution argument attached.
+    Reported to belong to the oldest stratum of Upaniṣads, and to address the supreme
+    being as Indra — itself an archaism. That is secondary characterisation, not verified
+    here, and should not be repeated as settled.
+    TITUS files it under POST-VEDIC Upaniṣads in its own taxonomy (…/ved/postved/upanisad/…)
+    even while the text is described as archaic. Recording the discrepancy rather than
+    smoothing it: TITUS's directory placement and the "oldest layer" characterisation are
+    in tension, and someone should reconcile them before this node is written up.
+    The Kauṣītaki Upaniṣad carries the same Bāṣkala-vs-Śāṅkhāyana attribution question as
+    the two records above. The Bāṣkalamantra does NOT — its attribution is in its name.
+    PROPOSES A NEW NODE. The Bāṣkalamantra alone would justify it, independently of how
+    the Kauṣītaki question is decided.
+  date_logged: 2026-08-01
+
+- node_path: vedas/rigveda/bashkala/_audio
+  veda: rigveda
+  organization: null
+  shakha: bashkala
+  layer: audio
+  edition: null
+  url: null
+  script: null
+  svara_source?: n/a
+  svara_verified?: pending — BV
+  text_layer: null
+  license: unknown
+  status: not-found
+  where_i_looked: >
+    vedicheritage.gov.in (no Bāṣkala page; my 'only two śākhās' reasoning is retracted, see `summary.ignca_portal_correction` —
+    the Ṛgveda section covers Śākala, including its Maharashtra and Kerala traditions, and
+    Āśvalāyana); IGNCA "Schools of Vedic Learning: Rigveda" PDF (swept — no Bāṣkala);
+    sanskritdocuments.org pāṭhaśālā directory; archive.org.
+  notes: >
+    NOT-FOUND, and the question is close to malformed — there is no Bāṣkala reciting
+    community and has not been for a very long time. `_status.yaml` records
+    `reciting_communities: []` and nothing here contradicts it.
+    THE ONE THING THAT WOULD BE RECORDABLE, and it is worth naming because it is
+    achievable: the KHILĀNI. Those 98 hymns are Bāṣkala's surviving trace, they are edited,
+    and they are sometimes carried within a Śākala reciter's repertoire. Recording the
+    Khilāni from a Śākala Ghanapāṭhī would capture the only audible Bāṣkala material there
+    is. That is a Śākala fieldwork ask with a Bāṣkala payoff — it belongs in a Śākala
+    recording plan, not in an expedition to find Bāṣkala reciters, because there are none.
+  date_logged: 2026-08-01

@@ -5,11 +5,19 @@ survival: endangered
 tier: settled
 reciting_communities:
   - region: Kerala / Tamil Nadu
-    note: "Nambudiri and Tamil Jaiminiya traditions; very few reciters remain — the priority recording target"
+    note: "Nambudiri and Tamil Jaiminiya traditions. Gerety finds the tradition reduced to a single active line of normative transmission."
 layers:
-  samhita:   { status: enumerated, note: "Jaiminiya Samhita — gana tradition markedly different from Kauthuma" }
-  brahmana:  { status: enumerated, note: "Jaiminiya Brahmana — major un-mined text" }
-  aranyaka:  { status: enumerated }
-  upanishad: { status: enumerated, note: "Kena (Talavakara) embedded in Jaiminiya Upanishad Brahmana — cross-reference, do not duplicate" }
-apparatus: {}
+  samhita:   { status: sourced, note: "Jaiminiyasamavedasamhita: Text of Kerala Tradition (Arcika, Sama and Candrasama portions), ed. K. A. Ravindran, National Mission for Manuscripts / Nag Publishers, 2013, 2 vols, ISBN 978-93-80829-20-3. Free. Prints in DEVANAGARI AND MALAYALAM, preserving the Kerala script transmission. Absent from every accented-Devanagari publisher — a structural fact about who publishes what, not a search failure." }
+  brahmana:  { status: sourced, note: "Five free scans located and apparently nobody working them — the scarcity is of ATTENTION, not copies. Raghu Vira & Lokesh Chandra 1954; Caland 1919 (German selection). VedicReserve holds an 846-page legacy-font copy, the largest single text in the sweep. Separate text, same layer: Jaiminiya Arseya Brahmana (Burnell 1878; B.R. Sharma)." }
+  aranyaka:  { status: sourced, note: "THERE IS NO SEPARATE JAIMINIYA ARANYAKA. In this sakha the Aranyaka IS the Jaiminiya Upanisad Brahmana (Talavakara Aranyaka) — positively confirmed, not merely argued: no separate edition exists in any script, and vedicheritage's own /aranyakas/jaiminiya-aranyaka/ returns 404. Editio princeps Oertel, JAOS 16, 1896; Rama Deva, D.A.V. Lahore 1921." }
+  upanishad: { status: enumerated, note: "Kena (Talavakara) embedded in the Jaiminiya Upanisad Brahmana — cross-reference, do not duplicate" }
+apparatus:
+  anukramani: { status: sourced, note: "Jaiminiyarseyabrahmanam, ed. B. R. Sharma — verified by reading the file (49,411 chars, 30,237 Devanagari). NEW node; this sakha's apparatus was empty." }
+audio:
+  status: sourced
+  note: "THE BEST-RECORDED SAKHA IN THE SWEEP, and it was nearly logged not-found. FOUR independent bodies: (A) IGNCA Vedic Heritage — 191 MP4s at /samhitas/samaveda-samhitas/jaiminiya-samhita-2/, JS-injected and invisible to scrapers, verified by direct HTTP. (B) Arnold Bake, BRITISH LIBRARY, 1933 — slip notes read '[Samaveda, Nambudiri (Jaiminiya)] Kottayam 6/11/33 Aranyakagana'; several catalogued 'almost inaudible... heavy mould'. (C) Staal/Levy Kerala 1957 and 1962, Folkways LP 1969. (D) Kalady — unpublished 1995-2015 Kerala Jaiminiya recordings, available on request."
+findings:
+  - "THE JAIMINIYA GANA IS PRINTED WITH NO NOTATION AT ALL — no accent marks, no svara-anka digits. Confirmed for BOTH the Kerala Devanagari and the Paravastu Telugu editions. It was never notated; the melody lives in written-out vowel prolongations, stobhas and oral transmission. A source reading svara=0 digits=0 is CORRECT here, not defective. FOR JAIMINIYA, THE RECORDING IS THE TEXT — audio is the primary carrier, and any text-only record of this sakha is incomplete by definition."
+  - "CAPTURE SEQUENCE, cheapest and most perishable first: (1) email Kalady; (2) digitise the Bake cylinders, 93 years old and moulded; (3) resolve whether Howard's tapes are at Indiana ATM; (4) only then record. The urgency is FRAGILITY AND DISPERSAL, not absence — four bodies of recording under four incompatible rights regimes, with exactly one item anywhere carrying a clean licence (CC BY-NC 4.0)."
+  - "The Jaiminiya Brahmana has NO classical commentary at all."
 sources: []

@@ -7,6 +7,8 @@ reciting_communities:
   - region: Maharashtra / Karnataka
     note: "Small reciting pockets reported (e.g. Gokarna) — verify before asserting"
 layers:
-  samhita: { status: enumerated, note: "Close to Kauthuma; differences mainly in gana tradition" }
+  samhita: { status: enumerated, note: "ZERO presence across the entire publisher ecosystem. Consistent with 'close to Kauthuma; differences mainly in gana tradition' — the differences live exactly in the gana material, which is the part nobody has digitised for this sakha. A documented absence; nothing to link." }
 apparatus: {}
+findings:
+  - "NOTATION: Ranayaniya writes melody with digits OR with varga-paribhasa letters, depending on the edition. Three Samaveda sakhas give three incompatible answers to 'how is melody written' — Kauthuma digits, Ranayaniya either, Jaiminiya nothing. Never infer a notation system from the Veda."
 sources: []

@@ -7,16 +7,23 @@ reciting_communities:
   - region: Tamil Nadu
     note: "Dominant recited shakha of South India; also Andhra, Karnataka, Kerala"
 layers:
-  samhita:   { status: sourced,    note: "Kanda 1 PDF only — remaining kandas to source" }
-  brahmana:  { status: sourced,    note: "Taittiriya-Brahmanam.pdf (stotrasamhita-lineage typesetting; marked personal-use-only — see sources/README licensing caveat)" }
-  aranyaka:  { status: sourced,    note: "Taittiriya Aranyaka Sanskrit PDF + secondary essence. Embedded texts live HERE: Taittiriya Upanishad = TA prapathakas 7-9; Mahanarayana Upanishad = TA 10." }
+  samhita:   { status: sourced, note: "COMPLETE at last: KYVeda/texts TS-Padam holds all 44 prasnas across all 7 kandas (1.1-1.8, 2.1-2.6, 3.1-3.5, 4.1-4.7, 5.1-5.7, 6.1-6.6, 7.1-7.5) in Baraha plain text with accent preserved. Also sanskritdocuments accented Unicode. Held PDF is kanda 1 only and is a textless scan. TITUS serves accented Unicode Devanagari (ts001 measured: 706 U+0951 + 841 U+0952) but is all-rights-reserved." }
+  brahmana:  { status: sourced, note: "Taittiriya-Brahmanam.pdf (stotrasamhita typesetting) — accented Unicode, 5,871 svara marks per 40pp. No translation or commentary in the volume, so nothing copyrightable: mula text is PD and usable; the personal-use notice is provenance, not a restriction. A materially better copy exists at sanskritdocuments (562k Devanagari / 88.7k svara) — take it on quality grounds." }
+  aranyaka:  { status: sourced, note: "Taittiriya-Aranyaka-Sanskrit.pdf — accented Unicode, 4,090 svara marks per 40pp. NOTE: carries the IDENTICAL stotrasamhita personal-use colophon as the Brahmana and is AES-encrypted; same rule-9 reasoning applies. Embedded texts live HERE: Taittiriya Upanisad = TA 7-9; Mahanarayana Upanisad = TA 10." }
   upanishad: { status: enumerated, note: "Taittiriya + Mahanarayana are embedded in the Aranyaka — cross-reference, do not duplicate" }
 apparatus:
-  pratishakhya: { status: enumerated, note: "Taittiriya Pratishakhya" }
-  anukramani:   { status: enumerated }
-  kalpa:        { status: enumerated, note: "Apastamba, Baudhayana, and related sutra traditions" }
+  pratishakhya: { status: sourced, note: "FULLY SOURCED. sanskritweb tp-comb.pdf = Whitney's complete text + translation, all 24 adhyayas. Tests as chars=44731 devanagari=0 svara=0 — the LEGACY-FONT case, not a scan: remap, do not OCR. See findings for what it settles." }
+  anukramani:   { status: enumerated, note: "THE ONE APPARATUS NODE NOTHING FILLS. Attributed to Katyayana; no separately printed or digitised copy in Archive.org, GRETIL, TITUS or sanskritweb. Next move is page-turning, not searching: the Anandasrama TS (ASS 42) and the VSM critical TS both conventionally bind an anukramani in." }
+  padapatha:    { status: sourced, note: "KYVeda TS-Padam, complete, all 7 kandas. Also TS-Kramam and a Jatai/Ghanam project — the vikrti pathas, i.e. the tradition's own error-correcting code, machine-readable." }
+  kalpa:        { status: enumerated, note: "Apastamba, Baudhayana, Bharadvaja, Vaikhanasa sutra traditions" }
+  bhashya:      { status: sourced, note: "TWO classical commentators, and the earlier one is not Sayana. BHATTA BHASKARA MISRA commented on all three Taittiriya texts and PREDATES Sayana; both commentaries are fully open and the VSM critical edition prints them SIDE BY SIDE with the padapatha. Two named classical readings of the same text, with real disagreement between them — the natural material for the side-by-side tier discipline." }
+findings:
+  - "TAITTIRIYA PRATISAKHYA 24.5 NAMES EXACTLY THREE ACCENT QUALITIES — svarita, udatta, nicatva. Read directly off the source. This answers the first item on the build plan's open-[verify] list ('whether Taittiriya marks 2 or 3 accent classes; determines the accent head's label set'). The anchor sakha's own specification answering a question about its own accent system. Still worth confirming with the guru as a practice question."
+  - "BARAHA MARKERS ARE SIX, NOT TWO. q and # map to U+0952 and U+0951, but $, &, ~M and (gg) require Vedic Extensions (U+1CD0-1CFF). A two-rule importer looks like it works and silently drops data."
+  - "KYVeda/texts declares NO LICENCE and is ~8.5 GB — needs a sparse checkout of the text directories. Under rule 9 the mula text is PD regardless, but there is no explicit grant to lean on."
 sources:
-  - "Taittriya Samhita Kanda 1.pdf"
-  - "Taittiriya-Brahmanam.pdf (for personal use only — not redistributable; replace with a clean-licensed edition)"
-  - "Taittiriya-Aranyaka-Sanskrit.pdf"
+  - "Taittriya Samhita Kanda 1.pdf — pure scan, no text layer; superseded by KYVeda TS-Padam"
+  - "Taittiriya-Brahmanam.pdf (public domain mula text; publisher notice recorded, not binding — credit the edition)"
+  - "Taittiriya-Aranyaka-Sanskrit.pdf (same colophon and reasoning as the Brahmana)"
   - "Mahanarayana Upanishad — Swami Vimalananda (Sanskrit-English)"
+  - "[to source] github.com/KYVeda/texts — TS-Padam, TS-Kramam, Ghanam, brAhmaNa, AraNyaka"

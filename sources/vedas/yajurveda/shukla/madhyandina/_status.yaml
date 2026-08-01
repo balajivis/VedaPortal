@@ -7,12 +7,17 @@ reciting_communities:
   - region: North India
     note: "Dominant Shukla Yajurveda tradition of the North — enumerate specific communities before claiming more"
 layers:
-  samhita:   { status: enumerated, note: "Vajasaneyi Samhita (Madhyandina recension)" }
-  brahmana:  { status: enumerated, note: "Shatapatha Brahmana (Madhyandina recension)" }
-  aranyaka:  { status: enumerated, note: "Aranyaka portion within the Shatapatha's closing books" }
-  upanishad: { status: enumerated, note: "Brihadaranyaka Upanishad = closing section of the Shatapatha Brahmana — embedded; lives with its home text, cross-referenced only. Also Isha = Samhita chapter 40." }
+  samhita:   { status: sourced, note: "Vajasaneyi Samhita (Madhyandina). VedicReserve legacy-font copy, accented. GRETIL's entry is 'restricted/TITUS, converted file not available' and serves nothing. TITUS itself holds it, all-rights-reserved." }
+  brahmana:  { status: sourced, note: "SATAPATHA BRAHMANA — GRETIL legacy .htm, sb_01_u.htm ... sb_14_u.htm, input by John Robert Gardner. INCOMPLETE: GRETIL's own index states 'SatBr_12 not available' — 13 of 14 kandas. DCS is worse (kandas 1-6, 10, 13 only); combining both still leaves kanda 12 absent. Unaccented (verified on kanda 1). Licence defers to source and is not restated — link-only. TITUS has it complete and public but all-rights-reserved." }
+  aranyaka:  { status: enumerated, note: "Aranyaka portion within the Satapatha's closing books" }
+  upanishad: { status: enumerated, note: "Brhadaranyaka Upanisad = closing section of the Satapatha Brahmana — embedded; lives with its home text, cross-referenced only. Isha = Samhita chapter 40." }
 apparatus:
-  pratishakhya: { status: enumerated, note: "Vajasaneyi Pratishakhya" }
+  pratishakhya: { status: enumerated, note: "Vajasaneyi Pratisakhya" }
   anukramani:   { status: enumerated }
-  kalpa:        { status: enumerated, note: "Katyayana Shrautasutra tradition" }
+  kalpa:        { status: enumerated, note: "Katyayana Srautasutra tradition" }
+  padapatha:    { status: enumerated, note: "Exists in print only. No machine-readable padapatha for this sakha." }
+  bhashya:      { status: enumerated, note: "CORRECTION to a common assumption: Sayana did NOT leave the Shukla Yajurveda alone — he commented on the KANVA recension, with Anandabodha. It is MADHYANDINA he left to Uvata and Mahidhara." }
+findings:
+  - "THE LARGEST REMAINING HOLE IN THE CORPUS, AND THE BLOCKER IS LICENCE, NOT AVAILABILITY. The Satapatha Brahmana is absent in ANY form, either recension, from the entire accented-Devanagari publisher ecosystem. TITUS has the Madhyandina Satapatha COMPLETE and PUBLIC. A permission request to TITUS is the single highest-leverage action available for this sakha, and it also reaches the aranyaka and Brhadaranyaka nodes, which are unsourced for the same reason."
+  - "Adyar Library's Vedic catalogue names 5 Madhyandina manuscripts. Sakha is absent from the modern databases but stated routinely in printed catalogues — see the manuscripts register."
 sources: []

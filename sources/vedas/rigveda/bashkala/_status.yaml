@@ -3,8 +3,16 @@ organization: null
 shakha: bashkala
 survival: fragmentary
 tier: settled
-reciting_communities: []
+reciting_communities: []          # none; and none for a very long time
 layers:
-  samhita: { status: enumerated, note: "Attested; associated with the Khilani (supplementary hymns). No complete text survives." }
+  samhita: { status: enumerated, note: "GENUINELY LOST — no complete text survives, and no searching will change that. Surviving trace: the KHILANI, 98 supplementary hymns recorded in Baskala and absent from Sakala, ed. Scheftelowitz 1906 from a single Kashmiri manuscript now in Pune. E-text on GRETIL and TITUS. Do NOT let the Khila material make this node look sourced — it is a fragment of a lost recension." }
+  brahmana:  { status: enumerated, note: "CONTESTED ATTRIBUTION — see findings. The Kausitaki (Sankhayana) Brahmana is widely claimed for Baskala, which would give this sakha a complete surviving brahmana despite a lost samhita. Editions exist and are free (Lindner 1887; Sreekrishna Sarma 1968 with Udaya's commentary; Keith 1920 tr.). Filed as enumerated pending the attribution decision." }
+  aranyaka:  { status: enumerated, note: "Sankhayana Aranyaka (Keith 1908). SAME attribution question as the brahmana — decide both together, never separately." }
+  upanishad: { status: sourced, note: "TWO DISTINCT TEXTS, do not conflate. (a) Kausitaki Upanisad = Sankhayana Aranyaka 3-6 — embedded, lives in its home layer. (b) BASKALAMANTRA UPANISAD — a short independent text, c.25 verses, on TITUS (data entry T. Jezic). The only text bearing this sakha's own name that survives independently, with no attribution argument attached." }
 apparatus: {}
+audio:
+  status: not-found
+  note: "The question is close to malformed — there is no Baskala reciting community. What IS recordable and achievable: the Khilani, which are edited and are sometimes recited."
+findings:
+  - "ATTRIBUTION IS THE WHOLE QUESTION FOR THIS SAKHA. Saunaka's Caranavyuha lists Sakala, Baskala, Asvalayana, Sankhayana and Mandukayana as separate caranas — so 'Sankhayana Brahmana = Baskala' needs an argument, not an assumption. Recorded, not resolved (rule 7). The same decision governs rigveda/shakala's brahmana and aranyaka notes."
 sources: []

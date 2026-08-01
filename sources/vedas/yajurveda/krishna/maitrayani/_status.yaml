@@ -7,7 +7,10 @@ reciting_communities:
   - region: Maharashtra / Gujarat
     note: "Small reciting pockets reported — verify before asserting"
 layers:
-  samhita:   { status: enumerated, note: "Maitrayani Samhita" }
-  upanishad: { status: enumerated, note: "Maitrayaniya Upanishad — attribution and textual history debated" }
-apparatus: {}
+  samhita:   { status: sourced, note: "GRETIL maitrs_au.htm (analytic) + maitrs_pu.htm (plain), redistributed from TITUS as legacy .htm. UNACCENTED — verified against expectation: TITUS's Maitrayani is generally DESCRIBED as accented, the file GRETIL serves is not (0 U+0951/0952 over 1.24MB; the 8,929 raw U+0301 are all NFD(s)). Completeness not established. Licence defers to TITUS and is not restated — treat as link-only." }
+  upanishad: { status: enumerated, note: "Maitrayaniya Upanisad — attribution and textual history debated" }
+apparatus:
+  padapatha: { status: enumerated, note: "THE ONE THAT HURTS. A Maitrayani padapatha EXISTED, is lost as recitation, and survives in TWO MANUSCRIPTS — BORI and the Vaidika Samsodhana Mandala, both in Pune — covering four kandas. Recoverable, and nobody is recovering it." }
+findings:
+  - "Accented Unicode Maitrayani exists at TITUS (all-rights-reserved). The GRETIL redistribution has had the accents dropped. If accent is wanted, TITUS is the only route and it needs permission."
 sources: []

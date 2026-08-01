@@ -7,11 +7,16 @@ reciting_communities:
   - region: Gujarat / Maharashtra
     note: "Small living tradition — verify specifics before asserting"
 layers:
-  samhita:   { status: enumerated, note: "Shaunaka Samhita — the standard printed Atharvaveda" }
-  brahmana:  { status: enumerated, note: "Gopatha Brahmana" }
-  upanishad: { status: enumerated, note: "Mundaka, Mandukya per tradition. NO aranyaka layer exists in the Atharvaveda — deliberate absence, do not create one." }
+  samhita:   { status: sourced, note: "FILLS ONE OF THE THREE EMPTY TARGET SAKHAS, TWICE OVER, IN TWO INDEPENDENT ENCODINGS. (a) VedicReserve, 713pp, complete, legacy-font DEVANAGARI, accented at 10.8% glyph density — and it carries per-sukta ANUKRAMANI HEADERS INLINE (rsi, devata, chandas per sukta). (b) GRETIL avs_acu.htm, accented Unicode ROMAN — 78,965 genuine udatta + 1,248 svarita, and THE ONLY ACCENTED TEXT IN GRETIL'S ENTIRE VEDIC SECTION. Two encodings of the same accented text can validate each other mark-for-mark." }
+  brahmana:  { status: sourced, note: "GOPATHA BRAHMANA. GRETIL TEI-P5, input by Arlo Griffiths, both parts (purva + uttara), unaccented, 322,029 chars; DCS confirms completeness at 233 chunks. VedicReserve's copy is a 92pp PURE SCAN. ATTRIBUTION: the Gopatha is the brahmana of the Atharvaveda as a whole and is claimed by both the Saunaka and Paippalada lines — filed here provisionally, cross-reference from paippalada rather than duplicating." }
+  upanishad: { status: sourced, note: "Mundaka, Mandukya per tradition — VedicReserve, unaccented. NO ARANYAKA LAYER EXISTS IN THE ATHARVAVEDA — deliberate absence, do not create one." }
 apparatus:
-  pratishakhya: { status: enumerated, note: "Shaunakiya Chaturadhyayika" }
-  anukramani:   { status: enumerated }
-  kalpa:        { status: enumerated, note: "Vaitana + Kaushika sutras" }
+  pratishakhya: { status: sourced, note: "Saunakiya Caturadhyayika — Whitney's text/translation/notes, JAOS 7, 1862 (metadata date field says 1860; record the edition, not the field). Also Surya Kanta's Atharva Pratisakhya 1939. CAUTION: VedicReserve's 'Atharva Veda Pratisakhya' resolves to a single 6-page PDF, too short for the Caturadhyayika — probably an extract, not identified." }
+  anukramani:   { status: sourced, note: "Atharvavediya Brhat-Sarvanukramanika. The critical edition is Vishva Bandhu, Hoshiarpur 1966 — THE COPY FOUND ONLINE IS NOT IDENTIFIED AS THAT EDITION. Attribution unverified, recorded here not in shakha (rule 7). Content is genuine and is the right text." }
+  padapatha:    { status: sourced, note: "Pandit's 1895-98 critical edition is the PD route to the AV padapatha (verified DLI identifiers). Vishva Bandhu's 5-vol edition is bibliographically confirmed but not cleanly available. PRINT ONLY — no machine-readable AV padapatha." }
+  kalpa:        { status: sourced, note: "THE BEST-SERVED KALPA CELL IN THE CORPUS, and the only one whose primary source is already machine-readable. Kausika Sutra and Vaitana Sutra, both on GRETIL as TEI-XML, input by Arlo Griffiths, with reference apparatus inline." }
+  bhashya:      { status: sourced, note: "PARTIAL, deliberately not upgraded. The Archive.org bundle mixes Pandit's 1895-98 critical edition (a padapatha/variants edition, NOT a Sayana commentary) with two volumes that do look like the genuine Vishva Bandhu Sayana volumes — 2 of 5." }
+findings:
+  - "P3 CONFIRMED AND REFINED: the AV is not absent, it is present-but-marginal. The trayi habit persists inside the exception — SCVG's own utsavam calendar lists only three Upakarmas."
+  - "Adyar Library's Vedic catalogue names 4 Saunaka manuscripts."
 sources: []

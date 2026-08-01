@@ -1,0 +1,1872 @@
+# P2-b — Apparatus tier: Prātiśākhyas · Anukramaṇīs (non-RV) · Kalpa · Nirukta/Nighaṇṭu ·
+#         padapāṭha availability · Sāyaṇa coverage
+#
+# Schema: sources/COLLECTION-PROTOCOL.md §1. Staging only — nothing here is authoritative,
+# and no _status.yaml was touched.
+#
+# Packet boundaries honoured: the Ṛgveda Anukramaṇī is P0-a's and is NOT logged here (only
+# noted as a cross-reference where a bundle happens to contain it). GRETIL/DCS/VedaWeb/TITUS
+# are P0-a's registry work; they appear here only where an apparatus text or a padapāṭha lives
+# there and the fact is load-bearing for this packet's two mapping deliverables. The
+# sanskritweb/Sarma publisher ecosystem is P1-a's; one sanskritweb file (tp-comb.pdf) is logged
+# here because it is an apparatus text, not a saṃhitā, and it is the single best TP source found.
+# Manuscript items are logged as leads for P2-c and marked `manuscript_lead: true` — not chased.
+
+packet: P2-b
+collector: agent
+date_logged: 2026-08-01
+
+summary: |
+  ================================================================================
+  HEADLINE
+  ================================================================================
+  Of the 15 apparatus cells declared `enumerated` across the five śākhās that carry an
+  `apparatus:` block (Śākala, Taittirīya, Mādhyandina, Kauthuma, Śaunaka × pratishakhya /
+  anukramani / kalpa), the Ṛgveda anukramaṇī is P0-a's. Of the remaining 14, **13 are now
+  fillable to `sourced`** with a verified, open URL. The one that is not is the Taittirīya
+  Anukramaṇī (see NOT-FOUND below). Two further nodes not currently in any _status.yaml are
+  also filled here: Nirukta and Nighaṇṭu (proposed `_reference/`), plus a Jaiminīya anukramaṇī
+  found opportunistically.
+
+  ================================================================================
+  1. PER-ŚĀKHĀ APPARATUS MATRIX
+  ================================================================================
+  Legend: ✔ = open source verified to open and be the right text · ~ = partial / attribution
+  unverified · ✘ = not found · [e] = machine-readable e-text exists (not a scan)
+
+  śākhā            | prātiśākhya          | anukramaṇī            | kalpa
+  -----------------+----------------------+-----------------------+---------------------------
+  RV Śākala        | ✔ Ṛk-Prāt., Mangal   | (P0-a — not mine)     | ✔ Āśvalāyana Śr+Gṛ [e],
+                   |   Deva Shastri w/    |                       |   Śāṅkhāyana Śr+Gṛ [e];
+                   |   Uvaṭa, 3 vols;     |                       |   both w/ PD Eng. tr.
+                   |   also Yugalakiśora  |                       |   (Oldenberg SBE 29)
+                   |   Vyāsa 1894. NO [e] |                       |
+  KYV Taittirīya   | ✔✔ TP: Whitney text  | ✘ NOT FOUND — see §4  | ✔ Āpastamba Śr (Garbe),
+                   |   + tr. [e at TITUS] |   Kātyāyana is credited|   Gṛ [e], Śulba [e];
+                   |   + sanskritweb PDF  |   with a Taittirīya    |   Baudhāyana Śr (Caland),
+                   |   (legacy-encoded)   |   anukramaṇī but no    |   Gṛ, Śulba; Bhāradvāja
+                   |   + 3 印 Devanāgarī  |   separate printed or  |   Śr (Kashikar) + Gṛ
+                   |   eds w/Tribhāṣyaratna|  digitised text found |   (Salomons 1913);
+                   |                      |                       |   Vaikhānasa Śr + Smārta
+                   |                      |                       |   (Caland, w/ PD Eng. tr.);
+                   |                      |                       |   Hiraṇyakeśi/Satyāṣāḍha
+  SYV Mādhyandina  | ✔ Vājasaneyi-Prāt.   | ✔ Sarvānukramasūtram, | ✔ Kātyāyana Śr (Weber
+                   |   of Kātyāyana w/    |   Svādhyāya-Maṇḍala,  |   1859) + Śulba (Khadikar);
+                   |   Uvaṭa, Benares 1888|   Killa-Pardi — good  |   Pāraskara Gṛ (SBE 29 tr.
+                   |   + Ghosal Eng. tr.  |   Devanāgarī OCR      |   PD; Skt. text NOT on
+                   |   (Part I only). NO[e]|                      |   GRETIL)
+  SYV Kāṇva        | (shares VPr)         | ✘ no Kāṇva-specific   | (shares Kātyāyana/Pāraskara)
+                   |                      |   anukramaṇī found    |
+  SV Kauthuma      | ✔ Ṛktantra (Surya    | ✔ Ārṣeya Brāhmaṇa     | ✔ Lāṭyāyana Śr (Bibl. Ind.
+                   |   Kanta 1933) + ✔    |   w/ Sāyaṇa; + Sāma-  |   1872), Drāhyāyaṇa Śr
+                   |   Puṣpasūtra (IGNCA  |   veda-sarvānukramaṇī |   (Reuter 1904), Ārṣeya
+                   |   2 vols; B.R.Sharma |   printed inside Surya|   Kalpa (B.R. Sharma 1976),
+                   |   Stuttgart 1985)    |   Kanta's Ṛktantram   |   Nidānasūtra (Bhatnagar
+                   |   NO [e]             |                       |   1939), Gobhila/Khādira Gṛ
+                   |                      |                       |   (both w/ PD Eng. tr.)
+  SV Jaiminīya     | (shares Ṛktantra)    | ✔ Jaiminīya Ārṣeya    | (Jaimini-Gṛhyasūtra [e],
+                   |                      |   Brāhmaṇa, B.R.Sharma|   Caland 1922 tr. PD)
+  AV Śaunaka       | ✔✔ Śaunakīyā Catur-  | ~ Bṛhat-Sarvānukra-   | ✔ Vaitāna [e] (Garbe 1878),
+                   |   ādhyāyikā: Whitney |   maṇikā — a copy is  |   Kauśika [e] (Bloomfield
+                   |   JAOS 7 (1862) +    |   online but the      |   1890), AV-Pariśiṣṭas [e],
+                   |   Surya Kanta 1939.  |   edition/editor is   |   Atharvaprāyaścittāni [e]
+                   |   Deshpande HOS 52   |   NOT stated → attri- |
+                   |   (1997) = ©, link   |   bution unverified.  |
+                   |   only. NO [e]       |   Vishva Bandhu 1966  |
+                   |                      |   ed. not found free  |
+  RV Bāṣkala, KYV Kaṭha/Maitrāyaṇī/Kapiṣṭhala, SV Rāṇāyanīya, AV Paippalāda carry no
+  `apparatus:` block today; nothing in this sweep argues for creating one, except that a
+  **Śāṅkhāyana-śākhīya Ṛgveda Saṃhitā padapāṭha** exists in print (see §2) which bears on
+  Bāṣkala/Śāṅkhāyana questions — flagged to P2-a, not claimed here.
+
+  THE SINGLE MOST LOAD-BEARING FINDING FOR ACCENT WORK:
+  The Taittirīya Prātiśākhya is fully available, complete, in two independent forms, and it
+  states its own accent inventory. TP 24.5 — the penultimate sūtra, read directly out of
+  tp-comb.pdf — enumerates the properties a Veda-reader must know and names exactly three
+  accent qualities: `svarita, udātta, nīcatva` ("circumflex, acute, grave", Whitney's rendering),
+  alongside quantity (hrasva/dīrgha/pluta), weight (guru/laghu), and the recitation
+  transformations (lopa/āgama/vikāra; prakṛti/vikrama/krama). This is the branch's own answer
+  to "how many accent classes does Taittirīya mark", and it settles it at three marked classes
+  plus quantity — a question no printed edition states in prose. TP is therefore the correct
+  ground truth for any accent-aware OCR target on the anchor śākhā, and it is sourced.
+
+  ================================================================================
+  2. THE PADAPĀṬHA AVAILABILITY MAP  (the most consequential map in this packet)
+  ================================================================================
+  Columns: does a padapāṭha exist in the tradition? · is a PRINT edition open online? ·
+  is a MACHINE-READABLE (already-tokenised, sandhi-resolved) transcription open online?
+
+  śākhā / text                    | exists | print open        | machine-readable open
+  --------------------------------+--------+-------------------+------------------------------
+  RV Śākala                       | YES    | YES (many)        | YES — GRETIL
+                                  |        |                   | sa_RgvedasaMhitApadapATha
+                                  |        |                   | (2.6 MB, complete, roman,
+                                  |        |                   | sandhi-split, CC BY-NC-SA);
+                                  |        |                   | + TITUS synoptic (Lubotsky),
+                                  |        |                   | incl. a Devanāgarī rendering
+  RV Śāṅkhāyana (≈Bāṣkala-adj.)   | YES    | YES — eGangotri,  | NO
+                                  |        | ed. Rūpa Kiśore   |
+                                  |        | Śāstrī, Part 3    |
+  KYV Taittirīya (Saṃhitā)        | YES    | YES — Vaidyanāth  | NO
+                                  |        | Śāstrī 1914/15,   |
+                                  |        | pūrva+uttara; and |
+                                  |        | inside Sontakke's |
+                                  |        | VSM crit. ed.     |
+  KYV Kaṭha (Kāṭhaka Saṃhitā)     | NO*    | —                 | PARTIAL, GATED — TITUS holds
+                                  |        |                   | a Pada-Pāṭha of KS books
+                                  |        |                   | 19–22 (Werba), preliminary
+                                  |        |                   | and TITUS-members-only
+  KYV Maitrāyaṇī                  | LOST   | NO                | NO — a padapāṭha existed and
+                                  |        |                   | is lost; MSS survive at BORI
+                                  |        |                   | and VSM Pune covering to
+                                  |        |                   | kāṇḍa 4 (→ P2-c lead)
+  KYV Kapiṣṭhala                  | NO     | —                 | NO
+  SYV Mādhyandina                 | YES    | YES — Yudhiṣṭhira | NO
+                                  |        | Mīmāṃsaka (2 uploads)
+  SYV Kāṇva                       | YES    | YES — B.R. Sharma | NO
+                                  |        | 1988 (w/ Sāyaṇa + |
+                                  |        | Ānandabodha); and |
+                                  |        | K. Suresh /       |
+                                  |        | The Ghanapati,    |
+                                  |        | Chennai (accented)|
+  SV Kauthuma                     | YES    | YES — eGangotri   | NO
+                                  |        | scan of prapāṭhaka|
+                                  |        | 1–6; Benfey 1848 /|
+                                  |        | Sāmaśramī 1874–99;|
+                                  |        | B.R. Sharma HOS   |
+                                  |        | 57/58 (2000–01, ©)|
+  SV Rāṇāyanīya                   | ?      | NO                | NO
+  SV Jaiminīya                    | NO     | —                 | NO
+  AV Śaunaka                      | YES    | YES — Shankar     | NO
+                                  |        | Pandurang Pandit  |
+                                  |        | 1895–98 (4 vols); |
+                                  |        | Vishva Bandhu     |
+                                  |        | 1960–64 (5 vols)  |
+  AV Paippalāda                   | NO     | —                 | NO
+  Taittirīya Brāhmaṇa / Āraṇyaka  | trad.  | NOT FOUND online  | NO
+                                  | YES    | (recited padapāṭha|
+                                  |        | attested; no      |
+                                  |        | printed edition    |
+                                  |        | surfaced)          |
+  Śatapatha Brāhmaṇa              | NO     | —                 | NO
+
+  *Kaṭha: the tradition is explicit that the Kāṭhaka Saṃhitā carries no commentary, no
+   padapāṭha, and no complete separate brāhmaṇa. The TITUS KS 19–22 padapāṭha is therefore a
+   modern scholarly reconstruction (Werba's special edition), not a received text — treat it
+   as such and do not present it as traditional.
+
+  WHAT THIS MAP MEANS FOR THE BUILD
+  - Free tokenisation exists for exactly ONE śākhā in machine-readable form: **Ṛgveda Śākala**.
+    Every other śākhā that has a padapāṭha has it only as page images. That is a scanning-and-
+    OCR problem, not a linguistics problem — the tradition already did the linguistics.
+  - The **Taittirīya padapāṭha is the highest-value digitisation target in the whole corpus**:
+    it exists, it is complete, it is public domain (1914/15), it is the anchor śākhā, and
+    nobody has transcribed it. Doing so hands the project sandhi-resolved TS for free.
+  - Where no padapāṭha exists at all — Kaṭha, Kapiṣṭhala, Jaiminīya, Paippalāda, Śatapatha —
+    downstream tokenisation has no traditional ground truth and every sandhi decision becomes
+    a model decision with no checksum. Those are exactly the śākhās where "AI generates,
+    tradition verifies" has no tradition to verify against. Encode that honestly.
+  - Maitrāyaṇī is the poignant case: the padapāṭha existed, is lost as a recitation, and
+    survives only in two Pune manuscripts covering four kāṇḍas.
+
+  ================================================================================
+  3. SĀYAṆA'S TRUE COVERAGE
+  ================================================================================
+  Sāyaṇa is far more than a Ṛgveda commentator, and the popular picture understates him in one
+  direction and overstates him in another.
+
+  CONFIRMED, COMPLETE, AND OPEN (mūla + bhāṣya, Devanāgarī, usable text layer):
+    Ṛgveda Saṃhitā ............ Max Müller ed.; Vaidika Saṃśodhana Maṇḍala (Sontakke/Kashikar)
+                                4-part complete set, all parts text-searchable
+    Taittirīya Saṃhitā ........ Ānandāśrama Sanskrit Series No. 42, ed. Kāśīnātha Śāstrī
+                                Āgāśe, 9 parts, 1940–51
+    Taittirīya Brāhmaṇa ....... ASS 37 (+38 for part 3), ed. Nārāyaṇaśāstrī Godbole
+    Taittirīya Āraṇyaka ....... ASS 36, ed. Bābāśāstrī Phāḍke
+    Aitareya Brāhmaṇa ......... Bibliotheca Indica, Satyavrata Sāmaśramī, 2 vols
+    Aitareya Āraṇyaka ......... Bibliotheca Indica, Rajendralāla Mitra
+    Pañcaviṃśa/Tāṇḍya Br. ..... Bibliotheca Indica, Ānandacandra Vedāntavāgīśa, 2 vols
+    Ārṣeya Brāhmaṇa ........... CONFIRMED by reading the file: "आर्षेयब्राह्मणम् सायणाचार्य-
+                                विरचितेन वेदार्थप्रकाशेन समन्वितम्", with the Bukka/Vidyātīrtha
+                                invocation verses. Sāyaṇa's Vedārthaprakāśa covers it.
+    Śatapatha Brāhmaṇa ........ Sāyaṇa's Vedārthaprakāśa, but PARTIAL — publishers uniformly
+                                print it together with Harisvāmin's older commentary precisely
+                                because Sāyaṇa's does not cover the whole text. The 1940
+                                Gaṅgāviṣṇu 5-part Sāyaṇa+Harisvāmin set is the usable one.
+                                The chapter-by-chapter boundary of what Sāyaṇa left uncovered
+                                could not be established — flagged, not guessed.
+    Sāmaveda Saṃhitā .......... Bibliotheca Indica, Sāmaśramī (Sāyaṇa attribution follows the
+                                series pattern; not independently confirmed in that item)
+
+  ATTESTED BUT NOT CLEANLY DIGITISED:
+    Ṣaḍviṃśa Brāhmaṇa, Sāmavidhāna Brāhmaṇa — Sāyaṇa's involvement is attested; no clean,
+    correctly-labelled open edition verified.
+    Atharvaveda Śaunaka — Vishva Bandhu's 5-vol Hoshiarpur ed. (padapāṭha + Sāyaṇa bhāṣya,
+    Vishveshvaranand Indological Series 13–17, 1960–64) is bibliographically real, but the
+    Archive.org item found bundles it confusingly with Shankar Pandurang Pandit's unrelated
+    1895–98 critical edition and only 2 of 5 volumes are identifiable. Treat as NOT covered.
+
+  CORRECTION TO A COMMON ASSUMPTION:
+    Sāyaṇa DID work on the Śukla Yajurveda — jointly with Ānandabodha, on the **Kāṇva**
+    recension of the Vājasaneyi Saṃhitā (Chowkhamba pub. adhyāyas 1–20, 1915; B.R. Sharma's
+    modern critical ed. 1988 carries Sāyaṇa+Ānandabodha for 1–20 and Ānandabodha+Anantācārya
+    for 21–40). The Mādhyandina VS is the one he did not touch — there the commentators are
+    Uvaṭa (Mantrabhāṣya) and Mahīdhara (Vedadīpa, 1588).
+
+  CONFIRMED ABSENT:
+    Jaiminīya Brāhmaṇa — no Sāyaṇa, no classical commentary of any kind; the first complete
+    edition (Raghu Vira & Lokesh Chandra 1954) was made without any commentary or paddhati.
+    Kaṭha, Maitrāyaṇī, Kapiṣṭhala Saṃhitās — no Sāyaṇa. Among the four surviving Kṛṣṇa
+    Yajurveda recensions only Taittirīya drew sustained classical commentary (Bhaṭṭa Bhāskara,
+    then Sāyaṇa). Kāṇva Śatapatha — no Sāyaṇa and apparently no classical commentary.
+
+  THE OLDER SOUTH INDIAN LAYER, WHICH MATTERS FOR THE ANCHOR ŚĀKHĀ:
+    **Bhaṭṭa Bhāskara Miśra** predates Sāyaṇa and commented on ALL THREE Taittirīya texts
+    (TS, TB, TA) — full coverage, independent of Sāyaṇa. Mysore Government Oriental Library
+    Series, ed. A. Mahādeva Śāstri (TS 1894–98; TB/TA 1900–02). All three are open with usable
+    text layers. The Vaidika Saṃśodhana Maṇḍala critical TS prints BOTH commentaries side by
+    side ("भट्टभास्कर-सायणाचार्य-विरचित-भाष्याभ्यां समेता" — read directly off the title page).
+    For a Taittirīya-anchored project this is a second, older, independent reading of the same
+    text, and it should be treated as a peer layer, not an appendix to Sāyaṇa.
+
+  H.H. WILSON'S ENGLISH ṚGVEDA (follows Sāyaṇa's interpretation — the intended cross-check):
+    6 volumes, London 1850–1888. Wilson (d. 1860) completed the earlier volumes; vol. 4 ed.
+    E.B. Cowell, vol. 5 Cowell & W.F. Webster, vol. 6 Webster alone. Two complete open sets on
+    Archive.org, all volumes verified with text layers. No single-file complete edition exists.
+    wisdomlib.org carries a genuinely machine-readable HTML transcription. Do not confuse with
+    sacred-texts.com's Ṛgveda, which is Griffith, not Wilson.
+
+  ================================================================================
+  4. GENUINELY UNAVAILABLE IN ANY DIGITAL FORM
+  ================================================================================
+  a) **The Nighaṇṭu has no open machine-readable text.** GRETIL's `sa_yAska-nirukta` is the
+     Nirukta ONLY — verified by reading the file: it opens at Nirukta 1,1 and ends at 14,37,
+     and "nighaṇṭu" appears in it only as the word Yāska is glossing. TITUS lists a Nighaṇṭu
+     e-text (Kobayashi) as "under preparation" with no public version. So the Nighaṇṭu — the
+     list of difficult words that is the actual input to a meaning layer — exists digitally
+     only as page scans. This is the highest-value small transcription job in the packet: five
+     short chapters of word-lists.
+  b) **The Taittirīya Anukramaṇī.** Kātyāyana is credited with anukramaṇīs for both the
+     Taittirīya and the Mādhyandina; the Mādhyandina one is in print and online, the
+     Taittirīya one is not, under any search tried. See the not-found record for
+     `where_i_looked`.
+  c) **A Kāṇva-specific anukramaṇī** — not found; possibly none exists distinct from
+     Kātyāyana's Mādhyandina Sarvānukramasūtram.
+  d) **Nidānasūtra** — the 1939 Bhatnagar scan is the only digital object anywhere; no e-text
+     on GRETIL, TITUS, Muktabodha or sanskritdocuments.
+  e) **Pāraskara Gṛhyasūtra Sanskrit text** — not on GRETIL; the clean PD digital text for
+     this Śukla Yajus gṛhya tradition is Oldenberg's English (SBE 29), not the Sanskrit.
+  f) **No Prātiśākhya at all is machine-readable except the Taittirīya.** GRETIL's section
+     literally headed "Pratisakhyas" contains no Prātiśākhya — only the Nirukta and the
+     Ṛgvidhāna. TITUS holds exactly one, the TP. Ṛk-, Vājasaneyi-, Śaunakīyā Caturādhyāyikā
+     and Ṛktantra/Puṣpasūtra are scans only. For a project whose thesis is that the
+     Prātiśākhyas are the accent specification, this is the structural gap: the specification
+     is not in a form a program can read, for four of five branches.
+  g) **No Anukramaṇī of any Veda is machine-readable.** All five (incl. the RV, which is
+     P0-a's) are page images. The Anukramaṇī validation harness — build-order #1 — is
+     blocked on transcription, not on discovery.
+  h) **English translations that do not exist at all** (not paywalled — absent): Āpastamba
+     Śrautasūtra, Baudhāyana Śrautasūtra (complete), Bhāradvāja Śrautasūtra, Baudhāyana
+     Gṛhyasūtra, Hiraṇyakeśi/Satyāṣāḍha Śrautasūtra, Vaikhānasa Śrautasūtra, Lāṭyāyana and
+     Drāhyāyaṇa Śrautasūtras (Parpola's 1968–69 study is a monograph, in copyright, offline).
+
+  ================================================================================
+  5. SCHEMA NOTES FOR THE MERGE REVIEWER  (decisions deliberately NOT taken here)
+  ================================================================================
+  - `apparatus.padapatha` and `apparatus.bhashya` are used below as node kinds. Neither exists
+    in any _status.yaml today. They are used so records get distinct primary keys and cannot
+    collide with P1-a/P1-b records on the same saṃhitā node. If you would rather model
+    padapāṭha as a FIELD on the saṃhitā node than as an apparatus child, these records rewrite
+    trivially — the finding is the map in §2, not the path.
+  - Nirukta and Nighaṇṭu are filed under `_reference/`, per README's description of that
+    directory as cross-cutting apparatus. They are Vedāṅga, pan-Vedic in application though
+    traditionally attached to the Ṛgveda. If you prefer `rigveda/shakala/apparatus/nirukta`,
+    that is a defensible call — it is yours, not the collector's.
+  - Several Kalpa texts serve more than one śākhā (Kātyāyana serves both Śukla branches;
+    Ṛktantra/Puṣpasūtra serve all three Sāma branches). They are logged once, on the śākhā
+    whose _status.yaml already declares the cell, with `also_serves` in notes.
+
+  ================================================================================
+  6. LEADS HANDED OFF
+  ================================================================================
+  → P2-c (manuscripts): Taittirīya-Prātiśākhya + Tribhāṣyaratna palm-leaf MS, Whish Collection,
+    Royal Asiatic Society, c.1825, 137 images, `raswhish38-37`, with OCR/hOCR layers.
+    Vājasaneyi Sarvānukramaṇī MS scan, eGangotri shelf 5101/Alm 23/Shlf 2.
+    Sāmaveda padapāṭha MS scan, eGangotri 5234/Alm 23/Shlf 5.
+    Puṣpasūtra MS scan, eGangotri 5262/Alm 24/Shlf 1.
+    Maitrāyaṇī padapāṭha MSS at BORI Pune and Vaidika Saṃśodhana Maṇḍala Pune (to kāṇḍa 4).
+  → P2-a (endangered): a Śāṅkhāyana-śākhīya Ṛgveda Saṃhitā **padapāṭha** is in print and
+    online (ed. Rūpa Kiśore Śāstrī, Maharshi Sandipani, Part 3) — bears on Bāṣkala/Śāṅkhāyana.
+    TITUS holds Kapiṣṭhala-Kāṭha-Saṃhitā and Maitrāyaṇī-Saṃhitā e-texts publicly.
+  → P0-a: `full-anukramani` on Archive.org bundles the RV Sarvānukramaṇī, Varṇānukramaṇī and
+    Bṛhaddevatā in one item with text layers; Mādhava Bhaṭṭa's Ṛgveda Anukramaṇī ed. C. Kunhan
+    Raja 1932 is also online. Not logged here — yours.
+
+  ================================================================================
+  7. METHOD / HONESTY NOTE
+  ================================================================================
+  Every Archive.org identifier below was resolved through `archive.org/metadata/<id>` and the
+  title/creator checked against the claim. Where a text layer is asserted, the `_djvu.txt` was
+  fetched and character-counted (Devanāgarī codepoints and svara marks counted separately).
+  Digital Library of India items very frequently ship an EMPTY `_djvu.txt` — several are marked
+  as such below, and that is a real difference between two items that look identical in a
+  search result. PDFs downloaded were run through the protocol §3 pdftotext test. Where I did
+  not sample, the record says so.
+
+records:
+
+# ============================================================================
+# 1 — PRĀTIŚĀKHYAS
+# ============================================================================
+
+- node_path: yajurveda/krishna/taittiriya/apparatus/pratishakhya
+  veda: yajurveda
+  organization: krishna
+  shakha: taittiriya
+  layer: apparatus
+  kind: pratishakhya
+  edition: >-
+    Taittirīya-Prātiśākhya with the commentary Tribhāṣyaratna, text/translation/notes by
+    William Dwight Whitney, Journal of the American Oriental Society vol. 9, New Haven 1871.
+    The file used here is the complete text + Whitney's English translation, proofread against
+    Whitney's edition by Ramesh Srinivasan, August 2005, typeset and hosted by Ulrich Stiehl
+    (sanskritweb.net), 60 pp.
+  url: http://www.sanskritweb.net/yajurveda/tp-comb.pdf
+  script: devanagari-legacy-font
+  svara_source?: >-
+    no — and correctly so. Verified by pdftotext over the whole file: svara marks = 0. The TP
+    is a sūtra text about accent, not an accented text. Its VALUE for accent work is that it
+    specifies the system; TP 24.5 (read directly) names svarita, udātta and nīcatva as the
+    three qualities, alongside quantity and the krama/vikrama transformations.
+  svara_verified?: pending — BV
+  text_layer: legacy-encoding
+  license: public-domain
+  status: found-complete
+  where_i_looked: null
+  notes: >-
+    PROTOCOL §3 TEST, run on the downloaded file: chars=44731 devanagari=0 svara=0 digits=3269
+    over the first 40 pages. This is the legacy-encoding case, NOT a scan and NOT a failure:
+    the Devanāgarī is in a pre-Unicode 8-bit Devanāgarī font (sūtra 1.1 renders as
+    "Aw v[Rsmaçay>" = अथ वर्णसमाम्नायः), and Whitney's English is in a legacy transliteration
+    font (ÁÀÌ for ī/ā/ś). Recoverable by codepage remap — do NOT send to OCR. Same class of
+    job as P0-b's `Entire Rig Veda Samhita.pdf`; consider batching them.
+    COMPLETENESS VERIFIED: pdfinfo reports 60 pages; the file opens at sūtra 1-1 and closes at
+    24-6 ("gacchedācāryasaṃsadam"), i.e. all 24 adhyāyas, every sūtra carrying both Sanskrit
+    and Whitney's translation. This is the whole Prātiśākhya of the anchor śākhā.
+    ATTRIBUTION OWED: Whitney (editor/translator, 1871); Ramesh Srinivasan (proofreader, 2005);
+    Ulrich Stiehl (sanskritweb, typesetting and hosting). sanskritweb is P1-a's publisher
+    ecosystem — logged here because this is an apparatus text, flagged to avoid double-logging.
+  date_logged: 2026-08-01
+
+- node_path: yajurveda/krishna/taittiriya/apparatus/pratishakhya
+  veda: yajurveda
+  organization: krishna
+  shakha: taittiriya
+  layer: apparatus
+  kind: pratishakhya
+  edition: >-
+    Taittirīya-Prātiśākhya, electronic text, data entry by M. Fushimi (Ōsaka), TITUS project,
+    Frankfurt. Page timestamp 25.9.2022.
+  url: https://titus.uni-frankfurt.de/texte/etcs/ind/aind/ved/yvs/tp/tp.htm
+  script: transliteration
+  svara_source?: "no — sūtra text, as above"
+  svara_verified?: pending — BV
+  text_layer: unicode
+  license: public-domain
+  status: found-complete
+  where_i_looked: null
+  notes: >-
+    THE ONLY MACHINE-READABLE PRĀTIŚĀKHYA OF ANY BRANCH. Verified HTTP 200; it is a frameset
+    index ("Index of Black Yajur-Veda: Taittiriya-Pratisakhya") — the text loads in the content
+    frame, and a members-only plain-text retrieval also exists at
+    titus.fkidg1.uni-frankfurt.de/private/texte/indica/vedica/yvs/tp/tp.txt.
+    LICENCE NOTICE RECORDED VERBATIM, per rule 9: "Copyright TITUS Project, Frankfurt a/M,
+    25.9.2022. No parts of this document may be republished in any form without prior
+    permission by the copyright holder." The site's general terms add: free for scholarly
+    purposes if editor and date are cited; "must not be used for any kind of commercial usage."
+    The MŪLA TEXT is an ancient sūtra work and is public domain; a faithful transcription of a
+    PD text creates no new right (Feist / Bridgeman). TITUS's own reference apparatus and
+    normalisation are theirs. Classified `public-domain` for the mūla text per rule 9, with the
+    notice recorded and Fushimi/TITUS credited — but note this is the one record in the packet
+    where the notice is most explicit, so treat the courteous path (cite and link, don't
+    mirror) as the default. TITUS is P0-a's registry; logged here only because the apparatus
+    tier is the deliverable.
+  date_logged: 2026-08-01
+
+- node_path: yajurveda/krishna/taittiriya/apparatus/pratishakhya
+  veda: yajurveda
+  organization: krishna
+  shakha: taittiriya
+  layer: apparatus
+  kind: pratishakhya
+  edition: >-
+    Print witnesses, Devanāgarī, with the Tribhāṣyaratna commentary —
+    (a) ed. Rājendralāla Mitra, Bibliotheca Indica, 1872;
+    (b) ed. Mahīṣeya, 1930;
+    (c) ed. S.G. Gopālayajvan;
+    (d) Whitney's own 1871 AOS printing and the Motilal Banarsidass reissue.
+  url: https://archive.org/details/in.ernet.dli.2015.292717
+  script: devanagari-unicode
+  svara_source?: "no — sūtra text"
+  svara_verified?: pending — BV
+  text_layer: mixed
+  license: public-domain
+  status: found-complete
+  where_i_looked: null
+  notes: >-
+    Verified identifiers, all metadata-matched:
+      in.ernet.dli.2015.292717 — Mitra ed., 1872, _djvu.txt 691 KB (non-empty);
+      in.ernet.dli.2015.553666 — Mahīṣeya 1930, _djvu.txt 642 KB, sampled: real Devanāgarī OCR
+        (172 234 Devanāgarī chars in 285 900), quoting accented TS pratīkas, e.g.
+        "सुहोता सूद॒गाता स्वध्वयुः" — noisy but genuinely the right text with commentary;
+      in.ernet.dli.2015.406939 — Gopālayajvan ed.;
+      in.ernet.dli.2015.53032 — Whitney, "Taittiriya-praticakhya", 1871, AOS (Asiatic Society
+        Kolkata copy), DjVuTXT present;
+      in.ernet.dli.2015.61160 — Whitney, Motilal Banarsidass reissue, EPUB + DjVuTXT present.
+    text_layer=mixed because these are scans whose OCR is present but noisy; use them as page
+    images and take the readable text from tp-comb.pdf or TITUS.
+  date_logged: 2026-08-01
+
+- node_path: yajurveda/krishna/taittiriya/apparatus/pratishakhya
+  veda: yajurveda
+  organization: krishna
+  shakha: taittiriya
+  layer: apparatus
+  kind: pratishakhya
+  manuscript_lead: true
+  edition: >-
+    Taittirīya-Prātiśākhya and Tribhāṣyaratna — palm-leaf manuscript, scribe/owner recorded as
+    Veṅkusudhīvara Śauṇḍa, dated [1825?]. Whish Collection, Royal Asiatic Society, London.
+    137 images.
+  url: https://archive.org/details/raswhish38-37
+  script: devanagari-unicode
+  svara_source?: "unknown — not sampled; manuscript"
+  svara_verified?: pending — BV
+  text_layer: scanned-no-text
+  license: public-domain
+  status: found-complete
+  where_i_looked: null
+  notes: >-
+    LEAD FOR P2-c, not chased here. Metadata verified. Collections: whishcollection,
+    royalasiaticsociety, palmleafmanuscripts, europeanlibraries. Item carries hOCR/chOCR/OCR
+    Search Text derivatives — unusual for a palm-leaf MS and possibly of poor quality; not
+    sampled. Recorded because a dated manuscript witness of the anchor śākhā's Prātiśākhya
+    alongside its commentary is exactly the kind of object P2-c should catalogue.
+  date_logged: 2026-08-01
+
+- node_path: rigveda/shakala/apparatus/pratishakhya
+  veda: rigveda
+  organization: null
+  shakha: shakala
+  layer: apparatus
+  kind: pratishakhya
+  edition: >-
+    The Ṛgveda-Prātiśākhya with the commentary of Uvaṭa, critically edited by Mangal Deva
+    Shastri — Vol. I (Vaidika Svādhyāya Mandira, Varanasi, 1959; also the 1931 Indian Press,
+    Allahabad printing), Vol. II (Indian Press, Allahabad, 1931), Vol. III (Punjab Sanskrit
+    Book Depot / Motilal Banarsidass, Lahore, 1937).
+  url: https://archive.org/details/in.ernet.dli.2015.313382
+  script: devanagari-unicode
+  svara_source?: "no — sūtra text; accented pratīkas quoted in the commentary"
+  svara_verified?: pending — BV
+  text_layer: mixed
+  license: public-domain
+  status: found-complete
+  where_i_looked: null
+  notes: >-
+    Verified identifiers: in.ernet.dli.2015.313382 (Vol. I, 1959, Vaidika Svādhyāya Mandira,
+    205 pp, san); kNLC_the-rigveda-pratisakhya-vol-2-with-commentary-of-uvata-by-mangal-deva-
+    shastri-19 (Vol. II, 1931 Allahabad); in.ernet.dli.2015.283680 / .102426 / .78184 / .78239
+    (Vol. III, 1937 — four independent scans).
+    CAUTION: in.ernet.dli.2015.284197 ("The Rgveda Pratisakhya", 1931) resolves in metadata but
+    the PDF download returned 146 bytes — a broken derivative. Do not cite it as an available
+    file without re-checking.
+    NO MACHINE-READABLE E-TEXT EXISTS. Confirmed by fetching GRETIL's live index: its section
+    headed "Pratisakhyas" contains only the Nirukta and the Ṛgvidhāna. TITUS holds no Ṛk-
+    Prātiśākhya. This is the branch with the largest recited community and no digital copy of
+    its own phonetic specification.
+  date_logged: 2026-08-01
+
+- node_path: rigveda/shakala/apparatus/pratishakhya
+  veda: rigveda
+  organization: null
+  shakha: shakala
+  layer: apparatus
+  kind: pratishakhya
+  edition: >-
+    Śaunaka's Prātiśākhya of the Ṛgveda with Uvaṭa's bhāṣya, ed. Yugalakiśora Vyāsa,
+    Braj B. Das & Co., Benares, 1894 (fasc. 1 onwards).
+  url: https://archive.org/details/in.ernet.dli.2015.486379
+  script: devanagari-unicode
+  svara_source?: "no — sūtra text"
+  svara_verified?: pending — BV
+  text_layer: mixed
+  license: public-domain
+  status: found-partial
+  where_i_looked: null
+  notes: >-
+    Sampled `2015.486379.Saunakas-Pratisakhya_djvu.txt`: 383 249 chars, 306 770 Devanāgarī,
+    358 svara marks — real Devanāgarī OCR, noisy but usable for search. Mid-file sample shows
+    aṣṭama-paṭala material with pratīkas. Duplicate upload:
+    saunukas-pratisakhya-of-rigveda-with-uvata-bhashya-yugala-kisora-vyaysa-fasc-1-braj-b-das-
+    co-1894. Marked found-partial because the 1894 issue was fascicular and I did not confirm
+    all fascicles are present in a single item.
+    Max Müller's 1856 Leipzig edition ("Rig-Veda-Prātiśākhya, das älteste Lehrbuch der
+    vedischen Phonetik", with German translation) is the other standard witness. I did NOT
+    verify an Archive.org identifier for it — the item that surfaced under a similar title
+    (bub_gb_gf7fuEyBRPEC) is Müller's Ṛgveda edition, a different book. Left unasserted.
+  date_logged: 2026-08-01
+
+- node_path: yajurveda/shukla/madhyandina/apparatus/pratishakhya
+  veda: yajurveda
+  organization: shukla
+  shakha: madhyandina
+  layer: apparatus
+  kind: pratishakhya
+  edition: >-
+    Kātyāyana's Prātiśākhya of the White Yajurveda (Vājasaneyi-Prātiśākhya) with the commentary
+    of Uvaṭa, ed. by the Pandits of Benares under Paṇḍit Yugalakiśora Pāṭhaka, Braj B. Das and
+    Co., Benares, 1888.
+  url: https://archive.org/details/india.history.resource.117514
+  script: devanagari-unicode
+  svara_source?: "no — sūtra text"
+  svara_verified?: pending — BV
+  text_layer: mixed
+  license: public-domain
+  status: found-complete
+  where_i_looked: null
+  notes: >-
+    Two independent verified scans of the same 1888 Benares edition:
+      india.history.resource.117514 — creators "Vedas. White Yajurveda / Katyayana /
+        Uvata (Comm.)", publisher Braj B. Das and Co., _djvu.txt 2.05 MB;
+      wg1093 — same edition, _djvu.txt 1.26 MB.
+    Also verified: tdl.57636-vajasaneyi-pratisakhya-of-katyayana-with-the-commentaries-of-uvata-
+    and — Vājasaneyi Prātiśākhya with the commentaries of Uvaṭa AND Anantabhaṭṭa, Tamil Digital
+    Library, _djvu.txt 534 KB. That second commentary is not in the Benares edition and makes
+    this item worth keeping distinct.
+    Weber's edition (Indische Studien vol. 4, 1858) is the European standard; Indische Studien
+    volumes are on Archive.org but I did not isolate the VPr pages, so I do not cite a locator.
+    NO MACHINE-READABLE E-TEXT.
+  date_logged: 2026-08-01
+
+- node_path: yajurveda/shukla/madhyandina/apparatus/pratishakhya
+  veda: yajurveda
+  organization: shukla
+  shakha: madhyandina
+  layer: apparatus
+  kind: pratishakhya
+  edition: >-
+    Vājasaneyi Prātiśākhya, Part I — English translation by S. N. Ghosal, with A. Weber's
+    Introduction to the Vājasaneyi Prātiśākhya (translated). Uploaded 1964 printing.
+  url: https://archive.org/details/VajasaneyiPratisakhyaEnglishTranslationWeberGhoshal
+  script: roman
+  svara_source?: "n/a — translation"
+  svara_verified?: pending — BV
+  text_layer: mixed
+  license: public-domain
+  status: found-partial
+  where_i_looked: null
+  notes: >-
+    Metadata verified: creators "Katyayana, S. N. Ghosal, A. Weber", opensource/community
+    collection, DjVuTXT present. PART I ONLY — the only English rendering of the Vājasaneyi
+    Prātiśākhya I could locate, and it is incomplete. Ghosal's translation and Weber's
+    introduction are original scholarly work belonging to their authors; the mūla sūtras
+    quoted within are PD (rule 9). 1964 printing: a 20th-century translation's copyright
+    status is not settled by rule 9 — FLAGGED, not adjudicated. Link, don't host.
+  date_logged: 2026-08-01
+
+- node_path: atharvaveda/shaunaka/apparatus/pratishakhya
+  veda: atharvaveda
+  organization: null
+  shakha: shaunaka
+  layer: apparatus
+  kind: pratishakhya
+  edition: >-
+    The Atharva-Veda Prātiśākhya, or Śaunakīyā Caturādhyāyikā — text, translation and notes by
+    William Dwight Whitney, Journal of the American Oriental Society vol. 7, New Haven, 1862.
+  url: https://archive.org/details/jstor-592161
+  script: devanagari-unicode
+  svara_source?: "no — sūtra text"
+  svara_verified?: pending — BV
+  text_layer: mixed
+  license: public-domain
+  status: found-complete
+  where_i_looked: null
+  notes: >-
+    Metadata verified: creator Whitney, publisher "Journal of the American Oriental Society",
+    284 images, Text PDF + DjVu + DjVuTXT, collections jstor_jameroriesoci / jstor_ejc /
+    journals. Note the metadata `date` field says 1860-01-01; the article itself is JAOS 7
+    (1862). Record the edition, not the metadata field.
+    Whitney's is the PD edition. The modern critical edition — Madhav M. Deshpande, "Śaunakīyā
+    Caturādhyāyikā: A Prātiśākhya of the Śaunakīya Atharvaveda, with the commentaries
+    Caturādhyāyībhāṣya, Bhārgava-Bhāskara-Vṛtti and Pañcasandhi", Harvard Oriental Series 52,
+    1997 — is in copyright: LINK ONLY, reference by citation. It is also a true critical
+    edition (manuscript collation, apparatus criticus), i.e. rule 9's genuine edge case.
+    Do not adjudicate; do not ingest.
+  date_logged: 2026-08-01
+
+- node_path: atharvaveda/shaunaka/apparatus/pratishakhya
+  veda: atharvaveda
+  organization: null
+  shakha: shaunaka
+  layer: apparatus
+  kind: pratishakhya
+  edition: >-
+    Atharva Prātiśākhya, critically edited with introduction and notes by Surya Kanta,
+    Lahore/Delhi, 1939 (repr. Oriental and Foreign Booksellers, Delhi, 1968).
+  url: https://archive.org/details/atharvavedaallparts
+  script: devanagari-unicode
+  svara_source?: >-
+    partial — 1941 svara codepoints counted in the OCR text layer, from accented AV pratīkas
+    quoted in the sūtras and notes. The sūtra text itself is unaccented.
+  svara_verified?: pending — BV
+  text_layer: mixed
+  license: public-domain
+  status: found-complete
+  where_i_looked: null
+  notes: >-
+    Best copy is inside the bundle item `atharvavedaallparts` (Archive.org, "Atharva veda
+    complete collection"), file "Athrvana Veda Pratisakhya Surya Kanta 1939-complete.pdf"
+    (65 MB) with "..._djvu.txt" (1.59 MB). Sampled: 914 873 chars, 327 608 Devanāgarī,
+    1941 svara marks. Same bundle also has partial volumes "v1 Atharava Pratishakhya" and
+    "v2 pratishakhya". Standalone scan: in.ernet.dli.2015.61744 (Surya Kanta, 1939) — metadata
+    verified; and ybiO_atharva-pratisakhya-by-surya-kanta-1968-delhi-... for the 1968 reprint.
+    THE BUNDLE `atharvavedaallparts` IS THE SINGLE RICHEST ATHARVAVEDA APPARATUS OBJECT FOUND —
+    it also carries the Bṛhat-Sarvānukramaṇikā, the Atharvavedīya Nighaṇṭu of Kautsavya Muni,
+    the Kauśika Gṛhyasūtra with Saṅkṣipta Ṭīkā, the Vaitāna Sūtra, and two Gopatha Brāhmaṇas,
+    each with its own PDF and text layer. Uploader "Sanatan Dharma"; no per-file edition
+    metadata, so editions must be read off title pages — attribution unverified per file
+    except where noted.
+  date_logged: 2026-08-01
+
+- node_path: samaveda/kauthuma/apparatus/pratishakhya
+  veda: samaveda
+  organization: null
+  shakha: kauthuma
+  layer: apparatus
+  kind: pratishakhya
+  edition: >-
+    Ṛktantram: a Prātiśākhya of the Sāmaveda, critically edited with introduction, appendices,
+    exhaustive notes and the commentary Ṛktantravivṛti, together with the
+    Sāmavedasarvānukramaṇī, by Surya Kanta. Mehar Chand Lachhman Das Sanskrit Book Depot,
+    Lahore, 1933. 299 pp.
+  url: https://archive.org/details/rik-tantra-surya-kant-shastri-a-pratisakhya-on-the-samaveda-surya-kanta-shastri-1933
+  script: devanagari-unicode
+  svara_source?: "no — sūtra text; not sampled for pratīka accents"
+  svara_verified?: pending — BV
+  text_layer: scanned-no-text
+  license: public-domain
+  status: found-complete
+  where_i_looked: null
+  notes: >-
+    THIS EDITION DOUBLES AS THE SĀMAVEDA ANUKRAMAṆĪ SOURCE — Surya Kanta printed the
+    Sāmavedasarvānukramaṇī inside it. See the samaveda anukramaṇī record.
+    Three verified identifiers: rik-tantra-surya-kant-shastri-... (1933, uploader Ajit
+    Gargeshwari); in.ernet.dli.2015.61686 (DLI copy — WARNING: its `_djvu.txt` is EMPTY,
+    139 bytes; this is the DLI empty-text-layer trap, the item is images only); rktantram
+    (uploader-asserted CC BY-NC-ND 3.0 — an uploader's licence claim on a 1933 public-domain
+    text is not binding; recorded per rule 9, classified public-domain).
+    Attributed in the tradition to Śākaṭāyana. NO MACHINE-READABLE E-TEXT.
+  date_logged: 2026-08-01
+
+- node_path: samaveda/kauthuma/apparatus/pratishakhya
+  veda: samaveda
+  organization: null
+  shakha: kauthuma
+  layer: apparatus
+  kind: pratishakhya
+  edition: >-
+    The Puṣpasūtra, a Prātiśākhya of the Sāmaveda — (a) IGNCA edition, 2 vols;
+    (b) Puṣpasūtra with the Vivaraṇa, Bhāṣya and Dīpa of Ajātaśatru and Rāmakṛṣṇa, ed.
+    B. R. Sharma, Franz Steiner Verlag, Stuttgart, 1985 (parts 2 and 3 located).
+  url: https://archive.org/details/the-puspasutra-a-pratisakhya-of-the-samaveda
+  script: devanagari-unicode
+  svara_source?: "not sampled"
+  svara_verified?: pending — BV
+  text_layer: mixed
+  license: public-domain
+  status: found-complete
+  where_i_looked: null
+  notes: >-
+    Metadata verified. `the-puspasutra-a-pratisakhya-of-the-samaveda` (creator IGNCA) carries
+    Vol I `_djvu.txt` 951 KB and Vol II 877 KB — both non-empty, so a usable text layer exists.
+    B. R. Sharma's Stuttgart 1985 edition: xplc-pushpasutra-part-2-with-vivarana-bhasya-and-
+    dipa-o (_djvu.txt 2.32 MB) and PJSW_pushpa-sutra-part-3-prapathak-8-10-... — the uploader
+    asserts CC0, which is not the uploader's to assert for a 1985 edition. Per rule 9: the
+    Puṣpasūtra mūla and the classical commentaries are PD; **B. R. Sharma's 1985 editorial
+    apparatus, introduction and critical work are his and Franz Steiner's** — FLAG, link only,
+    do not ingest the apparatus. R. Simon's 1908 edition, the other standard, was not located.
+    Manuscript lead for P2-c: PushpaSutramOfSamaveda5262Alm24Shlf1DevanagariSutraPaddhati
+    (eGangotri shelf scan).
+  date_logged: 2026-08-01
+
+# ============================================================================
+# 2 — ANUKRAMAṆĪS  (all except Ṛgveda, which is P0-a's)
+# ============================================================================
+
+- node_path: yajurveda/shukla/madhyandina/apparatus/anukramani
+  veda: yajurveda
+  organization: shukla
+  shakha: madhyandina
+  layer: apparatus
+  kind: anukramani
+  edition: >-
+    Vājasaneyi-Mādhyandina-Śukla-Yajurveda-saṃhitāyāḥ Sarvānukramasūtram (attributed to
+    Kātyāyana). Killa-Pardi: Svādhyāya-Maṇḍala, n.d. 116 images. University of Toronto scan.
+  url: https://archive.org/details/vajasaneyimadhya00killuoft
+  script: devanagari-unicode
+  svara_source?: >-
+    partial — 107 svara codepoints in the OCR text, from accented pratīkas quoted in the index
+    entries. The anukramaṇī apparatus itself is unaccented prose.
+  svara_verified?: pending — BV
+  text_layer: mixed
+  license: public-domain
+  status: found-complete
+  where_i_looked: null
+  notes: >-
+    THE ONE NON-ṚGVEDA ANUKRAMAṆĪ THAT IS BOTH COMPLETE AND USABLY OCR'd. Sampled
+    `vajasaneyimadhya00killuoft_djvu.txt`: 171 948 chars, 124 820 Devanāgarī, 107 svara. The
+    sample is unmistakably anukramaṇī content — pratīka, then devatā/chandas/ṛṣi, then the
+    verse reference: "...आपान्यग्नये लिङ्गोक्त, देव्याय पात्राणि ॥३॥ [य० अ०१ मे ५-१३]",
+    with a running header "सर्वानुक्रमसूत्रम्". Roman-numeral adhyāya divisions present.
+    Publisher is the Svādhyāya Maṇḍala (Killa-Pardi) — the same house named in the protocol's
+    seed sources for accented Devanāgarī; P1-a owns that ecosystem for saṃhitā texts, this is
+    the apparatus branch of it.
+    Alternate witness, MANUSCRIPT-GRADE, do not prefer:
+    VajasaneyiSamhitaSarvanukramaniShriKatyayana5101Alm23Shlf2DevanagariVeda (eGangotri, CC0
+    asserted) — sampled, the OCR is garbage (16 802 Devanāgarī chars out of 32 412, mostly
+    noise; the scan is a library shelf photograph). Logged as a P2-c lead only.
+    Applies to Mādhyandina; whether the Kāṇva recension has its own anukramaṇī is unresolved —
+    see the Kāṇva not-found record.
+  date_logged: 2026-08-01
+
+- node_path: atharvaveda/shaunaka/apparatus/anukramani
+  veda: atharvaveda
+  organization: null
+  shakha: shaunaka
+  layer: apparatus
+  kind: anukramani
+  edition: >-
+    Atharvavedīya Bṛhat-Sarvānukramaṇikā — the standard critical edition is: edited and
+    critically annotated with text-comparative data from original manuscripts by Vishva Bandhu,
+    in collaboration with Bhim Dev and Pitambar Datt. Woolner Indological Series 11 /
+    Vishveshvaranand Institute Publication 377, Hoshiarpur, 1966. THE COPY FOUND ONLINE IS NOT
+    IDENTIFIED AS THIS EDITION.
+  url: https://archive.org/details/atharvavedaallparts
+  script: devanagari-unicode
+  svara_source?: >-
+    partial — 77 svara codepoints in the OCR text, from accented pratīkas. The index apparatus
+    is unaccented.
+  svara_verified?: pending — BV
+  text_layer: mixed
+  license: public-domain
+  status: found-partial
+  where_i_looked: null
+  notes: >-
+    ATTRIBUTION UNVERIFIED — recorded here, not in `shakha`, per rule 7. The file
+    "Atharava vediya brhat sarava anukramanika.pdf" (10.96 MB, with `_djvu.txt` 520 KB) inside
+    the `atharvavedaallparts` bundle carries no edition metadata. I sampled it: 205 929 chars,
+    154 877 Devanāgarī, 77 svara. The content is genuine and is the right text — the mid-file
+    sample gives per-sūkta metrical analysis with textual footnotes in HINDI
+    ("गु० का पाठ शुद्ध है क्योंकि ६४, २७, २७ में तीन ऋचायें हैं जिनका अनुष्टुप् छन्द है..."),
+    and manuscript sigla क/ख/ग/च/छ. Hindi annotation means this is an Indian edition with a
+    Hindi-language apparatus — Vishva Bandhu's 1966 Hoshiarpur edition has an ENGLISH
+    introduction, so this is probably a DIFFERENT edition. Do not cite it as Vishva Bandhu's.
+    Vishva Bandhu's edition itself was not found freely online (checked Archive.org title
+    searches and the bookseller listings that establish its bibliography).
+    Also verified and relevant: TGZP_atharv-ved-sanhita-with-mantra-anukramani-nag-publishers-
+    delhi (Nag Publishers, Delhi — AV Saṃhitā printed with a mantra-anukramaṇī; uploader
+    asserts CC0). NO MACHINE-READABLE E-TEXT of any Atharvaveda anukramaṇī.
+  date_logged: 2026-08-01
+
+- node_path: samaveda/kauthuma/apparatus/anukramani
+  veda: samaveda
+  organization: null
+  shakha: kauthuma
+  layer: apparatus
+  kind: anukramani
+  edition: >-
+    Ārṣeyabrāhmaṇam, accompanied by Sāyaṇācārya's Vedārthaprakāśa — ed. B. R. Sharma.
+    (The classic edition is A. C. Burnell, Mangalore, 1876, with extracts from Sāyaṇa; a better
+    one by Satyavrata Sāmaśramī with the full commentary appeared in the journal Uṣā,
+    Calcutta, 1891–92. Neither was located on Archive.org.)
+  url: https://archive.org/details/arsheya-brahmanam
+  script: devanagari-unicode
+  svara_source?: "not applicable — a list of sāman names and ṛṣis, not mantra text"
+  svara_verified?: pending — BV
+  text_layer: mixed
+  license: public-domain
+  status: found-complete
+  where_i_looked: null
+  notes: >-
+    THE SĀMAVEDA'S OWN INDEX. The Ārṣeya Brāhmaṇa is functionally the earliest Sāmaveda
+    anukramaṇī: it lists the ṛṣis of the sāmans of the Grāmageya- and Āraṇya-gānas, in three
+    prapāṭhakas / 82 khaṇḍas. Logged under `anukramani` for that reason, though its traditional
+    label is "brāhmaṇa" — flag for the merge reviewer, who may prefer to cross-reference it
+    from the brāhmaṇa layer instead of duplicating (README's embedded-texts rule applies by
+    analogy).
+    VERIFIED BY READING THE FILE: `Arsheya Brahmanam Sayana_djvu.txt`, 341 338 chars, 237 379
+    Devanāgarī. It opens "आर्षेयब्राह्मणम् / सायणाचार्यविरचितेन वेदार्थप्रकाशेन समन्वितम्" and
+    carries the standard Sāyaṇa invocation naming Vidyātīrtha and Bukka-mahīpati. **This
+    settles a question the Sāyaṇa survey left open: Sāyaṇa DID write a Vedārthaprakāśa on the
+    Ārṣeya Brāhmaṇa.**
+    SECOND SOURCE FOR THE SAME NODE: the **Sāmavedasarvānukramaṇī** is printed inside Surya
+    Kanta's 1933 Ṛktantram (see the Sāma prātiśākhya record) — one purchase, two apparatus
+    cells.
+    Related, verified, worth holding: qXoe_sam-ved-arsheya-dip-... and pqzH_sam-ved-arsheya-
+    pradip-... (Ārṣeyadīpa / Ārṣeyapradīpa commentaries, Tirupati eds.); ArsheyaBrahman5243-
+    Alm23Shlf5Veda (eGangotri MS scan → P2-c). NO MACHINE-READABLE E-TEXT; TITUS lists the
+    Ārṣeya-Brāhmaṇa explicitly under "Desiderata".
+  date_logged: 2026-08-01
+
+- node_path: samaveda/jaiminiya/apparatus/anukramani
+  veda: samaveda
+  organization: null
+  shakha: jaiminiya
+  layer: apparatus
+  kind: anukramani
+  edition: "Jaiminīyārṣeyabrāhmaṇam, ed. B. R. Sharma."
+  url: https://archive.org/details/jaiminiya-arsheya-brahmanam
+  script: devanagari-unicode
+  svara_source?: "not applicable"
+  svara_verified?: pending — BV
+  text_layer: mixed
+  license: public-domain
+  status: found-complete
+  where_i_looked: null
+  notes: >-
+    OPPORTUNISTIC FIND — the Jaiminīya śākhā's `_status.yaml` has `apparatus: {}` today, so this
+    would be a NEW node, not a fill. P2-a owns the Jaiminīya; handing this over rather than
+    claiming it.
+    VERIFIED BY READING THE FILE: `Jaiminiya Arsheya Brahmanam_djvu.txt`, 49 411 chars,
+    30 237 Devanāgarī. Opens "जैमिनीयार्षेयब्राह्मणम् / प्रथमोऽध्यायः / प्रथमः खण्डः" and by
+    khaṇḍa 5 states its own purpose: "अथात ऋषीणां नामधेयगोत्रोदाहरणम्" — "now, hereafter, the
+    citation of the names and gotras of the ṛṣis". That is the anukramaṇī function, in the
+    text's own words. Small file (110 KB txt) — this is a short text, plausibly transcribable
+    by hand in a day.
+    Oertel's edition is the other standard witness; not located.
+  date_logged: 2026-08-01
+
+- node_path: yajurveda/krishna/taittiriya/apparatus/anukramani
+  veda: yajurveda
+  organization: krishna
+  shakha: taittiriya
+  layer: apparatus
+  kind: anukramani
+  edition: null
+  url: null
+  script: null
+  svara_source?: null
+  svara_verified?: pending — BV
+  text_layer: null
+  license: unknown
+  status: not-found
+  where_i_looked: >-
+    (1) Archive.org advanced-search API, `title:(taittiriya) AND title:(anukramani)` — ZERO
+    results; also `title:(anukramani)` broadly (returns RV, AV, SV and Purāṇa indices, no
+    Taittirīya); also `title:(sarvanukramani)` (returns Kātyāyana's Ṛgveda Sarvānukramaṇī,
+    the Vājasaneyi Sarvānukramaṇī, and Kerala Yogapakṣam items — no Taittirīya).
+    (2) GRETIL live index, full text — no anukramaṇī of any Veda is present anywhere on it.
+    (3) TITUS Vedic index, full text (texte/texte2.htm) — no anukramaṇī of any Veda; the Black
+    Yajurveda section lists TS, TB, TA, the Kalpa sūtras and the Taittirīya-Prātiśākhya, and
+    nothing indexical.
+    (4) sanskritweb.net/yajurveda/ full page listing (curl, cert-bypassed) — TB, Kāṭhakam, TA,
+    Ekāgni Kāṇḍam, TS kāṇḍa 1, Keith's translation, the Taittirīya Prātiśākhya, and the
+    archived Sansknet documents. No anukramaṇī.
+    (5) Web search for "Taittiriya Samhita Anukramani" / "Taittiriya Anukramani" edition —
+    returns TS editions only; the one substantive statement found is that Kātyāyana is credited
+    with anukramaṇīs of both the Taittirīya and the Mādhyandina, which establishes that the
+    text is attested but yields no edition.
+  notes: >-
+    THE ONE APPARATUS CELL THIS PACKET COULD NOT FILL, and it is on the anchor śākhā. What is
+    known: an anukramaṇī tradition for the Taittirīya is attested and ascribed to Kātyāyana.
+    What was not found: any separately printed edition, any digitised copy, any e-text.
+    NOT YET RULED OUT — the Ānandāśrama Sanskrit Series TS (ASS 42, ed. Kāśīnātha Śāstrī Āgāśe,
+    9 parts, 1940–51) and the Vaidika Saṃśodhana Maṇḍala critical TS are both open and both
+    conventionally carry anukramaṇī apparatus bound in. The next move on this cell is to open
+    those volumes and look, not to search again. That is a page-turning job, not a search job,
+    and I did not do it. Also worth checking: Ānandāśrama's Taittirīya Brāhmaṇa (ASS 37/38).
+  date_logged: 2026-08-01
+
+- node_path: yajurveda/shukla/kanva/apparatus/anukramani
+  veda: yajurveda
+  organization: shukla
+  shakha: kanva
+  layer: apparatus
+  kind: anukramani
+  edition: null
+  url: null
+  script: null
+  svara_source?: null
+  svara_verified?: pending — BV
+  text_layer: null
+  license: unknown
+  status: not-found
+  where_i_looked: >-
+    Archive.org `title:(kanva samhita) OR title:(kanva sanhita)`, `title:(sarvanukramani)`,
+    `title:(anukramani)`; GRETIL and TITUS full indices. Nothing Kāṇva-specific and indexical
+    surfaced. The Kāṇva śākhā's `_status.yaml` carries `apparatus: {}` today, so this record
+    proposes no new node — it documents a search whose answer is "no".
+  notes: >-
+    Kātyāyana's Sarvānukramasūtram is a Mādhyandina text. Whether the Kāṇva recension carries a
+    distinct anukramaṇī, or simply uses the Mādhyandina one adjusted for its different chapter
+    order, was not resolved. Do not create a Kāṇva anukramaṇī node on the strength of symmetry.
+  date_logged: 2026-08-01
+
+# ============================================================================
+# 3 — KALPA: ŚRAUTA, GṚHYA, ŚULBA
+# ============================================================================
+# One record per śākhā's kalpa cell, listing the sūtra families that belong to it, because the
+# existing _status.yaml models kalpa as a single cell (e.g. Taittirīya: "Apastamba, Baudhayana,
+# and related sutra traditions"). Per-sūtra records would fragment against that. Every
+# identifier below was resolved through archive.org/metadata and its _djvu.txt length checked.
+
+- node_path: yajurveda/krishna/taittiriya/apparatus/kalpa
+  veda: yajurveda
+  organization: krishna
+  shakha: taittiriya
+  layer: apparatus
+  kind: kalpa
+  edition: >-
+    ĀPASTAMBA — Śrautasūtra ed. Richard Garbe, Bibliotheca Indica, 3 vols, Calcutta 1882–1902,
+    with Rudradatta's commentary; Gṛhyasūtra with Haradatta's Anākulā and Sudarśana's
+    Tātparyadarśana (Ānandāśrama tradition); Śulbasūtra ed./tr. G. Bürk & G. Thibaut, The
+    Pandit 1874–77, consolidated in Thibaut's The Śulvasūtras 1875.
+    BAUDHĀYANA — Śrautasūtra ed. W. Caland, Bibliotheca Indica, 3 vols, 1904–13; Gṛhyasūtra ed.
+    R. Shama Sastri (ORI Mysore); Śulbasūtra ed./tr. Thibaut 1874–76 with Dvārakānātha's comm.
+    BHĀRADVĀJA — Śrautasūtra: "Śrauta, Paitṛmedhika and Pariśeṣa Sūtras of Bhāradvāja", ed.
+    C. G. Kashikar, Vaidika Saṃśodhana Maṇḍala, Poona, 1964, 2 parts; Gṛhyasūtra ed.
+    H. J. W. Salomons(-Prooye), "The Domestic Ritual according to the School of Bhāradvāja",
+    Leyden, 1913.
+    VAIKHĀNASA — Śrautasūtra ed. W. Caland, Bibliotheca Indica 265, Calcutta 1941 (posthumous);
+    Smārtasūtra ed. Caland 1927, English translation Caland 1929 ("The Domestic Rules of the
+    Vaikhānasa School belonging to the Black Yajurveda").
+    HIRAṆYAKEŚI / SATYĀṢĀḌHA — Satyāṣāḍhaśrautasūtram, Ānandāśrama Sanskrit Granthāvali 53,
+    8 vols, Poona 1907, with Mahādeva's Vaijayantī.
+  url: https://archive.org/details/TheSrautaSutraOfApastambaVol.1
+  script: devanagari-unicode
+  svara_source?: >-
+    no for the sūtra texts themselves; accented pratīkas appear where TS mantras are cited.
+    Not systematically sampled.
+  svara_verified?: pending — BV
+  text_layer: mixed
+  license: public-domain
+  status: found-complete
+  where_i_looked: null
+  notes: >-
+    VERIFIED IDENTIFIERS, with _djvu.txt sizes (non-empty unless stated):
+      Āpastamba Śr: TheSrautaSutraOfApastambaVol.1 (Garbe 1882, 310 KB);
+        in.ernet.dli.2015.281115 (vol. II, 1885, 1.3 MB); in.ernet.dli.2015.194715 (Caland,
+        "Das Śrautasūtra des Āpastamba", 1928, German).
+      Āpastamba Gṛ: MACHINE-READABLE on GRETIL, sa_ApastambagRhyasUtra (with Haradatta and
+        Sudarśana), via Sansknet.
+      Āpastamba Śulba: MACHINE-READABLE on GRETIL, sa_ApastambazulbasUtra with the commentaries
+        of Kapardin, Karavinda and Sundararāja — FETCHED AND SAMPLED, 636 KB HTML, real content
+        ("karavindīyā vyākhyā pucche dayet..."). English translation PD: ulvastras00ktgoog
+        (Thibaut 1875, 117 KB) — which covers Āpastamba, Baudhāyana AND Kātyāyana Śulba in one
+        volume.
+      Baudhāyana Śr: in.ernet.dli.2015.325981 / .325980 / .311948 (Caland, vols 1–3, 1907–13;
+        970 KB / 1.3 MB / 1.5 MB); alternates baudhyanasrautas01bauduoft,
+        p2srautasutramed02bauduoft.
+      Baudhāyana Gṛ: bodhayana_grihyasutra_-_shama_sastri (1.2 MB).
+      Bhāradvāja Śr: in.ernet.dli.2015.405597 (Part I, 2.1 MB), in.ernet.dli.2015.312012
+        (Part II, 2.0 MB).
+      Bhāradvāja Gṛ: domesticritualac00bharrich (Salomons 1913, 178 KB); companion Dutch
+        dissertation hethindoeschehui00salo.
+      Vaikhānasa Śr: in.ernet.dli.2015.368560 (1.5 MB), wg623 (377 KB).
+      Vaikhānasa Smārta: wg624 (1927), in.ernet.dli.2015.238112, dli.ernet.496578; ENGLISH
+        TRANSLATION in.ernet.dli.2015.345237 (Caland, 418 KB).
+      Hiraṇyakeśi/Satyāṣāḍha: satyashadha_shrautasutram (ASS 53, 1907, all 8 vols present, each
+        with its own _djvu.txt, ~2 MB for vol. 1); dli.ernet.326087 (Part 2).
+    TRANSLATION STATUS — this is the branch where the translation gap is worst. NO complete
+    English translation exists for Āpastamba Śr, Baudhāyana Śr, Bhāradvāja Śr, Baudhāyana Gṛ or
+    Hiraṇyakeśi Śr. Not paywalled — absent. The exceptions: Thibaut's Śulba (1875, PD) and
+    Caland's Vaikhānasa Smārta (1929, PD-adjacent; Caland d. 1932, so PD in India by life+60,
+    US status at the boundary — flagged, not adjudicated). Kashikar & Rai's Baudhāyana
+    Śrautasūtra translation (IGNCA 2003) is modern-copyright: link only.
+    MACHINE-READABILITY: only two of this śākhā's kalpa texts are e-texts (Āpastamba Gṛhya and
+    Āpastamba Śulba, both on GRETIL). TITUS holds Āpastamba Śr, Baudhāyana Śr, Hiraṇyakeśi Śr,
+    Mānava Śr, and all the Gṛhya and Śulba sūtras as public HTML — the largest single body of
+    machine-readable Kalpa anywhere, and it is P0-a's to register.
+  date_logged: 2026-08-01
+
+- node_path: yajurveda/shukla/madhyandina/apparatus/kalpa
+  veda: yajurveda
+  organization: shukla
+  shakha: madhyandina
+  layer: apparatus
+  kind: kalpa
+  edition: >-
+    KĀTYĀYANA Śrautasūtra ed. Albrecht Weber, Berlin/London 1859, with extracts of Karka's and
+    Yājñikadeva's commentaries; later eds. Karkācārya 1903 and Pathak 1908.
+    KĀTYĀYANA Śulbasūtra — transmitted within the Śrautasūtra; separate critical treatment by
+    S. D. Khadikar, Vaidika Saṃśodhana Maṇḍala, 1974.
+    PĀRASKARA Gṛhyasūtra ed. A. F. Stenzler with German tr., Leipzig 1876; English tr. Hermann
+    Oldenberg, Sacred Books of the East vol. 29, 1886.
+  url: https://archive.org/details/in.gov.ignca.16245
+  script: devanagari-unicode
+  svara_source?: "no — sūtra texts"
+  svara_verified?: pending — BV
+  text_layer: mixed
+  license: public-domain
+  status: found-complete
+  where_i_looked: null
+  notes: >-
+    VERIFIED: in.gov.ignca.16245 (Weber 1859, "Crautasutra of Katyayana vol. 1", _djvu.txt
+    2.2 MB); in.ernet.dli.2015.405660 (Karkācārya 1903); in.ernet.dli.2015.513471 (Pathak
+    1908); in.ernet.dli.2015.142145 and duplicate .133882 (Kātyāyana Śulba Sūtra, Khadikar
+    1974, ~238 KB each); wg929 and mlbd.grihyasutraspart0000fmax (SBE 29, Oldenberg 1886 —
+    covers Śāṅkhāyana, Āśvalāyana, PĀRASKARA and Khādira Gṛhyasūtras in one PD volume).
+    TWO CAUTIONS.
+    (a) The Sanskrit Pāraskara Gṛhyasūtra is NOT on GRETIL — confirmed against the live index,
+    no Pāraskara entry anywhere. The item `paraskara-grihyasutra-ed-1` (uploaded 2024,
+    attributed "Hermann Oldenberg", 121 KB text) is probably a repackaged SBE 29 extract, not
+    Stenzler's edition; provenance unclear, treat with suspicion.
+    (b) G. U. Thite's Sanskrit–English Kātyāyana Śrautasūtra (New Bharatiya Book Corp.) is on
+    Archive.org as `katyayana-srauta-sutra` but its `_djvu.txt` is 146 bytes — image-only, no
+    text layer — and it is modern-copyright. Link only.
+    Serves BOTH Śukla branches; the Kāṇva `_status.yaml` has no kalpa cell today.
+    TITUS holds public HTML of Kātyāyana-Śrautasūtra, Pāraskara-Gṛhyasūtra and Kātyāyana-
+    Śulvasūtra — the machine-readable route for this śākhā.
+  date_logged: 2026-08-01
+
+- node_path: atharvaveda/shaunaka/apparatus/kalpa
+  veda: atharvaveda
+  organization: null
+  shakha: shaunaka
+  layer: apparatus
+  kind: kalpa
+  edition: >-
+    VAITĀNA SŪTRA ed. with German translation by Richard Garbe, "Vaitāna Sūtra: das Ritual des
+    Atharvaveda", Strassburg (Trübner), 1878.
+    KAUŚIKA SŪTRA ed. Maurice Bloomfield, Journal of the American Oriental Society vol. 14,
+    1890.
+  url: https://gretil.sub.uni-goettingen.de/gretil/corpustei/transformations/html/sa_kauzikasUtra.htm
+  script: transliteration
+  svara_source?: "no — sūtra texts; mantra pratīkas cited by reference, not written out"
+  svara_verified?: pending — BV
+  text_layer: unicode
+  license: public-domain
+  status: found-complete
+  where_i_looked: null
+  notes: >-
+    THE BEST-SERVED KALPA CELL IN THE CORPUS, and the only one where the primary source is
+    already machine-readable. Both texts are on GRETIL as TEI-XML with HTML transformations,
+    input by Arlo Griffiths. BOTH FETCHED AND SAMPLED:
+      sa_kauzikasUtra.htm — 423 KB, real content with reference apparatus, e.g.
+        "(KauśS_7,8[57].29) <yad annam [6.71.1]> iti tisṛbhir bhaikṣasya juhoti";
+      sa_vaitAnazrautasUtra-vaitAnasUtra.htm — 171 KB, e.g.
+        "<3.11.21> (21.21) <evā pāhi [20.8.1-3]> iti prasthitayājyāḥ".
+    Note what those samples show: the sūtras cite AV mantras BY ADDRESS (kāṇḍa.sūkta.ṛc), and
+    GRETIL has preserved those addresses in angle brackets. That is a ready-made ritual-to-
+    mantra link table for the Atharvaveda — usable as-is, no parsing of prose required.
+    ALSO ON GRETIL, same input chain: sa_kauzikapaddhati (Keśava's paddhati),
+    sa_atharvavedaparizista, sa_atharvaprAyazcittAni, sa_dantyoSThavidhi.
+    Print witnesses verified: vaitnastra00garbgoog (Garbe 1878, 117 KB text) and
+    in.ernet.dli.2015.486688; jstor-592399 (Bloomfield, JAOS 14, 713 KB) and dli.ernet.408185
+    (1.6 MB). The `atharvavedaallparts` bundle also holds "vaitana sutra.pdf" (sampled: 154 522
+    chars, 78 841 Devanāgarī — a Devanāgarī edition, 1982 Munshiram Manoharlal reprint by the
+    look of the front matter) and "Atharvavediya Kausika Grihya Sutra with Sankshipta Tika.pdf"
+    (32 MB, _djvu.txt 1.56 MB).
+    NO complete English translation of either sūtra exists as a standalone book; Bloomfield's
+    renderings are scattered through SBE 42 and his AV studies.
+    GRETIL licence: CC BY-NC-SA 4.0, with GRETIL's standard good-faith copyright statement.
+  date_logged: 2026-08-01
+
+- node_path: rigveda/shakala/apparatus/kalpa
+  veda: rigveda
+  organization: null
+  shakha: shakala
+  layer: apparatus
+  kind: kalpa
+  edition: >-
+    ĀŚVALĀYANA — Śrautasūtra ed. Rāmanārāyaṇa Vidyāratna, Bibliotheca Indica, Calcutta 1874,
+    with Gārgya-Nārāyaṇa's commentary; later ed. Mangal Deva Shastri, Benares 1938–55.
+    Gṛhyasūtra: English tr. Hermann Oldenberg, SBE 29, 1886.
+    ŚĀṄKHĀYANA — Śrautasūtra ed. Alfred Hillebrandt, Bibliotheca Indica, 4 vols, Calcutta
+    1888–99; English tr. W. Caland, published posthumously 1953. Gṛhyasūtra: tr. Oldenberg,
+    SBE 29, 1886.
+  url: https://gretil.sub.uni-goettingen.de/gretil/corpustei/transformations/html/sa_AzvalAyanazrautasUtra.htm
+  script: transliteration
+  svara_source?: "no — sūtra texts"
+  svara_verified?: pending — BV
+  text_layer: unicode
+  license: public-domain
+  status: found-complete
+  where_i_looked: null
+  notes: >-
+    ALL FOUR TEXTS ARE MACHINE-READABLE on GRETIL (Āśvalāyana Śrauta and Gṛhya, Śāṅkhāyana
+    Śrauta and Gṛhya — Śrauta pair input by Muneo Tokunaga). BOTH ŚRAUTASŪTRAS FETCHED AND
+    SAMPLED: sa_AzvalAyanazrautasUtra.htm 612 KB, and notably carries INLINE RITUAL LABELS —
+    "(soma: sutyā day: midday: marutvatīya.śastra) (AsvSS_5.14-20)" — i.e. Tokunaga's edition
+    is already annotated with ritual-position metadata, which is a structural annotation layer
+    handed over for free. sa_zAGkhAyanazrautasUtra.htm 525 KB, referenced as ŚŚS_10.21.12 etc.
+    Print witnesses verified: india.history.resource.85601 (Āśvalāyana Śr, Vidyāratna, Bibl.
+    Indica, _djvu.txt 2.0 MB); in.ernet.dli.2015.312242 (Mangal Deva Shastri ed.);
+    in.ernet.dli.2015.405560 (Śāṅkhāyana Śr, Hillebrandt vol. 1, 1.3 MB, plus duplicate scans
+    of vols 3–4); in.ernet.dli.2015.311967 / .405551 (Caland's English Śāṅkhāyana Śrautasūtra,
+    1953, 1.4 MB); wg929 / mlbd.grihyasutraspart0000fmax (SBE 29, PD).
+    COPYRIGHT FLAG: Caland's Śāṅkhāyana translation was published 1953, posthumously (Caland
+    d. 1932). Likely PD in India (life+60); US status ambiguous. Flag, do not adjudicate.
+    No complete open English translation of the Āśvalāyana Śrautasūtra exists (H. G. Ranade's
+    1978 Pune edition is modern-copyright).
+    TITUS additionally holds Kauśītaki-Gṛhyasūtra publicly, which the Śākala cell does not
+    currently name.
+  date_logged: 2026-08-01
+
+- node_path: samaveda/kauthuma/apparatus/kalpa
+  veda: samaveda
+  organization: null
+  shakha: kauthuma
+  layer: apparatus
+  kind: kalpa
+  edition: >-
+    LĀṬYĀYANA Śrautasūtra ed. Ānandacandra Vedāntavāgīśa, Bibliotheca Indica, Calcutta 1872
+    (with Agnisvāmin's bhāṣya); also a 1932 Chowkhamba printing.
+    DRĀHYĀYAṆA Śrautasūtra ed. J. N. Reuter with Dhanvin's commentary, London (Luzac), 1904;
+    also a 1982 Dhanvi-bhāṣya edition.
+    ĀRṢEYA KALPA with the commentary of Varadarāja, ed. B. R. Sharma, Vishveshvaranand Vedic
+    Research Institute, Hoshiarpur, 1976.
+    GOBHILA Gṛhyasūtra ed. Chandrakānta Tarkālaṅkāra, Bibliotheca Indica, Calcutta 1871;
+    English tr. Oldenberg, SBE 30, 1892.
+    KHĀDIRA (Drāhyāyaṇa) Gṛhyasūtra ed. A. Mahādeva Śāstri with Rudraskanda's commentary;
+    English tr. Oldenberg, SBE 29, 1886.
+    NIDĀNASŪTRA, ascribed to Patañjali, ed. K. N. Bhatnagar, Meharchand Lachhmandas, Delhi,
+    1939.
+  url: https://archive.org/details/in.ernet.dli.2015.487227
+  script: devanagari-unicode
+  svara_source?: "no — sūtra texts"
+  svara_verified?: pending — BV
+  text_layer: mixed
+  license: public-domain
+  status: found-complete
+  where_i_looked: null
+  notes: >-
+    VERIFIED IDENTIFIERS:
+      Lāṭyāyana Śr: in.ernet.dli.2015.487227 and .284148 (Vedāntavāgīśa 1872, _djvu.txt
+        990 KB); in.ernet.dli.2015.345054; in.ernet.dli.2015.494088 (Chowkhamba 1932);
+        whbv_srauta-sutra-of-latyayana-bhashya-agniswami-... (with Agnisvāmin's bhāṣya).
+      Drāhyāyaṇa Śr: reuter-the-srauta-sutra-of-drahyayana (Reuter 1904, _djvu.txt 796 KB);
+        in.ernet.dli.2015.312078 / .405661 (Dhanvi-bhāṣya, 1982).
+      Ārṣeya Kalpa: CDCM_arsheya-kalpa-with-the-commenatry-of-varada-raja-by-b.-r.-sharma-1976-
+        hoshiarpur (_djvu.txt 1.97 MB; uploader asserts CC0 — a 1976 edition, so B. R. Sharma's
+        editorial work is his: FLAG, mūla PD per rule 9).
+      Gobhila Gṛ: in.ernet.dli.2015.344809 (Tarkālaṅkāra 1871, _djvu.txt 3.2 MB); English PD
+        wg930 (SBE 30).
+      Khādira Gṛ: khadiragrhyasutra (with Rudraskanda's commentary, 434 KB); in.gov.ignca.4311
+        (Pattabhiramarya 1955); also khadir-grihya-sutram-athva-drahyayana-grihya-sutram-with-
+        rudra-skanda-commentary; drahyayana-grahyasutra-vritti-ganeshsastri-gokhale-1914 and
+        ksu.d548.drahyayanagrihya0000gane (Gaṇeśa Śāstrī Gokhale 1914).
+      Nidānasūtra: in.ernet.dli.2015.408135 and .407628 (Bhatnagar 1939, _djvu.txt 1.1 MB).
+    MACHINE-READABILITY — THE SĀMAVEDA IS THE WORST-SERVED BRANCH. GRETIL has Kauthuma-Gṛhya
+    and Jaimini-Gṛhya only. TITUS lists Drāhyāyaṇa-Śrautasūtra, Lāṭyāyana-Śrautasūtra,
+    Ārṣeya-Brāhmaṇa, Ārṣeya-Kalpa, Ṣaḍviṃśa-Brāhmaṇa and Sāmavidhāna-Brāhmaṇa explicitly under
+    "Desiderata" — i.e. the two people best placed to have digitised the Sāma Kalpa have
+    formally recorded that they have not. The Nidānasūtra is on GRETIL, TITUS, Muktabodha and
+    sanskritdocuments: nowhere. Its only digital existence is the 1939 scan.
+    UNRESOLVED, FLAGGED: GRETIL lists "Kauthuma-Gṛhyasūtra" as downloadable AND groups
+    "Gobhila" under its dead TITUS-pointer bucket. Gobhila is the author of the Kauthuma
+    school's Gṛhyasūtra, so these may be the same text under two names, or two recensions.
+    Check GRETIL's XML directly before assuming Gobhila is covered.
+    NO English translation of Lāṭyāyana or Drāhyāyaṇa is openly available; Asko Parpola's
+    "The Śrautasūtras of Lāṭyāyana and Drāhyāyaṇa and their Commentaries" (Finnish Academy of
+    Science and Letters, Helsinki, 1968–69) is a monograph with partial translation, in
+    copyright, not online. Cite, don't chase.
+  date_logged: 2026-08-01
+
+# ============================================================================
+# 4 — NIRUKTA AND NIGHAṆṬU
+# ============================================================================
+
+- node_path: _reference/nirukta
+  veda: null
+  organization: null
+  shakha: null
+  layer: apparatus
+  kind: nirukta
+  edition: >-
+    Yāska: Nirukta — electronic text, data entry by Muneo Tokunaga (and partly M. Kobayashi),
+    29 July 1999, based on Lakshman Sarup's edition. TEI-encoded by GRETIL 2020-07-31.
+  url: https://gretil.sub.uni-goettingen.de/gretil/corpustei/transformations/html/sa_yAska-nirukta.htm
+  script: transliteration
+  svara_source?: "no — unaccented throughout; verified over the whole file"
+  svara_verified?: pending — BV
+  text_layer: unicode
+  license: CC-BY-SA
+  status: found-complete
+  where_i_looked: null
+  notes: >-
+    FETCHED, READ, AND BOUNDED. 388 KB HTML. Opens at Nirukta 1,1
+    ("samāmnāyaḥ.samāmnātaḥ.sa.vyākhyātavyaḥ") and closes at 14,37
+    ("brahma.śuklamasīya"), i.e. all fourteen adhyāyas, complete. Word-internal boundaries are
+    marked with periods and compounds are analysed — this is a tokenisation-friendly encoding,
+    not raw running text. TEI-XML source at gretil/corpustei/sa_yAska-nirukta.xml.
+    **IT IS THE NIRUKTA ONLY — THE NIGHAṆṬU IS NOT IN IT.** Verified by string search: the
+    substring "nighaṇṭ" occurs ten times and every occurrence is inside Nirukta 1,1, where
+    Yāska is explaining what the word nighaṇṭu means. The five chapters of Nighaṇṭu word-lists
+    are absent. This is the finding that matters for the meaning layer — see the Nighaṇṭu
+    record.
+    LICENCE, recorded as printed in the file header: "This e-text was provided to GRETIL in
+    good faith that no copyright rights have been infringed. ... Distributed under a Creative
+    Commons Attribution-NonCommercial-ShareAlike 4.0 International License." Recorded as
+    CC-BY-SA (the NC term noted here rather than in the enum, which has no CC-BY-NC-SA value —
+    flag for the merge reviewer; the enum may need widening).
+    ATTRIBUTION OWED: Muneo Tokunaga and M. Kobayashi (data entry, 1999); Lakshman Sarup
+    (the underlying edition); GRETIL/SUB Göttingen.
+    TITUS also lists a Nirukta (Tokunaga & Kobayashi) but marks it "under preparation" with no
+    public link — GRETIL's is the live one.
+  date_logged: 2026-08-01
+
+- node_path: _reference/nirukta
+  veda: null
+  organization: null
+  shakha: null
+  layer: apparatus
+  kind: nirukta
+  edition: >-
+    Lakshman Sarup, "The Nighaṇṭu and the Nirukta, the oldest Indian treatise on etymology,
+    philology and semantics — critically edited from original manuscripts and translated for
+    the first time into English, with introduction, exegetical and critical notes, three
+    indexes and eight appendices". Oxford University Press / University of the Panjab,
+    1920–1929, in three parts: Introduction and English translation (1920/21), Sanskrit text
+    (1927), Indices and Appendices (1929). Motilal Banarsidass one-volume reissue 1967.
+  url: https://archive.org/details/nighantuniruktao00yaskuoft
+  script: devanagari-unicode
+  svara_source?: "no"
+  svara_verified?: pending — BV
+  text_layer: mixed
+  license: public-domain
+  status: found-complete
+  where_i_looked: null
+  notes: >-
+    THE NAMED INPUT TO THE MEANING LAYER, AND IT IS FULLY OPEN. Best single object:
+    nighantuniruktao00yaskuoft — Motilal one-volume reissue, University of Toronto scan, 692
+    images, creators "Yaska / Sarup, Lakshman", with hOCR, chOCR, OCR Search Text, DjVuTXT and
+    a Text PDF. This is the copy to work from: everything in one item, with a search layer.
+    Other verified witnesses:
+      nighantuniruktao01saru — 1920 Oxford, 94 images, California Digital Library scan, with
+        Grayscale PDF and full OCR derivatives. Archive notes no visible copyright notice.
+      in.ernet.dli.2015.282287 — "The Nighantu And The Nirukta Vol I 1927", University of the
+        Panjab (the Sanskrit text volume).
+      in.ernet.dli.2015.479110 — "Indices And Appendices To The Nirukta", Sarup, 1929,
+        _djvu.txt 1.53 MB. This is the volume with the three indexes and eight appendices, and
+        it is the one people forget to download.
+      in.ernet.dli.2015.13042, in.ernet.dli.2015.325503, TheNighantuAndTheNirukta,
+        nighantuandniru00sarugoog, nighantuniruktao00yask (microform) — further copies.
+    Published 1920–29 with no renewal; public domain. Sarup's translation, introduction and
+    notes are his original work and are PD by age, not by rule 9 — a cleaner case than most.
+    The Bibliotheca Indica edition with Durgācārya's commentary (ed. Satyavrata Sāmaśramī,
+    1882–91) is the other standard witness and was NOT located — worth a look, since Durga's
+    commentary is not in Sarup.
+  date_logged: 2026-08-01
+
+- node_path: _reference/nighantu
+  veda: null
+  organization: null
+  shakha: null
+  layer: apparatus
+  kind: nighantu
+  edition: >-
+    Nighaṇṭu — printed within Sarup's edition (see the Nirukta record) and separately, e.g.
+    "Nighaṇṭu by Yāska Muni", Ajmer: Vaidik Mantralay, 1932; "Yāska Niruktam and Nighaṇṭu",
+    Thanjavur Sarasvati Mahal Series no. 150; "Niruktam (Nighaṇṭu) Vol. 1", Yāskācārya, 1952.
+  url: https://archive.org/details/nighantuniruktao00yaskuoft
+  script: devanagari-unicode
+  svara_source?: "not sampled"
+  svara_verified?: pending — BV
+  text_layer: mixed
+  license: public-domain
+  status: found-partial
+  where_i_looked: >-
+    For a machine-readable Nighaṇṭu specifically: (1) GRETIL full index and the
+    sa_yAska-nirukta file itself — the Nighaṇṭu word-lists are not present, verified by reading
+    the file's first and last lines and by string search. (2) TITUS Vedic index — a Nighaṇṭu
+    entry exists, "Data entry by M. Kobayashi (Kyōtō; UNDER PREPARATION)", with no HTML or
+    plain-text link of any kind, public or members-only. (3) Archive.org title:(nighantu) —
+    returns scans (Ajmer 1932, Thanjavur, DAM Devanāgarī paper, plus a large number of
+    unrelated Ayurvedic nighaṇṭus and Kannada dictionaries), no e-text. (4) sanskritdocuments
+    veda section — nothing.
+  notes: >-
+    STATUS IS found-partial DELIBERATELY: the text is completely available as page images
+    inside Sarup, but there is NO machine-readable transcription of the Nighaṇṭu anywhere
+    open, and the one project that started (TITUS/Kobayashi) has not published.
+    WHY THIS MATTERS DISPROPORTIONATELY: the Nighaṇṭu is not a dictionary — it is a curated
+    list of the Veda's difficult words, grouped semantically (the naighaṇṭuka, naigama and
+    daivata chapters), assembled by the tradition precisely because these are the words that
+    need explaining. As a seed vocabulary for a meaning layer it is small, closed, ancient and
+    authoritative. It is also SHORT — five chapters of word-lists. Transcribing it is a
+    days-not-months job and it is the highest value-per-hour transcription target identified
+    anywhere in this packet.
+    SEPARATE TEXT, DO NOT CONFLATE: the "Atharvavedīya Nighaṇṭu of Kautsavya Muni" is a
+    distinct, Atharvaveda-specific nighaṇṭu — file "Atharva Vediya Nighantu of Kautsavya
+    Muni.pdf" inside the `atharvavedaallparts` bundle, ed. Pt. Sh. Jāsh, D.A.V. College Lahore,
+    saṃvat 1978 (= 1921 CE). Sampled: 57 947 chars, 36 129 Devanāgarī; genuine content, e.g.
+    "तुक् । तुर् । तोकम् । तनयम् ... [ऋषभ] जाः । बहुः ... नपात् । अपत्यस्य ॥ ३७ ॥" with
+    manuscript sigla in the footnotes. Small file. Also a candidate for transcription.
+  date_logged: 2026-08-01
+
+# ============================================================================
+# 5 — PADAPĀṬHA  (proposed node kind; see summary §5)
+# ============================================================================
+
+- node_path: rigveda/shakala/apparatus/padapatha
+  veda: rigveda
+  organization: null
+  shakha: shakala
+  layer: apparatus
+  kind: padapatha
+  edition: >-
+    Ṛgvedasaṃhitā, Padapāṭha — electronic text input by members of the Sansknet project,
+    TEI-encoded by GRETIL. Independently, TITUS carries A. Lubotsky's (Leiden) sandhi-free
+    padapāṭha within its synoptic Ṛgveda (saṃhitāpāṭha + padapāṭha + van Nooten/Holland
+    metrically restored text), with a Devanāgarī rendering.
+  url: https://gretil.sub.uni-goettingen.de/gretil/corpustei/transformations/html/sa_RgvedasaMhitApadapATha.htm
+  script: transliteration
+  svara_source?: "no — unaccented"
+  svara_verified?: pending — BV
+  text_layer: unicode
+  license: CC-BY-SA
+  status: found-complete
+  where_i_looked: null
+  notes: >-
+    THE ONLY MACHINE-READABLE PADAPĀṬHA OF ANY ŚĀKHĀ. Fetched and sampled: 2.64 MB HTML,
+    complete, with RV addresses inline — e.g. "su-peśasā | dyāvāpṛthivī iti | varuṇasya |
+    dharmaṇā | viskabhiteitivi-skabhite | ajareiti | bhūri-retasā // RV_6,70.1 //". Note the
+    encoding quirk visible in that sample: the traditional "iti"-repetition of a resolved
+    compound is run together without a separator ("viskabhiteitivi-skabhite" = viskabhite iti
+    vi-skabhite). Any tokeniser consuming this must handle that; it is a known, regular
+    pattern, not corruption.
+    TEI-XML source: gretil/corpustei/sa_RgvedasaMhitApadapATha.xml.
+    TITUS synoptic version: titus.uni-frankfurt.de/texte/etcs/ind/aind/ved/rv/mt/rv.htm
+    (verified HTTP 200) and a Devanāgarī rendering under .../etcd/.../rv/mt/rv.htm. TITUS's
+    plain-text padapāṭha retrieval is members-only.
+    Print padapāṭhas are also plentiful (Chunilal Gandhi Vidyabhavan aṣṭaka scans; the
+    Chowkhamba and Gaṇpat Kṛṣṇājī Sāyaṇa editions print padapāṭha alongside), but with an
+    e-text this good they are only needed for accent, which the e-text lacks.
+    THE ACCENT GAP: this padapāṭha is unaccented. An accented padapāṭha is what the project
+    actually needs for the recitation-to-comprehension bridge, and it does not exist digitally
+    for any śākhā. Nearest print witness: RigvedaSamhitaPadaPathaWithSvaras5045Alm22Shlf5-
+    DevanagariSamhitaBrahmin (eGangotri, "with svaras") → P2-c lead.
+    GRETIL/TITUS registration is P0-a's; this record exists because the padapāṭha map is P2-b's
+    deliverable and cannot be stated without it.
+  date_logged: 2026-08-01
+
+- node_path: yajurveda/krishna/taittiriya/apparatus/padapatha
+  veda: yajurveda
+  organization: krishna
+  shakha: taittiriya
+  layer: apparatus
+  kind: padapatha
+  edition: >-
+    Taittirīya Sanhitā Padpāṭha, ed. Vaidyanāth Śāstrī — pūrvabhāga 1914, uttarabhāga 1915.
+    Also printed within the Vaidika Saṃśodhana Maṇḍala critical Taittirīya Saṃhitā
+    ("padapāṭhayutā", ed. N. S. Sontakke / T. N. Dharmadhikari, Poona 1970) alongside Bhaṭṭa
+    Bhāskara's and Sāyaṇa's commentaries.
+  url: https://archive.org/details/in.ernet.dli.2015.311888
+  script: devanagari-unicode
+  svara_source?: "unknown — no text layer to test; the printed page must be inspected"
+  svara_verified?: pending — BV
+  text_layer: scanned-no-text
+  license: public-domain
+  status: found-complete
+  where_i_looked: null
+  notes: >-
+    THE HIGHEST-VALUE DIGITISATION TARGET IN THE PROJECT. It exists, it is complete in two
+    volumes, it is public domain (1914/15), it covers the anchor śākhā, and nobody has
+    transcribed it.
+    PROTOCOL §3 TEST, run on the downloaded PDF of in.ernet.dli.2015.311888: chars=0 over the
+    first 30 pages. Pure scan. Its `_djvu.txt` derivative is also empty (139 bytes) — the DLI
+    empty-text-layer case. So: page images only, no OCR at all, and Devanāgarī OCR on a
+    padapāṭha (dense with avagrahas and iti-repetitions) is hard. Budget for it accordingly.
+    Verified identifiers: in.ernet.dli.2015.311888 (pūrvabhāga, 1914) and .311889 (uttarabhāga,
+    1915), creator "Shastri, Vaidhnath", language san, both with hOCR/chOCR derivatives that
+    are empty in practice.
+    The Sontakke/Dharmadhikari VSM critical edition is the better source if its scans have a
+    text layer — taittiriya-samhita-vol-i-part-i, -vol-i-part-ii, -vol-iii-part-i are all on
+    Archive.org and were confirmed (by the Sāyaṇa sweep) to have non-empty text layers. That
+    edition's title page reads "...padapāṭhayutā Bhaṭṭabhāskara-Sāyaṇācārya-viracita-
+    bhāṣyābhyāṃ sametā" — padapāṭha AND both commentaries in one edition. Check it first.
+  date_logged: 2026-08-01
+
+- node_path: yajurveda/shukla/madhyandina/apparatus/padapatha
+  veda: yajurveda
+  organization: shukla
+  shakha: madhyandina
+  layer: apparatus
+  kind: padapatha
+  edition: >-
+    Śukla Yajurveda Vājasaneyi Mādhyandina Saṃhitā Padapāṭha, ed. Yudhiṣṭhira Mīmāṃsaka.
+    Also: Weber's edition of the Vājasaneyi Saṃhitā in both Mādhyandina and Kāṇva recensions
+    with Mahīdhara's commentary (London 1852; Chowkhamba reissue 1972).
+  url: https://archive.org/details/MaadhyandinSamhitaPadaPathaYudhishthirMimansaka
+  script: devanagari-unicode
+  svara_source?: >-
+    likely yes for the eGangotri witness, which is titled "with Svaras"; not confirmed for the
+    Mīmāṃsaka edition — not sampled.
+  svara_verified?: pending — BV
+  text_layer: mixed
+  license: public-domain
+  status: found-complete
+  where_i_looked: null
+  notes: >-
+    Two verified uploads of the Mīmāṃsaka padapāṭha:
+      MaadhyandinSamhitaPadaPathaYudhishthirMimansaka (uploader "संस्कृत-ग्रंथाः", CC0
+        asserted, `_djvu.txt` 2.15 MB — non-empty, so some OCR exists);
+      sukla-yajurveda-vajasaneyi-madhyandina-samhita-pada-patha-yudhishthir-mimansaka —
+        `_djvu.txt` present but EMPTY when fetched (163 bytes). Prefer the first upload.
+    ACCENTED WITNESS: VajasaneyiSamhita21To40thKandaWithSvarasPadapatha5104KaAlm23Shlf2-
+    DevanagariVedanga (eGangotri) — "with Svaras", adhyāyas 21–40 only. Manuscript-grade shelf
+    scan → P2-c lead, but note it because an ACCENTED padapāṭha is the thing the project
+    actually wants and this is one of only two sighted anywhere.
+    NO MACHINE-READABLE E-TEXT. TITUS has the Vājasaneyi Saṃhitā (Kümmel) in roman and
+    Devanāgarī but saṃhitāpāṭha only.
+  date_logged: 2026-08-01
+
+- node_path: yajurveda/shukla/kanva/apparatus/padapatha
+  veda: yajurveda
+  organization: shukla
+  shakha: kanva
+  layer: apparatus
+  kind: padapatha
+  edition: >-
+    (a) Kāṇva Saṃhitā with the Padapāṭha and the commentaries of Sāyaṇācārya and Ānandabodha,
+    Vol. 1, ed. B. R. Sharma, Pune, 1988.
+    (b) Śukla Yajur Veda Kāṇva Śākhā Saṃhitā and Padapāṭha (Sanskrit), Vol. 1, adhyāyas 1–20,
+    by K. Suresh, The Ghanapati, Chennai.
+  url: https://archive.org/details/iapg_kanva-samhita-with-the-padapatha-and-the-commentaries-sayanacharya-and-anandabod
+  script: devanagari-unicode
+  svara_source?: "not sampled — the Ghanapati editions are normally accented; verify on the page"
+  svara_verified?: pending — BV
+  text_layer: mixed
+  license: public-domain
+  status: found-partial
+  where_i_looked: null
+  notes: >-
+    Both verified. iapg_... : `_djvu.txt` 2.76 MB, uploader Madhuban-Trust-Delhi, CC0 asserted.
+    LWlp_shukla-yajur-veda-kanva-shakha-samhita-and-pada-patha-sanskrit-vol.-1-chapters-1 :
+    `_djvu.txt` 950 KB, creator "The Ghanapati, Chennai", CC0 asserted.
+    found-partial because both are Vol. 1 only (adhyāyas 1–20 of 40); later volumes were not
+    located.
+    RULE 9 FLAG on (a): the Kāṇva mūla and padapāṭha and the classical commentaries are PD, but
+    B. R. Sharma's 1988 critical apparatus is his — and this is a genuine critical edition
+    (manuscript collation), i.e. rule 9's edge case. Flag, do not adjudicate.
+    NOTE FOR THE SĀYAṆA RECORD: this edition is also the evidence that Sāyaṇa commented on the
+    Kāṇva Vājasaneyi Saṃhitā. Two findings, one object.
+    The Kāṇva `_status.yaml` has `apparatus: {}` — this would be a new node. P1-b owns the
+    Kāṇva śākhā; handing over rather than claiming.
+  date_logged: 2026-08-01
+
+- node_path: samaveda/kauthuma/apparatus/padapatha
+  veda: samaveda
+  organization: null
+  shakha: kauthuma
+  layer: apparatus
+  kind: padapatha
+  edition: >-
+    Sāmaveda Saṃhitā Padapāṭha, prapāṭhakas 1–6 (eGangotri shelf scan 5234/Alm 23/Shlf 5).
+    The scholarly editions are: Theodor Benfey 1848; Satyavrata Sāmaśramī, Bibliotheca Indica,
+    1874–99; and B. R. Sharma, "Sāmaveda Saṃhitā of the Kauthuma School: with Padapāṭha and the
+    commentaries of Mādhava, Bharatasvāmin and Sāyaṇa", Harvard Oriental Series 57–58,
+    2000–2001, 2 vols + index vol.
+  url: https://archive.org/details/SamvedaSamhitaPadaPatha1To6Prapathaka5234Alm23Shlf5Veda
+  script: devanagari-unicode
+  svara_source?: "not sampled"
+  svara_verified?: pending — BV
+  text_layer: scanned-no-text
+  license: public-domain
+  status: found-partial
+  where_i_looked: null
+  notes: >-
+    found-partial: the only freely available object located covers prapāṭhakas 1–6 and is a
+    library shelf scan (`_djvu.txt` 171 KB, not sampled; eGangotri items have generally been
+    poor). → P2-c lead as much as a source.
+    B. R. Sharma's Harvard Oriental Series edition is the definitive modern one — accented
+    text, padapāṭha, and three commentaries, from manuscripts collected across India and
+    Europe. It is in copyright (HUP, 2000–01): LINK ONLY, cite by name. Its existence is worth
+    recording precisely because it shows the Sāma padapāṭha is a solved editorial problem and
+    an unsolved digitisation problem.
+    Benfey 1848 and Sāmaśramī 1874–99 are PD and were not isolated on Archive.org — a
+    remaining thread. Related verified item: samaveda-aranya-sanhita (Satyavrata Sāmaśramī,
+    1873, Bengali-script cataloguing).
+    NO MACHINE-READABLE E-TEXT.
+  date_logged: 2026-08-01
+
+- node_path: atharvaveda/shaunaka/apparatus/padapatha
+  veda: atharvaveda
+  organization: null
+  shakha: shaunaka
+  layer: apparatus
+  kind: padapatha
+  edition: >-
+    (a) Atharvaveda Saṃhitā, ed. Shankar Pandurang Pandit, Bombay, 1895–1898, 4 vols — the
+    critical edition with the padapāṭha and variant readings.
+    (b) Atharvaveda (Śaunaka) with the Pada-pāṭha and Sāyaṇācārya's commentary, ed. Vishva
+    Bandhu, 5 vols, Vishveshvaranand Indological Series 13–17, Hoshiarpur, 1960–64.
+    (c) Index Alphabetical to the Atharvaveda (Padapāṭha), ed. Vishva Bandhu, VVRI.
+  url: https://archive.org/details/in.ernet.dli.2015.345042
+  script: devanagari-unicode
+  svara_source?: "not sampled"
+  svara_verified?: pending — BV
+  text_layer: mixed
+  license: public-domain
+  status: found-partial
+  where_i_looked: null
+  notes: >-
+    Pandit's 1895–98 edition verified: in.ernet.dli.2015.345042 (Vol. 2, creator "Pandit,
+    Shankar Pandurang, Ed.", 1895) and companion DLI volumes .405452, .311868, .311869,
+    .405453; also bundled inside atharva-veda-sAyaNa-bhAShyam, which carries vols 1–3 as
+    separate files. Pandit's is the PD route to the AV padapāṭha.
+    Vishva Bandhu's 5-volume edition is bibliographically confirmed but NOT cleanly available:
+    the Archive.org item that appears to hold it mixes it with Pandit's unrelated edition and
+    only two volumes ("Kāṇḍas I–V" and "Kāṇḍas VI–X, Sāyaṇācārya, 1960/1961") are identifiable.
+    Do not record it as covered.
+    found-partial for that reason: the padapāṭha exists in print in two editions, one of which
+    is fully open in scattered volumes and one of which is not cleanly online.
+    NO MACHINE-READABLE E-TEXT. GRETIL and TITUS both carry the AV Śaunaka SAṂHITĀ-pāṭha
+    (accented and unaccented, Petr/Vavroušek with Griffiths and Kubisch, referenced by Vishva
+    Bandhu's numbering) — but not the padapāṭha. Given that the samhitāpāṭha e-text already
+    uses Vishva Bandhu's reference system, a padapāṭha transcription would align to it for
+    free. Worth noting to whoever picks this up.
+  date_logged: 2026-08-01
+
+- node_path: yajurveda/krishna/katha/apparatus/padapatha
+  veda: yajurveda
+  organization: krishna
+  shakha: katha
+  layer: apparatus
+  kind: padapatha
+  edition: >-
+    No traditional padapāṭha. A modern reconstruction of the padapāṭha of Kāṭhaka Saṃhitā
+    books 19–22 exists as a "special edition" by Chlodwig H. Werba (Vienna), held by TITUS.
+  url: https://titus.uni-frankfurt.de/texte/texte2.htm
+  script: transliteration
+  svara_source?: "unknown — gated, not inspectable"
+  svara_verified?: pending — BV
+  text_layer: unicode
+  license: unknown
+  status: not-found
+  where_i_looked: >-
+    TITUS Vedic index, read in full: under Kāṭha-Saṃhitā, "Books 19-22 (special edition), Data
+    entry by Chl. H. Werba (Vienna) — [Preliminary HTML version (UTF-8) of Saṃhitā-Pāṭha of
+    Books 19-22 with index available (TITUS Members only)] [Preliminary HTML version (UTF-8) of
+    Pada-Pāṭha of Books 19-22 with index available (TITUS Members only)]". Both are members-
+    only; the complete Kāṭha-Saṃhitā (Fushimi) IS public but is saṃhitāpāṭha. GRETIL: Kāṭhaka-
+    Saṃhitā listed as TITUS-restricted, converted files not available. Archive.org
+    title:(padapatha) and title:(pada patha): nothing Kāṭhaka. Web search on whether a Kāṭhaka
+    padapāṭha exists: the tradition is explicit that the Kaṭha Saṃhitā has no commentary, no
+    padapāṭha and no complete separate brāhmaṇa.
+  notes: >-
+    Recorded as not-found deliberately, and it is the RIGHT answer rather than a failure: the
+    Kaṭha śākhā never had a padapāṭha. What exists is Werba's modern scholarly reconstruction
+    of four books, and it is gated. Do NOT present the TITUS material as a traditional
+    padapāṭha if it is later obtained.
+    This is one of the packet's structural findings: for Kaṭha, Kapiṣṭhala, Jaiminīya and
+    Paippalāda there is no traditional word-boundary authority at all, so every sandhi decision
+    downstream is a model decision with no checksum behind it. That belongs in the UI, not just
+    in a YAML file. P2-a owns the Kaṭha node.
+  date_logged: 2026-08-01
+
+- node_path: yajurveda/krishna/maitrayani/apparatus/padapatha
+  veda: yajurveda
+  organization: krishna
+  shakha: maitrayani
+  layer: apparatus
+  kind: padapatha
+  edition: >-
+    No printed edition. A padapāṭha of the Maitrāyaṇī Saṃhitā existed and is lost as a
+    recitation; it survives in two manuscripts, at the Bhandarkar Oriental Research Institute,
+    Pune and the Vaidika Saṃśodhana Maṇḍala, Pune, covering up to the fourth kāṇḍa. A study,
+    "Maitrāyaṇī Padapāṭha: A Study", is based on them.
+  url: null
+  script: null
+  svara_source?: null
+  svara_verified?: pending — BV
+  text_layer: null
+  license: unknown
+  status: not-found
+  where_i_looked: >-
+    GRETIL (Maitrāyaṇī-Saṃhitā present as plain text via TITUS — saṃhitāpāṭha only); TITUS
+    Vedic index (Maitrāyaṇi-Saṃhitā, Fushimi, public HTML — saṃhitāpāṭha only; no padapāṭha
+    entry, and none in Desiderata either); Archive.org title:(padapatha) and title:(pada patha)
+    sweeps; web search on the Maitrāyaṇī padapāṭha specifically.
+  notes: >-
+    → P2-c AND P2-a. This is the most affecting single fact in the packet: the Maitrāyaṇī
+    padapāṭha is not a text that was never made, it is a text that was made, recited, and lost
+    inside living memory, and the surviving evidence is two manuscripts in one city covering
+    less than half the saṃhitā. If the project ever justifies a physical-archive trip, BORI and
+    the Vaidika Saṃśodhana Maṇḍala are both in Pune and hold one each.
+  date_logged: 2026-08-01
+
+# ============================================================================
+# 6 — SĀYAṆA AND THE COMMENTARIAL LAYER  (proposed node kind; see summary §3 and §5)
+# ============================================================================
+
+- node_path: rigveda/shakala/apparatus/bhashya
+  veda: rigveda
+  organization: null
+  shakha: shakala
+  layer: apparatus
+  kind: bhashya
+  edition: >-
+    Ṛgveda Saṃhitā with Sāyaṇa's bhāṣya — (a) ed. F. Max Müller, London 1849–75, 6 vols
+    (2nd ed. Oxford 1890–92, 4 vols); (b) Vaidika Saṃśodhana Maṇḍala, Poona, ed. N. S. Sontakke
+    (later Sontakke & C. G. Kashikar), 4 parts covering maṇḍala 1 / 2–5 / 6–8 / 9–10 + khilas.
+  url: https://archive.org/details/RgVedaWithSayanasCommentaryPart1
+  script: devanagari-unicode
+  svara_source?: "yes for the mūla text in these editions; not sampled character-by-character"
+  svara_verified?: pending — BV
+  text_layer: mixed
+  license: public-domain
+  status: found-complete
+  where_i_looked: null
+  notes: >-
+    Verified: RgVedaWithSayanasCommentaryPart1 through Part4, all four with substantial
+    non-empty text layers; the item description confirms "Commentator: Sayana... Vaidik
+    Samshodhan Mandala, Tilak Vidyapeeth, Pune". Duplicate complete upload:
+    rgveda-with-sayanabhasya (49 files). Müller's edition: rigvedasanhitasa01syaauoft (1849,
+    non-empty), plus DLI singles in.ernet.dli.2015.272521 and .487366 and a Google scan
+    rigvedasanhitas00mlgoog.
+    THE BEST-COVERED TEXT IN THE CORPUS — multiple complete, text-searchable editions, free.
+  date_logged: 2026-08-01
+
+- node_path: rigveda/shakala/apparatus/bhashya
+  veda: rigveda
+  organization: null
+  shakha: shakala
+  layer: apparatus
+  kind: bhashya
+  edition: >-
+    H. H. Wilson, "Ṛg-Veda Sanhitā: a collection of ancient Hindu hymns", 6 vols, London
+    1850–1888. Wilson (d. 1860) saw the earlier volumes through; vol. 4 ed. E. B. Cowell,
+    vol. 5 ed. Cowell & W. F. Webster, vol. 6 ed. Webster. The translation follows Sāyaṇa's
+    interpretation throughout.
+  url: https://archive.org/details/RigVedaSanhitaByHHWilsonVol1
+  script: roman
+  svara_source?: "n/a — English translation"
+  svara_verified?: pending — BV
+  text_layer: mixed
+  license: public-domain
+  status: found-complete
+  where_i_looked: null
+  notes: >-
+    THE CROSS-CHECK ON SĀYAṆA, AND IT IS FULLY OPEN. Two complete independent sets verified:
+    RigVedaSanhitaByHHWilsonVol1 … Vol6 (uniform scans, all six present, non-empty text layers
+    565–795 KB each), and rigvedasanhitc01wils … c06wils (University of Toronto, creator fields
+    correctly listing Wilson/Cowell/Webster, date range 1854–1888). Further redundant single
+    volumes: in.ernet.dli.2015.33630, dli.ernet.236706, dli.ernet.1122.
+    NO single-file complete edition exists — six volumes, always.
+    MACHINE-READABLE: wisdomlib.org carries a running HTML transcription of Wilson's Ṛgveda
+    including the Sāyaṇa-derived notes. DO NOT CONFLATE with sacred-texts.com's Ṛgveda, which
+    is Griffith — a different translator with a different relationship to Sāyaṇa. That
+    confusion is common and would silently corrupt any comparison.
+  date_logged: 2026-08-01
+
+- node_path: yajurveda/krishna/taittiriya/apparatus/bhashya
+  veda: yajurveda
+  organization: krishna
+  shakha: taittiriya
+  layer: apparatus
+  kind: bhashya
+  edition: >-
+    SĀYAṆA — Taittirīya Saṃhitā with bhāṣya, Ānandāśrama Sanskrit Series 42, ed. Kāśīnātha
+    Śāstrī Āgāśe, 9 parts, 1940–51; Taittirīya Brāhmaṇa, ASS 37 (+38), ed. Nārāyaṇaśāstrī
+    Godbole, 1898/1934, 3 parts; Taittirīya Āraṇyaka, ASS 36, ed. Bābāśāstrī Phāḍke,
+    1898/1927, 2 parts.
+    BHAṬṬA BHĀSKARA MIŚRA (pre-Sāyaṇa) — TS, TB and TA, Mysore Government Oriental Library
+    Series, ed. A. Mahādeva Śāstri (with K. Rangācārya for the Āraṇyaka), TS 1894–98,
+    TB/TA 1900–02.
+  url: https://archive.org/details/ASS042KrishnaYajurvediyaTaittiriyaSamhitaPart1KasinathSastriAgase1940
+  script: devanagari-unicode
+  svara_source?: "yes for the mūla in these editions; not sampled character-by-character"
+  svara_verified?: pending — BV
+  text_layer: mixed
+  license: public-domain
+  status: found-complete
+  where_i_looked: null
+  notes: >-
+    SĀYAṆA, verified as single bundled items each containing every part with non-empty text:
+      ASS042KrishnaYajurvediyaTaittiriyaSamhitaPart1KasinathSastriAgase1940 (all 9 parts);
+      ASS037TaittiriyaBrahmanamWithSayanabhashyaPart1NarayanasastriGodbole1934 (3 parts);
+      ASS036TaittiriyaAranyakamWithSayanaBhashyaPart1BabasastriPhadke1898 (2 parts).
+    BHAṬṬA BHĀSKARA, verified: in.ernet.dli.2015.312238 (TS vols I pts 1–4, creator "Bhatta,
+    Bhaskara Misra", 4 MB text) and dli.ernet.495706 (TS vol. 4); in.ernet.dli.2015.486522 and
+    .383422 (TB); taittiriya-aranyaka-bhashyam-by-sayana-bhatta-bhaskara (TA, BOTH bhāṣyas,
+    parts 1 and 2, all text layers non-empty).
+    WHY THIS MATTERS MORE HERE THAN ANYWHERE ELSE: on the anchor śākhā there are TWO
+    independent classical readings of the same text, separated by centuries, and both are open.
+    That is the natural material for the project's "named readings side by side" discipline —
+    a real disagreement between two named traditional commentators, not a manufactured one.
+    Bhaṭṭa Bhāskara is the South Indian layer that Sāyaṇa later overwrote in general awareness;
+    for a Tamil-Nadu-anchored Taittirīya project he is arguably the more local authority.
+    UNVERIFIED DETAIL: the co-editor of the Mysore Āraṇyaka is given as K. Rangācārya in what
+    was found; an attribution to L. Srinivasacharya could not be confirmed. Check the title
+    page before citing.
+    The Vaidika Saṃśodhana Maṇḍala critical TS (Sontakke/Dharmadhikari) prints padapāṭha plus
+    BOTH commentaries — see the Taittirīya padapāṭha record; it is the single densest object
+    for this śākhā.
+  date_logged: 2026-08-01
+
+- node_path: rigveda/shakala/apparatus/bhashya
+  veda: rigveda
+  organization: null
+  shakha: shakala
+  layer: apparatus
+  kind: bhashya
+  edition: >-
+    Aitareya Brāhmaṇa with Sāyaṇa's bhāṣya, Bibliotheca Indica, ed. Satyavrata Sāmaśramī,
+    2 vols, 1895/1896. Aitareya Āraṇyaka with Sāyaṇa's bhāṣya, Bibliotheca Indica, ed.
+    Rājendralāla Mitra.
+  url: https://archive.org/details/in.ernet.dli.2015.292709
+  script: devanagari-unicode
+  svara_source?: "not sampled"
+  svara_verified?: pending — BV
+  text_layer: mixed
+  license: public-domain
+  status: found-complete
+  where_i_looked: null
+  notes: >-
+    Verified: in.ernet.dli.2015.292709 (AB vol. 1) and .292710 (vol. 2), both _djvu.txt
+    1.4–1.6 MB — a case where the DLI text layer IS usable, contrary to the general pattern.
+    in.ernet.dli.2015.344820 (Aitareya Āraṇyaka, Mitra ed., 1.5 MB text; the metadata `date`
+    field reads "1627", which is obviously corrupt — the edition is 1870s. Record the edition,
+    not the field.)
+  date_logged: 2026-08-01
+
+- node_path: yajurveda/shukla/madhyandina/apparatus/bhashya
+  veda: yajurveda
+  organization: shukla
+  shakha: madhyandina
+  layer: apparatus
+  kind: bhashya
+  edition: >-
+    Śatapatha Brāhmaṇa with Sāyaṇa's Vedārthaprakāśa AND Harisvāmin's bhāṣya, ed. Vaṃśīdhara /
+    Śrīdhara Śāstrī, Gaṅgāviṣṇu Śrīkṛṣṇadāsa, 1940, 5 parts.
+    Vājasaneyi Saṃhitā: the commentators are Uvaṭa (Mantrabhāṣya) and Mahīdhara (Vedadīpa,
+    1588) — NOT Sāyaṇa. Weber's edition with Mahīdhara: London 1852 / Chowkhamba 1972.
+  url: https://archive.org/details/satapatha_bahmanam_with_sayana_bhashya__harisvami_bhashya_ed._vamsidhara_sastri_1940_gangavishnu
+  script: devanagari-unicode
+  svara_source?: "not sampled"
+  svara_verified?: pending — BV
+  text_layer: mixed
+  license: public-domain
+  status: found-partial
+  where_i_looked: null
+  notes: >-
+    found-partial ON PURPOSE, and this is a finding rather than a shortfall: **Sāyaṇa's
+    Śatapatha commentary does not cover the whole text.** It was his last work, composed under
+    Harihara II, and publishers uniformly print it together with Harisvāmin's much older
+    commentary precisely to fill the gaps. The 1940 Gaṅgāviṣṇu 5-part set (all five parts'
+    text layers non-empty, 2.2–5.6 MB each) is the combined edition and is the one to use.
+    Single-volume alternates: satapatha-brahmana-part-i, satapatha-brahmanam-sayana-part-iii.
+    The chapter-by-chapter boundary of Sāyaṇa's coverage could not be established from the
+    sources consulted. Do not assert it. This is exactly the kind of underdetermination the
+    project's evidence-bundle discipline is for.
+    VS commentators verified: in.ernet.dli.2015.407385 and .408325 (Weber, VS in Mādhyandina
+    and Kāṇva with Mahīdhara); YDfZ_shukla-yajur-veda-samhita-... (Mantrabhāṣya + Vedadīpa,
+    ed. Wasudeva Laxmana Shastri Pansikar, Nirnaya Sagar Press, Bombay 1929); vajasneyasamhita
+    (Mahīdhara, Chowkhamba 1972 reissue of Weber 1852).
+  date_logged: 2026-08-01
+
+- node_path: yajurveda/shukla/kanva/apparatus/bhashya
+  veda: yajurveda
+  organization: shukla
+  shakha: kanva
+  layer: apparatus
+  kind: bhashya
+  edition: >-
+    Vājasaneyi Saṃhitā, KĀṆVA recension, with the commentary of Sāyaṇa (jointly with
+    Ānandabodha) — Chowkhamba, adhyāyas 1–20, 1915; critical edition ed. B. R. Sharma,
+    adhyāyas 1–20 with Sāyaṇa + Ānandabodha, adhyāyas 21–40 with Ānandabodha + Anantācārya
+    (Ānandabodha alone covers all forty plus the Īśāvāsya).
+  url: https://archive.org/details/lInF_shukla-yajurveda-kanva-samhita-with-the-commentary-by-sayana-acharya-edited-by-m
+  script: devanagari-unicode
+  svara_source?: "not sampled"
+  svara_verified?: pending — BV
+  text_layer: unknown
+  license: public-domain
+  status: found-partial
+  where_i_looked: >-
+    Archive.org title:(kanva samhita) sweeps and Sāyaṇa-specific searches. The identifier given
+    surfaced in a title search as "Shukla Yajurveda Kanva Samhita With The Commentary By Sayana
+    Acharya Edited By M..., Published By Chaukhamba" but its metadata was NOT independently
+    resolved — treat the URL as a lead to check, not as verified.
+  notes: >-
+    RECORDED BECAUSE IT CORRECTS A COMMON ASSUMPTION, not because it is settled. Sāyaṇa DID
+    work on the Śukla Yajurveda — on the KĀṆVA recension, with Ānandabodha. It is the
+    Mādhyandina VS he left to Uvaṭa and Mahīdhara. The B. R. Sharma critical edition is the
+    solid witness and is reachable through the Kāṇva padapāṭha record above
+    (iapg_kanva-samhita-with-the-padapatha-and-the-commentaries-sayanacharya-and-anandabod,
+    Vol. 1, verified, 2.76 MB text) — that item is simultaneously the padapāṭha source and the
+    proof of Sāyaṇa's Kāṇva commentary.
+    STATUS found-partial: adhyāyas 1–20 only located, and B. R. Sharma's 1988 apparatus is
+    modern editorial work (rule 9 edge case: a true critical edition). Flag; link, don't host
+    the apparatus.
+  date_logged: 2026-08-01
+
+- node_path: samaveda/kauthuma/apparatus/bhashya
+  veda: samaveda
+  organization: null
+  shakha: kauthuma
+  layer: apparatus
+  kind: bhashya
+  edition: >-
+    Sāmaveda Saṃhitā with Sāyaṇa's bhāṣya, Bibliotheca Indica, ed. Satyavrata Sāmaśramī,
+    1874–78. Pañcaviṃśa (Tāṇḍya-Mahā-) Brāhmaṇa with Sāyaṇa, Bibliotheca Indica, ed.
+    Ānandacandra Vedāntavāgīśa, 1870/1874. Ārṣeya Brāhmaṇa with Sāyaṇa's Vedārthaprakāśa,
+    ed. B. R. Sharma.
+  url: https://archive.org/details/in.ernet.dli.2015.344920
+  script: devanagari-unicode
+  svara_source?: "not sampled"
+  svara_verified?: pending — BV
+  text_layer: mixed
+  license: public-domain
+  status: found-partial
+  where_i_looked: null
+  notes: >-
+    Verified: in.ernet.dli.2015.344920 (Sāma Veda Sanhita Vol. 1, 1874, 2.1 MB text — the
+    Sāyaṇa attribution follows the Bibliotheca Indica series pattern and was NOT independently
+    confirmed in this item's own metadata; flag); in.ernet.dli.2015.487242 (Pañcaviṃśa vol. 1,
+    1870) and .345109 (vol. 2, 1874) and .369523 (creator field literally "Sayana Acharya"),
+    all non-empty; arsheya-brahmanam (Ārṣeya Brāhmaṇa with Sāyaṇa — CONFIRMED by reading the
+    file, see the Sāmaveda anukramaṇī record).
+    NOT CLEANLY DIGITISED: Ṣaḍviṃśa Brāhmaṇa (Sāyaṇa's Vedārthaprakāśa attested; the item
+    `shadvimsa-brahmana`, B. R. Sharma, was found but its text layer not confirmed) and
+    Sāmavidhāna Brāhmaṇa (Sāyaṇa attested alongside a separate Bhāratasvāmin commentary first
+    published in B. R. Sharma's modern edition; no standalone open Sāyaṇa edition located).
+    CONFIRMED ABSENT: the Jaiminīya Brāhmaṇa has NO Sāyaṇa and no classical commentary of any
+    kind — Raghu Vira and Lokesh Chandra's 1954 first complete edition was made without any
+    commentary or paddhati to lean on. That is a real statement about the Jaiminīya's
+    transmission, not a gap in this search. → P2-a.
+  date_logged: 2026-08-01
+
+- node_path: atharvaveda/shaunaka/apparatus/bhashya
+  veda: atharvaveda
+  organization: null
+  shakha: shaunaka
+  layer: apparatus
+  kind: bhashya
+  edition: >-
+    Atharvaveda (Śaunaka) with the Pada-pāṭha and Sāyaṇācārya's commentary, ed. Vishva Bandhu,
+    5 vols, Vishveshvaranand Indological Series 13–17, Hoshiarpur, 1960–64.
+  url: https://archive.org/details/atharva-veda-sAyaNa-bhAShyam
+  script: devanagari-unicode
+  svara_source?: "not sampled"
+  svara_verified?: pending — BV
+  text_layer: mixed
+  license: public-domain
+  status: found-partial
+  where_i_looked: >-
+    Archive.org searches on the edition title and on Vishva Bandhu; the bundled item
+    `atharva-veda-sAyaNa-bhAShyam`, whose file list was read.
+  notes: >-
+    found-partial and DELIBERATELY NOT UPGRADED. The bundle `atharva-veda-sAyaNa-bhAShyam`
+    mixes Shankar Pandurang Pandit's 1895–98 critical edition (which is a padapāṭha and
+    variant-readings edition, NOT a Sāyaṇa commentary) with two files that do look like the
+    real Vishva Bandhu Sāyaṇa volumes — "Atharvaveda Saunaka Part 1 Kāṇḍas I–V" and "Part 2
+    Kāṇḍas VI–X, Sāyaṇācārya, 1960/1961". That is 2 of 5 volumes, inside an item that
+    misdescribes its own contents. Do not treat the AV Sāyaṇa bhāṣya as covered.
+    ON THE AUTHORSHIP QUESTION: the whole "Sāyaṇa corpus" is treated by modern scholarship as
+    composite (Sāyaṇa, his brother Mādhava, and pupils writing under his name by convention).
+    No source was found singling out the ATHARVAVEDA bhāṣya as more disputed than the rest. Do
+    not repeat the "the AV Sāyaṇa is spurious" claim without a citation — it did not survive
+    checking.
+  date_logged: 2026-08-01

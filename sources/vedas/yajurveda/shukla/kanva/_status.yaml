@@ -7,8 +7,12 @@ reciting_communities:
   - region: South India
     note: "Kanva recitation continues, notably in Karnataka/Andhra — verify specifics before asserting"
 layers:
-  samhita:   { status: enumerated, note: "Vajasaneyi Samhita (Kanva recension)" }
-  brahmana:  { status: enumerated, note: "Shatapatha Brahmana (Kanva recension)" }
-  upanishad: { status: enumerated, note: "Brihadaranyaka (Kanva recension) — embedded in the Shatapatha, cross-referenced only" }
-apparatus: {}
+  samhita:   { status: enumerated, note: "THE TARGET SAKHA THIS SWEEP DID NOT CLOSE. No machine-readable Kanva samhita exists in any of the four large corpora — GRETIL has no Kanva entry at all (its 'Vajasaneyi-Samhita' is the Madhyandina); DCS has no Kanva directory; VedaWeb is Rgveda-only. The only complete Vajasaneyi Kanva Samhita located anywhere is a 158-page PURE SCAN." }
+  brahmana:  { status: enumerated, note: "Satapatha Brahmana (Kanva recension). Absent from the publisher ecosystem in any form." }
+  upanishad: { status: sourced, note: "Brhadaranyaka (Kanva recension) — embedded in the Satapatha, cross-referenced only. GRETIL holds it with commentary (sa_bRhadAranyakopaniSadkANva-recension-comm.xml), and the Isa Upanisad in the Kanva recension." }
+apparatus:
+  padapatha: { status: enumerated, note: "Print only." }
+  bhashya:   { status: enumerated, note: "SAYANA COMMENTED ON THIS RECENSION, with Anandabodha — contrary to the common assumption that he left the Shukla Yajurveda to Uvata and Mahidhara. That is true of Madhyandina, not Kanva." }
+findings:
+  - "Adyar Library's Vedic catalogue names 21 KANVA MANUSCRIPTS — the largest count for any sakha this repo records as empty. The manuscripts are not missing; sakha is simply not a field in the modern databases. This node's route is the printed catalogues and the manuscript register, not another digital sweep."
 sources: []

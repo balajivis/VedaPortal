@@ -7,7 +7,13 @@ reciting_communities:
   - region: Kashmir
     note: "Historically Kashmiri; living recitation nearly extinct — verify current state"
 layers:
-  samhita:   { status: enumerated, note: "Kathaka Samhita (Subramania Sarma's electronic edition exists — see sanskritweb.net)" }
-  upanishad: { status: enumerated, note: "Katha Upanishad" }
+  samhita:   { status: enumerated, note: "CORRECTION 2026-08-01: the previous pointer here was WRONG. sanskritweb's 'Kathakam' is TB 3.10-12 — Taittiriya material, not the Kathaka Samhita. Different text, similar name. sanskritweb/Sarma is Taittiriya-only. GRETIL's entry reads 'Restricted download / proprietary format from TITUS — converted file(s) not available at present' and serves nothing. The text DOES exist as accented Unicode at TITUS, all-rights-reserved." }
+  upanishad: { status: enumerated, note: "Katha Upanisad" }
 apparatus: {}
+audio:
+  status: enumerated
+  note: "Not established in this sweep. Media paths on vedicheritage were never HTTP-probed for this sakha — treat any negative as low-confidence (protocol rule 11)."
+findings:
+  - "TITUS holds accented Unicode Kathaka alongside Maitrayani and Kapisthala — three of the six endangered sakhas in one place. All-rights-reserved, no CC. Written permission is the only legitimate route and would fill four nodes at once. Nothing was fetched from it."
+  - "No padapatha exists for this sakha in any form. Every sandhi decision here is a model decision with no traditional checksum behind it."
 sources: []

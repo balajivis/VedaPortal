@@ -43,5 +43,31 @@ Many Upaniṣads are the closing sections of Āraṇyakas (Bṛhadāraṇyaka = 
 ## Provenance and licensing caveats
 
 - Prefer copyright-expired or explicitly open sources. Record the edition in the śākhā's `_status.yaml` `sources:` list.
-- **Known caveat**: `Taittiriya-Brahmanam.pdf` is marked *"for personal use only — not for commercial printing/distribution."* It is retained as a working reference; replace with a clean-licensed edition before any redistribution claim. The repo-level `sources/LICENSE` (CC-BY-SA 4.0) covers **our original compilation and metadata**, not third-party PDFs — each PDF carries its own status.
+- The repo-level `sources/LICENSE` (CC-BY-SA 4.0) covers **our original compilation and metadata**, not third-party PDFs — each PDF carries its own status.
+
+### The mūla text is public domain, whatever the PDF says
+
+The Vedic corpus is ancient and out of copyright everywhere. **Typesetting a public-domain text
+does not create a new copyright in it.** In the US there is no protection for typeface or
+typographical arrangement, *Feist* forecloses "sweat of the brow," and *Bridgeman* forecloses
+slavish reproduction of a public-domain work. India has no separate published-edition right
+either. A restrictive notice on a reset of a PD text does not attach to the text.
+
+**What does belong to an editor**, and must be treated as theirs: an original introduction,
+preface, editorial notes, commentary, translation, or index bound in the same volume.
+
+So: record the notice verbatim, classify the **mūla text** as `public-domain`, and note the
+apparatus separately. Two distinct objects in one file.
+
+- **Worked case — settled**: `Taittiriya-Brahmanam.pdf` carries *"for personal use only — not for
+  commercial printing/distribution."* The volume contains **no translation and no commentary** —
+  it is the received text, typeset. There is therefore nothing in the file that copyright attaches
+  to. **Treated as public domain and used accordingly.** The notice is recorded for provenance,
+  not honoured as a restriction.
+- **The genuine edge case**: a true *critical* edition — manuscript collation, apparatus criticus,
+  conjectural emendation — involves original editorial judgement, and some jurisdictions protect
+  scholarly editions specifically. Flag those in `notes` rather than assuming either way.
+- **Attribution is separate from licensing, and is not optional.** These editions are usually the
+  work of individual scholars doing it as seva. Credit the editor and the edition by name in
+  `_status.yaml`, always — that costs nothing and is owed regardless of what the law requires.
 - `unorganised-collection/` holds material not yet attributable to a śākhā or edition. Attribution work moves files out of it; nothing ships from it.

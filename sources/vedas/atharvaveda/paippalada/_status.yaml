@@ -7,8 +7,13 @@ reciting_communities:
   - region: Odisha
     note: "Manuscript tradition rediscovered in Odisha, 1957; living recitation status to verify"
 layers:
-  samhita:   { status: enumerated, note: "Paippalada Samhita — critical editions in progress internationally" }
-  upanishad: { status: sourced,    note: "Prashna Upanishad PDF in repo — traditionally associated with the Pippalada school; shakha attribution per tradition, verify scholarly placement" }
+  samhita:   { status: sourced, note: "GRETIL TEI-P5, a composite of the published critical editions (Zehnder kanda 2, Lubotsky 5, Griffiths 6-7, Kubisch 20.1-30) — ALL 20 KANDAS PRESENT, measured stanza counts per kanda. Far better coverage than DCS, which has only 6 of 20. The single most complete open machine-readable Paippalada located. UNACCENTED (0 over 901,371 chars) — see findings." }
+  brahmana:  { status: enumerated, note: "The Gopatha Brahmana is claimed by both Atharvan lines — lives at atharvaveda/shaunaka/brahmana, cross-referenced here, not duplicated." }
+  upanishad: { status: sourced, note: "Prasna Upanisad — traditionally associated with the Pippalada school; attribution is per tradition, verify scholarly placement. Two witnesses held." }
 apparatus: {}
+findings:
+  - "NO PADAPATHA EXISTS, AND THAT FOLLOWS FROM HOW THIS SAKHA SURVIVED. The Paippalada came down OUTSIDE the oral lock — a manuscript that escaped the rot long enough to be found in 1957, i.e. a survival lottery rather than a preservation system. A padapatha is a PRODUCT of that lock. The word-divisions in the modern critical editions are editorial reconstructions by Griffiths, Lubotsky and Zehnder — real and useful, but a scholar's analysis, not the tradition's authority. Tag modern_etic and machine-split, never inherited."
+  - "THE ODISHA STATE MUSEUM'S 1973 CATALOGUE STATES IT HOLDS TEN PAIPPALADA MANUSCRIPTS, against ONE record in India's national manuscript database. The national database undercounts this text by an order of magnitude. See the manuscripts register."
+  - "SEARCH TRAP, recorded because it nearly produced a false finding about this exact text: query=paippalada returns EMPTY in the national database; query=Paippal returns three. A zero-result query is a claim about the query, not the collection."
 sources:
   - "Prashna Upanishad - Swami Sarvanand [Sanskrit-English].pdf"

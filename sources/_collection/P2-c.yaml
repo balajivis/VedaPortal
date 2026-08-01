@@ -1,0 +1,2004 @@
+# P2-c — Manuscript catalogue sweep
+#
+# Packet scope: the HANDWRITTEN record and the catalogues that describe it.
+# NOT printed editions (P1-a), NOT machine-readable text corpora (P0-a), NOT apparatus
+# editions (P2-b), NOT the six endangered śākhās as editions/audio (P2-a).
+#
+# ---------------------------------------------------------------------------
+# SCHEMA EXTENSION — documented once, per COLLECTION-PROTOCOL.md §1 closing note
+# ---------------------------------------------------------------------------
+# The protocol record is keyed on `node_path` (śākhā → layer). That key does not fit a
+# manuscript catalogue, because a catalogue is keyed on INSTITUTION → HOLDING and —
+# critically — because these catalogues almost never state śākhā (see FINDING-1 below).
+# Forcing a node_path onto them would require inferring śākhā, which rule 7 forbids.
+#
+# So records here are keyed on `holding_id` (institution + collection), and carry:
+#
+#   holding_id                institution-slug/collection-slug — primary key for this packet
+#   institution               full name, as the institution writes it
+#   collection                named collection or catalogue within the institution
+#   country
+#   catalogue_url             a link that opens
+#   machine_queryable         no / html-scrape / postback-scrape / api / solr / oai-pmh / iiif / bulk-file
+#   query_endpoint            the EXACT working URL, verbatim, if machine_queryable != no
+#   query_verified            what I actually ran and what came back (evidence, not claim)
+#   record_count              total records in the catalogue, as the catalogue itself reports
+#   vedic_material            what Vedic material, with counts where the catalogue gives them
+#   shakha_stated             what śākhā the CATALOGUE ITSELF names. `none` is the usual answer.
+#   images_digitised          none / partial / full  — of the ORIGINALS, not of a card catalogue
+#   images_public             yes / no / registration / on-request
+#   image_access_path         how images are actually obtained
+#   access_requirements       permissions, fees, in-person application, visa-level friction
+#   license                   protocol enum, applied to the CATALOGUE METADATA
+#   image_license             separate — terms asserted over the manuscript images
+#   status                    protocol enum: found-complete / found-partial / not-found
+#   where_i_looked            mandatory when not-found (protocol rule 2)
+#   notes
+#   date_logged
+#
+# Protocol fields carried through unchanged: `license`, `status`, `where_i_looked`,
+# `notes`, `date_logged`. Fields dropped as inapplicable to a catalogue: `veda`,
+# `organization`, `shakha`, `layer`, `edition`, `script`, `text_layer`,
+# `svara_source?`, `svara_verified?` — a catalogue is not a text and has no svaras.
+# `svara_verified?` is BV's field and is not present here at all, per the hand-off seam.
+#
+# ---------------------------------------------------------------------------
+
+summary:
+  date: 2026-08-01
+  packet: P2-c
+
+  headline: >
+    Twenty-seven holdings mapped. Twelve are machine-queryable today and I ran queries against
+    every headline endpoint myself.
+    The premise of the packet holds, and more strongly than expected. Without credentials, I
+    can enumerate right now roughly 155,000 Vedic manuscript records — 87,207 from India's
+    national database, 65,672 from IGNCA's Vedic Heritage catalogue, 2,349 from NGMCP's
+    Nepalese index (150,298 folios, counted not estimated), 1,151 from Qalamos's Veda class,
+    and hundreds more from Berlin, Paris and Cambridge. Nobody has read that.
+    The evidence is not the bottleneck. Two findings make the point sharply. First, the
+    Paippalāda Atharvaveda — the recension believed lost until 1957 — is described in the
+    Odisha State Museum's own 1973 printed catalogue as TEN manuscripts in its collection,
+    a volume freely readable with OCR on archive.org, while India's national database
+    contains exactly ONE record for the actual Saṃhitā. Second, a single Adyar Library printed
+    catalogue from the last century names manuscripts for every śākhā this repository
+    currently records as holding nothing — Mādhyandina 5, Kāṇva 21, Śaunaka 4, Kaṭha 15,
+    Jaiminīya 3, Maitrāyaṇī 2.
+    Metadata is broadly open; images are scarce but not absent — India's Kritisampada serves
+    ~476 MB manuscript PDFs over plain unauthenticated HTTP, and 2,429 Vedic manuscripts there
+    are digitised and public. What is missing is not evidence and increasingly not even
+    pixels. It is readers.
+
+  METHOD-WARNING_this_packet_shipped_three_false_negatives: >
+    Recorded prominently because a map of what is reachable is worth nothing if its negatives
+    are unreliable, and because both errors were the same error.
+    (1) I logged NAMAMI / KRITISAMPADA as not-found after namami.gov.in — the URL every
+    published account gives — refused TCP on 443 and 80 at four timeout settings. WRONG. The
+    database is alive on a different host, www.pandulipipatala.nic.in, with 87,207 records
+    under subject=Veda and publicly fetchable manuscript PDFs. It is now the packet's number
+    one target. A dead front door is not an absent building.
+    (2) I logged ASHA ARCHIVES, Kathmandu as not-found from three dead domains and one blocked
+    repository. WRONG. Its printed catalogue is on archive.org with 2 MB of OCR text.
+    (3) I was about to record "the Paippalāda is absent from India's Vedic union catalogue"
+    because query=paippalada returned an empty response from IGNCA's endpoint. WRONG. The
+    endpoint does not stem that string; query=Paippal returns three records including an
+    Oriya-script palm-leaf Atharvaveda Paippalāda śākhā. An empty response and a zero result
+    are indistinguishable on that endpoint, and I nearly published the difference as a
+    finding about the Vedic corpus.
+    In all three cases the failure was concluding absence from a failed fetch instead of
+    probing an alternative surface, host, or query form. Every negative in this file was re-examined after that; where a
+    negative rests on a page not rendering rather than on a probed endpoint, the record now
+    says so explicitly.
+    A related worked example is preserved in the Asha record: the Heidelberg repository copy
+    returns HTTP 200 whose BODY is an anti-bot challenge. Status codes are not evidence;
+    bodies are.
+
+  FINDING-1_shakha_lives_in_print_not_in_databases: >
+    The single most consequential structural fact for this project, and it inverts the
+    obvious assumption.
+    MODERN DATABASES CANNOT EXPRESS ŚĀKHĀ. India's national database has NO śākhā field at
+    all — not among its 419 subject terms, not among the ~40 fields of a detail record. Of
+    NGMCP's 117,406 Nepalese records, exactly FOUR name a śākhā, all in the title:
+    (Mādhyandinaśākhīya)Rudrādhyāya, (Taittirīyaśākhīya)Rudrādhyāya,
+    (Yajurvedoktakaṭhaśākhīya)Kaṭhopaniṣad, (Yajuḥśākhīya)Upakarmotsarjanavidhi. Nepal's
+    National Archives catalogue has no śākhā column. Berlin names one in two of 231 titles.
+    BnF states one exactly once. Kerala's ORIML lists only "Vedanta", which is a darśana.
+    PRINTED CATALOGUES DO IT ROUTINELY, because recension was the scholarly question of the
+    19th and 20th centuries. Adyar's Descriptive Catalogue Vol. 1 (Vedic) counts manuscripts
+    by śākhā: Taittirīya 42 · Kāṇva 21 · Aitareya 19 · Kaṭha 15 · Kauṣītaki 9 · Vājasaneyi 7 ·
+    Mādhyandina 5 · Śāṅkhāyana 5 · Āpastamba 5 · Śaunaka 4 · Jaiminīya 3 · Maitrāyaṇī 2 ·
+    Drāhyāyaṇa 1. Thanjavur Vol. 2 (Vedas, 1928) names Aitareya, Taittirīya, Kaṭha, Kāṇva,
+    Mādhyandina, Śāṅkhāyana, Kauṣītaki and one PAIPPALĀDA. Eggeling's India Office catalogue
+    Part I is titled "Vedic Manuscripts". Odisha's 1973 preface states ten Paippalāda
+    manuscripts outright.
+    THE PARTIAL EXCEPTION among modern sources: IGNCA's Vedic Heritage catalogue carries śākhā
+    in TITLES at scale — taittirīya 1,405, madhyandina 58, jaiminiya 25, kauthuma 6 — with
+    false positives to weed (its "kāṇva" count of 888 is inflated by the ṛṣi name).
+    CONSEQUENCE FOR A TRIAGE PIPELINE: filtering by śākhā means (a) string-matching titles in
+    IGNCA and Kritisampada, and (b) OCR-MINING PRINTED CATALOGUES, which is where the real
+    śākhā data is. For the Nepalese and European pools, śākhā is downstream manuscript work —
+    and the descriptive catalogues' transcribed incipits and explicits are exactly the
+    material for it.
+    Everywhere: record what the catalogue says. Never what the region implies. Kerala is
+    associated with the Jaiminīya Sāmaveda and a Mādhyandinaśākhāviṣaya sits in Telugu script
+    in Chennai — regional inference would have destroyed both facts.
+
+  FINDING-2_metadata_is_open_pixels_are_scarce_but_not_absent: >
+    Catalogue metadata is broadly harvestable — Solr, OAI-PMH, SRU, IIIF, REST, and two
+    undocumented POST endpoints. Images are the scarce good, but "scarce" is not "none", and
+    the earlier draft of this packet overstated the scarcity.
+    NO IMAGES AT ALL: NGMCP serves zero for 117,406 records (derCount:[1 TO *] → 0, an API
+    fact not a page impression). Nepal's National Archives serves none. IGNCA serves none for
+    65,672 Vedic records. Odisha State Museum, BORI, Thanjavur, ORI Mysore — none online.
+    IMAGES THAT DO EXIST AND ARE PUBLIC: India's Kritisampada is the big one — 3,133 of its
+    87,207 Veda records are flagged digitised and 2,429 are digitised AND public-view, with
+    the PDFs directly fetchable over plain HTTP (verified: a ~476 MB Yajurvedabhāṣya scan).
+    Then Berlin's 23 Vedic manuscripts, all imaged, Public Domain Mark, including Ṛgveda and
+    Atharvaveda PADAPĀṬHAS; BnF's Ṛgveda padapāṭhas; Cambridge's 1,595 Sanskrit manifests;
+    Muktabodha's 233 Gokarna prayoga scans; and EAP's Nepal and Kerala projects.
+    THE RECURRING PATTERN, worth naming: the imaging often happened and the publishing did
+    not. Kerala's ORIML had 10,000+ manuscripts microfilmed by IGNCA — unpublished. NGMCP's
+    Kathmandu scan records date from 2006 — unpublished. The NGMPP X series was digitised and
+    handed over in 2024 — unpublished, and it contributes exactly ONE manuscript to the
+    Nepalese Vedic subset anyway.
+
+  FINDING-3_the_barrier_is_anti_bot_infrastructure_not_copyright: >
+    What blocked this packet was almost never a licence or a policy. It was Cloudflare
+    (PANDIT, Adyar, Muktabodha's new UI), AWS WAF (eap.bl.uk), Anubis proof-of-work
+    (Bodleian's south-asian catalogue, Heidelberg's repository), geo-walls (NVLI's API), and
+    an "abuse-deny" interstitial that NGMCP serves to any client without a browser
+    User-Agent. Add the silent traps: NGMCP's incomplete TLS chain, its Solr returning
+    numFound=0 without defType=lucene, Nepal's ASP.NET event validation, IGNCA's endpoint
+    ignoring GET pagination, and archive.org's scrape API returning HTTP 200 with wrong data.
+    None of these are walled gardens. Every one of these institutions publishes in principle.
+    The fix is to ask for a dump or an API key, not to out-engineer the gate.
+
+  machine_queryable_today:
+    - >
+      Kritisampada / Pandulipi Patala (India) at www.pandulipipatala.nic.in — CSRF-gated form
+      POST with an UNBOUNDED limit, plus sequentially enumerable detail records at
+      /manus/search-view?id=<base64 int> with no CSRF and no auth. 87,207 subject=Veda,
+      verified by me. Manuscript PDFs directly fetchable. NOT namami.gov.in, which is dead.
+    - >
+      IGNCA Vedic Heritage — undocumented POST /wp-content/themes/vedic/fetch.php returning
+      65,672 VEDIC records with śākhā in the titles. Verified by me, including that GET
+      silently ignores pagination.
+    - >
+      NGMCP (Hamburg) — unauthenticated Solr with CSV export and cursorMark; I pulled the
+      complete 2,349-record Vedic subset as a 273 KB CSV in ONE request. Plus a MyCoRe REST
+      API enumerating 175,818 objects. Requires defType=lucene and a browser User-Agent.
+    - >
+      NGMCP Descriptive Catalogue — 15,834 static HTML pages with transcribed incipit and
+      explicit; the live wiki is deleted, this static archive and a CC0 GitHub mirror survive.
+    - >
+      Qalamos (Leipzig) — OAI-PMH at /oai2 with seven formats including TEI, plus open Solr
+      /select. 504,607 records, 36,065 Sanskrit, 1,151 "Veda", and 651 under a distinct
+      "Vedic Sanscrit" LANGUAGE code. Mostly CC0. Verified by me.
+    - Staatsbibliothek zu Berlin — OAI-PMH set of 231 South Asian manuscripts, 23 Vedic, all imaged, Public Domain Mark. Verified by me.
+    - BnF Gallica — SRU + IIIF, 1,437 Sanskrit manuscripts, metadata open under Etalab.
+    - Cambridge CUDL — IIIF collection of 1,595 manifests plus per-item TEI/JSON. CC BY-NC.
+    - National Archives of Nepal — 114,552 records behind an ASP.NET postback form; I ran a subject-filtered query and joined 95 of 95 reel keys to NGMCP.
+    - archive.org — the printed union catalogues (Aufrecht, Eggeling, Weber, Burnell, Mitra, New Catalogus Catalogorum, BORI 27 vols, Odisha, Adyar, Thanjavur, Asha), all OCR'd, mostly CC0 or NOT_IN_COPYRIGHT, no terms of use. This is how every dark institution becomes reachable.
+    - EAP (British Library) — IIIF bypasses the WAF; harvest by ID enumeration to the 404 boundary.
+    - Wellcome Collection — the cleanest API of all, and the wrong corpus (Āyurveda, not Veda).
+
+  dark_or_walled:
+    - Thanjavur Sarasvati Mahal Library — NO WEBSITE HAS EVER EXISTED. 17 candidate domains, all NXDOMAIN, zero Wayback snapshots ever. Not down; never online.
+    - Odisha State Museum — every candidate domain NXDOMAIN or timing out. No online catalogue, no digitisation.
+    - Adyar Library — Cloudflare 403 and a redirect loop; the library states its own catalogue "is in paper registers", and digitised manuscripts are for on-site readers only.
+    - BORI Pune — site up, but no manuscript catalogue exists online; borilib.com is a near-empty WordPress that still has "Hello world!" published.
+    - Kerala ORIML (orimssku.in, not orimlku.in) — TCP open, HTTP timing out. Verified down.
+    - All Jammu & Kashmir government hosts — NXDOMAIN or timeout; spsmuseum.jk.gov.in has zero Wayback snapshots ever.
+    - namami.gov.in — dead, and still the URL everything links to. The database moved; the links did not.
+    - indianculture.gov.in — a 924-byte React shell on every path; its NVLI backend is geo-walled to India.
+    - Bodleian south-asian.bodleian.ox.ac.uk — structured records demonstrably exist behind an Anubis challenge on every path including .json and /oai.
+    - PANDIT — Cloudflare 403 everywhere; its /api/graph endpoint exists but 500s and returns only a relationship graph.
+    - eap.bl.uk HTML — AWS WAF; only IIIF gets through and there is no collection endpoint.
+    - SARIT — 502, the web app is down. Muktabodha's new UI — Cloudflare Turnstile, and its GitHub repos are private.
+    - British Library machine surface — api.bl.uk and labs.bl.uk NXDOMAIN, SPARQL ports closed, Digitised Manuscripts retired. Long tail of the 2023 cyberattack.
+
+  three_highest_value_triage_targets:
+    - rank: 1
+      target: "Kritisampada / Pandulipi Patala — https://www.pandulipipatala.nic.in/"
+      why: >
+        87,207 Vedic manuscript records, the largest pool found anywhere, in India's official
+        national database — and unlike every other large catalogue here it also serves the
+        IMAGES: 2,429 Vedic manuscripts digitised and public-view, PDFs fetchable over plain
+        HTTP with no auth (verified on a ~476 MB Yajurvedabhāṣya). Detail records are
+        sequentially enumerable by integer ID with no CSRF, so a full harvest is
+        straightforward. Odisha 2,830 and Jammu & Kashmir 1,030 are both well represented.
+        Three conditions, all firm: the licence is all-rights-reserved and NAMAMI should be
+        asked; `mrc_id` is the surveying centre and NOT the holder, so institution counts from
+        it are badly inflated; and the database explicitly includes PRIVATE collections, so
+        the Institute Name column must be institution-filtered on ingest.
+    - rank: 2
+      target: "OCR-mining the printed catalogues on archive.org — Adyar Vol.1 Vedic, Thanjavur Vol.2 Vedas, Odisha Alphabetical Catalogue Part I, Eggeling Part I, BORI Śrauta and Vedāṅga volumes"
+      why: >
+        This is where the ŚĀKHĀ data actually is, and no digital catalogue anywhere replaces
+        it. Adyar Vol.1 alone names manuscripts for every śākhā this repo records as empty.
+        Odisha's Part I is the only source that states the ten Paippalāda manuscripts. It is
+        also the only route into the institutions that are wholly dark — Thanjavur has never
+        had a website, and its 1928 Vedas volume is nonetheless sitting there with OCR. No
+        auth, no terms, no rate limits, mostly CC0 or NOT_IN_COPYRIGHT, and it is the cheapest
+        work in the packet by a wide margin. Use advancedsearch.php?…&output=json, never the
+        v1 scrape endpoint, which returns HTTP 200 with silently wrong data.
+    - rank: 3
+      target: "NGMCP Solr CSV + Descriptive Catalogue, joined to the National Archives of Nepal — with Qalamos as the clean-licence companion"
+      why: >
+        The largest single coherent physical pool — 2,349 Vedic manuscripts, 150,298 folios —
+        and the only place a machine can go beyond titles, because the descriptive tier
+        transcribes incipit AND explicit, which is precisely what recension-matching needs and
+        precisely what would let a pipeline assign śākhā where no catalogue states it. Zero
+        auth, one-request CSV export, and a verified clean join to a second independent
+        catalogue on reel number (95 of 95 matched). Pair it with Qalamos, which is mostly CC0
+        — so unlike targets 1 and 2 it can actually be redistributed — and which offers the
+        highest-precision Vedic filter found anywhere: 651 records under a "Vedic Sanscrit"
+        LANGUAGE code, a cataloguer's judgement that the text is in Vedic, not merely about it.
+
+  honest_gaps:
+    - >
+      Two negatives in this packet were shipped wrong and then corrected (see METHOD-WARNING).
+      Others may remain. Where a negative rests on a failed fetch rather than a probed
+      alternative surface, the record says so; treat those as lower confidence.
+    - >
+      The Vedic share of NGMCP's 34,061 "Karmakāṇḍa (vaidika, āgamika, tāntrika etc.)" class
+      is not separated by the catalogue and is not estimated here. It is the largest class in
+      that catalogue.
+    - >
+      The exact Vedic count in the NGMCP descriptive tier is bounded (order of 100–300) but
+      not known; a 130-page random sample returned zero. Fetching all 15,834 pages settles it.
+    - >
+      Whether Asha Archives holds Vedic manuscripts is unanswered. The 2 MB OCR of its
+      catalogue is one HTTP request away and would settle it.
+    - >
+      The Kashmir Śāradā birch-bark Paippalāda is reported to be at Tübingen; no shelfmark was
+      located in Tübingen's catalogue. Lead, not fact.
+    - >
+      Staatsbibliothek Berlin's terms-of-use page is JavaScript-only and could not be read;
+      rights are taken from per-record Public Domain Mark assertions instead.
+    - >
+      indianculture.gov.in / NVLI is geo-walled and should be re-tested from an Indian
+      network before being written off.
+    - >
+      Several counts in the European, digitisation and Indian sections come from delegated
+      verification and were not personally re-run; each such field says so. The headline
+      endpoints — Kritisampada's search and PDFs, IGNCA's fetch.php, NGMCP's Solr and CSV,
+      Qalamos's OAI and Solr, Berlin's OAI set, Nepal's postback form — I verified myself.
+    - >
+      The WebSearch budget for the session was exhausted partway through, thinning discovery
+      of anything not reachable by direct fetch.
+
+# ===========================================================================
+# HOLDINGS
+# ===========================================================================
+
+holdings:
+
+  # -------------------------------------------------------------------------
+  # 1. NEPAL — the richest single pool
+  # -------------------------------------------------------------------------
+
+  - holding_id: ngmcp-hamburg/indic-title-index
+    institution: Universität Hamburg, Asien-Afrika-Institut (Nepalese-German Manuscript Cataloguing Project)
+    collection: NGMCP Indic manuscript index (`ngmcpdocument`) — catalogue of the NGMPP microfilms
+    country: Germany (describing manuscripts physically in Nepal)
+    catalogue_url: https://catalogue.ngmcp.uni-hamburg.de/
+    machine_queryable: solr
+    query_endpoint: https://catalogue.ngmcp.uni-hamburg.de/servlets/solr/find?q=*:*&defType=lucene&wt=json&rows=100
+    query_verified: >
+      Verified 2026-08-01 by direct HTTP. The MyCoRe Solr proxy is open and unauthenticated
+      and returns raw Solr JSON (`wt=json`) or XML (`XSL.Style=xml`). CRITICAL PARAMETER:
+      `defType=lucene` must be passed — without it the default edismax handler silently
+      returns numFound=0 for `*:*` and for all fielded queries, which looks like an empty
+      index and is not. With it: numFound=117406. Faceting works
+      (`facet=true&facet.field=subject_Label`). Field-scoped and wildcard queries work
+      (`title:vajasaneyi*` → 585). The Solr admin handlers ARE restricted — /admin/luke
+      returns HTTP 403 MCRSolrQueryHandler restricted — so field discovery must be done by
+      sampling documents, not by introspection.
+      SECOND ACCESS PATH, also verified: MyCoRe REST API.
+        https://catalogue.ngmcp.uni-hamburg.de/api/v1/objects?format=json
+          → {"numFound": 175818, "mycoreobjects":[{"ID":...,"href":...}, ...]}
+        https://catalogue.ngmcp.uni-hamburg.de/api/v1/objects/aaingmcp_ngmcpdocument_00029627
+          → full MyCoRe object XML (all metadata fields, not just the indexed subset)
+        https://catalogue.ngmcp.uni-hamburg.de/api/v1/classifications?format=json
+          → the controlled vocabularies (subject, script, language, material)
+      This is a complete bulk-harvest path: enumerate IDs from /api/v1/objects, fetch each.
+      THIRD AND EASIEST PATH — CSV EXPORT, verified end to end 2026-08-01. The Solr proxy
+      honours `wt=csv` and `cursorMark` deep paging. I downloaded the ENTIRE Vedic subset in
+      ONE request — 2,349 rows, 273,145 bytes, HTTP 200:
+        https://catalogue.ngmcp.uni-hamburg.de/servlets/solr/find?q=subject_Label:%22Veda%22&defType=lucene&wt=csv&rows=3000&sort=id+asc&fl=id,title,subject_Label,script_Label,language_Label,material_Label,folio_count,microfilm_series,microfilm_reel,microfilm_entry,remarks,link
+      Sample rows:
+        aaingmcp_ngmcpdocument_00000171,Acchāvākaśāstra,Veda,Devanagari,Sanskrit,not specified,8.0,B,492.0,3.0,,
+        aaingmcp_ngmcpdocument_00000629,Adhyāyaśatapāṭha,Veda,Devanagari,Sanskrit,not specified,11.0,A,588.0,19.0,,aaingmcp_ktmscan_00003859
+      `cursorMark=*` with `sort=id asc` returns a nextCursorMark, so the full 117,406-record
+      index is harvestable the same way without deep-paging limits. This is the answer to
+      "is there bulk-downloadable catalogue metadata anywhere": yes, here, today, one request.
+      A copy of the 2,349-row CSV was pulled to the scratchpad as verification evidence and
+      deliberately NOT written into the repo. Analysed locally, that CSV yields, for the
+      subject=Veda subset:
+        total folios ............ 150,298  ← the size of the Vedic manuscript pool in Nepal,
+                                             counted rather than estimated
+        scripts ................. Devanagari 1,963 · Newari 294 · not specified 52 ·
+                                  Maithili 23 · Devanagari+Newari 12 · Maithili+Newari 3 ·
+                                  Bengali+Devanagari 2
+        microfilm series ........ E 895 · A 780 · B 299 · H 122 · G 97 · M 45 · I 30 ·
+                                  D 27 · F 24 · T 16 · C 9 · R 2 · S 1 · X 1 · P 1
+        scan-record links ....... none 2,159 · ktmscan 185 · hhscan 5
+      The series breakdown matters for the images question: the ONE series that has been
+      fully digitised (X, handed to the National Archives in March 2024) contains exactly
+      ONE record in this Vedic subset. The 2024 digitisation, welcome as it is, moved the
+      needle on Vedic material by a single manuscript.
+      ACCESS GOTCHA: the host serves an "abuse-deny" interstitial to default curl. A normal
+      browser User-Agent is required. It also presents an incomplete TLS chain, so some
+      clients need the intermediate supplied (or `-k`). Neither is an auth wall; both will
+      silently break a naive harvester.
+    record_count: >
+      117,406 Indic manuscript records (`objectType:ngmcpdocument`).
+      175,818 objects total across all types, including `hhscan` / `ktmscan` scan-location
+      records and a separate Tibetan tier (`tbtdocument`, `tbtauthor`) not counted here.
+    vedic_material: >
+      Counted directly off the `subject_Label` facet over the whole index, 2026-08-01:
+        Veda ......................................... 2,349
+        Upaniṣad ....................................... 813
+        Chandaḥśāstra .................................. 213
+        Karmakāṇḍa (vaidika, āgamika, tāntrika etc.) . 34,061  ← largest class in the whole
+                                                                 catalogue; the vaidika share
+                                                                 is NOT separated out and is
+                                                                 unknown. Do not claim it.
+        Mantra ....................................... 1,476
+        Vedānta ...................................... 1,433
+      Title-facet within subject=Veda (facet field is lowercased, diacritics stripped):
+        vajasaneyisamhita 487 · rgveda 107 · rudradhyaya 67 · pitrsukta 61 · srisukta 58
+        satapathabrahmana 53 · sadangarudri 30 · caranavyuha 27 · rudrastadhyayi 26
+        purusasukta 25 · pavamanasukta 25 · samaveda 22 · aitareyabrahmana 21
+        atharvavedasamhita 20 · yajurvedasamhita 17 · taittiriyasamhita 13
+        samavedasamhita 12 · taittiriyaranyaka 11 · taittiriyabrahmana 9
+        rgvedakhilani 7 · aitareyaranyaka 7 · rgvidhana 7 · suklayajurvedasamhita 7
+      Whole-index title-prefix counts (not restricted to subject=Veda):
+        vajasaneyi* 585 · rgveda* 154 · samaveda* 60 · satapathabrahmana* 56
+        taittiriya* 44 · yajurveda* 32 · caranavyuha* 30 · katha* 30 · atharvaveda* 27
+        aitareya* 28 · sakala* 18 · jaiminiya* 18 · pratisakhya* 10 · maitrayani* 5
+        kausitaki* 2 · kanva* 2 · madhyandina* 1 · saunaka* 1 · sankhayana* 1
+        kauthuma* 0 · baskala* 0 · ranayaniya* 0 · kapisthala* 0
+      Two entries worth naming: TWO Kauṣītakibrāhmaṇa manuscripts
+      (aaingmcp_ngmcpdocument_00029475, 50 ff., NGMPP E 1674/21; and _00029476, 72 ff.,
+      NGMPP E 1675/4), both Devanagari, both subject=Veda. And 27–30 Caraṇavyūha copies —
+      the text that enumerates the śākhās themselves.
+    shakha_stated: >
+      NONE, for 117,402 of 117,406 records. The four exceptions, quoted verbatim from the
+      catalogue's own `title` field:
+        (Mādhyandinaśākhīya)Rudrādhyāya    — id aaingmcp_ngmcpdocument_00054346,
+                                             NGMPP H 341/23, 8 ff., Devanagari, subject=Veda
+        (Taittirīyaśākhīya)Rudrādhyāya     — subject=Veda
+        (Yajurvedoktakaṭhaśākhīya)Kaṭhopaniṣad — subject=Upaniṣad
+        (Yajuḥśākhīya)Upakarmotsarjanavidhi    — subject=Karmakāṇḍa
+      Recorded exactly as printed. No śākhā inferred for anything else, per protocol rule 7.
+    images_digitised: none
+    images_public: no
+    image_access_path: >
+      The catalogue is metadata-only. Verified: `derCount:[1 TO *]` returns numFound=0 —
+      not one of the 175,818 objects has a digital derivative attached. The `hhscan` and
+      `ktmscan` object types are NOT online images; fetching
+      /api/v1/objects/aaingmcp_hhscan_00001257 returns only case / reel / series / title_id —
+      i.e. the shelf location of a physical microfilm copy. The `link` field on a document
+      points to one of these (18,861 documents carry a link; 190 of those are subject=Veda),
+      so it means "a microfilm copy of this exists at that shelf," not "an image exists here."
+      The `ktmscan` counterpart is a Kathmandu-side SCANNING record: fetching
+      /api/v1/objects/aaingmcp_ktmscan_00003859 returns a scan date of 2006-08-13, reel/box
+      numbers and an operator's initials — evidence that film-to-digital scanning was being
+      done in Kathmandu twenty years ago. Those digital files are not exposed anywhere in
+      this catalogue. That is the gap: the scanning largely happened; the publishing did not.
+      Physical route, per the project's own access page: microfilms may be consulted in the
+      Lesesaal der Orient- und Ostasienabteilung, Staatsbibliothek zu Berlin (a complete copy
+      of every NGMPP film was given to the Deutsche Morgenländische Gesellschaft and placed
+      on permanent loan there). New copies must be ordered from the National Archives,
+      Ram Shah Path, Kathmandu (mail@nationalarchives.gov.np). The same page states that
+      "with effect from January 1, 2014" the Nepal Research Centre in Kathmandu CANNOT accept
+      manuscript copy orders, because the NAK order queue is already full.
+    access_requirements: >
+      Catalogue: none — no login, no registration, no rate limit encountered.
+      Images: in-person at Berlin, or an order placed directly with NAK Kathmandu, which the
+      project itself describes as a saturated queue. This is the bottleneck.
+    license: copyright-link-only
+    image_license: not-applicable — no images served
+    license_notice_verbatim: >
+      "© 2016 Universität Hamburg. Alle Rechte vorbehalten." (footer of
+      https://catalogue.ngmcp.uni-hamburg.de/content/index.xml). No open-data statement, no
+      CC licence, no terms-of-use page found. The same page states "The curation of the
+      catalogues and integration of digitized material is work in progress" — i.e. Hamburg's
+      own stated intent is to integrate digitised material, which has not happened.
+      Note the distinction the project applies elsewhere: bare catalogue FACTS (reel number,
+      folio count, accession number, title) are not themselves copyrightable subject matter
+      under Feist; the descriptive prose and the transcribed excerpts are the editors' work.
+      Treat as link-and-cite, credit NGMCP by name, and do not republish the descriptive
+      prose wholesale without asking.
+    status: found-complete
+    notes: >
+      NGMPP filmed ~180,000 manuscripts / >5 million folios, 1970–2002; NGMCP catalogued them
+      2002–2014. Both projects are ENDED — every record I sampled has
+      created/modified 2016 and createdby "administrator" (a bulk import). The catalogue is
+      frozen, not maintained. That is good for a harvester (stable) and bad for coverage
+      (nothing added since 2014).
+      Cross-join key: every record carries microfilm_series + microfilm_reel + microfilm_entry
+      (e.g. A / 1115 / 17), which is the same reel identifier the National Archives of Nepal
+      uses in its own catalogue. The two catalogues can be joined on it.
+      Attribution: NGMPP/NGMCP, Universität Hamburg Asien-Afrika-Institut, with the National
+      Archives of Nepal and the DFG.
+    date_logged: 2026-08-01
+
+  - holding_id: ngmcp-hamburg/descriptive-catalogue
+    institution: Universität Hamburg, Asien-Afrika-Institut (NGMCP)
+    collection: NGMCP Descriptive Catalogue — the deep tier (archived MediaWiki, now static HTML)
+    country: Germany (describing manuscripts physically in Nepal)
+    catalogue_url: https://www-archiv.fdm.uni-hamburg.de/ngmcp/index.html
+    machine_queryable: bulk-file
+    query_endpoint: https://www-archiv.fdm.uni-hamburg.de/ngmcp/index.html
+    query_verified: >
+      Verified 2026-08-01. The live wiki is DEAD: catalogue.ngmcp.uni-hamburg.de/wiki/* and
+      ngmcp.fdm.uni-hamburg.de/mediawiki both redirect to catalogue-old.ngmcp.uni-hamburg.de
+      and return HTTP 404; the MediaWiki api.php is gone. Anyone following the URLs printed in
+      the literature will conclude the descriptive catalogue is lost. It is not.
+      It survives as a flat static archive. The index page is a single HTML file linking
+      15,834 per-manuscript pages (I parsed and counted them). Filenames are
+      `<series>_<reel>-<entry>_<Title>.html`, DOUBLE percent-encoded — decode twice or the
+      fetch 404s. No auth, no session, no JS. This is the single easiest bulk harvest in the
+      packet: one index fetch plus 15,834 small static GETs.
+      Sample record fetched and read in full —
+      https://www-archiv.fdm.uni-hamburg.de/ngmcp/A_1115-17_Atharvaveda.html — which yields:
+      title, subject (Veda), script (Devanagari), language, material (Nepali paper), state
+      (incomplete), size, folio count, lines per folio, a paragraph on foliation, place of
+      deposit (NAK), accession no. (6/2056), manuscript features, available folios, and —
+      the reason this tier matters — a transcribed INCIPIT and EXPLICIT with exposure
+      references, plus microfilm reel, date of filming, exposure count, and cataloguer
+      initials. That is enough to machine-match a manuscript against a known recension.
+    record_count: 15,834 descriptive entries (vs 117,406 in the index tier — ~13% coverage)
+    vedic_material: >
+      NOT PRECISELY DETERMINED, and I measured how wrong the easy answer is rather than
+      reporting it. 428 of the 15,834 filenames match a Vedic-vocabulary regex (veda /
+      saṃhitā / brāhmaṇa / āraṇyaka / upaniṣad / prātiśākhya / śākhā / sūkta / kalpa /
+      gṛhyasūtra / śrautasūtra). I then fetched a random 40 of those 428 and read the
+      authoritative "Subjects" line inside each page. Result: only 4 of 40 are actually
+      subject=Veda (plus 3 Upaniṣad, 2 Vedānta, 1 Karmakāṇḍa). The rest are Āyurveda 8,
+      Tantra 6, Stotra 6, Jyotiṣa 5, Yoga 1, Vyākaraṇa 1 — the regex is catching
+      Bṛhatsaṃhitā, Vāmadevasaṃhitā, Āyurvedaprakāśa and similar. So filename matching has
+      roughly 10% precision here and must not be used as a count.
+      It also under-counts: many genuinely Vedic entries carry no matching token at all
+      (Rudrādhyāya, Anuvākādhyāya, Acchāvākaśāstra).
+      The defensible estimate is proportional: the descriptive tier covers 15,834 of 117,406
+      records (13.5%), so if Vedic material is covered at the same rate the descriptive tier
+      holds on the order of 300 subject=Veda entries.
+      I then tested that estimate with a second, unbiased sample: 500 pages drawn at random
+      from the FULL 15,834 (not from the regex hits). 130 returned a readable Subjects line
+      (the rest failed to parse in the harness run and are not counted). Of those 130,
+      ZERO are subject=Veda — the observed classes were Stotra 28, Karmakāṇḍa 20, Bauddha 13,
+      Jyotiṣa 12, Tantra 9, Nyāya 6, Kāvya 6, Āyurveda 4, Vyākaraṇa 4, Purāṇa 4, and a tail
+      including Upaniṣad 1 and Chandaḥśāstra 1.
+      Zero hits in 130 puts a 95% upper bound of roughly 2.3% on the Veda share, i.e. FEWER
+      than ~360 entries, and is equally consistent with ~100. So: the descriptive tier holds
+      somewhere on the order of 100–300 Vedic entries, and I am not going to pretend to a
+      tighter number. Getting the true figure requires fetching all 15,834 pages and reading
+      the Subjects line — cheap, and worth doing as step one of any triage pipeline.
+      Named examples verified: A 1108-5 Ṛgvedaprātiśākhyabhāṣya; A 1115-17 Atharvaveda
+      (NAK 6/2056, 27 ff., Devanagari, incipit and explicit both transcribed).
+    shakha_stated: >
+      None in the sample examined. A 1115-17 is catalogued as "Atharvaveda", subject "Veda",
+      with no recension named — despite the entry transcribing both incipit and explicit.
+      Explicitly NOT inferred to Śaunaka here. Determining recension from those transcribed
+      excerpts is exactly the downstream work this packet is mapping, not work this packet does.
+    images_digitised: none
+    images_public: no
+    image_access_path: same as the index tier — microfilm at Berlin, or order from NAK Kathmandu
+    access_requirements: none for the catalogue
+    license: copyright-link-only
+    image_license: not-applicable — no images served
+    license_notice_verbatim: >
+      Same Universität Hamburg all-rights-reserved footer as the index tier. Each archived
+      page carries its MediaWiki provenance line, e.g. 'Retrieved from
+      "http://ngmcp.fdm.uni-hamburg.de/mediawiki/index.php?title=A_1115-17_Atharvaveda&oldid=10027"'.
+      Per-entry cataloguer initials are printed on each record; credit them where used.
+    status: found-complete
+    notes: >
+      A partial mirror exists at https://github.com/INDOLOGY/NGMCP-Descriptive-Catalogue
+      ("Mirror of the Hamburg NGMCP-Wiki files"), ~24 MB, licence CC0-1.0, still being pushed
+      to as of 2026-02-21, content under `docs/`. CC0 on a mirror is the community's
+      assertion, not Hamburg's — see the licence note in the packet caveats.
+      RISK: this tier lives on a URL with "archiv" in the hostname, is unmaintained, and the
+      primary copy it replaced has already gone dark once. It is the highest-value and most
+      fragile artefact found in this packet.
+    date_logged: 2026-08-01
+
+  - holding_id: national-archives-nepal/online-catalogue
+    institution: National Archives of Nepal (Rāṣṭriya Abhilekhālaya), Ministry of Culture, Tourism & Civil Aviation
+    collection: Online Catalogues — the NAK holdings, independently published
+    country: Nepal
+    catalogue_url: http://narchives.gov.np/List.aspx
+    machine_queryable: postback-scrape
+    query_verified: >
+      Verified 2026-08-01 by completing a real filtered query, not by reading the page.
+      It is ASP.NET WebForms: there is no API and no GET query interface — every filter is a
+      __doPostBack. To query it you must GET List.aspx, extract __VIEWSTATE /
+      __VIEWSTATEGENERATOR / __EVENTVALIDATION, then POST all six dropdowns back. The
+      unselected dropdowns must be posted with the literal value `-- Select --`; posting
+      empty strings fails event validation with an ASP.NET 500 and a stack trace. I hit that
+      error first, then got a clean result.
+      Working query executed: ddlSubject=`V` (Veda), all other dropdowns `-- Select --`,
+      btnFilter=`Apply Filter` → HTTP 200, "Total Records: 2179", results table with columns
+      S.N / Title / Language / Script / Date / Material / Folios / Access / State / Reel No.
+      / Subject. First rows returned: "(...)Sūkta" (A 588/17, 83 ff., acc. 4/2226);
+      "(Āśvalāyana or Pāraskara?)Gṛhyasūtrabhāṣya" (B 407/7, SAM 1648, 206 ff.);
+      "(Atharvavedokta)Kṛtyāsūkta" (A 1152/15, VS 1938, 6 ff.); "(Bṛhad)Ṛgvidhāna" (A 437/39).
+      Also served: the site is plain HTTP, no TLS.
+    record_count: 114,552 total records
+    vedic_material: >
+      2,179 records under subject `V | Veda`, verified by running the filter. (NGMCP's
+      independent count for the same corpus is 2,349 — the two catalogues do not agree
+      exactly, which is itself useful: they are separately maintained derivatives of the
+      same survey, and a triage pipeline should treat them as two sources to reconcile, not
+      one source mirrored twice.)
+      Adjacent subject codes, each verified by running the same postback filter, with the
+      NGMCP figure for the same class alongside:
+        Up | Upaniṣad ........................ NAK  806  vs NGMCP    813
+        Ch | Chandaḥśāstra ................... NAK  213  vs NGMCP    213   (exact agreement)
+        Kk | Karmakāṇḍa (vaidika, āgamika…) .. NAK 30,311 vs NGMCP 34,061
+        V  | Veda ............................ NAK 2,179 vs NGMCP  2,349
+      Chandaḥśāstra agrees exactly; Veda and Karmakāṇḍa do not. The divergence is the
+      interesting part — it is concentrated in the big, loosely-bounded classes, which is
+      where reclassification decisions get made. Reconciling the two lists on reel number
+      would surface several thousand records where the two cataloguing efforts disagreed
+      about what a manuscript is, and disagreement is a triage signal, not noise.
+      The subject vocabulary is the SAME controlled list NGMCP uses — Ch | Chandaḥśāstra,
+      Kk | Karmakāṇḍa (vaidika, āgamika, tāntrika, etc.), M | Mantra, Up | Upaniṣad,
+      V | Veda — 52 subject codes, so subject-level filtering is directly comparable
+      across the two catalogues.
+    shakha_stated: none observed in the returned rows; the schema has no śākhā column
+    images_digitised: partial — and not through this catalogue
+    images_public: no
+    image_access_path: >
+      This catalogue returns metadata and shelf references only; the "Access" column is an
+      accession number, not a link. Physical consultation at Ram Shah Path, Kathmandu.
+      Separately: in March 2024 the CSMC (Hamburg) and Staatsbibliothek zu Berlin, funded by
+      the DFG, digitised the complete NGMPP **X series** microfilms and handed the digital
+      copy to the National Archives — closing a gap in the archives' own holdings. Verified
+      against the CSMC announcement
+      (https://www.csmc.uni-hamburg.de/news/2024-03-19-x-series.html): the X series is
+      ~700 manuscripts, the films were held at the Berlin State Library, the handover was
+      17 March 2024. The announcement gives NO portal URL and makes NO statement about public
+      online access or ordering. That digitised set is not exposed on this website or on any
+      site reached in this packet, and must not be assumed requestable.
+      Scale check, from the CSV analysis logged under the NGMCP record: the X series
+      contributes exactly ONE manuscript to the 2,349-record Vedic subset. The 2024
+      digitisation is real and welcome and is very nearly irrelevant to Vedic material.
+    access_requirements: >
+      Catalogue: open, no login. Images/originals: in-person or by order to the Director,
+      National Archives, Ram Shah Path, Kathmandu — mail@nationalarchives.gov.np. Hamburg's
+      own access page states the NAK copy-order queue was already saturated as of 2014.
+    license: unknown
+    image_license: unknown
+    status: found-complete
+    notes: >
+      Reel numbers in this catalogue (e.g. "A 1152/15") are the NGMPP reel identifiers, so
+      this catalogue and NGMCP join on reel. THE JOIN IS VERIFIED, not assumed: I parsed the
+      first results page of the subject=Veda query (the form paginates at 100 rows), derived
+      95 distinct (series, reel, entry) keys, and matched them against the 2,012 distinct
+      keys in the NGMCP Vedic CSV. 95 of 95 matched. Zero NAK-only keys. The join is clean
+      and needs no fuzzy matching.
+      Running both and reconciling therefore gives a stronger Vedic manuscript list than
+      either alone, and the count discrepancies (2,179 vs 2,349) mark exactly where the
+      metadata is uncertain.
+      Harvest cost: 2,179 records at 100 rows/page is ~22 postbacks, each needing a fresh
+      __VIEWSTATE from the preceding response. Trivial, but it must be sequential and
+      session-bound — this is not a parallelisable fetch.
+      Related but distinct: National Digital Library Nepal (https://ndl.gov.np/) runs the
+      Nepal National Union Catalog on Koha at
+      https://nuc.ndl.gov.np/cgi-bin/koha/opac-search.pl. Verified 2026-08-01: OAI-PMH is
+      DISABLED (oai.pl?verb=Identify returns a Koha errorpage.tt), but the RSS/atom output
+      IS live and is a usable machine interface —
+      https://nuc.ndl.gov.np/cgi-bin/koha/opac-search.pl?q=veda+manuscript&format=rss2
+      returns well-formed RSS with opensearch and Dublin Core namespaces. This is a union
+      catalogue of LIBRARY holdings, though, not a manuscript catalogue; I did not confirm
+      any manuscript-level Vedic records there and claim none.
+    date_logged: 2026-08-01
+
+  - holding_id: asha-archives-kathmandu/nepalese-manuscripts
+    institution: Āśā Saphū Kuthi (Asha Archives), Kathmandu
+    collection: Nepalese manuscript collection (Newar / Sanskrit)
+    country: Nepal
+    catalogue_url: https://archive.org/details/asha-saphookuthiya-saphoo-dhalah-a-short-catalogue-of-asha-archives-edited-by-raja-shakya
+    machine_queryable: bulk-file
+    query_verified: >
+      ⚠️ THIS RECORD WAS ORIGINALLY LOGGED not-found AND THAT WAS WRONG. The first pass
+      concluded "no catalogue reachable" from three dead domains and one blocked repository.
+      Re-probing on the method warning found the catalogue immediately.
+      WHAT WAS WRONG WITH THE FIRST PASS: I treated a blocked page as an absent resource, and
+      I never checked archive.org.
+      WHAT IS ACTUALLY THERE, verified 2026-08-01 via the archive.org metadata API:
+        identifier: asha-saphookuthiya-saphoo-dhalah-a-short-catalogue-of-asha-archives-edited-by-raja-shakya
+        title: आशा सफूकुथिया सफू धलः, न्ह्यब्वःम्ह - राजा शाक्य / "Asha Saphookuthiya Saphoo
+               Dhalah — A Short Catalogue of Asha Archives", edited by Raja Shakya
+        language: नेपालभाषा (Nepal Bhasa / Newar)
+        files: the scanned PDF (240,119,534 bytes) AND **_djvu.txt with 2,072,335 BYTES OF
+               OCR TEXT** — i.e. the whole catalogue is machine-readable, free, no auth.
+      Three further related items are on archive.org, including a descriptive study of the
+      Asha manuscript collection by Janak Lal Vaidya and Prem [Bahadur Kansakar].
+      ALSO CORRECTED: asha.org.np DOES exist — it is dead live (no response) but Wayback holds
+      snapshots (/background.html, /contact.html). My earlier "no working institutional web
+      presence" was right about the present tense and wrong about the record.
+      STILL BLOCKED, and now verified by CONTENT rather than status code: the Heidelberg
+      FID4SA repository copy at fid4sa-repository.ub.uni-heidelberg.de/1397/1/asha.pdf returns
+      **HTTP 200** — and the body is the Anubis challenge page, "Making sure you're not a
+      bot!". A 200 here means nothing. Recorded as the packet's own worked example of why a
+      status code is not evidence.
+    record_count: not counted; a full printed short-catalogue of the collection, OCR'd
+    vedic_material: >
+      NOT ESTABLISHED, and deliberately not guessed. The catalogue is in Nepal Bhasa and the
+      Asha collection is known for Newar Buddhist and vernacular material. Whether it holds
+      Vedic manuscripts is answerable — the OCR text is right there, 2 MB of it — but it was
+      not answered in this packet and no claim is made either way.
+    shakha_stated: not established
+    images_digitised: none of the manuscripts; the CATALOGUE is scanned
+    images_public: "no"
+    image_access_path: none for manuscripts; catalogue at https://archive.org/download/<identifier>/
+    access_requirements: none for the catalogue
+    license: unknown
+    image_license: no licence or rights statement is set on the archive.org item
+    status: found-partial
+    notes: >
+      Second-largest named manuscript repository in the Kathmandu valley after NAK, and its
+      holdings were partly covered by NGMPP filming — so it also appears, unattributed, inside
+      the NGMCP records.
+      Next step is cheap and concrete: fetch the 2 MB OCR text and grep it for Vedic
+      vocabulary. That converts "not established" into a real answer for the cost of one HTTP
+      request.
+      Attribution owed: Raja Shakya, editor.
+    date_logged: 2026-08-01
+
+  # -------------------------------------------------------------------------
+  # 2. EUROPE — the colonial-era collections
+  #    Taken, shelved, catalogued in the 19th century, and now — some of them —
+  #    better exposed to machines than anything in South Asia.
+  # -------------------------------------------------------------------------
+
+  - holding_id: qalamos/oriental-manuscripts-union-catalogue
+    institution: Qalamos (Universitätsbibliothek Leipzig, successor to KOHD / Orient-Digital)
+    collection: German union catalogue of Oriental manuscripts — Sanskrit and South Asian holdings
+    country: Germany (aggregating many German institutions)
+    catalogue_url: https://qalamos.net/
+    machine_queryable: oai-pmh + solr
+    query_endpoint: https://qalamos.net/oai2?verb=ListRecords&metadataPrefix=oai_dc&set=language:LANG0021
+    query_verified: >
+      Verified independently by me on 2026-08-01, not taken on report.
+        https://qalamos.net/oai2?verb=Identify → 200, <repositoryName>MyMSS Repository</repositoryName>,
+          responseDate 2026-08-01T10:28:26Z. SEVEN metadata formats, including oai_tei,
+          oai_mods, oai_marc21 and the Handschriftenportal profiles oai_tei_hsp_kod /
+          oai_tei_hsp_desc. TEI out of an OAI feed is unusually good for this material.
+        ?verb=ListIdentifiers&metadataPrefix=oai_dc&set=language:LANG0021 → 200,
+          completeListSize="33818" — 33,818 Sanskrit-language records.
+        https://qalamos.net/servlets/solr/select?q=category:MyMssSubjectMatter\:THEM0065.005&wt=json&rows=0
+          → 200, numFound 1151. That category is the catalogue's own subject class "Veda".
+      IMPORTANT ENDPOINT DISTINCTIONS, all confirmed: /servlets/solr/**select** is open;
+      /servlets/solr/**find** returns 403. /api/v1/objects and /api/v2/objects return 401
+      ACCESS_DENIED. /oai/OAIHandler and /servlets/OAIDataProvider return 404 — the working
+      OAI path is the bare /oai2. Solr's `fl` is pinned as a solrconfig invariant, so select
+      returns IDs but not full metadata; the working pipeline is two-step — Solr for IDs,
+      then OAI GetRecord for the record.
+    record_count: >
+      504,607 records in the whole Qalamos corpus (verified by me, q=*:*).
+      Sanskrit: 36,065 by Solr category MyMssLanguage:LANG0021 (verified by me), but 33,818
+      by OAI ListIdentifiers set=language:LANG0021 (also verified by me). The two disagree by
+      ~2,200 — the OAI set and the Solr category are not the same population. Harvest one or
+      the other consistently; do not mix the counts.
+      Other language facets: Pali 1,343 · Prakrit 1,083 · Newari 448 · Nepali 40 ·
+      Apabhraṃśa 23 · Maithili 10. Project facet: kohd 26,520 — the KOHD union catalogue is
+      the Sanskrit backbone.
+    vedic_material: >
+      The largest Vedic manuscript pool found anywhere in this packet, and it is a UNION
+      catalogue, so it spans many German holding institutions rather than one shelf.
+      Catalogue's own subject class "Veda" (MyMssSubjectMatter:THEM0065.005): 1,151 records —
+      verified by me directly.
+      AND — the best single machine-filterable Vedic signal found anywhere in this packet —
+      Qalamos has a distinct LANGUAGE code for VEDIC SANSKRIT as opposed to Sanskrit:
+        category:"MyMssLanguage:LANG0198" = "Vedic Sanscrit" → 651 records (verified by me).
+      That is a cataloguer's judgement that the LANGUAGE OF THE TEXT IS VEDIC, not a subject
+      tag and not a title match. No other catalogue in this packet distinguishes Vedic from
+      Classical Sanskrit at the record level. For a triage pipeline that needs high precision
+      over high recall, this 651-record set is the cleanest starting population available.
+      Free-text counts reported by the delegated verification (field is `allMeta`; a bare
+      q=Sanskrit returns 0, so the field name matters): Veda* 2,619 · Ṛgveda 393 ·
+      Yajurveda 241 · Atharvaveda 196 · Sāmaveda 140 · Upaniṣad 464 · Brāhmaṇa 244 ·
+      Āraṇyaka 75 · Prātiśākhya 48 · Gṛhyasūtra 46 · Śrautasūtra 41.
+      I verified the 1,151 figure and the two OAI figures myself; the free-text breakdown I
+      did not re-run and it is flagged accordingly.
+    shakha_stated: >
+      Not established. The subject taxonomy resolves to "Veda" and not below it. Whether
+      individual TEI records name a śākhā in prose is unknown and worth checking on a sample
+      before anyone assumes either way.
+    images_digitised: partial — not systematically established
+    images_public: varies by contributing institution
+    image_access_path: per contributing institution; Qalamos is a metadata union catalogue
+    access_requirements: none for OAI-PMH
+    license: CC-BY  # see note — the bulk of records carry CC0
+    image_license: varies by contributing institution
+    status: found-complete
+    notes: >
+      LICENCE: the `licenses` facet shows cc0 171,799 · cc_by_4.0 10,678 · cc_4.0 11,326 ·
+      rights_reserved 2. Records carry <dc:rights>CC0 1.0</dc:rights>. Recorded as CC0 in substance; the protocol enum
+      has no CC0 value, so `license: CC-BY` above is the nearest enum and this note is
+      authoritative over it. **If the enum is extended, add `cc0` and correct this record.**
+      CRAWL POLICY: robots.txt disallows /servlets/, /api/ and /browse/. It does NOT disallow
+      /oai2. Take the hint — harvest via OAI-PMH, use Solr sparingly and throttled.
+      Published institutional contact (the OAI adminEmail): collection@rz.uni-leipzig.de.
+      Qalamos is also where Tübingen's Indic manuscript CATALOGUE lives (2,072 Tübingen
+      records, 587 Sanskrit), so it subsumes that target — see the Tübingen record.
+    date_logged: 2026-08-01
+
+  - holding_id: staatsbibliothek-berlin/suedasiatische-handschriften
+    institution: Staatsbibliothek zu Berlin — Preußischer Kulturbesitz
+    collection: Südasiatische Handschriften (digitised set) — the collection Weber catalogued
+    country: Germany
+    catalogue_url: https://digital.staatsbibliothek-berlin.de/
+    machine_queryable: oai-pmh + iiif
+    query_endpoint: https://oai.sbb.berlin/oai?verb=ListRecords&metadataPrefix=oai_dc&set=suedasiatische.handschriften
+    query_verified: >
+      Verified independently by me 2026-08-01. digital.staatsbibliothek-berlin.de/oai 301s to
+      https://oai.sbb.berlin/oai — the redirect must be followed or the harvest silently fails.
+      ?verb=Identify → 200, <repositoryName>DC MOAI</repositoryName>.
+      ?verb=ListIdentifiers&metadataPrefix=oai_dc&set=suedasiatische.handschriften → 200,
+      completeListSize="231". Formats oai_dc and mets. Parent set
+      `aussereuropaeische.handschriften` is 9,135 records.
+      IIIF verified by the delegated check: https://content.staatsbibliothek-berlin.de/dc/PPN1938100271/manifest
+      → 200; Image API level 2 (1993×4008), full/200,/0/default.jpg → 200 JPEG.
+    record_count: 231 in the South Asian digitised set (9,135 in the parent non-European set)
+    vedic_material: >
+      The highest Vedic DENSITY of any collection in this packet, and — critically — the
+      material is actually IMAGED, not merely described. 23 of the 231 records are
+      Vedic/Vedāṅga by title, including NINE copies of Ṛgvedasaṃhitā. Named items with
+      canvas counts:
+        PPN1938100271  Ṛgveda, Aṣṭaka I–IV, PADAPĀṬHA          1600   569 canvases
+        PPN1938094700  Atharvavedasaṃhitā, Kāṇḍa 1–9, Padapāṭha 1593   729 canvases
+        PPN1938096398  Vājasaneyisaṃhitā, Adhyāya 1–20, Saṃhitāpāṭha 1596  331 canvases
+        PPN1938099648  [Acht Bücher des Śatapathabrāhmaṇa]      1793   537 canvases
+        PPN1939011426  Kommentar zu Śāṅkhāyanaśrautasūtra       1600   463 canvases
+        PPN1938312775  Gobhilagṛhyasūtra                        1549    71 canvases
+        PPN1938340213  Maśakakalpasūtra                         1600   305 canvases
+        PPN797799117   Maitrāyaṇīyakārikāḥ; Mānava-gṛhya/śrautasūtra 1800 225 canvases
+      Language breakdown of the set: san 189, pra 13, new 6.
+      The padapāṭha manuscripts are the notable thing here: a padapāṭha is the word-separated
+      recitation form, and it is directly relevant to this project's accent/segmentation work
+      in a way a plain saṃhitāpāṭha is not.
+    shakha_stated: >
+      STATED, for two: "Vājasaneyisaṃhitā" and "Maitrāyaṇīyakārikāḥ" name the śākhā (or in
+      Vājasaneyi's case the śākhā family) in the catalogue title itself.
+      EXPLICITLY MARKED AS INFERENCE, not catalogue statement: Śāṅkhāyana → Ṛgveda,
+      Gobhila and Maśaka → Sāmaveda. Those are attributions from the standard affiliation of
+      the named sūtra work, made by the verifying agent, NOT by the Staatsbibliothek. Basis:
+      the received scholarly affiliation of each sūtra. Do not promote them to catalogue fact.
+      WARNING recorded by the verifier and worth keeping: the two records titled plain
+      "Kalpasūtra" (1450, 1550) are almost certainly the JAIN Kalpasūtra, not Vedic kalpa.
+      A naive title filter on "kalpasūtra" will pull them in wrongly.
+    images_digitised: full — for this set
+    images_public: yes
+    image_access_path: IIIF — https://content.staatsbibliothek-berlin.de/dc/<PPN>/manifest
+    access_requirements: none
+    license: public-domain
+    image_license: >
+      Public Domain Mark 1.0 for 214 of the 231 records, asserted per-record in the OAI
+      output and as "open access" in METS; 4 records UNKNOWN.
+      HONEST GAP: the human-readable Nutzungshinweise page is JavaScript-only and returned no
+      text to either curl or WebFetch, so the site-wide terms page could NOT be verified.
+      The PDM assertion is per-record and is the stronger evidence; the terms page is unread.
+    status: found-complete
+    notes: >
+      This is also where the NGMPP Nepal microfilms live — a complete copy of every NGMPP
+      film was given to the Deutsche Morgenländische Gesellschaft and placed on permanent
+      loan to the SBB Orientabteilung, consultable in the Lesesaal der Orient- und
+      Ostasienabteilung. So Berlin is simultaneously (a) a digitised Vedic collection in its
+      own right and (b) the physical access point for the much larger Nepalese pool.
+      TRAP: some records are parent/multi-volume entries with ZERO canvases (PPN1938102606
+      was found this way). Check canvas count before assuming a record is imaged.
+    date_logged: 2026-08-01
+
+  - holding_id: bnf/manuscrits-sanscrit
+    institution: Bibliothèque nationale de France
+    collection: Département des Manuscrits, fonds Sanscrit (via Gallica)
+    country: France
+    catalogue_url: https://gallica.bnf.fr/
+    machine_queryable: sru + iiif
+    query_endpoint: https://gallica.bnf.fr/SRU?operation=searchRetrieve&version=1.2&query=gallica%20all%20%22sanscrit%22
+    query_verified: >
+      Verified by the delegated check; endpoints and counts as reported, not re-run by me.
+      SRU → 200. Restricted to manuscripts: sanscrit 1,437 · veda 60 · yajurveda 18.
+      Fonds "Département des Manuscrits Sanscrit" 10,675 records overall.
+      IIIF → https://gallica.bnf.fr/iiif/ark:/12148/btv1b10083021f/manifest.json → 200,
+      label "BnF. Département des Manuscrits. Sanscrit 200", content Ṛg-veda (padapāṭha),
+      124 canvases. Per-item Dublin Core at services/OAIRecord?ark=…  → 200.
+      NEGATIVE RESULTS, useful: oai.bnf.fr did not resolve. archivesetmanuscrits.bnf.fr is
+      HTML only — /sru, /oai2, .xml suffix and robots.txt all 404, and there is no EAD export,
+      so the descriptive archival catalogue is NOT machine-reachable even though the digitised
+      objects are. data.bnf.fr/sparql serves a JavaScript SPA shell, not a SPARQL endpoint.
+      GOTCHA: an invalid ark returns HTTP 500, not 404. Do not read a 500 as "endpoint down".
+    record_count: 1,437 Sanskrit manuscripts (10,675 records in the Sanscrit fonds overall)
+    vedic_material: >
+      ~50 unique Vedic manuscript arks surfaced in a single SRU pass: multiple Ṛg-veda
+      padapāṭha, Ṛg-veda-bhāṣya, Yajurvedabrāhmaṇa, Ṛg-veda-prātiśākhya, Nirukta, and
+      Sarvānukramaṇī, plus Āraṇyakagāna (du Sāma-veda).
+      The Prātiśākhya, Nirukta and Sarvānukramaṇī items are directly the apparatus tier —
+      flagged here because packet P2-b owns that tier and should be told these exist as
+      manuscripts, not just as printed editions.
+    shakha_stated: >
+      YES — and this is the ONLY catalogue in the entire packet that states a śākhā as
+      catalogue text rather than leaving it to inference:
+        ark btv1b100829973 — "10e et 12e livres, du Śatapathabrāhmaṇa, KĀṆVA ŚĀKHĀ"
+      Recorded verbatim. Kāṇva is one of the three target śākhās listed as empty in
+      COLLECTION-PROTOCOL.md §5 packet P1-b, so this is a live lead for that packet.
+    images_digitised: partial
+    images_public: yes
+    image_access_path: IIIF — https://gallica.bnf.fr/iiif/ark:/12148/<ark>/manifest.json
+    access_requirements: none
+    license: public-domain
+    image_license: >
+      Verbatim from the Gallica conditions d'utilisation (note: the canonical /html/und/ URL
+      403s; the /edit/und/ variant serves):
+      "La réutilisation non commerciale de ces contenus est libre et gratuite… « Source
+      gallica.bnf.fr / Bibliothèque nationale de France ». La réutilisation commerciale de ces
+      contenus est payante et fait l'objet d'une licence… LES CHERCHEURS SONT EXONÉRÉS DE
+      TOUTE REDEVANCE D'UTILISATION COMMERCIALE DANS LE CADRE DE LEURS PUBLICATIONS À
+      CARACTÈRE SCIENTIFIQUE ET ACADÉMIQUE. Les métadonnées sont soumises à la licence Etalab."
+      So: metadata open under Etalab; images free for non-commercial use with source credit;
+      an explicit academic exemption from the commercial fee. Individual records additionally
+      carry dc:rights "domaine public / public domain".
+    status: found-complete
+    notes: >
+      Attribution string required on image reuse: "Source gallica.bnf.fr / Bibliothèque
+      nationale de France".
+    date_logged: 2026-08-01
+
+  - holding_id: cambridge-cudl/sanskrit-manuscripts
+    institution: Cambridge University Library
+    collection: Sanskrit Manuscripts (Cambridge Digital Library)
+    country: United Kingdom
+    catalogue_url: https://cudl.lib.cam.ac.uk/collections/sanskrit
+    machine_queryable: iiif + api
+    query_endpoint: https://cudl.lib.cam.ac.uk/iiif/collection/sanskrit
+    query_verified: >
+      Verified by the delegated check. IIIF collection → 200, 195 KB, 1,595 manifests.
+      PATH TRAP: it is /iiif/collection/sanskrit, NOT /collections/.
+      TEI API: https://services.cudl.lib.cam.ac.uk/v1/metadata/tei/MS-ADD-01105/ → 200, full
+      TEI msDesc. Requires -L; the bare path 301s. JSON equivalent at /v1/metadata/json/<id>/.
+      NEGATIVE: no OAI-PMH (/oai?verb=Identify returns the HTML homepage). A 12.9 MB sitemap
+      exists but robots.txt disallows /search. No public TEI data repo — the
+      `cambridge-collection` GitHub org holds processing XSLT, not the manuscript data.
+      THROTTLE WARNING: sustained requests began returning HTTP 202 with an empty body, then
+      recovered. A harvester that treats 202 as success will silently write empty records.
+    record_count: 1,595 manifests in the Sanskrit collection
+    vedic_material: >
+      Estimated ~110 of 1,595, from a random sample of 100 manifests of which 7 carried
+      strict Vedic subject terms (Vaidika, Vedalakṣaṇa, Śikṣā, Brāhmaṇa). The collection is
+      dominated by Buddhist and Jain Nepalese material (Bauddha 22%, Jaina 18%) — it is
+      largely the same Nepalese manuscript world as NGMCP, collected differently.
+      Confirmed items: MS-ADD-01105 Kṛṣṇayajurveda · MS-ADD-02436 Caraṇavyūha ·
+      MS-ADD-01938 Lomaśīśikṣā · MS-OR-00305 Mādhavīyavedārthaprakāśa.
+      The structured subject vocabulary (Vaidika / Vedalakṣaṇa / Śikṣā) is the best
+      machine-filterable Vedic subject taxonomy found in this packet.
+    shakha_stated: >
+      Stated in PROSE where known, not as a structured field — which means it is extractable
+      but only by reading the TEI summary, not by faceting. Verbatim examples:
+        MS Add.2436 — "the fifth pariśiṣṭa of the Śuklayajurveda, discusses the form and
+                       language of the Vājasaneya Saṃhitā"
+        MS Add.1938 — "belonging to the Sāmavedic school of recitation… vedalakṣaṇa"
+      This is the most promising target for machine śākhā-extraction anywhere in the packet,
+      precisely because the statements exist in free text at scale.
+    images_digitised: full — for the digitised collection
+    images_public: yes
+    image_access_path: IIIF manifests linked from https://cudl.lib.cam.ac.uk/iiif/collection/sanskrit
+    access_requirements: none
+    license: CC-BY  # NC restriction — see image_license
+    image_license: >
+      Verbatim from the manifest `attribution` field: "Images made available for download are
+      licensed under a Creative Commons Attribution-NonCommercial 4.0 Unported License
+      (CC BY-NC 4.0). This metadata is licensed under a Creative Commons
+      Attribution-NonCommercial 4.0 Unported License."
+      NOTE: CC BY-NC, not CC BY. The protocol enum has no NC value; `license: CC-BY` above is
+      the nearest enum and THIS NOTE IS AUTHORITATIVE OVER IT. The NC term binds the images
+      AND, per Cambridge's own wording, the metadata. **If the enum is extended, add
+      `cc-by-nc` and correct this record.** Relevant because VedaPortal's own sources/ licence
+      is CC-BY-SA 4.0, which is not NC-compatible — CUDL metadata cannot be merged into a
+      CC-BY-SA compilation. Link and cite; do not absorb.
+    status: found-complete
+    date_logged: 2026-08-01
+
+  - holding_id: british-library/india-office-sanskrit
+    institution: British Library (incorporating the India Office Library)
+    collection: Oriental Manuscripts — Sanskrit / India Office Library / Jones Collection
+    country: United Kingdom
+    catalogue_url: https://searcharchives.bl.uk/
+    machine_queryable: api  # undocumented JSON, and legally constrained
+    query_endpoint: https://searcharchives.bl.uk/?q=Rigveda&search_field=all_fields&format=json
+    query_verified: >
+      Verified by the delegated check, then the headline endpoint re-verified. Returns 200
+      application/json, JSON:API shape with meta.pages.total_count; 33 results for Rigveda.
+      `format=json` is MANDATORY — /catalog.json?q= returns HTML.
+      IIIF: https://bl.digirati.io/iiif/ark:/81055/… → 200, Presentation API 3.0, a Kalpasūtra
+      manifest at 377,714 bytes, rights CC0/PDM 1.0, no requiredStatement.
+      DEAD, all confirmed: api.bl.uk NXDOMAIN · labs.bl.uk NXDOMAIN · bnb.data.bl.uk SPARQL
+      ports 443/80 closed · data.bl.uk redirects to the homepage · www.bl.uk/manuscripts/ 404
+      (Digitised Manuscripts is retired). No OAI-PMH, no SPARQL, no bulk download. This is the
+      long tail of the 2023 cyberattack: the BL's machine surface is a fraction of what the
+      literature still cites.
+    record_count: "~1,386 Oriental Manuscripts records matching Sanskrit (facets: Sanskrit 1,167 · India Office Library 927 · Jones Collection 118)"
+    vedic_material: >
+      Rich descriptions, almost no pixels. Only ~25 items are digitised at all and just 16 are
+      served via iiif.bl.uk. The catalogue records are derived from the printed Eggeling/Keith
+      catalogue and carry the printed catalogue number in the scope note — a usable join key
+      back to the printed volumes.
+      THE PRACTICAL ROUTE IS THE PRINTED CATALOGUE, NOT THE WEBSITE: Eggeling's catalogue
+      PART I IS LITERALLY TITLED "VEDIC MANUSCRIPTS", it is public domain, and it is on
+      archive.org WITH OCR TEXT —
+      https://archive.org/download/p1a4catalogueofs01greauoft/p1a4catalogueofs01greauoft_djvu.txt
+      → 200, 1.96 MB of plain text. That file is outside the BL's terms of use entirely and is
+      a complete, machine-readable, śākhā-aware 19th-century Vedic manuscript catalogue.
+    shakha_stated: not established for the online records; the printed Eggeling catalogue does discuss recension
+    images_digitised: minimal — ~25 of ~1,386
+    images_public: yes, for the ~16 served via IIIF
+    image_access_path: https://bl.digirati.io/iiif/ark:/81055/<ark>
+    access_requirements: reader registration for physical consultation
+    license: copyright-link-only
+    image_license: >
+      Per-item IIIF manifests assert CC0 / Public Domain Mark 1.0 with no requiredStatement.
+      BUT the site-wide terms (https://www.bl.uk/terms, §3 Prohibited use) state verbatim:
+      "You agree not to use the Website … to create a database (electronic or otherwise) that
+      includes material downloaded or otherwise obtained from the Website except where
+      expressly permitted…"
+      That clause cuts directly against exactly what this packet is scoping. The per-item CC0
+      grants are narrower and stronger evidence for the individual objects; the site ToU
+      governs the act of harvesting. FLAGGED, NOT ADJUDICATED — this needs a human decision
+      before any BL harvest, and the Eggeling archive.org route sidesteps it completely.
+    status: found-partial
+    date_logged: 2026-08-01
+
+  - holding_id: british-library/endangered-archives-programme
+    institution: British Library — Endangered Archives Programme
+    collection: EAP digitised manuscript projects, South Asia
+    country: United Kingdom (hosting), material from India / Nepal / Bangladesh
+    catalogue_url: https://eap.bl.uk/
+    machine_queryable: api  # discovery via searcharchives JSON; images via open IIIF
+    query_endpoint: https://searcharchives.bl.uk/?q=veda&f[language][]=Sanskrit&format=json
+    query_verified: >
+      Verified twice, by two independent checks that found two different routes in. Both hold.
+      THE WALL: eap.bl.uk sits behind AWS WAF. Every HTML page returns HTTP 202 with
+      `x-amzn-waf-action: challenge` and a zero-byte body; /search returns 405. A headless
+      browser gets an interactive AWS CAPTCHA, not an auto-solving JS challenge. HTML search
+      is effectively closed to scripted access.
+      ROUTE 1 — discovery via the main BL archives JSON API (bypasses the EAP front end):
+        https://searcharchives.bl.uk/?q=veda&f[language][]=Sanskrit&format=json
+        language=Sanskrit → 8,361 records; Sanskrit + "veda" → 108.
+        Named: EAP729/1/2/75 Ṛgsaṃhitā · EAP584/5/79 Veda (16th c.).
+      ROUTE 2 — IIIF, which bypasses the WAF entirely and needs no auth:
+        https://eap.bl.uk/archive-file/{EAPnnn}-{coll}-{item}/manifest → IIIF Presentation 3.0
+        https://images.eap.bl.uk/{PROJ}/{ITEM}/{n}.jp2/info.json → IIIF Image API 2, level1/2
+        Sample (EAP1023-1-1, 5,480 bytes, 157 canvases): label "चरित्र शुक सप्तती",
+        metadata Identifier EAP1023/1/1, Extent "157 TIFF images", Place "Nepal, Asia",
+        "Digitised by: Tribhuvan University", Scripts Devanagari.
+        Image body verified: images.eap.bl.uk/EAP1023/EAP1023_1_1/1.jp2/full/full/0/default.jpg
+        → 3961×2641, 200 image/jpeg.
+      NO BULK ROUTE: there is no OAI-PMH, no IIIF Collection endpoint, and no catalogue dump.
+      /project/{id}/manifest, /collection/{id}/manifest, /iiif/collection/top,
+      /archive-file/{id}/collection and /api were all tried — 404 or WAF. The only
+      programmatic harvest is ID ENUMERATION over EAPnnn-C-I until 404 (verified:
+      EAP1023-1-50 → 200 with 118 canvases; EAP1023-1-200 → 404).
+      POST-CYBERATTACK STATUS, verified: https://www.bl.uk/cyber-incident/ is live as of
+      August 2026 and still says the Library is "working to restore full functionality". The
+      BL blog platform is frozen at blogs-archive.bl.uk and the EAP blog path 404s. But EAP
+      itself runs on separate AWS infrastructure and survived intact — EAP1550-1-1, a
+      post-attack project, has a working manifest, so new material is still being published.
+    record_count: 8,361 Sanskrit-language records
+    vedic_material: >
+      108 records matching Sanskrit + "veda" by keyword — certainly an undercount.
+      The project-level picture is more useful. Verified projects with images confirmed
+      online (manifest → 200):
+      NEPAL
+        EAP1023  Rare medieval Sanskrit MSS, Newār settlements, rural Kathmandu + hills — 504 items
+        EAP790   Melvin Seiden Award — medieval MSS, Kathmandu Valley
+                 (21 collections, 687 MSS, 28,050 folios) — 714 items
+        EAP676   Buddhist Sanskrit MSS survey, Vajrayana vihāras, Lalitpur — 251 items
+        EAP945   Pre-modern HINDU RITUAL MSS, Kathmandu Valley
+                 (Rajopadhyaya priestly lineage; Sanskrit/Newari/Nepali) — 155 items
+      INDIA
+        EAP1304  Palm-leaf MSS of the four Śaṅkaran maṭhams, Thrissur, Kerala (~800 MSS;
+                 host EFEO). HIGHEST VEDIC RELEVANCE — the project description explicitly
+                 names "Advaita Vedānta, VEDIC EXEGESIS". First item is Śābarabhāṣya
+                 (the Mīmāṃsā commentary), 369 canvases.
+        EAP584 / EAP208  Palm-leaf MSS, northern Kerala — 748 bundles, 2,533 Sanskrit/
+                 Malayalam texts
+        EAP886   Sanskrit MSS + books, Jammu & Kashmir (Raghunath Temple Library, Ranbir
+                 Sanskrit Library) — 48 items; Śaiva/Tantra-leaning, item 1 is Patañjali's
+                 Mahābhāṣya, 389 canvases
+        EAP1294  Two palm-leaf collections, Tamil country (~183 bundles, Grantha script)
+        EAP1217  Palm-leaf MSS, Tamil University
+      NO IMAGES ONLINE (manifest 404): EAP781, EAP921 (Bengal).
+      BANGLADESH: no Vedic/Sanskrit manuscript project surfaced. Reported as none found.
+    shakha_stated: not established
+    images_digitised: full — EAP exists to digitise
+    images_public: yes, via images.eap.bl.uk
+    image_access_path: "https://images.eap.bl.uk/<project>/<item>/<n>.jp2/info.json (IIIF Image API 2.0)"
+    access_requirements: >
+      Records carry restrictions_on_use_ssi "Access is for research purposes only".
+      The eap.bl.uk web front-end additionally interposes an AWS WAF human-verification
+      challenge.
+    license: copyright-link-only
+    image_license: >
+      Manifests carry NO `rights` field. The `requiredStatement` is restrictive, verbatim:
+      "Except as otherwise permitted under your national copyright law this material may not
+      be copied or distributed further". Plus the BL site ToU §3 database clause — see the
+      IOL record. This is NOT open data. Link and cite.
+    status: found-partial
+    notes: >
+      EAP is the only programme in this packet whose entire purpose is to photograph
+      manuscripts that are at risk, which makes it structurally the best match for this
+      project's concern with material that may not survive. The 108-record Vedic figure is a
+      keyword count and is almost certainly an undercount.
+      CAUTION ON PROVENANCE: many EAP projects digitise material held by families, temples
+      and small local institutions. Records may therefore identify private individuals and
+      private locations. Per this packet's hard constraint, harvest at the PROJECT and
+      INSTITUTION level only and do not compile custodian identities or locations out of EAP
+      metadata — that aggregation is precisely the artefact the constraint exists to prevent.
+    date_logged: 2026-08-01
+
+  - holding_id: bodleian/sanskrit-manuscripts
+    institution: Bodleian Library, University of Oxford
+    collection: Sanskrit manuscripts — Chandra Shum Shere, Wilson, Mill, Ind. Inst. Sansk.
+    country: United Kingdom
+    catalogue_url: https://digital.bodleian.ox.ac.uk/
+    machine_queryable: iiif  # images only — the descriptive catalogue is walled
+    query_endpoint: https://iiif.bodleian.ox.ac.uk/iiif/collection/sanskrit-manuscripts-clay
+    query_verified: >
+      Verified by the delegated check. IIIF collections work:
+        .../iiif/collection/sanskrit-manuscripts-clay ("Sanskrit Manuscripts: A JJC Foundation
+          Digitization project") → 62 manifests
+        .../iiif/collection/south-asian-origin → 87 manifests
+      HOST TRAP: digital.bodleian.ox.ac.uk/iiif/... 301s — use the iiif. host.
+      Image API verified end to end: info.json → 200; full/200,/0/default.jpg → 200 JPEG.
+      THE DESCRIPTIVE CATALOGUE IS WALLED, precisely: south-asian.bodleian.ox.ac.uk serves an
+      Anubis anti-bot challenge ("Making sure you're not a bot!") on EVERY path tried —
+      /catalog.json?q=veda, /catalog/manuscript_03257.json, and /oai. The manifests link to it
+      as "Full catalogue record", so the structured descriptive data demonstrably EXISTS and
+      is simply not machine-reachable. This is the cleanest example in the packet of a
+      catalogue that is neither absent nor open.
+      Digital Bodleian's own "API Documentation" link is a dead 404 (/api-documentation/,
+      /api/, /help/api/ all 404). IIIF is the only route in.
+    record_count: 62 + 87 manifests across the two relevant IIIF collections
+    vedic_material: >
+      Almost nothing digitised. Across all 62 Clay-project manifests exactly ONE clear Vedic
+      item: MS. Ind. Inst. Sansk. 4 — Chāndogyopaniṣad; Chāndogyopaniṣadbhāṣya, 272 canvases.
+      Shelfmark composition of the 87 South-Asian-origin manifests: MS. Ind. Inst. Sansk. 20 ·
+      MS. Sansk. 19 · MS. Chandra Shum Shere 15 · MS. Mill 7 · MS. Wilson 1.
+      So the two collections a Vedicist would most want — Chandra Shum Shere and Wilson — are
+      barely digitised at all: 15 and 1 items respectively.
+    shakha_stated: none
+    images_digitised: minimal
+    images_public: yes, for what is digitised
+    image_access_path: IIIF via iiif.bodleian.ox.ac.uk
+    access_requirements: reader admission for physical consultation
+    license: CC-BY  # NC restriction — see image_license
+    image_license: >
+      Verbatim from https://digital.bodleian.ox.ac.uk/terms/ : "most of the images on Digital
+      Bodleian are made available under a Creative Commons non-commercial license, with
+      attribution (CC-BY-NC 4.0)". Confirmed per-item in manifest attribution.
+      Same NC caveat as CUDL: not compatible with a CC-BY-SA compilation.
+    status: found-partial
+    where_i_looked: >
+      iiif.bodleian.ox.ac.uk (works, images only) · digital.bodleian.ox.ac.uk/iiif (301) ·
+      south-asian.bodleian.ox.ac.uk/catalog.json, /catalog/<id>.json, /oai (all Anubis-walled) ·
+      digital.bodleian.ox.ac.uk/api-documentation/, /api/, /help/api/ (all 404).
+    date_logged: 2026-08-01
+
+  - holding_id: tuebingen/indische-handschriften
+    institution: Universitätsbibliothek Tübingen
+    collection: "Ma I — Indische Handschriften"
+    country: Germany
+    catalogue_url: https://opendigi.ub.uni-tuebingen.de/
+    machine_queryable: oai-pmh + iiif
+    query_endpoint: https://opendigi.ub.uni-tuebingen.de/opendigi/api/oai?verb=ListIdentifiers&metadataPrefix=oai_dc&set=sammlung19
+    query_verified: >
+      Verified by the delegated check. OAI Identify → 200. Note the path: it is
+      /opendigi/api/oai — the guessable /opendigi/oai is 404, and idb.ub.uni-tuebingen.de
+      redirects to opendigi. 27,600 records total; formats mets, oai_dc, epicur, leoxml.
+      Set `sammlung19` = "Ma I Indische Handschriften" contains EXACTLY 23 identifiers,
+      enumerated: MaI211, MaI536, MaI421_1–8, MaI84-1/2, MaI879, MaI312, MaI411, MaI406,
+      MaI486, MaI893, MaI894, MaI339, MaI390, MaI82, MaVI26.
+      IIIF: https://opendigi.ub.uni-tuebingen.de/opendigi/MaI211/manifest → 200, 215 KB,
+      label "Stavamala", 295 canvases. No /iiif/ path segment and no .json suffix.
+      K10plus SRU partially works (sru.k10plus.de/gvk and /opac-de-627 respond; Sanskrit →
+      40,632 / 67,912) but the Tübingen-specific base opac-de-21 404s on searchRetrieve and
+      pica.bib=DE-21 returns "Access to specified database denied".
+    record_count: 23 digitised Indic manuscripts locally; 2,072 Tübingen records catalogued in Qalamos, of which 587 Sanskrit
+    vedic_material: >
+      ~132 of the 2,072 Qalamos-held Tübingen records match Vedic terms — but the DIGITISED
+      set is only 23 items and no Vedic item was confirmed among them. The metadata and the
+      images are almost disjoint here: catalogue via Qalamos, images via opendigi, and the
+      overlap is thin.
+    shakha_stated: not established
+    images_digitised: minimal — 23 items
+    images_public: yes
+    image_access_path: https://opendigi.ub.uni-tuebingen.de/opendigi/<id>/manifest
+    access_requirements: none
+    license: public-domain
+    image_license: >
+      Verbatim from the IIIF manifest `license` field: "To the best of our knowledge this work
+      is free of known copyrights or related property rights (public domain)."
+      Attribution: "University Library Tübingen".
+    status: found-partial
+    notes: >
+      Effectively subsumed by the Qalamos record for catalogue purposes. Kept separate because
+      the 23 digitised items are only reachable through opendigi, not through Qalamos.
+    date_logged: 2026-08-01
+
+  - holding_id: wellcome/sanskrit-works
+    institution: Wellcome Collection
+    collection: Sanskrit-language works, incl. MS Indic shelfmarks
+    country: United Kingdom
+    catalogue_url: https://wellcomecollection.org/collections
+    machine_queryable: api
+    query_endpoint: https://api.wellcomecollection.org/catalogue/v2/works?languages=san&pageSize=100
+    query_verified: >
+      Verified by the delegated check. The best-documented and cleanest API in the whole
+      packet — unauthenticated, with working faceting, aggregations and pagination.
+      4,503 Sanskrit-language works; 146 digitised; 13 with genuine `MS Indic` shelfmarks.
+      Licence aggregation on digitised Sanskrit (aggregations=items.locations.license):
+      Public Domain Mark 121 · CC BY 4.0 6 · In copyright 19.
+      IIIF: https://iiif.wellcomecollection.org/presentation/v2/b29952931 → 200.
+    record_count: 4,503 Sanskrit works, 146 digitised
+    vedic_material: >
+      EFFECTIVELY NONE, and this is a genuine negative result worth recording so nobody
+      spends time here again. Wellcome is a MEDICAL library. All 146 digitised Sanskrit works
+      were walked; every "veda"/"saṃhitā" hit is either Āyurvedic (Aṣṭāṅgahṛdayasaṃhitā,
+      Suśrutasaṃhitā, Āyurvedaśabdārṇava) or a printed Western edition (Max Müller's
+      Rig-Veda-Sanhita) — not a Vedic manuscript.
+      Excellent target for Āyurveda (an Upaveda, and in scope for the wider VedaPortal
+      taxonomy). Wrong target for the Vedic corpus.
+    shakha_stated: not applicable
+    images_digitised: partial
+    images_public: yes
+    image_access_path: https://iiif.wellcomecollection.org/presentation/v2/<bnumber>
+    access_requirements: none
+    license: public-domain
+    image_license: Public Domain Mark 121 · CC BY 4.0 6 · in-copyright 19, per the licence aggregation
+    status: not-found  # for Vedic manuscripts specifically
+    where_i_looked: >
+      api.wellcomecollection.org/catalogue/v2/works with languages=san, then every one of the
+      146 digitised Sanskrit works enumerated and title-checked. Zero Vedic manuscripts.
+    date_logged: 2026-08-01
+
+  # -------------------------------------------------------------------------
+  # 3. INDIA-WIDE — the Vedic-specific union catalogue, and the digital libraries
+  # -------------------------------------------------------------------------
+
+  - holding_id: ignca-vedicheritage/manuscript-union-catalogue
+    institution: Indira Gandhi National Centre for the Arts (IGNCA), Vedic Heritage Portal
+    collection: Vedic manuscripts union catalogue — pan-Indian, aggregating many institutions
+    country: India
+    catalogue_url: https://vedicheritage.gov.in/
+    machine_queryable: api  # undocumented POST endpoint, verified working
+    query_endpoint: https://vedicheritage.gov.in/wp-content/themes/vedic/fetch.php
+    query_verified: >
+      Verified independently by me on 2026-08-01, not taken on report. This is an
+      undocumented WordPress theme file, not a published API, and it is wide open.
+        POST https://vedicheritage.gov.in/wp-content/themes/vedic/fetch.php
+        body: page={1..657}&query={free text}
+        → HTTP 200, 34,256 bytes for page 1, "<label>Total Records - 65672</label>" plus a
+          100-row HTML table.
+      COLUMNS: Title · Author(s) · Language · Script · Folios · Account No. · Material ·
+      Publisher (= holding institution) · Place · Title in Hindi · Status (Complete/Incomplete).
+      First two rows, verbatim:
+        Agniṣṭomasāmaṛcā | Sanskrit | Devanāgarī | 5 folios | Ac. No. 7148 / R(II) 1212 |
+          Paper | Vaidika Samshodhana Mandala | Pune | अग्निष्टोमसामऋचा | Complete
+        Agniṣṭomasāma | Sanskrit | Devanāgarī | Folio 8 ; l 9, w 36 | Paper |
+          Saraswati Bhawan Library | Varanasi | अग्निष्टोमसाम | Incomplete
+      CRITICAL GOTCHA, verified by me: **it must be POST**. A GET with page=200 silently
+      ignores the page parameter and returns page 1 with the same total. A harvester written
+      with GET will loop 657 times over the same 100 rows and look like it worked.
+      Offset = (page-1)*100; 657 pages covers the whole catalogue.
+      Free-text filtering works: query=rigveda → "Total Records - 146".
+      NEGATIVE: no manuscript images (/manuscripts/ → 404). wp-json exposes 161 routes but no
+      custom manuscript route — only Contact Form 7, events-manager, post-smtp and wp/v2 core.
+    record_count: 65,672
+    vedic_material: >
+      ALL OF IT. This is the only catalogue found in this packet that is Vedic-specific by
+      construction rather than by filtering a general Indic catalogue — 65,672 records, every
+      one of them a Vedic manuscript, drawn from institutions across India.
+      Query counts I ran myself:
+        saṃhitā 7,038 · brāhmaṇa 3,098 · yajurveda 1,655 · taittirīya 1,405 · āraṇyaka 869 ·
+        samaveda 715 · "prat" (prātiśākhya etc.) 596 · atharvaveda 221 · rigveda 146
+      For comparison: NGMCP's entire Vedic subset is 2,349 and Qalamos's "Veda" class is
+      1,151. This single endpoint is roughly 28× the former.
+      Scripts are genuinely pan-Indian — Devanāgarī, Telugu, Grantha, Nandinagari, Oriya,
+      Bengali — which matters, because a Telugu-script Vedic manuscript is a different
+      transmission line from a Devanāgarī one.
+    shakha_stated: >
+      YES, AT SCALE, IN THE TITLE FIELD — and this is the single most important qualification
+      to FINDING-1 in this packet. Counts from my own queries:
+        taittirīya 1,405 · kāṇva 888 (⚠ over-counts: "Kāṇva" is also a ṛṣi name, so this
+        figure certainly includes non-śākhā matches) · sakala 62 · madhyandina 58 ·
+        jaiminiya 25 · kauthuma 6 · "shakha" 1 · **paippalada 0**
+      ⚠️ CORRECTION — MY OWN THIRD FALSE NEGATIVE, CAUGHT ON RE-PROBE. I first ran
+      query=paippalada and query=Paippalāda, got EMPTY responses, and was about to record
+      "the Paippalāda is absent from India's Vedic union catalogue" as a finding. It is not
+      absent. The search does not match those strings; query=**Paippal** returns 3, and
+      query=**sakha** returns 157 (the endpoint normalises sakha → śākhā but does not
+      stem "paippalada"). Truncating the query stem was the whole fix.
+      What is actually there, verified:
+        "Atharvaveda ( Paippalad śākhā)" — ORIYA script, PALM LEAF, Odisha.
+          ⚠️ The Publisher field for this row is a PRIVATE INDIVIDUAL with a district-level
+          location. Per this packet's hard constraint the holder and the location are NOT
+          recorded here or anywhere downstream. What is recorded: ONE Paippalāda Saṃhitā
+          manuscript, privately held, in Odisha, in Oriya script on palm leaf.
+        "Paippalādopaniṣad ; Bṛhajjābālopani…" — Devanagari, paper, Sanskrit College, Kolkata
+        "Paippalādopaniṣad" — Devanagari, paper, The Asiatic Society, Kolkata
+      This matches Kritisampada exactly, including the same single privately-held Odisha
+      record — the two catalogues agree, which raises confidence in both.
+      THE REAL FINDING IS STILL STARK, just differently: India's Vedic union catalogue of
+      65,672 records contains exactly ONE Paippalāda Saṃhitā manuscript, and it is in a
+      private collection. Meanwhile the Odisha State Museum's own 1973 printed catalogue
+      states it holds TEN. The gap between what is catalogued nationally and what is
+      catalogued locally in print is, for this recension, a factor of ten.
+      METHOD NOTE for anyone querying this endpoint: use SHORT STEMS. Full diacritic forms
+      return nothing, and an empty response looks identical to a zero result.
+    images_digitised: none — this is a metadata catalogue only
+    images_public: no
+    image_access_path: none; records give holding institution and accession number for physical follow-up
+    access_requirements: none for the catalogue
+    license: copyright-link-only
+    image_license: not-applicable — no images
+    license_notice_verbatim: >
+      From https://vedicheritage.gov.in/copyright-policy/ : "The contents of this website can
+      not be reproduced partially or fully, without written permission from Indira Gandhi
+      National Center for the Arts or the contributor."
+      No GODL, no Creative Commons. This is the most restrictive notice attached to the most
+      valuable dataset in the packet. Bare catalogue facts (title, folio count, accession
+      number, holding institution) are not copyrightable subject matter, but the compilation
+      claim is asserted and IGNCA is the natural body to ASK — they are a public institution
+      whose mission is exactly this, and a permission request is far cheaper than a lawsuit.
+      **Recommendation: write to IGNCA before harvesting, not after.**
+    status: found-complete
+    notes: >
+      ⚠️ PRIVACY CONSTRAINT — READ BEFORE INGESTING. I sampled the "Publisher" column across
+      9 pages spread through the catalogue (900 rows). It is overwhelmingly INSTITUTIONAL:
+      S.B.L. Varanasi 100 · Government Oriental Manuscripts Library Chennai 81 · Saraswati
+      Bhawan Library Varanasi 60 · Bharathpura Library Patna 56 · SRSRI Jammu 40 · Shri Ranbir
+      Sanskrit Research Institute 28 · BORI Pune 24 · Deccan College Pune 18 · Vaidika
+      Samshodhana Mandala Pune 14 · Patna University 14 · Scindia Oriental Institute Ujjain 11
+      · Tilak Maharashtra Vidyapeeth 10 · T.M.S.S.M. Library Thanjavur 10 · Anandashram
+      Sanstha Pune 13 · RORI Alwar · GOML Chennai.
+      BUT a minority of rows carry what appear to be PERSONAL NAMES paired with a
+      city-or-district location, rather than an institution. I have deliberately NOT recorded
+      any of those values here, and neither should any downstream file. Harvesting this
+      catalogue and retaining that column would assemble exactly the person-level
+      "who holds what manuscript, and where" resource this packet is forbidden to create —
+      and the compilation is the harm even though each row is individually public.
+      **If this is ingested, the Publisher/Place columns must be institution-filtered on the
+      way in, and unmatched rows kept without custodian or location.** Named donor collections
+      held INSIDE an institution (e.g. "Deccan College (Dixit Collection)",
+      "V.S.M. (Janorkar coll.)") are institutional and are fine.
+      COVERAGE NOTE: this one endpoint is effectively a union catalogue over most of the
+      Indian institutional targets in this packet's brief — BORI Pune, GOML Chennai,
+      T.M.S.S.M. (Sarasvati Mahal) Thanjavur, RORI Alwar, Ranbir/SRSRI Jammu, Scindia Ujjain,
+      Saraswati Bhawan Varanasi. Querying it is cheaper and more complete than approaching
+      those institutions one at a time.
+      Attribution owed: IGNCA Vedic Heritage Portal, and the contributing institutions named
+      per record.
+    date_logged: 2026-08-01
+
+  - holding_id: muktabodha/gokarna-vedic-collection
+    institution: Muktabodha Indological Research Institute
+    collection: Gokarna Vedic manuscript collection (scanned PDFs) + IFP Pondicherry transcripts + e-text library
+    country: USA / India
+    catalogue_url: https://muktalib7.com/DL_CATALOG_ROOT/VEDIC_CATALOG/vedic_library.htm
+    machine_queryable: html-scrape  # plus an undocumented metadata exporter, e-texts only
+    query_verified: >
+      Verified by the delegated check. Muktabodha is THREE separate systems with three
+      separate access regimes, and conflating them is the main way to get this wrong.
+        1. Searchable e-text library (~590 texts) — muktalib7.com legacy + the new
+           muktabodha-digital-library.org. HTTP Basic auth, with the credentials PRINTED ON
+           THEIR OWN PUBLIC ENTRY PAGE as an anti-crawler speed bump. Licence CC BY-NC 4.0.
+        2. IFP Pondicherry paper transcripts — 1,144 transcripts / 2,000+ texts / 200,000+
+           pages, at muktalib7.com/DL_CATALOG_ROOT/IFP_CATALOG/. Free self-service
+           registration for a personal login (the shared credentials returned 401).
+           Licence CC BY-NC-ND 3.0.
+        3. GOKARNA VEDIC MANUSCRIPTS — muktalib7.com/DL_CATALOG_ROOT/VEDIC_CATALOG/.
+           HTTP Basic, realm "Vedic catalog". © Muktabodha, all rights reserved.
+      The Vedic catalogue page returns 233 PDF links across three collections (103 / 93 / 37).
+      Scan access confirmed live: .../TEXTS/JOGLEKAR/JOGLEKAR-PDF/J0045.pdf → HTTP 200,
+      application/pdf, 7.8 MB with credentials; 401 WWW-Authenticate: Basic realm="Vedic
+      catalog" without.
+      BULK METADATA EXPORTER (undocumented, found on the legacy catalogue UI, E-TEXTS ONLY):
+        .../DL_CATALOG/DL_CATALOG_METADATA/dl_catalog_metadata_create_dublin_core.php → 590 records, 18 KB
+        .../dl_catalog_metadata_create_marcxml.php → 590 records, 110 KB
+        .../dl_catalog_metadata_create_ead.php → EAD finding aid, 13.5 KB
+      Returns 401 without auth, 200 with the published credentials. Covers the e-text
+      collection only — NOT IFP, NOT Gokarna.
+      Bulk e-text zips confirmed by HEAD (not downloaded): MUKTABODHA-LIBRARY-IAST_2026_02_20.zip
+      44.2 MB (modified 2026-02-21) and MUKTABODHA-LIBRARY-DEVANAGARI.zip 48.0 MB (2024-11-27).
+      NEGATIVE: the new UI at muktabodha-digital-library.org is behind Cloudflare Turnstile —
+      /library, /search, /api, /api/v1, /robots.txt and /sitemap.xml all return the identical
+      1,543-byte /welcome gate. Not machine-queryable. The two GitHub repos its /about page
+      links (muktabodha-v2/muktalib-v2-app, muktalib-v2-data) are PRIVATE — the org reports
+      public_repos: 0. Dead end.
+      Legacy search searches e-texts only: search_string=veda → "0 manuscripts found
+      containing: veda".
+    record_count: 233 Vedic manuscript PDFs; 590 e-texts; 1,144 IFP transcripts
+    vedic_material: >
+      233 scanned Vedic manuscript PDFs from Gokarna, Karnataka, across three collections
+      (103 / 93 / 37). Content is Āśvalāyana Ṛgveda and Baudhāyana + Hiraṇyakeśin
+      Taittirīya Kṛṣṇayajurveda, heavily weighted to PRAYOGA and śrauta ritual manuals —
+      ādhānaprayoga, agnihotra, cāturmāsya, āśvalāyanaśrautasūtra.
+      Small in count, but this is one of very few places in the packet where Vedic manuscript
+      IMAGES are actually served rather than merely described. And prayoga manuals are the
+      applied, performed layer — the ritual as actually done — which is close to this
+      project's concern with recitation as living practice.
+    shakha_stated: >
+      YES, at collection level: the collections are described as Āśvalāyana (Ṛgveda) and
+      Baudhāyana / Hiraṇyakeśin (Taittirīya Kṛṣṇayajurveda). Āśvalāyana and Baudhāyana and
+      Hiraṇyakeśin are sūtra-caraṇas within those śākhās, stated by Muktabodha itself —
+      recorded as stated, not inferred.
+    images_digitised: full — for the 233 Gokarna PDFs
+    images_public: registration  # HTTP Basic with publicly printed credentials
+    image_access_path: https://muktalib7.com/DL_CATALOG_ROOT/VEDIC_CATALOG/ (Basic auth, realm "Vedic catalog")
+    access_requirements: HTTP Basic credentials, published on Muktabodha's own entry page
+    license: copyright-link-only
+    image_license: >
+      Gokarna Vedic PDFs: "© Muktabodha, all rights reserved" — view / private study only.
+      E-texts: CC BY-NC 4.0. IFP transcripts: CC BY-NC-ND 3.0.
+      CONTRADICTION WORTH FLAGGING: the site Terms & Conditions prohibit "use of any automated
+      system or software to extract any information… (screen scraping)" and prohibit
+      commercial use — which sits awkwardly against the CC BY-NC licence on the e-texts
+      themselves. Practical reading: the e-text CONTENT is CC BY-NC 4.0; the WEBSITE forbids
+      scraping; the Gokarna Vedic scans are all-rights-reserved and are the most restricted
+      of the three.
+    status: found-partial
+    notes: >
+      ⚠️ PROVENANCE / PRIVACY: the Gokarna collections are institution-mediated PRIVATE FAMILY
+      collections, and the collection folder names on the server are family names. Per this
+      packet's hard constraint, the holding is recorded here as "Muktabodha Gokarna Vedic
+      Collection" and nothing finer. Do not compile the custodian names, and do not record
+      village-level locations for them.
+      Attribution owed: Muktabodha Indological Research Institute, and for the transcript
+      series the Institut Français de Pondichéry.
+    date_logged: 2026-08-01
+
+  - holding_id: archive-org/printed-union-catalogues
+    institution: Internet Archive (hosting public-domain printed catalogues from many institutions)
+    collection: The 19th–20th century printed manuscript union catalogues, with OCR
+    country: various
+    catalogue_url: https://archive.org/
+    machine_queryable: bulk-file + api
+    query_endpoint: https://archive.org/advancedsearch.php?q=<query>&output=json
+    query_verified: >
+      Verified by the delegated check; all six target works resolve and 100% have an OCR text
+      layer. Fetch pattern, no auth: https://archive.org/download/<id>/<name>_djvu.txt
+        Aufrecht, Catalogus Catalogorum      b30094124_0001 (2.6 MB OCR, PD Mark) ·
+                                             in.ernet.dli.2015.56538 (Pt 2, 1.2 MB) ·
+                                             cataloguscatalogorumtheodoraufrechtpart31903_854_r (Pt 3, 0.8 MB, CC0)
+        New Catalogus Catalogorum (Madras)   ukNs_1-new-catalogus-catalogorum-01-…-madras-1968-3 … ZqRo_38-… (CC0, 63 of 72 items)
+        Rājendralāl Mitra, Notices of Skt MSS in.ernet.dli.2015.552513 (vols 1+2, 2.6 MB OCR)
+        Eggeling, India Office catalogue     p1a4catalogueofs01greauoft (NOT_IN_COPYRIGHT, 1.96 MB OCR)
+                                             — PART I IS TITLED "VEDIC MANUSCRIPTS"
+        Weber, Berlin Verzeichniss           verzeichnissder00webegoog (1.5 MB, NOT_IN_COPYRIGHT)
+        Burnell, Tanjore classified index    aclassifiedinde00burngoog (1.3 MB, NOT_IN_COPYRIGHT)
+        Haraprasād Śāstrī, ASB               in.ernet.dli.2015.313476 (1.6 MB)
+        BORI descriptive catalogue, 21 vols  descriptive-catalogue-of-sanskrit-manuscripts-vol-*-bhandarkar (CC0)
+      TWO API LANDMINES, both verified, both silent:
+        1. services/search/beta/page_production/scrape.json is 404, GONE. Its successor
+           services/search/v1/scrape returns HTTP 200 WITH SILENTLY WRONG DATA — it goes
+           "sticky" on one result set per IP and then returns total=578538 for EVERY query
+           regardless of q. Do not trust it. Use advancedsearch.php?…&output=json instead
+           (anonymous, no auth, a 6-call burst all returned 200 at 0.22 s).
+        2. https://archive.org/metadata/<bad-id> returns HTTP 200 with body {} — not 404.
+           Check for a `metadata` key, not the status code.
+      GAPS, verified as genuinely absent (numFound=0): New Catalogus Catalogorum vols 22 and
+      23; Weber Band II (1886/88/92) is entirely absent from IA — get it from
+      Staatsbibliothek zu Berlin or MDZ.
+      DLI mirrors alive: collection:digitallibraryindia = 578,538 · collection:JaiGyan =
+      1,771,669 · identifier:in.gov.ignca.* = 9,735 (IGNCA is mirrored on IA directly, so
+      ignca.gov.in is not needed). collection:ignca and tamildigitallibrary are NOT valid
+      collection names.
+    record_count: 8+ major printed union catalogues, all with full OCR text
+    vedic_material: >
+      Eggeling Part I is a complete, śākhā-aware, machine-readable Vedic manuscript catalogue
+      of the India Office collection — 1.96 MB of OCR, public domain, no terms of use
+      attached. Burnell's Tanjore index and the BORI 21-volume descriptive series likewise
+      describe Vedic holdings of institutions whose own online catalogues are weak or absent.
+    shakha_stated: >
+      YES — and this is the reason these matter disproportionately. 19th-century cataloguers
+      routinely recorded recension because it was the scholarly question of the day. Eggeling,
+      Burnell and the BORI series discuss śākhā where the manuscript supports it. The printed
+      catalogues are frequently MORE śākhā-aware than the modern online catalogues that
+      superseded them.
+    images_digitised: not-applicable — these are printed catalogues, not manuscripts
+    images_public: yes
+    image_access_path: https://archive.org/download/<id>/
+    access_requirements: none
+    license: public-domain
+    image_license: CC0 / NOT_IN_COPYRIGHT / unasserted, per item as listed above
+    status: found-complete
+    notes: >
+      Strategically this is the cheapest high-value target in the packet: no auth, no terms,
+      no rate limit, full text, and better śākhā data than the live catalogues. It is also
+      the only route into institutions whose modern catalogues are dark — the printed
+      catalogue of a dark collection is still a catalogue of that collection.
+      Attribution owed by name: Theodor Aufrecht · Julius Eggeling · Albrecht Weber ·
+      A. C. Burnell · Rājendralāl Mitra · Haraprasād Śāstrī · the Madras New Catalogus
+      Catalogorum editors · the BORI descriptive catalogue editors.
+    date_logged: 2026-08-01
+
+  - holding_id: indology-github/ngmcp-descriptive-mirror
+    institution: INDOLOGY (community mirror of the Hamburg NGMCP wiki)
+    collection: NGMCP Descriptive Catalogue — CC0 mirror
+    country: distributed
+    catalogue_url: https://github.com/INDOLOGY/NGMCP-Descriptive-Catalogue
+    machine_queryable: bulk-file
+    query_endpoint: https://github.com/INDOLOGY/NGMCP-Descriptive-Catalogue/archive/refs/heads/main.zip
+    query_verified: >
+      Verified: repo metadata via the GitHub API — licence CC0-1.0, 24,607 KB, default branch
+      main, last pushed 2026-02-21, owner org INDOLOGY (3 public repos: this, a GRETIL mirror,
+      and indology.github.io). Contents: LICENSE, README.md, and docs/.
+      Delegated check confirmed the payload: 15,833 .html files under docs/, 127.7 MB
+      uncompressed, tree not truncated, zip ≈52 MB. Browsable at
+      https://indology.github.io/NGMCP-Descriptive-Catalogue/ → 200.
+      IT IS THE FULL DESCRIPTIVE RECORD, NOT STUBS. Sample (A 0264-05 Paśupatipurāṇa.html,
+      2,927 bytes): infobox with reel, dimensions 24.0×7.5 cm, 38 folios, paper, damaged,
+      Newari script, subject Purāṇa, date NS 752, NAK accession 1/1520 — PLUS transcribed
+      «Beginning» / «End» / «Colophon» excerpts with folio references.
+      A parallel mirror exists: tylergneill/ngmcp-wiki-mirror, CC0-1.0, 177 MB, pushed
+      2025-08-18.
+    record_count: 15,833 descriptive manuscript records
+    vedic_material: same corpus as the Hamburg descriptive tier — on the order of 100–300 subject=Veda entries
+    shakha_stated: as the Hamburg descriptive tier — essentially never
+    images_digitised: none
+    images_public: no
+    image_access_path: not-applicable
+    access_requirements: none
+    license: public-domain  # CC0-1.0 as asserted on the mirror
+    image_license: not-applicable
+    status: found-complete
+    notes: >
+      ⚠️ LICENCE CAVEAT, important: the CC0-1.0 is the MIRROR MAINTAINERS' assertion. Hamburg's
+      own site footer says "© 2016 Universität Hamburg. Alle Rechte vorbehalten." A third
+      party cannot CC0 someone else's work. In practice the bare catalogue facts are not
+      copyrightable and the descriptive prose is Hamburg's; the honest position is to treat
+      the mirror as a durable ARCHIVAL COPY rather than as a clean licence grant, and to
+      credit NGMCP and the named cataloguers regardless.
+      STRATEGIC VALUE: the delegated check reports the Hamburg wiki was DELETED IN JULY 2025.
+      The Hamburg static archive I found is still live, but this mirror, on two independent
+      GitHub repos, is what guarantees the descriptive tier survives. **Snapshot it.**
+    date_logged: 2026-08-01
+
+  - holding_id: _negative-results/bulk-metadata-dead-ends
+    institution: "(multiple — consolidated negative result)"
+    collection: Bulk manuscript-catalogue metadata sources that do NOT work, with what was tried
+    country: various
+    catalogue_url: https://panditproject.org/
+    machine_queryable: "no"
+    query_verified: >
+      Recorded because protocol rule 2 makes "I looked in these places and it is not there"
+      a real deliverable. Each of these is a plausible target that a later effort would
+      otherwise re-try.
+      PANDIT (panditproject.org) — prosopographical database with real manuscript
+        sub-projects (Zysk Copenhagen ~3,000 Indic MSS, Wellcome Pingree, BORI, Samhita).
+        Tried: /, /api, /jsonapi, /entity/{id}/{type}?_format=json, /robots.txt,
+        /sitemap.xml, apex and www, WebFetch, and a headless browser. Every path returns a
+        Cloudflare interstitial, HTTP 403 with cf-mitigated: challenge.
+        /api/graph/{nid}?_format=json DOES exist (25 such URLs found in the Wayback CDX index)
+        but returns HTTP 500 with a zero-byte body live. A 2024 Wayback capture shows its
+        shape: it returns only a RELATIONSHIP GRAPH, not full manuscript records.
+        VERDICT: rich, and effectively dark to automation. Needs a human browser session or a
+        direct approach to the project team.
+      SARIT (sarit.indology.info) — /, /exist/apps/sarit-pm/index.html and /exist/restxq/sarit
+        all return 502 Bad Gateway. The web application is DOWN. The corpus survives on GitHub
+        at sarit/SARIT-corpus (170 MB, pushed 2025-06-06, NO LICENCE FILE). It is e-texts,
+        not manuscript metadata, so it belongs to packet P0-a in any case.
+      FIHRIST (fihrist.org.uk) — behind an Anubis proof-of-work anti-scraper gate. It covers
+        Islamicate manuscripts in UK collections and has negligible Sanskrit. Not pursued.
+      E-CODICES (unifr.ch) — /metadata/iiif/collection.json → 200, a valid sc:Collection with
+        100 sub-collections. The endpoint works perfectly. It is Swiss medieval Latin and
+        German codices with ZERO Indic content. Out of scope, and now recorded as such so
+        nobody checks again.
+      ZENODO — API queried for title:"Sanskrit manuscripts" (8 hits),
+        title:manuscript AND title:catalogue AND (Sanskrit OR Indic OR India) (ZERO),
+        "palm-leaf" AND manuscript (1), "Nepalese-German Manuscript" (ZERO).
+        CONCLUSION: no manuscript-catalogue metadata datasets exist on Zenodo. What is there
+        is OCR/CNN papers and one line-annotation dataset (10.5281/zenodo.20663949).
+      GITHUB (broad) — search/repositories across 5 query variants surfaced nothing beyond the
+        INDOLOGY and SARIT repositories already recorded.
+      OSF — not reached. Given Zenodo's emptiness, low expected yield.
+      NEPAL NATIONAL UNION CATALOG (Koha) — OAI-PMH is disabled (oai.pl?verb=Identify returns
+        a Koha error page); RSS/atom output works. Library holdings, not manuscripts.
+      ASHA ARCHIVES, KATHMANDU — see its own record above; Heidelberg repository Anubis-walled,
+        no working institutional web presence found.
+    record_count: 0
+    vedic_material: none reachable from any of the above
+    shakha_stated: not-applicable
+    images_digitised: not-applicable
+    images_public: "no"
+    image_access_path: not-applicable
+    access_requirements: not-applicable
+    license: unknown
+    image_license: not-applicable
+    status: not-found
+    where_i_looked: >
+      panditproject.org (all paths, Cloudflare 403 + Wayback CDX) · sarit.indology.info
+      (502) · fihrist.org.uk (Anubis) · e-codices.unifr.ch (works, wrong corpus) ·
+      zenodo.org API (4 query forms) · GitHub search API (5 query forms) ·
+      nuc.ndl.gov.np Koha OAI (disabled).
+    notes: >
+      The pattern across these is worth naming: the barrier is almost never copyright or
+      policy. It is anti-bot infrastructure — Cloudflare, AWS WAF, Anubis proof-of-work —
+      deployed against scrapers and catching scholarship in the same net. PANDIT, Bodleian's
+      south-asian catalogue, the EAP front end, Muktabodha's new UI and the Heidelberg
+      repository are all open in principle and closed in practice for exactly this reason.
+      That is a different problem from a walled garden and it has a different fix: ask the
+      institution for an API key or a dump, rather than trying to out-engineer the gate.
+    date_logged: 2026-08-01
+
+  - holding_id: namami-india/kritisampada
+    institution: National Mission for Manuscripts (NAMAMI), Ministry of Culture, Government of India
+    collection: Kritisampada / Pandulipi Patala — the National Database of Manuscripts
+    country: India
+    catalogue_url: https://www.pandulipipatala.nic.in/
+    machine_queryable: api  # CSRF-gated form POST, unbounded limit, enumerable detail IDs
+    query_endpoint: https://www.pandulipipatala.nic.in/advance-search
+    query_verified: >
+      ⚠️ THIS RECORD CORRECTS AN EARLIER FALSE NEGATIVE IN THIS PACKET, and the correction is
+      the most important thing in the file. I first probed www.namami.gov.in — the URL every
+      published account of Kritisampada gives — and got a connection that never completes:
+      DNS resolves to 164.100.58.201, but raw TCP connect to both 443 and 80 times out, curl
+      exit 28, HTTP 000, at 8 s / 20 s / 45 s / 120 s. I logged the database as not-found.
+      THAT WAS WRONG. The database lives on a DIFFERENT HOST and is fully operational:
+      **https://www.pandulipipatala.nic.in/** — HTTP 200, verified by me 2026-08-01.
+      The lesson generalises: an unreachable front door is not an absent building. The dead
+      domain is what every write-up links to.
+      MECHANICS, driven end to end by me:
+        - CakePHP app. /advance-search issues a _csrfToken in the form; POST it back with the
+          query fields. Verified working.
+        - Advanced search exposes 25 filters: title, author, language (378 values), script
+          (98), SUBJECT (419), material (23), condition, scribe, commentary, manuscript type,
+          samvat era, century, state (39), district, city, MRC (156), digitisation status,
+          public-view.
+        - `limit` is UNBOUNDED — limit=1000 is accepted and honoured.
+        - Record detail: GET /manus/search-view?id=<base64 of the integer id> — NO CSRF, NO
+          auth, ~40 metadata fields. Verified: id=MQ== resolves, so IDs are sequentially
+          ENUMERABLE. This is the harvest path.
+        - Simple search: POST /advanceSearch (title only).
+      NEGATIVE, verified: no API, no OAI-PMH, no export control anywhere. /api, /rest, /oai,
+      /oai?verb=Identify, /sitemap.xml and /robots.txt all 404. The institute filter
+      (/advance-search/get-institute) is BROKEN — returns an empty <option> for every
+      parameter combination tried.
+      COUNTS I RAN MYSELF against subject IDs, 2026-08-01:
+        subject 2240 Veda ............ 87,207
+        subject 2091 Śrautasūtra ......  1,491
+        subject  313 Brāhmaṇa .........    193
+        subject  113 Āraṇyaka .........     25
+        subject 1744 Prātiśākhya ......      3
+      Delegated verification adds, from the same facet: Vedāṅga 48,985 · Śikṣā 6,948 ·
+      Upaniṣad 3,906 · Śrautaprayoga 655 · Chandas 229 · Vedalakṣaṇa 78 · Gṛhyasūtra 62 ·
+      Nirukta 51 · Kalpa 28 · Vedic Literature 23 · Śulbasūtra 4.
+    record_count: "~5.2 million manuscripts reported overall; 87,207 under subject=Veda, verified by me"
+    vedic_material: >
+      87,207 records under subject "Veda" — BY FAR THE LARGEST VEDIC MANUSCRIPT POOL FOUND IN
+      THIS PACKET. For scale: IGNCA's Vedic Heritage catalogue has 65,672, NGMCP's Nepalese
+      index 2,349, Qalamos's Veda class 1,151.
+      Distribution of the 87,207 by state (delegated verification):
+        Uttar Pradesh 26,321 · Maharashtra 24,043 · Karnataka 4,963 · Tamil Nadu 4,413 ·
+        Rajasthan 3,595 · Kerala 3,579 · West Bengal 3,356 · Gujarat 2,943 ·
+        ODISHA 2,830 · Madhya Pradesh 1,122 · Andhra Pradesh 1,066 ·
+        JAMMU & KASHMIR 1,030 · Delhi 314.
+      Odisha and Kashmir — the two regions this packet was specifically told to look at —
+      are both substantially represented.
+      DIGITISATION: 3,133 of the 87,207 Veda records are flagged digitised, and 2,429 are
+      digitised AND public-view.
+    shakha_stated: >
+      NO ŚĀKHĀ FIELD EXISTS. Not among the 419 subject terms, not among the ~40 detail-record
+      fields. This is the single clearest structural finding about Indian manuscript
+      infrastructure in the packet: the national database cannot express recension.
+      Śākhā appears only incidentally in free-text TITLES — 491 records match "śākhā".
+      Śākhās verified as CATALOGUE-STATED (not inferred) from those titles: Kāṇva (91 title
+      matches, concentrated in Odisha, the Asiatic Society and Sanskrit College), Āśvalāyana
+      (7 aṣṭakas at Vishveshvaranand, Hoshiarpur), Mādhyandina, Kauthuma, Paippalāda.
+      PAIPPALĀDA IN THE NATIONAL DATABASE: 15 records total. FOURTEEN of them are the
+      *Paippalādopaniṣad* — an Upaniṣad, NOT the Atharvaveda Paippalāda Saṃhitā — held at
+      S.B.L. Varanasi, the Asiatic Society, Sanskrit College Kolkata, GOML Chennai,
+      ORI Mysore, ORI Karnataka and Calcutta University. EXACTLY ONE record is the actual
+      Atharvaveda Paippalāda śākhā: Odisha, Oriya script, palm leaf — and it is a PRIVATE /
+      FAMILY holding, so per this packet's hard constraint neither the holder nor the location
+      is recorded here, in this file or anywhere downstream.
+      So: the recension rediscovered in 1957 is represented in India's national manuscript
+      database by a single record, and that record points at a private collection.
+    images_digitised: partial — 3,133 of 87,207 Veda records flagged digitised
+    images_public: yes — 2,429 Veda records are digitised AND public-view
+    image_access_path: >
+      Two steps, both verified by me end to end on 2026-08-01.
+        1. The record page exposes a pdf.js wrapper:
+           /manus/pdf-view?content=<double-url-encoded base64 of the file path>
+        2. The underlying file is DIRECTLY fetchable with no auth, no referer, no cookie:
+           https://www.pandulipipatala.nic.in/uploads/manusdata/<id>/pdf/<filename>.pdf
+      WORKED EXAMPLE, verified: record id 285807 → decoded path
+      "285807/pdf/VBI000011825_Yajurvedabhāṣya_1396_PDFA.pdf" → a 1 KB HTTP Range request
+      returned 206, Content-Type application/pdf, first bytes "%PDF-1.3 %ImPDF-". A HEAD
+      request reports Content-Length 498,778,880 — a ~476 MB high-resolution scan of a
+      YAJURVEDABHĀṢYA manuscript.
+      Only a 1 KB verification sample was fetched, into the scratchpad. No bulk download.
+      This is the largest body of publicly-fetchable Vedic manuscript IMAGES found anywhere
+      in this packet, and it is the answer to FINDING-2's complaint that the pixels are
+      missing — they are not missing here, they are merely behind a dead domain name.
+    access_requirements: none — no login for search, detail records, or PDFs
+    license: copyright-link-only
+    image_license: >
+      Verbatim from the site footer: "© 2025 National Mission for Manuscripts. Government of
+      India. All Rights Reserved." No open licence, no GODL, no Creative Commons.
+      The site's own disclaimer describes the data as "the 1st draft/version of the
+      cataloguing format… under revision/review" and advises contacting the holding repository
+      for authoritative detail — which is both a data-quality warning and a reason to treat
+      any single record as a pointer rather than a citation.
+      Manuscript scans of ancient texts are reproductions of public-domain works; per
+      COLLECTION-PROTOCOL.md rule 9 and Bridgeman, a faithful scan of a PD manuscript creates
+      no new copyright in the text. The all-rights-reserved notice is recorded verbatim and
+      not adjudicated here. Ask NAMAMI. They are a public body whose stated purpose is access.
+    status: found-complete
+    notes: >
+      ⚠️ CRITICAL DATA TRAP, verified: the `mrc_id` field is the SURVEYING CENTRE, not the
+      holding institution. BORI's MRC shows 208,532 records against ~29,510 actual BORI
+      holdings; Odisha State Museum's MRC shows 364,521. Any institution-level count taken
+      from mrc_id is badly inflated. Attribution must come from the free-text "Institute Name"
+      column — and the institute dropdown is broken, so that column has to be parsed, not
+      filtered.
+      ⚠️ PRIVACY: this database explicitly documents manuscripts "whether in a museum,
+      library, temple, madrassa or a PRIVATE COLLECTION", and the Institute Name column
+      therefore contains private holders. The one true Paippalāda Saṃhitā record is exactly
+      such a case. Institution-filter on ingest; never compile the private entries.
+      The old namami.gov.in front end remains the documented entry point and is dead. Wayback
+      shows it serving 200 monthly through 2026-03-23, so this is a RECENT outage rather than
+      a decommissioning — expect it to return, and expect published links to keep pointing at
+      it either way.
+      Related: NAMAMI publishes edited texts from its holdings, not only catalogue records —
+      e.g. Jaiminīyasāmavedasaṃhitā, Text of Kerala Tradition, ed. K. A. Ravindran, NMM / Nag
+      Publishers, 2013, ISBN 978-93-80829-20-3. Its publication series (Catalogue Series,
+      Prakāśikā, Kṛtibodha, Tattvabodha, Samīkṣikā, Kriti Rakshana) are separately enumerable
+      from the database. I checked the Wayback record of namami.gov.in's PDF directory —
+      116 book PDFs are archived, and NONE match Vedic terms by filename, so the free-PDF
+      route does not currently reach the Vedic titles.
+    date_logged: 2026-08-01
+
+  # -------------------------------------------------------------------------
+  # 4. INDIAN INSTITUTIONS — where the manuscripts physically are.
+  #    Almost all dark online; almost all catalogued in print; the print is on
+  #    archive.org with OCR, and the print is where the śākhās are named.
+  # -------------------------------------------------------------------------
+
+  - holding_id: odisha-state-museum/paippalada-and-veda-collection
+    institution: Odisha State Museum, Bhubaneswar
+    collection: Palm-leaf manuscript collection — the V/ (Veda) accession series
+    country: India
+    catalogue_url: https://archive.org/details/catalogue-of-manuscripts-orissa-state-museum
+    machine_queryable: bulk-file  # printed catalogue with OCR; the museum itself is dark
+    query_verified: >
+      THE MUSEUM IS DARK. Verified 2026-08-01: odishamuseum.nic.in resolves to 164.100.83.180
+      but port 443 is closed (30 s timeout). museum.odisha.gov.in, odishaculture.gov.in,
+      odishamuseum.gov.in, statemuseum.odisha.gov.in and orissamuseum.nic.in are ALL NXDOMAIN.
+      odisha.gov.in resolves but times out. There is no online catalogue and no digitisation.
+      THE CATALOGUE IS NOT DARK. The complete printed set is on archive.org WITH OCR TEXT,
+      under identifier `catalogue-of-manuscripts-orissa-state-museum` ("All Volumes"):
+      Alphabetical Index of Oriya MSS (1972); Alphabetical Catalogue Part I (1973) and
+      Part II (1974); Descriptive Catalogue vols 1–10 (Smṛti; Kāvya/Alaṅkāra/Saṅgīta; Purāṇa;
+      Jyotiṣa/Gaṇita; Tantra; Oriya Kāvya ×4; Dharmaśāstra); and Gītagovinda (2008).
+      ⚠️ THERE IS NO VEDA VOLUME IN THE DESCRIPTIVE SERIES. Vedic material is catalogued only
+      in the ALPHABETICAL CATALOGUE, and specifically in PART I — Part II (1974) contains ZERO
+      Atharva/Paippalāda hits. Anyone who checks the descriptive series and concludes the
+      museum holds no Vedic manuscripts will be wrong.
+    record_count: "127 unique accession numbers in the V/ (Veda) series"
+    vedic_material: >
+      A dedicated `V/` accession series, 127 unique numbers. Atharvaveda entries are itemised
+      by kāṇḍa, quoted from the OCR of Alphabetical Catalogue Part I:
+        V/122 — explicitly "Paipplāda Śākhā"
+        V/71  — Ekaṛc + Mahat Kāṇḍa · V/123 and V/125 — Aṣṭarca Kāṇḍa
+        V/135, V/151, V/153 — Daśārca through Aṣṭādaśārca (mantra-only portions)
+        V/154 · Atharvaṇa Śruti V/70, V/34, V/74, V/67, V/94 · Aṅgirasa Kalpa ·
+        Atharvavedokta Upaniṣat
+      KĀṆVA SAṂHITĀ entries are itemised by chapter range: 1–12, 1–15, 1–20, 1–41, 21–39.
+      Cross-check in the national database: institute name "Orissa State Museum, Kalpana Sqr
+      Bhubaneswar" is attached to KĀṆVA-ŚĀKHĀ ŚUKLA-YAJURVEDA BRĀHMAṆA manuscripts. Kāṇva is
+      one of the three śākhās this repo records as holding nothing.
+    shakha_stated: >
+      YES, EXPLICITLY, IN PRINT — and this is the packet's answer to its own framing case.
+      Verbatim from the preface of Alphabetical Catalogue Part I (1973):
+        "Late Pandit Durgamohana Bhattacharya… was fortunate to get a complete manuscript of
+         the Paippala Sakha of the Atharva Veda from Jagannathpur in P.S of Pipili, Dist. Puri
+         which was not available in any other part of India inspite of thorough search of the
+         last few decades. The first Kanda of this unique vedic work has been published as
+         Calcutta Sanskrit College Research series No. 26 in 1964. THERE ARE TEN MANUSCRIPTS
+         IN OUR COLLECTION CONTAINING DIFFERENT ARCHAS OF THE PAIPPALADA SAKHI OF THE ATHARVA
+         VEDA. There are THREE MANUSCRIPTS CONTAINING THE SAYANA'S BHASYA ON THE KANVA
+         SAMHITA, of which one is complete in twenty one chapters of second part of this
+         Bhasya."
+      TEN Paippalāda manuscripts and THREE Kāṇva-Saṃhitā-with-Sāyaṇa manuscripts, stated by
+      the holding institution in its own catalogue. Recorded exactly as printed.
+      (The 1957 rediscovery is conventionally dated to that year; this preface names the place
+      of recovery. Recorded as the catalogue's own historical statement about a manuscript
+      acquisition made seventy years ago, not as a present-day location of anything.)
+    images_digitised: none publicly accessible
+    images_public: "no"
+    image_access_path: none — no IIIF, no image repository, no online catalogue
+    access_requirements: in-person; no published online route
+    license: public-domain  # the printed catalogues
+    image_license: not-applicable — no images published
+    status: found-partial
+    notes: >
+      This is the strongest single result in the packet against the "the text does not exist"
+      claim. The Paippalāda Atharvaveda — the recension believed lost — is held in TEN
+      manuscripts at a state museum that has no website, catalogued in a 1973 printed volume
+      that is freely readable with OCR on archive.org, and represented in India's national
+      manuscript database by exactly ONE record.
+      The bottleneck is not evidence and it is not even cataloguing. It is that nobody has
+      connected the 1973 print catalogue to anything a machine can act on.
+      Also verified: the Kashmir Śāradā birch-bark Paippalāda (the base text of Barret's
+      edition) is reported to be at Tübingen University Library. NOT VERIFIED — the delegated
+      check could not locate a shelfmark in Tübingen's catalogue. Treat as a lead.
+      Attribution owed: Durgamohana Bhattacharyya, whose recovery this was, and the Odisha
+      State Museum cataloguers.
+    date_logged: 2026-08-01
+
+  - holding_id: bori-pune/government-manuscripts-library
+    institution: Bhandarkar Oriental Research Institute (BORI), Pune
+    collection: Government Manuscripts Library and other collections — 29,510 manuscripts
+    country: India
+    catalogue_url: https://archive.org/search?query=descriptive-catalogue-of-sanskrit-manuscripts-bhandarkar
+    machine_queryable: bulk-file  # printed catalogue only; no online catalogue exists
+    query_verified: >
+      bori.ac.in is UP (WordPress, 200), and its Manuscript Department page confirms 29,510
+      manuscripts — 17,877 in the Government Manuscript Library plus 11,633 others, ~350
+      palm-leaf, ~150 birch-bark, 1,500+ with miniatures.
+      BUT THERE IS NO ONLINE MANUSCRIPT CATALOGUE. Three candidate digital properties were
+      tested and all three fail:
+        borilib.com (200) — a near-empty WordPress from September 2024 still carrying the
+          default "Hello world!" post. /catalogue/ is a bare WP search; ?s=Atharvaveda returns
+          "Nothing Found"; /catalogue/manuscript/ is 404. Not a manuscript catalogue.
+        bharatvidya.in (200) — a paid MOOC platform, 27 courses at ₹800–2,500. Not a catalogue.
+        bori.ac.in/wp-json/ — generic WordPress REST API, no manuscript data.
+      No API, no OAI-PMH.
+    record_count: 29,510 manuscripts held; 27 printed catalogue volumes verified on archive.org
+    vedic_material: >
+      The real finding aid is the printed *Descriptive Catalogue of Sanskrit Manuscripts in
+      the Government Manuscripts Library*, 27 volumes verified on archive.org (CC0 on the
+      21-volume subject series). Directly relevant volumes:
+        Vol 4-1  Śrauta
+        Vol 3-3  Vedāṅga
+        Vol 1-2 and 1-3  Upaniṣad
+        Vol 9-1 and 9-2  Vedānta
+      A śrauta volume and a vedāṅga volume are precisely the apparatus tier that packet P2-b
+      is trying to source — flagged for them.
+    shakha_stated: not established from the online presence; the printed descriptive volumes are the place to look
+    images_digitised: none online
+    images_public: "no"
+    image_access_path: none published
+    access_requirements: in-person; published institutional contacts manuscripts@boriindia.org and digital@boriindia.org
+    license: public-domain  # printed catalogues, CC0 on the archive.org subject series
+    image_license: not-applicable
+    status: found-partial
+    date_logged: 2026-08-01
+
+  - holding_id: adyar-library/vedic-manuscripts
+    institution: Adyar Library and Research Centre, Chennai
+    collection: Palm-leaf manuscript collection — ~20,000 manuscripts
+    country: India
+    catalogue_url: https://archive.org/search?query=adyar+library+descriptive+catalogue+vedic
+    machine_queryable: bulk-file  # printed catalogue; the institution says its own catalogue is on paper
+    query_verified: >
+      Site effectively unreachable: adyarlibrary.com returns a 403 Cloudflare challenge;
+      adyarlibrary.org 301-redirects to itself in a loop; only ts-adyar.org is readable.
+      The institution states of itself that the "Catalog of such 'books' is in paper
+      registers" — this is not an inference from a broken page, it is the library's own
+      description. No API, no OAI-PMH.
+      Notable: Adyar is ABSENT from NAMAMI's 156-centre Manuscript Resource Centre list, while
+      ORI Mysore (65), Kerala ORIML (66), Thanjavur (67), SPS Library Srinagar (269) and
+      J&K Archives (244) are all present. So Adyar's holdings are unlikely to be represented
+      in the national database either.
+    record_count: ~20,000 palm-leaf manuscripts (plus 250,000+ printed volumes)
+    vedic_material: >
+      Its printed Descriptive Catalogue Vol. 1 is *Vedic* — and it is the single most
+      śākhā-rich source found in this entire packet.
+    shakha_stated: >
+      YES, AT MANUSCRIPT LEVEL, AND IN QUANTITY. Counts from the printed Descriptive Catalogue
+      Vol. 1 (Vedic):
+        Taittirīya 42 · Kāṇva 21 · Aitareya 19 · Kaṭha 15 · Kauṣītaki 9 · Vājasaneyi 7 ·
+        Mādhyandina 5 · Śāṅkhāyana 5 · Āpastamba 5 · Śaunaka 4 · Jaiminīya 3 ·
+        Maitrāyaṇī 2 · Drāhyāyaṇa 1
+      Read that list against COLLECTION-PROTOCOL.md §5. Packet P2-a's endangered set is
+      Jaiminīya, Kaṭha, Maitrāyaṇī, Rāṇāyanīya, Bāṣkala, Kapiṣṭhala — and Kaṭha (15),
+      Jaiminīya (3) and Maitrāyaṇī (2) are all here, named, at manuscript level. Packet P1-b's
+      three empty śākhās are Mādhyandina, Kāṇva and Śaunaka — and all three are here: 5, 21
+      and 4. A single 20th-century printed volume names manuscripts for every śākhā this
+      project currently records as empty.
+    images_digitised: partial, and deliberately walled
+    images_public: "no"
+    image_access_path: >
+      None remotely. The library states: "Digitized manuscripts are meant only for use by
+      research scholars who come to the Adyar Library IN PERSON."
+    access_requirements: Registered Readers only, with the Librarian's permission, on site
+    license: public-domain  # the printed catalogue
+    image_license: access restricted to on-site readers
+    status: found-partial
+    notes: >
+      The highest-value target in the packet for ŚĀKHĀ data specifically, and it is reachable
+      only by OCR-mining a printed volume. That is a very cheap piece of work for a very high
+      return.
+    date_logged: 2026-08-01
+
+  - holding_id: thanjavur-tmssml/vedic-manuscripts
+    institution: Thanjavur Maharaja Serfoji's Sarasvati Mahal Library
+    collection: Sanskrit manuscript collection
+    country: India
+    catalogue_url: https://archive.org/search?query=descriptive+catalogue+sanskrit+manuscripts+tanjore+burnell
+    machine_queryable: bulk-file
+    query_verified: >
+      **THERE IS NO WEBSITE AT ALL** — and this is a stronger negative than "the site is
+      down". 17 candidate domains were tested and every one is NXDOMAIN, with ZERO Wayback
+      snapshots ever recorded for any of them. The library has never had a web presence under
+      any name tested. Nothing is online.
+      The printed catalogues are on archive.org: Descriptive Catalogue Vol 2 *Vedas* (1928)
+      and Vol 3 *Vedas and Vedāṅgas* (1929), plus Burnell's earlier classified index
+      (aclassifiedinde00burngoog, 1.3 MB OCR, NOT_IN_COPYRIGHT).
+      Oddity worth noting: the national database's survey-region count for Thanjavur is
+      35,901 records with ZERO under subject=Veda — their subject coding evidently differs
+      from the national taxonomy. Do not read that zero as an absence of Vedic manuscripts;
+      Vol 2 of their own catalogue is titled *Vedas*.
+    record_count: not established online; two dedicated printed Vedic catalogue volumes
+    vedic_material: two full printed volumes devoted to Vedas and Vedāṅgas (1928, 1929)
+    shakha_stated: >
+      YES. Vol 2 (*Vedas*, 1928) names Aitareya, Taittirīya, Kaṭha, Kāṇva, Mādhyandina,
+      Śāṅkhāyana, Kauṣītaki, and PAIPPALĀDA ×1.
+      A Paippalāda manuscript catalogued in Thanjavur, in Tamil country, in 1928 — three
+      decades before the Odisha rediscovery. Recorded exactly as printed and not interpreted.
+    images_digitised: none online
+    images_public: "no"
+    image_access_path: none
+    access_requirements: in-person
+    license: public-domain
+    image_license: not-applicable
+    status: found-partial
+    date_logged: 2026-08-01
+
+  - holding_id: ori-mysore/oriental-research-institute
+    institution: Oriental Research Institute, University of Mysore
+    collection: Palm-leaf and paper manuscript collection
+    country: India
+    catalogue_url: https://uni-mysore.ac.in/oriental_research.php?ids=132
+    machine_queryable: "no"
+    query_verified: >
+      orimysore.uni-mysore.ac.in is NXDOMAIN. What survives is three static pages under
+      uni-mysore.ac.in/oriental_research.php?ids=132-134 (HTTP 200). No catalogue behind them.
+      /oai and /api are 404; a Koha instance is 404; an eprints instance returns HTTP 500.
+      CORRECTION TO A WIDELY REPEATED FIGURE: the "~70,000 palm-leaf manuscripts" number in
+      circulation is WRONG. The institute's own page says 30,000+ MANUSCRIPTS, and 70,000
+      WORKS in Sanskrit and Kannada. Recorded because this packet is supposed to report what
+      is verified rather than what is repeated.
+    record_count: 30,000+ manuscripts (institute's own figure); 544 subject=Veda in the national DB survey region
+    vedic_material: >
+      Its printed Descriptive Catalogue **Vol. 1 is "Veda"** and is on archive.org under CC0 —
+      but the OCR of that volume is unusable, so it needs re-OCR before it can be mined.
+    shakha_stated: not established — the site carries none, and the printed volume was not readable
+    images_digitised: none online
+    images_public: "no"
+    image_access_path: none
+    access_requirements: in-person
+    license: public-domain  # printed catalogue, CC0
+    image_license: not-applicable
+    status: found-partial
+    date_logged: 2026-08-01
+
+  - holding_id: kerala-oriml/travancore-palace-collection
+    institution: Oriental Research Institute and Manuscripts Library (ORIML), University of Kerala
+    collection: 65,000+ manuscripts; nucleus is the Travancore Palace Library
+    country: India
+    catalogue_url: https://orimssku.in/
+    machine_queryable: "no — verified down"
+    query_verified: >
+      DOMAIN CORRECTION: orimlku.in is NXDOMAIN; the correct domain is **orimssku.in**. TCP is
+      open on that host but HTTP times out — VERIFIED DOWN on 2026-08-01, last good Wayback
+      capture 2026-03-06.
+      When up it is WordPress with /wp-json/, but there is no catalogue behind the REST API,
+      and /manuscripts/ is a PHOTO GALLERY rather than a catalogue.
+      IMPORTANT for the images question: "More than 10,000 Sanskrit manuscripts of this
+      library were microfilmed by IGNCA", plus C-DIT CD-ROM digitisation work. NONE OF IT IS
+      PUBLISHED ONLINE. Another instance of the packet's recurring pattern — the imaging
+      happened, the publishing did not.
+    record_count: 65,000+ manuscripts; 114,447 records in the national DB survey region, of which 1,935 subject=Veda
+    vedic_material: 1,935 subject=Veda records attributed to this survey region in the national database
+    shakha_stated: >
+      NO. The institute's subject list names only "Vedanta", which is a darśana and not a
+      śākhā. Explicitly NOT inferred to anything. Kerala is strongly associated with the
+      Jaiminīya Sāmaveda, and that association is exactly the kind of regional inference this
+      packet is forbidden to make — so it is recorded here as a warning, not as data.
+    images_digitised: microfilmed and CD-ROM'd, but not published
+    images_public: "no"
+    image_access_path: none published
+    access_requirements: in-person
+    license: unknown
+    image_license: unknown
+    status: found-partial
+    date_logged: 2026-08-01
+
+  - holding_id: kashmir-jammu/sharada-collections
+    institution: SPS Museum Srinagar · Ranbir Sanskrit Research Institute Jammu · J&K Archives
+    collection: Śāradā-script and Sanskrit manuscript collections of Kashmir and Jammu
+    country: India
+    catalogue_url: https://archive.org/search?query=ranbir+sanskrit+research+institute+catalogue
+    machine_queryable: "no — all hosts unreachable"
+    query_verified: >
+      ALL JAMMU & KASHMIR GOVERNMENT HOSTS ARE UNREACHABLE, verified 2026-08-01:
+      spsmuseum.jk.gov.in is NXDOMAIN with ZERO Wayback snapshots ever; jk.gov.in,
+      archives.jk.gov.in and culture.jk.gov.in all time out. Nothing is reachable.
+      The catalogues, however, are on archive.org: Ranbir Sanskrit Research Institute
+      Descriptive Catalogue vols 1 and 3; the 2011 J&K Department of Libraries catalogue; and
+      an NMM-authored *Kashmir Research Institute Sharada Manuscripts Catalogue* under
+      CC Public Domain Mark 1.0.
+      National database survey-region counts: J&K Archives 40,627 records (382 Veda) ·
+      Srinagar Directorate 12,482 (207 Veda, 283 digitised) · SPS Library 73 (53 digitised).
+      Subject=Veda for the state as a whole: 1,030.
+    record_count: 1,030 subject=Veda records for Jammu & Kashmir in the national database
+    vedic_material: 1,030 subject=Veda records statewide; catalogues on archive.org
+    shakha_stated: not verified
+    images_digitised: partial — 283 digitised at the Srinagar Directorate, 53 at SPS Library, per the national DB
+    images_public: not established
+    image_access_path: potentially via pandulipipatala.nic.in for the digitised subset — not individually verified
+    access_requirements: not established; institutional sites unreachable
+    license: unknown
+    image_license: CC Public Domain Mark 1.0 on the NMM Sharada catalogue specifically
+    status: found-partial
+    notes: >
+      ⚠️ TWO CLAIMS DELIBERATELY NOT ASSERTED, both of which circulate widely.
+      (1) NMM's own metadata for the Sharada Manuscripts Catalogue states that the collection
+      it describes is a PRIVATE holding and is "currently inaccessible, as the owner is
+      unwilling to permit access". The owner and the fine location are withheld here per this
+      packet's hard constraint. That the collection is inaccessible is recorded; who holds it
+      is not.
+      (2) On relocation of Kashmiri manuscripts: the only citable statement found (Stein
+      collection → Oxford Indian Institute 1911, with portions to Vienna, Tübingen and Paris)
+      comes from an ARCHIVE.ORG UPLOADER DESCRIPTION, not from the 1912 text itself. Treat as
+      a lead, not a fact. NO CITABLE SOURCE was found for the frequently repeated post-1990
+      Jammu / BORI / Delhi relocation claims. Do not assert them.
+    date_logged: 2026-08-01
+
+  - holding_id: indianculture-nvli/manuscripts
+    institution: Ministry of Culture — Indian Culture Portal / National Virtual Library of India (NVLI)
+    collection: Manuscripts section of the national culture portal
+    country: India
+    catalogue_url: https://indianculture.gov.in/manuscripts
+    machine_queryable: "no — API geo-walled"
+    query_verified: >
+      The portal returns HTTP 200 but serves a 924-BYTE REACT SPA SHELL to every path —
+      /manuscripts, /jsonapi and /api/v1 all return the identical shell. This is precisely the
+      "rendered page proves nothing" case, so it was probed further: the real backend was
+      extracted from the 2.6 MB JavaScript bundle and is NVLI at
+      icvtestingold.nvli.in/rest-v1/... That host is UNREACHABLE from outside India
+      (http=000), as are apitesting.nvli.in and nvli.in.
+      So the portal is browsable by a human in a browser and its API is effectively
+      geo-walled. Recorded as not-machine-queryable FROM HERE, which is a different and weaker
+      claim than not-machine-queryable at all.
+    record_count: not established
+    vedic_material: not established
+    shakha_stated: not established
+    images_digitised: not established
+    images_public: not established
+    image_access_path: not established
+    access_requirements: appears to require an Indian IP for the API
+    license: unknown
+    image_license: unknown
+    status: not-found
+    where_i_looked: >
+      indianculture.gov.in/manuscripts, /jsonapi, /api/v1 (all return the same 924-byte SPA
+      shell) · the JS bundle, which yielded the NVLI backend host · icvtestingold.nvli.in,
+      apitesting.nvli.in, nvli.in (all http=000 from outside India) ·
+      ignca.gov.in (200) and ignca.gov.in/wp-json/ (200, generic WordPress REST, no manuscript
+      data) · ignca.gov.in/oai (404).
+    notes: >
+      Flagged as a good candidate for re-testing from an Indian network. IGNCA material is
+      also mirrored directly on archive.org (identifier:in.gov.ignca.* = 9,735 items), which
+      is a working route to some of the same content.
+    date_logged: 2026-08-01

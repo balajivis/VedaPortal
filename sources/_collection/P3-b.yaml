@@ -1,0 +1,2460 @@
+# P3-b — The Ṛgveda's prose layers: Brāhmaṇas and Āraṇyakas
+#
+# Packet scope: the FOUR surviving prose texts of the Ṛgveda as TEXTS —
+#   Aitareya Brāhmaṇa · Kauṣītaki (Śāṅkhāyana) Brāhmaṇa ·
+#   Aitareya Āraṇyaka  · Śāṅkhāyana (Kauṣītaki) Āraṇyaka
+# plus the exact embedding loci of the two Upaniṣads that live inside the Āraṇyakas.
+#
+# NOT in scope (owned elsewhere, do not merge from here):
+#   P2-b — apparatus tier (Prātiśākhya, Kalpa/Śrauta-sūtra, Nirukta) AND the Sāyaṇa
+#          coverage map across the corpus. Where P2-b maps *whether* a Sāyaṇa bhāṣya
+#          exists, this packet sources the base texts and records Sāyaṇa editions only
+#          as carriers of the mūla text.
+#   P2-c — manuscript catalogues.   P3-a — Mīmāṃsā.
+#
+# ---------------------------------------------------------------------------
+# SCHEMA EXTENSION — documented once, per COLLECTION-PROTOCOL.md §1
+# ---------------------------------------------------------------------------
+# The protocol keys a record on `node_path` (śākhā → layer). That key is not unique
+# here, because the Ṛgveda's brāhmaṇa layer holds TWO independent texts and its
+# āraṇyaka layer holds two more. Records in this packet are therefore keyed on the
+# composite
+#         node_path + text
+# where `text` is one of: aitareya-brahmana | kaushitaki-brahmana |
+# aitareya-aranyaka | shankhayana-aranyaka.
+#
+# A directory decision is implied and is NOT taken here (rule 8):
+# whether `brahmana/` should gain `aitareya/` and `kaushitaki/` subdirectories, and
+# `aranyaka/` gain `aitareya/` and `shankhayana/`. Because the filesystem path is the
+# Prisma join key, that is a merge-pass decision by one hand. See
+# open_questions_for_merge below. All `node_path` values written here are the
+# CURRENT paths, which exist on disk today.
+#
+# Every other protocol field is carried through unchanged. `svara_verified?` is BV's
+# field and is absent from this file entirely, per the hand-off seam.
+# ===========================================================================
+
+summary:
+  date: 2026-08-01
+  packet: P3-b
+  collector: agent
+
+  headline: >
+    All four texts are obtainable, and three of the four are obtainable COMPLETE and
+    machine-readable today. The Aitareya Brāhmaṇa exists twice over — complete
+    transliterated (TITUS, from Aufrecht 1879, 285 addressable units) and complete
+    Devanāgarī (Sanskrit Wikisource, 8 pañcikās) — and the two witnesses agree on
+    structure to the khaṇḍa. The Aitareya Āraṇyaka exists complete twice over as well
+    (TITUS/Doyama from Keith 1909, carrying Keith's page and line numbers; and
+    Sanskrit Wikisource Devanāgarī). The Kauṣītaki Brāhmaṇa exists complete once
+    (GRETIL/Tokunaga, 30 adhyāyas, 271 khaṇḍas) and the Śāṅkhāyana Āraṇyaka complete
+    once (GRETIL/Kümmel, 15 adhyāyas, 146 khaṇḍas) — both transliterated, both
+    single-witness, both resting on modern editions with real editorial judgement in
+    them. **The prose is not accented anywhere.** The only svara marks that exist in
+    this entire body of material are in the *mantra* material embedded in Aitareya
+    Āraṇyaka books 4 and 5 — 92 udātta and 1 svarita mark, all of them in the last
+    four files of the TITUS text, none anywhere else in ~940,000 characters sampled.
+    Keith says why: the Aitareya Brāhmaṇa "originally was duly accented, but the
+    accents have not been preserved by the tradition." Haug, in 1863, reports hearing
+    it — the Aitareya recited "quite monotonously, whilst the Brahmanas of the Yajurveda
+    are recited with the proper accents." **The Ṛgvedic Brāhmaṇa svara is not
+    undigitised. It is extinct.** Two things survive it and both are recorded below: an
+    accented Aitareya *Upaniṣad* — prose, 329 svara marks, at exactly the section that
+    went on being recited — and 268 khaṇḍa-by-khaṇḍa recitation files of the Kauṣītaki
+    Brāhmaṇa on a government server, embedded in modals where no search engine will
+    find them.
+
+  the_five_open_questions_this_packet_was_given:
+    1_citation_convention: "RESOLVED. Two systems, not three; the three example citations all point at the same passage. Recommendation: store pañcikā.adhyāya.khaṇḍa, display pañcikā.khaṇḍa. Full concordance table below."
+    2_khanda_count_285_or_235: "RESOLVED, and the error is explained. 285, on four independent witnesses. 235 is a PAGE NUMBER — the running head of Aufrecht's last text page reads 'Adhyāya 40, 5.   235'."
+    3_vedic_heritage_arithmetic: "CONFIRMED, verbatim, and it is not the only error on that portal — its Kauṣītaki khaṇḍa figure (226) matches no witness either. Two independent structural errors."
+    4_kaushitaki_shakha: "NOT RESOLVED, correctly. Reported: the Indian print tradition puts it in Bāṣkala on a title page; the critical literature (Keith, Witzel) does not, and treats Kauṣītaka as a sub-school paired with Paiṅgya. Recommended wording supplied. Tier: multi_traditional."
+    5_aranyaka_partition: "VERIFIED against Keith 1909. Books I–III core, IV and V appendices. **Book IV = Āśvalāyana, Book V = Śaunaka — not the reverse**, which is the common error (Oldenberg's, which Keith argues down). Keith also denies Mahidāsa's authorship of I–III."
+
+  the_three_things_that_will_bite_downstream:
+    - "**The Kauṣītaki khaṇḍa numbers do not align between our Sanskrit and our English.** GRETIL follows Sarma's Kerala recension (272 khaṇḍas); Keith translates Lindner's vulgate (276). Only five khaṇḍas are genuinely absent; the rest is re-bracketing, and it starts at adhyāya 3. Ganga Sagar Rai 1987 prints the concordance table that fixes this. Until it is transcribed, the KB node cannot honestly reach `structured`."
+    - "**Aitareya Āraṇyaka II.5 and II.6 have no khaṇḍas.** Keith says so explicitly. A schema that requires uniform three-level depth will invent a '.1' at exactly the locus of the Aitareya Upaniṣad — the most-cited passage in the whole packet. Sanskrit Wikisource already does this."
+    - "**AiĀ book 3 never uses the words *pada* or *krama*.** It uses nirbhuja / pratṛṇṇa / ubhayam-antareṇa. Any lexical search for the recitation doctrine will return nothing and look like absence. It is the earliest surviving statement of that doctrine — Keith dates it c. 6th c. BCE, earlier than Yāska and the Prātiśākhyas."
+
+  what_is_obtainable_per_text:
+
+    aitareya_brahmana:
+      status: found-complete, twice, independently
+      forms:
+        - "TITUS (Aufrecht, Bonn 1879) — 285 addressable HTML units ab001–ab285,
+           romanised, unaccented, structurally labelled by pañcikā and adhyāya.
+           Complete: verified by walking every unit and confirming ab286 does not exist."
+        - "Sanskrit Wikisource — complete Devanāgarī Unicode, 8 pañcikā pages,
+           ~410 kB, unaccented (1 stray U+0951 in pañcikā 6 = noise). Derived, per its
+           own provenance note, from Peter Freund's HTML files — i.e. from Muktabodha."
+      print: >
+        Haug 1863 (text vol. I + translation vol. II), Aufrecht 1879 (the critical text,
+        romanised), Keith HOS 25 1920 (translation), and **Sāyaṇa's Vedārthaprakāśa
+        complete across two editions** — Ānandāśrama 32 for pañcikās 1–4 and Sāmaśramī's
+        Bibliotheca Indica for the rest. All public domain, all located.
+      missing: >
+        No accented text — none exists (see accents_in_the_prose_layers). No
+        machine-readable Sāyaṇa: the bhāṣya is available only as scans with poor
+        Devanāgarī-only OCR.
+
+    kaushitaki_brahmana:
+      status: found-complete, once
+      forms:
+        - "GRETIL, TEI-P5 + plaintext, entered by Muneo Tokunaga 1995 from
+           E. R. Sreekrishna Sarma, Wiesbaden 1968. 30 adhyāyas, 271 khaṇḍas, no gaps.
+           Romanised, unaccented. Header states verbatim: '[The text is not proofread.]'"
+      caveats: >
+        Single witness, and it is a normalised one — Tokunaga notes that preverbs are
+        partly united with main verbs for word-search convenience, so the token stream
+        is not the printed token stream. Sarma 1968 is a genuine critical edition and
+        is the protocol's flagged edge case (rule 9, final clause) — flagged, not adjudicated.
+      print: >
+        Lindner 1887 (the vulgate critical text, 276 khaṇḍas — text only, the promised
+        second volume never appeared), Ānandāśrama 65 (1911, Keith: "of no value
+        whatever"), Keith HOS 25 1920 (translation, from Lindner), Sarma 1968 with
+        **Udaya's** commentary (in copyright — link only), and Ganga Sagar Rai 1987
+        (Sanskrit + Hindi, and it prints the Lindner↔Sarma concordance).
+        **No Sāyaṇa. Sāyaṇa never commented on the Kauṣītaki** — the commentators are
+        Vināyaka Bhaṭṭa (vulgate, never published in full) and Udaya (Kerala, printed).
+      missing: >
+        No Devanāgarī DIGITAL text anywhere — not Wikisource in any language, not TITUS,
+        not sanskritdocuments. And the printed and digital khaṇḍa divisions do not agree
+        (see structures_verified).
+
+    aitareya_aranyaka:
+      status: found-complete, twice, independently
+      forms:
+        - "TITUS (Eijiro Doyama, Osaka 2017, from Keith, Oxford 1909) — 18 units,
+           aa001–aa018, romanised. Carries Keith's PAGE and LINE numbers inline plus
+           manuscript variants and Keith's own conjectures. This is the highest-value
+           single artefact in the packet: it joins the e-text to the print edition
+           mechanically. Books 4 and 5 are ACCENTED."
+        - "Sanskrit Wikisource — complete Devanāgarī, all 5 āraṇyakas on one page
+           (~89 kB) with duplicate sub-pages. Unaccented throughout — it drops the
+           accents Keith prints in books 4–5."
+      print: >
+        Keith 1909 — **Sanskrit text AND translation AND apparatus criticus in one
+        volume**, plus the editio princeps of Śāṅkhāyana Āraṇyaka VII–XV as an appendix
+        with an AiĀ↔ŚĀ concordance. And **Sāyaṇa on all five āraṇyakas, printed twice**:
+        Rājendralāla Mitra, Bibl. Ind. 1876, and Ānandāśrama 38, 1898. For Āraṇyakas I,
+        IV and V, Sāyaṇa is the ONLY commentary that exists — Śaṅkara never touched them.
+      missing: >
+        No accented Devanāgarī of any use. No machine-readable Sāyaṇa. And the khaṇḍa
+        total is unresolved across editions — see
+        unresolved_discrepancy_aitareya_aranyaka_khanda_total.
+
+    shankhayana_aranyaka:
+      status: found-complete, once
+      forms:
+        - "GRETIL, TEI-P5 + plaintext, entered by Martin Joachim Kümmel from
+           Bhim Dev, Hoshiarpur 1980 (Vishveshvarand Indological Series 70) for
+           adhyāyas 1–6 and 9–15, and from the appendix to Keith's Aitareya Āraṇyaka
+           (Oxford 1909, pp. 305–328) for adhyāyas 7–15. 15 adhyāyas, 146 khaṇḍas,
+           ends with the vaṃśa and 'iti śāṅkhāyanāraṇyakaṃ samāptam'. Unaccented."
+      caveats: "Kümmel asserts '(c) this edition M. J. Kümmel 13/01/2015' over the e-text."
+      print: >
+        Keith 1908 (translation only, all 15 adhyāyas — but composited over three
+        different Sanskrit base texts). Sanskrit: adhyāyas vii–xv in Keith's 1909 AiĀ
+        appendix (PD); iii–vi in Cowell, Bibl. Ind. 1861 (PD, with Śaṅkarānanda);
+        **i–ii, the Mahāvrata, only in Friedländer, Berlin 1900, which I could not
+        locate, or in Bhim Dev 1980, which is modern.**
+      missing: >
+        No Devanāgarī digital text. Not on TITUS. Not on Wikisource. **No commentary at
+        all on i–ii or vii–xv** — Śaṅkarānanda covers only the Upaniṣad in iii–vi.
+        This is the least-supported of the four texts.
+
+  # -------------------------------------------------------------------------
+  # THE CITATION CONVENTION — the finding this packet was mainly for
+  # -------------------------------------------------------------------------
+  citation_convention:
+    the_problem_as_posed: >
+      The project's notes record the same Aitareya Brāhmaṇa passage cited as VIII.21,
+      as 8.23, and as 8.4.7–9, and infer three incompatible conventions.
+
+    what_is_actually_true: >
+      The three citations are not in conflict and they are not three conventions.
+      They are TWO conventions, and the first two citations are the first and last
+      khaṇḍa of the span the third names in full. Verified mechanically:
+      TITUS units 278, 279, 280 — which are pañcikā 8, khaṇḍas 21, 22, 23, and
+      simultaneously adhyāya 39 (= 4th adhyāya of pañcikā 8), khaṇḍas 7, 8, 9 —
+      carry the aindra mahābhiṣeka king-list: 'etena ha vā aindreṇa mahābhiṣekeṇa
+      Turaḥ Kāvaṣeyo Janamejayam Pārikṣitam abhiṣiṣeca' (278), Udamaya Ātreya and
+      Aṅga (279), 'Dīrghatamā Māmateyo Bharataṃ Dauḥṣantim abhiṣiṣeca' (280).
+      So VIII.21 = the first of them, 8.23 = the last of them, 8.4.7–9 = all three.
+
+    the_conventions_actually_in_use:
+      A_pancika_khanda:
+        form: "pañcikā . khaṇḍa-counted-continuously-within-the-pañcikā (1–30, 1–41, …)"
+        example: "AB 8.21 · AB VIII.21 · AB 7.13–18 (Śunaḥśepa)"
+        used_by: >
+          Haug 1863 and Aufrecht 1879, hence TITUS's 'Paragraph' numbers, hence
+          Sanskrit Wikisource (which prints ॥8.21॥-style markers), hence most
+          19th–20th c. Indological citation and most secondary literature.
+      B_pancika_adhyaya_khanda:
+        form: "pañcikā . adhyāya-within-pañcikā (1–5) . khaṇḍa-within-adhyāya"
+        example: "AB 8.4.7–9 · AB 7.3.1–6 (Śunaḥśepa)"
+        used_by: >
+          The Sanskrit colophons themselves — Wikisource's pañcikā 8 closes with
+          'इत्यष्टमपञ्चिकायां पञ्चमोऽध्यायः', 'thus the fifth adhyāya in the eighth
+          pañcikā' — and the Indian editions that follow them (Sāyaṇa-bhāṣya editions,
+          Ānandāśrama). This is the convention native to the text.
+      C_continuous_adhyaya:
+        form: "adhyāya numbered continuously 1–40 . khaṇḍa-within-adhyāya"
+        example: "AB 39.7–9 · AB 33.1–6 (Śunaḥśepa)"
+        used_by: >
+          Aufrecht's editorial adhyāya labels (TITUS reproduces them verbatim:
+          'adʰyāya 39, kʰaṇḍaḥ 1-9'), Keith HOS 25's chapter numbering, and the
+          Wikisource editorial notes ('अध्याय ३५ खण्डः १-८'). Note this is NOT a
+          separate numbering of khaṇḍas — only of adhyāyas. B and C differ solely in
+          whether the adhyāya is numbered 1–5 within its pañcikā or 1–40 across the text.
+      D_continuous_khanda:
+        form: "khaṇḍa numbered continuously 1–285 across the whole text"
+        example: "AB 278–280"
+        used_by: >
+          TITUS's 'Part No.' only. Not a traditional convention. It is an artefact of
+          the file numbering — but it is exact, and it is the only 1-level address that
+          is unambiguous, so it is useful as an internal join key.
+
+    what_each_edition_actually_uses:
+      note: "Read off title pages, running heads, colophons and cross-references in the scans themselves."
+      rows:
+        - "Haug 1863 vol. I (Sanskrit) — A in the running heads ('ऐतरेयब्राह्मणे चतुर्थपंचिका १४, १५, १६'); adhyāya only in colophons"
+        - "Haug 1863 vol. II (translation) — **A, and only A**. Every cross-reference is 2-level: '(see 2,31)', '(see 3,33-38)', 'See 1,1-5.', '(This paragraph is identical with 5, 27.)'. No 3-number AB citation occurs anywhere in the volume"
+        - "Aufrecht 1879 — **A and B printed side by side at every khaṇḍa**: Latin numeral = khaṇḍa-within-pañcikā, Devanāgarī numeral = khaṇḍa-within-adhyāya. Running heads carry both (verso 'Pancika 2, 17. 18.' / recto 'Adhyaya 7, 8. 8, 1.'). Sentences numbered within khaṇḍa, so Aufrecht's own reference form is pañcikā.khaṇḍa.sentence, and his Wortverzeichniss uses it ('atirātra 3, 41, 2')"
+        - "Keith HOS 25 1920 — **A primary, C in parentheses**: 'i. 12 (iii. 1).' · 'ii. 1 (vi. 1).' · 'viii. 1 (xxxvi. 1).' · 'vii. 34 (xxxv. 8).' Running heads carry only A"
+        - "Keith on the Kauṣītaki — flat adhyāya.khaṇḍa, lowercase roman ('KB. xxix. 4'). No pañcikā tier exists in the KB"
+        - "Keith, Aitareya Āraṇyaka 1909 — 3-level āraṇyaka, adhyāya, khaṇḍa, arabic. Running heads 'AITAREYA ARANYAKA I, 1, 1-' … '-III, 2, 4'"
+        - "Keith, Śāṅkhāyana Āraṇyaka 1908 — 2-level, adhyāya in lowercase roman ('i, 1', 'ii, 1-17', 'xii, 20')"
+        - "Ānandāśrama AiĀ (ASS 38) — 3-level, '[ऐ॰ आ॰ २ अ॰ ४ ख॰ २]'"
+        - "Rājendralāla Mitra, AiĀ, Bibl. Ind. 1876 — **4-level**: āraṇyaka·adhyāya·khaṇḍa·ṛc ('१आ० । ४अ० । २क० । ६-८ऋ०')"
+        - "Sāmaśramī, AB with Sāyaṇa, Bibl. Ind. — pañcikā + continuous adhyāya 1–40"
+        - "TITUS — A as 'Paragraph', plus C in the adhyāya labels, plus D as the file/Part number"
+        - "GRETIL Kauṣītaki — adhyāya,khaṇḍa.sentence. GRETIL Śāṅkhāyana Āraṇyaka — adhyāya,khaṇḍa"
+    keiths_own_view: >
+      Worth recording because it licenses a decision. Keith, HOS 25, Introd. §3, p. 36:
+      "Nor have we any idea when the division of the text into Pañcikās was made; it is
+      clearly not a natural division in any way, as the text does not fall into sets of
+      five Adhyāyas, and **it is unfortunate that the Pañcikā division should have become
+      usual in citations.**" Footnote: "As, however, it is now established, the citation
+      by Adhyāya in Lévi's *Doctrine du sacrifice dans les Brāhmaṇas* is to be regretted."
+      Keith disliked the pañcikā scheme, used it anyway because it was standard, and
+      regretted that Lévi had done otherwise. Note also his point that a pañcikā does
+      NOT contain five adhyāyas in any meaningful sense — the name is a misnomer he
+      distrusts, even though the count happens to be five.
+    RECOMMENDATION:
+      store: >
+        **Store the full three-level B address — pañcikā.adhyāya.khaṇḍa — as the
+        canonical key.** It is native to the colophons, it is total, and it is the only
+        form that is unambiguous at every depth. A is ambiguous against B truncated to
+        two levels ('AB 8.4' = khaṇḍa 4 of pañcikā 8 under A, but the whole of adhyāya
+        39 under B), and that collision is the actual origin of the confusion in the
+        project's notes. Choosing A does not remove it; choosing B does.
+      display_and_accept: >
+        **Display and accept A — pañcikā.khaṇḍa — as the primary human citation form,
+        and accept C and D as aliases.** This is not a compromise, it is what the
+        evidence requires: Haug's translation uses A exclusively, Keith's translation
+        leads with A, and essentially all secondary literature cites A. A reader who
+        cannot look up 'AB 7.13–18' in Keith will not trust the node.
+      why_this_is_safe: >
+        The mapping is not reconstructed, it is **printed**. Aufrecht sets both numerals
+        at the end of every khaṇḍa, and Keith prints C in parentheses after A on every
+        section head. Cumulative khaṇḍa offsets per pañcikā are 0, 30, 71, 121, 153,
+        187, 223, 257; continuous adhyāya = 5·(pañcikā−1) + adhyāya-within-pañcikā.
+        Everything converts arithmetically from the concordance table below, which this
+        packet verified against four independent witnesses. Generate A, C and D; never
+        store them as independent truth.
+      for_the_aranyakas: >
+        Aitareya Āraṇyaka: **āraṇyaka.adhyāya.khaṇḍa**, which is Keith's form and
+        matches both our witnesses — but see the Aitareya Upaniṣad entry: AiĀ II.5 and
+        II.6 have NO khaṇḍas, so the schema must permit a two-level address at those
+        loci rather than inventing a '.1'. Mitra 1876 adds a fourth level (ṛc) for
+        verse-bearing sections; accept it as an extension, do not require it.
+        Śāṅkhāyana Āraṇyaka: **adhyāya.khaṇḍa**, Keith's form, matching GRETIL.
+        Kauṣītaki Brāhmaṇa: **adhyāya.khaṇḍa** — but read the khaṇḍa warning under
+        structures_verified before joining anything to it.
+
+    THE_CONCORDANCE_TABLE:
+      note: >
+        Verified twice: from TITUS's per-unit 'adʰyāya N, kʰaṇḍaḥ x-y' labels across
+        all 285 units, and independently from the ॥p.k॥ markers on Sanskrit Wikisource.
+        The two agree exactly. Read as: pañcikā | adhyāya-within-pañcikā |
+        continuous-adhyāya | khaṇḍas-in-this-adhyāya | khaṇḍa-range-within-pañcikā |
+        continuous-khaṇḍa-range.
+      rows:
+        - "1 | 1 | 1  |  6 |  1-6   |   1-6"
+        - "1 | 2 | 2  |  5 |  7-11  |   7-11"
+        - "1 | 3 | 3  |  6 | 12-17  |  12-17"
+        - "1 | 4 | 4  |  9 | 18-26  |  18-26"
+        - "1 | 5 | 5  |  4 | 27-30  |  27-30"
+        - "2 | 1 | 6  | 10 |  1-10  |  31-40"
+        - "2 | 2 | 7  |  8 | 11-18  |  41-48"
+        - "2 | 3 | 8  |  6 | 19-24  |  49-54"
+        - "2 | 4 | 9  |  8 | 25-32  |  55-62"
+        - "2 | 5 | 10 |  9 | 33-41  |  63-71"
+        - "3 | 1 | 11 | 11 |  1-11  |  72-82"
+        - "3 | 2 | 12 | 13 | 12-24  |  83-95"
+        - "3 | 3 | 13 | 14 | 25-38  |  96-109"
+        - "3 | 4 | 14 |  6 | 39-44  | 110-115"
+        - "3 | 5 | 15 |  6 | 45-50  | 116-121"
+        - "4 | 1 | 16 |  6 |  1-6   | 122-127"
+        - "4 | 2 | 17 |  8 |  7-14  | 128-135"
+        - "4 | 3 | 18 |  8 | 15-22  | 136-143"
+        - "4 | 4 | 19 |  6 | 23-28  | 144-149"
+        - "4 | 5 | 20 |  4 | 29-32  | 150-153"
+        - "5 | 1 | 21 |  5 |  1-5   | 154-158"
+        - "5 | 2 | 22 | 10 |  6-15  | 159-168"
+        - "5 | 3 | 23 |  4 | 16-19  | 169-172"
+        - "5 | 4 | 24 |  6 | 20-25  | 173-178"
+        - "5 | 5 | 25 |  9 | 26-34  | 179-187"
+        - "6 | 1 | 26 |  3 |  1-3   | 188-190"
+        - "6 | 2 | 27 |  5 |  4-8   | 191-195"
+        - "6 | 3 | 28 |  8 |  9-16  | 196-203"
+        - "6 | 4 | 29 | 10 | 17-26  | 204-213"
+        - "6 | 5 | 30 | 10 | 27-36  | 214-223"
+        - "7 | 1 | 31 |  1 |  1     | 224      # genuinely one khaṇḍa — paśor vibhaktiḥ"
+        - "7 | 2 | 32 | 11 |  2-12  | 225-235"
+        - "7 | 3 | 33 |  6 | 13-18  | 236-241  # ŚUNAḤŚEPA"
+        - "7 | 4 | 34 |  8 | 19-26  | 242-249"
+        - "7 | 5 | 35 |  8 | 27-34  | 250-257"
+        - "8 | 1 | 36 |  4 |  1-4   | 258-261"
+        - "8 | 2 | 37 |  7 |  5-11  | 262-268"
+        - "8 | 3 | 38 |  3 | 12-14  | 269-271  # great anointing of INDRA"
+        - "8 | 4 | 39 |  9 | 15-23  | 272-280  # great anointing of the KING + king-lists"
+        - "8 | 5 | 40 |  5 | 24-28  | 281-285"
+      per_pancika_khanda_totals: "30, 41, 50, 32, 34, 36, 34, 28  →  285"
+      key_loci:
+        shunahshepa: "AB 7.3.1–6  =  AB 7.13–18  =  AB 33.1–6  =  units 236–241"
+        aindra_mahabhisheka_indra: "AB 8.3.1–3  =  AB 8.12–14  =  AB 38.1–3  =  units 269–271"
+        aindra_mahabhisheka_king_and_kinglists: "AB 8.4.7–9  =  AB 8.21–23  =  AB 39.7–9  =  units 278–280"
+
+  # -------------------------------------------------------------------------
+  khanda_count:
+    verdict: "285. RESOLVED."
+    evidence: >
+      Two independent complete witnesses, counted mechanically, agree:
+      (1) TITUS's Aufrecht-based text has exactly 285 addressable units — ab001 through
+      ab285, with ab286 returning the TITUS 'not available' stub (1330 bytes, identical
+      to the stub returned for texts TITUS does not hold). The unit count is not a
+      claim about khaṇḍas; it is a file count that happens to equal one.
+      (2) Sanskrit Wikisource's eight pañcikā pages carry per-pañcikā khaṇḍa numerals
+      running 1–30, 1–41, 1–50, 1–32, 1–34, 1–36, 1–34, 1–28. Sum = 285. Two numerals
+      (3.21, 6.24) are absent from the markup as printed numerals while their text is
+      present and the sequence continues past them — wiki typos, not textual gaps.
+      (3) The two distributions are identical, and both reconcile to Aufrecht's
+      adhyāya labels, which sum to 285 independently.
+    corroborating_witnesses:
+      - "Haug 1863 vol. I — the pañcikā-closing colophons carry the running totals:
+         I.5 ॥३०॥, II.5 ॥४१॥, III.5 ॥५०॥, V.5 ॥३४॥, VI.5 ॥३६॥, VIII.5 ॥२८॥. Same eight numbers."
+      - "Aufrecht 1879 — per-adhyāya colophons ('Iti prathamādhyāye ṣaṣṭhaḥ khaṇḍaḥ' = 6,
+         'dvitīyādhyāye pañcamaḥ' = 5, 'tṛtīyādhyāye ṣaṣṭhaḥ' = 6, 'caturthādhyāye navamaḥ'
+         = 9, 'pañcamādhyāye caturthaḥ' = 4 → 30 for pañcikā I), and each khaṇḍa closes
+         with TWO numerals — Latin for khaṇḍa-within-pañcikā, Devanāgarī for
+         khaṇḍa-within-adhyāya ('|| 11 || ५ ||'). The edition prints the concordance."
+      - "Keith HOS 25 §1, the khaṇḍa-by-khaṇḍa AB↔KB comparison table, pp. 1–21 —
+         the last entry of each pañcikā gives the same eight numbers."
+    a_caution: >
+      **Neither Haug nor Keith ever states the total.** Haug says only that the work is
+      "in its eight books, or forty chapters, each of which is subdivided into a certain
+      number of kandikas"; Keith does not use the word *khaṇḍa* at all. 285 is a figure
+      that has to be summed, which is part of why it drifts.
+    on_the_235_claim:
+      verdict: "SOLVED. It is a page number that someone read as a section count."
+      evidence: >
+        Aufrecht's romanised Sanskrit text of the Aitareya Brāhmaṇa runs pp. 1–236, and
+        the recto running head of its final text page reads **"Adhyāya 40, 5.   235"**.
+        A reader looking for "how big is the Aitareya Brāhmaṇa" at the end of the text
+        finds 235 sitting next to "Adhyāya 40" and carries it off as a count of sections.
+        Independently: 235 appears in no edition, no catalogue and no scholarly source
+        as a division of the AB; the English Wikipedia article gives no khaṇḍa figure at
+        all, so it is not the vector; and a Wikipedia-wide search for the literal strings
+        "235 khandas" and "285 khandas" returns nothing.
+      use: "**285.** Do not carry 235 forward, and record why it existed."
+
+  # -------------------------------------------------------------------------
+  vedic_heritage_portal_error:
+    verdict: "CONFIRMED. The error exists and is live as of 2026-08-01."
+    url: https://vedicheritage.gov.in/brahmanas/aitareya-brahmana/
+    quoted_verbatim: >
+      "This work is ascribed to Mahidasa Aitareya and dated variously from 1000 BCE to
+      500 BCE. It is divided into eight Panchikas and each of the Panchika is divided
+      into eight adhyayas. Totally, it consist forty adhyayas."
+    why_it_is_wrong: >
+      8 × 8 = 64, not 40. The correct figure is five adhyāyas per pañcikā — which is
+      what the word pañcikā *means* ('a group of five'), what every edition prints, and
+      what the text's own colophons say ('इत्यष्टमपञ्चिकायां पञ्चमोऽध्यायः'). The
+      arithmetic is not merely inconsistent; the wrong number contradicts the name of
+      the unit it is counting.
+    also_noted: >
+      The same page states "The first six panchikas of Aitareya Brahmana dealing with
+      Soma Sacrifice ... and in the last two panchikas describe about Rajyabhisheka."
+      Loosely defensible but imprecise: pañcikā 7 is the paśu-vibhakti, the expiations,
+      Śunaḥśepa and the preparations for the royal consecration — the rājasūya material
+      proper begins inside pañcikā 7, and Śunaḥśepa is not rājyābhiṣeka.
+      The page has no khaṇḍa count and no mention of Sāyaṇa.
+    a_second_error_on_the_same_portal: >
+      /brahmanas/kausitaki-shankhyayana-brahmana/, verbatim: "associated with **Baskala
+      Shakha** of Rigveda and also called Sankhyayana Brahmana. It is divided into thirty
+      chapters and **226 Khanda**." The 226 figure matches no witness — not the vulgate's
+      276, not Sarma's 272, not Burnell's 260. Wikipedia carries the same number and
+      cites this page.
+    BUT_THE_OTHER_THREE_PAGES_ARE_GOOD_AND_THAT_MATTERS: >
+      **Do not generalise from the two errors. I checked all four pages and the other
+      two are accurate, in one case more accurate than most secondary sources.**
+      /aranyakas/aitareyaranyaka/ states correctly that the AiĀ "belongs to the Shakala
+      recension", has five āraṇyakas, that "third Aranyaka [is] about spiritual meaning
+      of various interpretation of the Samhitas including padapatha, kramapatha etc. for
+      recitation of the Vedamantras along with the Svaras", that "The fourth, fifth and
+      sixth chapter of the Second Aranyaka is known as Aitareya Upanishad", and — the
+      point where most sources get it backwards — that **"fourth Aranyaka to Ashvalayana
+      and fifth Aranyaka to sage Shaunaka."** That is Keith's conclusion exactly, arrived
+      at independently by an Indian institutional source.
+      /aranyakas/sankhyayana-aranyaka/ states correctly: fifteen chapters, "third, fourth,
+      fifth and sixth are considered as Kaushtaki Upanishad and chapters seventh and
+      eights as Samhitopanishad." Matches Keith exactly.
+    bearing_on_trust: >
+      The honest reading is narrower and more useful than "don't trust it". The portal's
+      **prose descriptions of content and structure are largely sound** — two of four
+      pages are accurate and one is unusually good. What fails is **numbers**: 8×8=40 on
+      the Aitareya, 226 khaṇḍas on the Kauṣītaki. Both are the kind of figure a
+      copy-editor would not catch and a specialist would.
+      Operational rule: **cite the portal for what it holds and for its content
+      descriptions; never take a count from it without a second witness.**
+      Note also that its own menu links resolve to /brahmanas/kausitaki-shankhyayana-brahmana/,
+      /aranyakas/aitareyaranyaka/ and /aranyakas/sankhyayana-aranyaka/ — spellings no
+      naive URL guess will hit, and the plausible guesses all 404.
+    AND_IT_HOLDS_MORE_THAN_IT_ADVERTISES: >
+      **The portal hosts complete free page-image scans of all four texts, and they are
+      not linked from anywhere a search engine will surface.** See the five flipbook
+      records below. This is the only place I found a Devanāgarī Śāṅkhāyana/Kauṣītaki
+      Brāhmaṇa in any digital form, and the only free scan of a Sāyaṇa-plus-Hindi
+      Aitareya Brāhmaṇa. It also hosts a paper, "Contribution of Aitareya Aranyaka to
+      Phonetics" (https://vedicheritage.gov.in/Vijnana_Bharati/15.pdf, 5 pp) — directly
+      on the AiĀ 3 material this project has flagged as a sleeper node.
+      **So the correct posture is: a portal whose holdings are better than its prose and
+      whose prose is better than its arithmetic.**
+
+  # -------------------------------------------------------------------------
+  accents_in_the_prose_layers:
+    verdict: >
+      **No. Not for the prose. Yes, partially, for the mantra material embedded in it.**
+    method: >
+      Every text was normalised to NFC first, then counted for U+0951 (udātta),
+      U+0952 (anudātta), Vedic Extensions U+1CD0–U+1CFF, and — for romanised texts —
+      combining U+0301 and U+0300. The U+0301 trap the protocol warns about does not
+      fire here: these texts contain zero Devanāgarī, so ś/ǵ are precomposed in NFC and
+      every surviving combining acute is a real accent mark on a vowel that has no
+      precomposed form (vidā́, bŕ̥haspátir, ánu).
+    results:
+      - "TITUS Aitareya Brāhmaṇa, all 285 units, 702,836 chars: U+0951/0952 = 0,
+         Vedic Ext = 0, U+0301 = 0, U+0300 = 0. Aufrecht 1879 prints the AB unaccented."
+      - "Sanskrit Wikisource Aitareya Brāhmaṇa, 8 pañcikās, 409,828 chars: svara marks = 1
+         (a single stray U+0951 in pañcikā 6; noise). Effectively unaccented."
+      - "GRETIL Kauṣītaki Brāhmaṇa, 422,159 chars: 0 accent marks of any kind."
+      - "GRETIL Śāṅkhāyana Āraṇyaka, 87,997 chars: 0 accent marks of any kind."
+      - "Sanskrit Wikisource Aitareya Āraṇyaka, ~89,000 chars: 0 accent marks."
+      - "TITUS Aitareya Āraṇyaka, 233,909 chars: U+0301 = 92, U+0300 = 1.
+         ALL of them fall in units 15–18 — that is, Āraṇyaka 4 (30 acutes) and
+         Āraṇyaka 5 adhyāyas 1–3 (15 + 26 + 21 acutes, 1 grave). Āraṇyakas 1–3
+         (units 1–14) carry zero."
+      - "Vedic Heritage flipbooks — sampled at full resolution and read: the Mālavīya
+         Aitareya Brāhmaṇa (Sāyaṇa + Hindi), the Sāyaṇa Aitareya Āraṇyaka, and the
+         Devanāgarī Śāṅkhāyana Brāhmaṇa all print the mūla WITHOUT svara. But the Sāyaṇa
+         Āraṇyaka's opening śānti IS accented — श॒तं भ॑वास्यू॒तिभिः ॥ स्यो॒ना पृ॑थिवि… —
+         because it is Saṃhitā-derived mantra. Same split as TITUS, in a different
+         script, from a different publisher."
+      - "**THE ONE EXCEPTION, and it is prose:** the *sasvara* Aitareya Upaniṣad at
+         sanskritdocuments.org — 5,601 Devanāgarī chars, **329 U+0951/0952 marks plus
+         33 Vedic Extensions** (U+1CDA double svarita among them), 88 of 115 lines
+         accented, running through the body prose of AiĀ II.4–II.6. Verified by counting.
+         No source edition is named — credited only to Premraj Ware — so its authority is
+         unknown. See the record."
+    THE_SCHOLARSHIP_SETTLES_IT_AND_THE_ANSWER_MATTERS: >
+      The counting above says no accented witness was found. The literature says why,
+      and the why is the whole project's thesis in one sentence.
+      **Macdonell, *A Vedic Grammar for Students*, Oxford 1916, App. III §1, p. 448:**
+      "The accent is marked in all the texts of the four Vedas as well as in two
+      Brāhmaṇas, the Taittirīya (including its Āraṇyaka) and the Śatapatha (including
+      the Bṛhadāraṇyaka Upaniṣad)." That list is exhaustive — only two Brāhmaṇas are
+      accented, and neither is Ṛgvedic.
+      **Keith, HOS 25, Introd. §43, p. 96, on the Aitareya Brāhmaṇa:** "The text as
+      preserved is unaccented. **It is no doubt the case that it originally was duly
+      accented, but the accents have not been preserved by the tradition.**" Keith
+      immediately gives the parallel case with a date attached: the Pañcaviṃśa Brāhmaṇa
+      "was once accented in the style of the Śatapatha and was still so extant at the
+      time of the Bhāṣikasūtra (ii.32), but by Kumārila's time it had ceased to bear
+      accents." Keith's own General Index carries the entry
+      "Accents, absence of in Brāhmaṇas of the Ṛgveda, 96" — plural, so the Kauṣītaki
+      is covered by the same statement. At p. 103 he adds of the two KB editions
+      (Lindner, Jena 1887; Ānandāśrama 65, 1911) that "Neither is punctuated."
+      **Keith, *Aitareya Āraṇyaka*, 1909, Introd. §I, p. 10, on the AiĀ:** "In the
+      edition of Rājendralāla and in the MSS. A and E only are accents used. These
+      accents are clearly confined to those verses not occurring in the Ṛgveda Saṃhitā
+      which are quoted in full in the Āraṇyaka V. Unfortunately in the edition the
+      accents are often obviously incorrect … The MSS. also, as often, are carelessly
+      and inaccurately accented."
+      Haug 1863 and Aufrecht 1879 print the AB unaccented and never discuss
+      accentuation of the transmitted text at all — their silence is corroboration.
+      **And Haug gives eyewitness testimony from living reciters, which is the strongest
+      evidence in the packet.** *Aitareya Brāhmaṇam*, Introduction pp. 72–73:
+      "Regarding the repetition of the Brahmanam we have to remark, that it is done in a
+      very slow tone, but quite monotonously, **whilst the Brahmanas of the Yajurveda are
+      recited with the proper accents, like the Samhitas.**"
+      That is a man in Bombay in 1863 reporting what he heard: the Aitareya Brāhmaṇa
+      chanted flat, the Yajurveda Brāhmaṇas chanted with svara, side by side in the same
+      living tradition. The accent is not merely missing from the page. **It is missing
+      from the voice, and it already was in 1863.**
+    interpretation: >
+      The count and the scholarship agree exactly, including on the fine grain: I found
+      accent marks in TITUS units 15–18 and nowhere else, and Keith says the AiĀ's only
+      accents are on the fully-quoted non-Ṛgvedic verses of Āraṇyaka V (and, per his
+      critical notes, on the Mahānāmnīs in some MSS but "not accented at all in R").
+      **So: the Ṛgveda's prose layers are unaccented, and they are unaccented because
+      the accent was LOST, not because it was never there.** Keith is explicit: the AB
+      "originally was duly accented." That is not a gap in our collection. It is the
+      exact failure mode this project exists to document — a layer with no permuted
+      recitation to error-correct it, fewer carriers, and a transmission that dropped
+      its own svara while the Saṃhitā's held. The Pañcaviṃśa case even gives a rough
+      window: accented at the Bhāṣikasūtra, gone by Kumārila.
+      **Two rules follow, and the second is the one that will otherwise be got wrong:**
+        1. Encode AB, KB, AiĀ and ŚĀ as unaccented. There is nothing to recover.
+        2. Do NOT record "Brāhmaṇa prose is unaccented" as a property of the genre.
+           The Śatapatha and the Taittirīya Brāhmaṇa falsify it directly, and
+           sanskritweb.net (Stiehl / Sarma) publishes a fully accented Taittirīya
+           Brāhmaṇa and Āraṇyaka in Devanāgarī today. Accented Brāhmaṇa prose exists,
+           is typesettable, and is in print. Its absence here is specific to the
+           Ṛgvedic schools.
+      Register as a P5 hole with the correct framing: **the Ṛgveda's Brāhmaṇa svara is
+      not undigitised — it is extinct.** Whether any Aitareya manuscript anywhere
+      preserves it is a manuscript question and should be handed to P2-c as a specific
+      query; Keith's answer is no, for the MSS he saw.
+    THE_EXCEPTION_THAT_PROVES_IT: >
+      One accented prose text exists, and its boundary is the finding.
+      **The Aitareya Upaniṣad — AiĀ II.4–II.6 — is available fully accented, in prose,
+      and the Brāhmaṇa prose on either side of it is not.** The split does not fall
+      between mantra and prose, and it does not fall between texts. It falls at a section
+      break *inside one text*, and it tracks **liturgical use**: the Upaniṣad went on
+      being recited, so it kept its svara; the surrounding Āraṇyaka and the Brāhmaṇa
+      stopped being recited, so they lost theirs. Haug heard exactly that in 1863 — the
+      Aitareya Brāhmaṇa chanted "quite monotonously" while the Yajurveda Brāhmaṇas were
+      chanted "with the proper accents".
+      That is the project's whole diagnosis, visible in one text, measurable in
+      codepoints, at a boundary you can point to.
+      Caveat that must travel with it: the accented Upaniṣad names no source edition, and
+      Keith reports that the AiĀ manuscripts accent only Āraṇyaka V's quoted verses. So
+      this is almost certainly a modern notation of living recitation practice rather than
+      a manuscript reading — which does not weaken the point, because living recitation
+      practice is exactly what the argument is about. But it does mean `svara_verified?`
+      matters here more than anywhere else in the packet.
+    THE_ACCENT_THAT_IS_STILL_IN_A_VOICE: >
+      **The Kauṣītaki Brāhmaṇa is recorded khaṇḍa by khaṇḍa — 268 files verified — on
+      vedicheritage.gov.in.** Whether those reciters render svara or chant flat is an
+      audio question this packet cannot settle and deliberately does not. But it is the
+      only place where the question can still be asked of the Ṛgveda's prose layer at
+      all, and it is undiscoverable by search. See the record.
+    note_on_pluti: >
+      The Wikisource Aitareya Āraṇyaka does preserve pluti (prolation) numerals in the
+      Mahānāmnī — 'एवा ह्येवैवा ह्यग्ना३इ', 'विदो३म्' — which is prosodic notation and
+      not svara, but is the one place the Devanāgarī witness records something the
+      recitation needs.
+
+  # -------------------------------------------------------------------------
+  aitareya_aranyaka_book_3_the_sleeper_node:
+    verdict: "Confirmed, and sharper than the project's note assumed."
+    what_is_there: >
+      AiĀ 3.1.1 opens 'athātaḥ saṃhitāyā upaniṣat' — 'now, then, the upaniṣad of the
+      saṃhitā [-pāṭha]'. Book 3 is the Saṃhitopaniṣad: the tradition theorising its own
+      recitation. The technical triad is present and is stated as a *choice with
+      consequences* at 3.1.3 and 3.1.5:
+        nirbhuja        — the continuous/saṃhitā recitation
+        pratṛṇṇa        — the broken/pada recitation
+        ubhayam antareṇa — 'with both in between', the krama
+      and 3.1.3 assigns each an aim: 'annādyakāmo nirbhujaṃ brūyāt, svargakāmaḥ
+      pratṛṇṇam, ubhayakāma ubhayam antareṇa.'
+    the_precision_that_matters: >
+      **The text does not use the words pada or krama.** Zero occurrences of either in
+      book 3. It uses the older nirbhuja / pratṛṇṇa / ubhayam-antareṇa terminology.
+      Any search of this corpus for 'krama' will return nothing and will look like the
+      doctrine is absent. It is not absent; it is under different names. This is the
+      single most useful thing in the packet for the svara apparatus, and it is exactly
+      the kind of vocabulary shear that silently breaks a lexical index.
+    the_accent_definition: >
+      3.1.5 defines saṃhitā as the interval between the two forms — 'yo 'vakāśaḥ
+      pūrvarūpottararūpe antareṇa, yena saṃdhiṃ vivartayati, **yena svarāsvaraṃ
+      vijānāti**, yena mātrāmātrāṃ vibhajate, sā saṃhitā' — 'by which one turns the
+      juncture, by which one distinguishes accented from unaccented, by which one
+      divides mora from mora.' That clause is a direct tradition-internal statement
+      that the saṃhitā-pāṭha is where accent is discriminated.
+    named_authorities_in_book_3: >
+      Māṇḍūkeya (and Hrasva Māṇḍūkeya, Śūravīra Māṇḍūkeya and his son), Mākṣavya,
+      Āgastya, Śākalya (and Sthavira Śākalya), Pañcālacaṇḍa, Kauṇṭharavya, Tārkṣya.
+      Book 3 is a doxography — it reports named positions and disagreements rather than
+      asserting one. That is unusually good for this project's purposes.
+    structure: >
+      Book 3 = 2 adhyāyas, 6 khaṇḍas each, 12 total. 3.1.1–3.1.6 is the Saṃhitopaniṣad
+      proper; 3.2 is the phonetic-class material (sparśa / ūṣman / svara / antaḥsthā)
+      and the daivī-vīṇā ~ mānuṣī-vīṇā analogy.
+    THE_DOCTRINE_HAS_TWO_INDEPENDENT_WITNESSES: >
+      **Śāṅkhāyana Āraṇyaka 7–8 is a second, parallel recension of the same
+      Saṃhitopaniṣad**, and it is available complete and machine-readable in the same
+      GRETIL file as the rest of the ŚĀ. Verified by counting in the ŚĀ 7–8 span
+      (18,916 chars): nirbhuja ×9, pratṛṇṇa ×5, 'ubhayam antareṇa' ×2, 'saṃhitāyā
+      upaniṣat' ×1, Māṇḍūkeya ×8, Śākalya ×5, vīṇā ×9. Same doctrine, same technical
+      vocabulary, same named authorities — with real divergences worth collating:
+      AiĀ has Śūravīra Māṇḍūkeya and his son **Hrasva** Māṇḍūkeya, ŚĀ has Śauravīra
+      Māṇḍūkeya and his son **Dīrgha**; AiĀ 3.1.5 carries the svarāsvara clause and the
+      ŚĀ parallel does not ('svarāsvar' ×0 in ŚĀ 7–8).
+      For the svara apparatus this is the best possible situation: the tradition's own
+      theory of its own recitation survives in two recensions that can be set side by
+      side, and the difference between them is itself evidence. Neither is accented.
+      ŚĀ 7 opens with the same 'ṛtaṃ vadiṣyāmi' śānti as the Aitareya frame; ŚĀ 8 is
+      Sthavira Śākalya's prāṇa-vaṃśa, matching AiĀ 3.2.
+
+  # -------------------------------------------------------------------------
+  # -------------------------------------------------------------------------
+  # SCHOLARSHIP — reported, not adjudicated
+  # -------------------------------------------------------------------------
+  kaushitaki_shakha_affiliation:
+    verdict: >
+      **Unsettled. The status file's caution is correct and should be kept.**
+      Do not resolve it by assertion, and do not move the node on the strength of the
+      handbooks.
+    the_conflation_at_the_root: >
+      Two different axes get merged. Śākala and Bāṣkala are **Saṃhitā recensions**.
+      Aitareya and Kauṣītaki are **Brāhmaṇa-carrying schools**. Asking whether the
+      Kauṣītaki Brāhmaṇa "belongs to Śākala or Bāṣkala" presupposes a one-to-one
+      mapping between the two axes that the sources do not supply.
+    the_traditional_position: >
+      Śaunaka's *Caraṇavyūha* lists five Ṛgvedic śākhās — Śākala, Bāṣkala, Āśvalāyana,
+      Śāṅkhāyana, Māṇḍūkāyana — so in the native reckoning Śāṅkhāyana is a śākhā in its
+      own right (reported at Jamison & Brereton, *The Rigveda*, OUP 2014, p. 16).
+    the_critical_position: >
+      Keith, HOS 25, Introd. p. 25: "the essential similarity of the Brāhmaṇas is so
+      great that it cannot be doubted that they both represent the tradition of one
+      school, but that the tradition has received different handling by the branches of
+      that school. Nor can we derive the two versions directly from the one source, for
+      the evidence of the Kauṣītaki shows clearly that it is only a branch of a school
+      which divided into the **Paiṅgya and the Kauṣītaka sub-schools**." So: one
+      Bahvṛca tradition, two sub-schools, not a peer of Śākala/Bāṣkala at all.
+      Witzel cites this page (canon.pdf n. 324) and adds that the relationship between
+      the Kauṣītaki and Śāṅkhāyana schools "has to be investigated. Though both names
+      are often used indiscriminately, there is a genuine Kauṣītaki GS in Kerala."
+      Witzel elsewhere places the Aitareyins squarely with the Śākala RV (canon.pdf
+      §5.1 p. 315, §6.2 p. 325 — the Śākala clan appears inside AB 3.43 as belonging to
+      the Aitareya school, and Śākalya at AiĀ 3.2.1.6).
+    the_bashkala_claim: >
+      **Not established.** It traces to Weber, *History of Indian Literature* (Eng. tr.
+      1878), Suppl. Notes p. 315, who noticed a divergence at Śāṅkhāyana Gṛhyasūtra
+      4.10.3 from the Śākala Anukramaṇī and asked "Have we here also to do with a
+      divergence of the Vāṣkala school?" — then immediately undercut it: "(In Śāṅkh.
+      Gṛh., 4.5.8, however, there is no trace of this variation from the vulgate.)"
+      A question, not a conclusion. Keith HOS 25 never mentions Bāṣkala in connection
+      with the KB at all. Jamison & Witzel, "Vedic Hinduism" (1992) p. 16 puts the
+      Bāṣkala and Māṇḍūkeya Saṃhitās in a box marked *lost*, with **no Brāhmaṇa
+      attached**, and shows AB and KB as the two Brāhmaṇas of the surviving Śākala RV.
+      **BUT the Indian editorial tradition asserts it on a title page.** The Ānandāśrama
+      edition of the Brāhmaṇa is titled
+      *ऋग्वेदीयबाष्कलशाखायाः "कौषीतकि" इत्यपरसंज्ञं शाङ्खायनब्राह्मणम्* — "the Śāṅkhāyana
+      Brāhmaṇa, otherwise named Kauṣītaki, of the **Bāṣkala** śākhā of the Ṛgveda."
+      So this is not merely a Wikipedia artefact: it is the position of the Indian print
+      tradition, stated where a tradition states things. That is exactly the shape the
+      project's `multi_traditional` tier exists for — name both lineages, do not pick.
+      The modern *popular* circulation is traceable to Wikipedia's *Rigveda*
+      "Recensions" table, which is uncited, invents a "Kauṣītaki Saṃhitā" and a
+      "Śāṅkhāyana Saṃhitā" that no scholarship attests, and links its two distinct
+      Brāhmaṇa cells to the same article. vedicheritage.gov.in repeats it without
+      argument — a **third** structural claim on that portal that does not survive
+      checking.
+    RECOMMENDED_WORDING_FOR_THE_STATUS_FILE: >
+      "Traditionally associated with the Bāṣkala śākhā in Indian handbooks; this
+      association goes back to a tentative suggestion of Weber's and is not accepted or
+      asserted in the critical literature (Keith, Renou, Witzel), which treats the
+      Kauṣītaki Brāhmaṇa as the Brāhmaṇa of the Kauṣītaki/Śāṅkhāyana school within a
+      tradition transmitting the Śākala Saṃhitā."
+      On that reading the current node placement under rigveda/shakala/ is defensible
+      and should stand for now, with the doubt recorded — which is what the status file
+      already does. **Tier: multi_traditional, naming the lineages, not contested.**
+    kausitaki_vs_shankhayana_one_text_or_two: >
+      One text, two names, and the manuscripts say so directly. Keith HOS 25 pp. 37–38:
+      "The MSS. of the book which show the title *Kauṣītaki Brāhmaṇa* as the normal
+      title have as a variant here and there *Śāṅkhāyana* … the most exact version,
+      that preserved in the MSS. in the Bodleian Library, is **Kauṣītakimatānusāri
+      Śāṅkhāyana Brāhmaṇa**" — 'the Śāṅkhāyana Brāhmaṇa which follows the doctrine of
+      Kauṣītaki'. "There is no mention of Śāṅkhāyana in the text, and Vināyakabhaṭṭa,
+      the commentator on the Brāhmaṇa, never mentions it under the title Śāṅkhāyana …
+      in all probability the version of the doctrines of the Kauṣītaki school is
+      preserved for us in a Śāṅkhāyana tradition."
+      Independently corroborated by the text itself: the vaṃśa at Śāṅkhāyana Āraṇyaka
+      15 makes Guṇākhya Śāṅkhāyana the pupil of Kahoḷa Kauṣītaki. Teacher and pupil in
+      one lineage — hence one text under two names.
+      What genuinely differs is not the chapter division but the **manuscript line**:
+      the vulgate (Vināyaka's commentary, most MSS → Lindner 1887, Keith 1920) against
+      the Kerala/Malayalam line (Lindner's MS M → Sarma 1968 → GRETIL). See the khaṇḍa
+      warning under structures_verified.
+
+  kaushitaki_brahmana_is_not_a_reordering_of_the_aitareya:
+    verdict: "Confirmed, emphatically. It holds a great deal the Aitareya does not."
+    wider_scope: >
+      Keith HOS 25 §§1–2: "Not only does the Kauṣītaki Brāhmaṇa contain much less
+      material than the Aitareya, but it has a wider scope. It includes all the Śrauta
+      sacrifices of the first rank, omitting the less normal offerings such as the
+      Rājasūya and the Aśvamedha." KB 1–4 = agnyādhāna, agnihotra, new/full moon,
+      special and four-monthly offerings; KB 5–6 = the Brahman priest's function;
+      KB 7–30 = Soma. The AB is essentially Soma only, with the agnihotra (v.26–34) a
+      later addition and pañcikās vii–viii later still.
+    material_with_no_AB_counterpart: >
+      The Abhiplava Ṣaḍaha (KB xx–xxi); the Āditya and Savitṛ cups before the
+      Vaiśvadeva Śastra (xvi.1–3); the Patnīvata cup (xvi.6); Hariyojana (xviii.6),
+      Śākalas (xviii.7), the concluding bath (xviii.9), the barren-cow offering
+      (xviii.11–14); Abhijit (xxiv.1–2), Svarasāmans (xxiv.3–9), Viśvajit (xxv.11–15),
+      Viṣuvant (xxv.1–10).
+    it_names_its_authorities_and_the_AB_does_not: >
+      Keith: "The name Aitareya never occurs in its whole text, whereas the Kauṣītaki
+      Brāhmaṇa constantly cites Kauṣītaki, and twice the Kauṣītaka, while though much
+      less often it cites the views of the parallel school of **Paiṅgya**."
+      Kauṣītaki at ii.9; vii.4,10; viii.9; xi.5,7; xiv.2,4; xv.2; xvi.9; xviii.5;
+      xxii.1,2; xxiii.1,4; xxiv.8,9; xxv.8,10,14,15; xxvi.3,4,5,8,9,11,14; xxvii.1,6;
+      xxviii.2,7; xxx.11. Paiṅgya at iii.1; xix.9; xxiv.8.
+      **This is directly load-bearing for the project's thesis.** The KB is a text that
+      shows its disagreements — it says whose view it is following and whose it is
+      rejecting. That is the "arguments in between" the tradition is supposed to have
+      lost, surviving in the least-read of the four texts.
+    divergent_myth_versions: >
+      Keith p. 22: the Gravastut priest / Arbuda hymn — AB vi.1 tells the story for its
+      own sake, KB xxx.1 minimises it; the prattle of Aitaśa — AB vi.33 vs KB xxx.5;
+      the Aṅgirases and Ādityas — AB vi.34–35 "shrinks into an almost unintelligible
+      version" at KB xxx.6, with a *third* version again at Śāṅkhāyana Śrautasūtra
+      xiv.40; Nābhānediṣṭha Mānava — AB v.14 at length vs KB xxviii.4 a bare allusion;
+      Kavaṣa — AB ii.19 vs KB xii.3. Rudra's names: AB iii.33–34 (Prajāpati, Bhūtapati,
+      Paśupati) against KB vi.1–9 (Bhava, Śarva, Paśupati, Ugra Deva, Mahān Deva,
+      Rudra, Īśāna, Aśani).
+    relative_age: >
+      Keith p. 37: the KB is "clearly a redaction of the tradition of the school made
+      deliberately **after** the redaction of the Aitareya in its first thirty Adhyāyas
+      (i–vi), and embracing in it the views of the schools of Kauṣītaki and Paiṅgya,
+      but with a preference in any case of dispute for the views of Kauṣītaki."
+      Weber p. 44 rates the KB the better-arranged of the two. Witzel (canon.pdf §5.5,
+      pp. 320–321): "KB clearly is a reformulation, in an order copied from YV Saṃhitā
+      texts, of an older Ṛgvedic Brāhmaṇa such as that of the Aitareyin which centers
+      on the Soma sacrifices. **Its exact relation to AB and some lost RV Brāhmaṇas
+      remains open.**" Jamison & Witzel 1992 p. 12: "of which the Aitareya is the older
+      and the more extensive."
+    style_warning: >
+      Keith: "The Kauṣītaki is distinctly inferior to the Aitareya, as the former text
+      is everywhere so seriously condensed as to be needlessly and notoriously hard to
+      understand", with "almost interminable use of the phrase *tasyoktaṃ brāhmaṇam*"
+      ('its brāhmaṇa has been stated'). Practical consequence: the KB is full of
+      back-references that only resolve against another passage. Any reader-facing
+      treatment must resolve them or the text is unreadable.
+
+  aitareya_aranyaka_is_composite:
+    verified_against: "A. B. Keith, *The Aitareya Āraṇyaka*, Oxford 1909, Introd. §III 'Divisions of the Āraṇyaka and their date', pp. 15–22."
+    core_vs_appendices: >
+      Books **I–III** are the older core; books **IV** and **V** are later appendices.
+      Keith divides the core into four parts: Book I (Mahāvrata, ritual + allegory,
+      parallel to AB III.1–38 and IV.14, "doubtless more recent in date, or it would
+      have been included in the Brāhmaṇa"); Book II adhy. 1–3 (the Uktha as
+      Prāṇa/Puruṣa — "not directly connected with Book I, and it is doubtless later
+      than it"); Book II adhy. 4–6 ("the Upaniṣad *par excellence*. It is probably
+      later than part one"); Book III (the Saṃhitopaniṣad).
+    a_correction_worth_making: >
+      Keith **denies** Mahidāsa Aitareya's authorship even of books I–III, p. 16: "it
+      would be incorrect to ascribe to him even the first three books of the Āraṇyaka,
+      since in them he is cited as a teacher. He is named expressly in II, 1, 8 and
+      3, 7, and is clearly referred to in I, 1, 1. This must be taken as decisive
+      against his authorship." Our TITUS text confirms the citations
+      ('etad dha sma vai tad vidvān āha mahidāsa aitareya', 'iti ha smāha mahidāsa
+      aitareyaḥ'). The common statement "the Aitareya Āraṇyaka is by Mahidāsa" should
+      not be repeated.
+    book_IV: >
+      **The Mahānāmnī = śakvarī verses, and nothing else.** Keith p. 18: "The fourth
+      book consists solely of the Mahānāmnī verses. The presence of these verses is
+      explained by Sāyaṇa on the ground that they must be studied in the forest."
+      Keith's own index equates the names — "Śākvarī, see Mahānāmnī" (p. 393). Alluded
+      to as the Śakvarī verses at RV VII.33.4 and X.71; ritual use at Āśvalāyana
+      Śrautasūtra VII.12.10. A single undivided adhyāya. Confirmed in both our
+      witnesses.
+    ATTRIBUTIONS_book_IV_is_ashvalayana_book_V_is_shaunaka: >
+      **Book IV → Āśvalāyana. Book V → Śaunaka. NOT the reverse** — and the reverse is
+      the common error, because Oldenberg (GGA/ZDMG XXIX, 154 ff.) held it and Keith
+      had to argue him down (Keith even notes at p. 18 n. 2 that in Oldenberg "the
+      words 'fifth and fourth' should be transposed").
+      For Book V → Śaunaka, Keith p. 20: "For Śaunaka's authorship of the fifth
+      Āraṇyaka we have the distinct and repeated authority of Sāyaṇa" — Colebrooke
+      (*Essays* I, 46) noted AiĀ V.2.5 cited by Sāyaṇa on RV I.8.1 as Śaunaka's; also
+      Max Müller SBE I, xcv; and Sāyaṇa names Śaunaka repeatedly in the AiĀ commentary
+      (on I.4.1 *eva pañcame śaunakenoddhṛtaḥ*, and again at I.4.2, I.4.3, I.5.2, I.5.3).
+      For Book IV → Āśvalāyana, on Sadgurusiṣya's testimony; Keith's conclusion p. 20:
+      "**There is therefore no sound evidence to ascribe the fifth Āraṇyaka to
+      Āśvalāyana, and Sadgurusiṣya's attribution to him of the fourth Āraṇyaka remains
+      the most probable.**" Corroborated by Witzel, canon.pdf n. 329 p. 322.
+    book_III_authorship_and_date: >
+      Anonymous and composite — built as a doxography of named teachers in dispute
+      (Suravīra Māṇḍūkeya and his eldest son, Mākṣavya, Agastya, Hrasva Māṇḍūkeya,
+      Sthavira Śākalya, Kauṣīhāravya, Kṛṣṇaharita, Mahaitareya). Keith p. 17: "It
+      quotes Māṇḍūkeya and Śākalya among others, and makes use of the above terms to
+      describe the *saṃhitā*, *pada*, and *krama pāṭhas* of the Saṃhitā. These are so
+      far signs of late origin, but at the same time the treatment of the subject-matter
+      is at a much earlier stage than that reached by Yāska or the authors of the
+      Prātiśākhyas. … **it can probably be dated about the sixth cent. B.C.**"
+      Keith confirms the terminology mapping this packet found in the text itself —
+      *nirbhuja* = saṃhitā-pāṭha, *pratṛṇṇa* = pada-pāṭha, *ubhayamantareṇa* =
+      krama-pāṭha, with the cosmic assignment "the earth is the seat of the nirbhuja,
+      heaven the seat of the pratṛṇṇa, the atmosphere the seat of the ubhayamantareṇa."
+      **That AiĀ 3 is EARLIER than the Prātiśākhyas and Yāska is the fact that makes it
+      a sleeper node** — it is the earliest surviving statement of the pāṭha doctrine,
+      and it predates the apparatus tier P2-b is sourcing. Structure: 2 adhyāyas ×
+      6 khaṇḍas, confirmed from Keith's running heads.
+    book_counts_per_keith: "I = 5 adhyāyas · II = 6 (+ the śānti as a 7th in most MSS) · III = 2 · IV = 1 · V = 3."
+
+  shankhayana_aranyaka_numbering_is_unstable:
+    keiths_division: >
+      Keith, *The Śāṅkhāyana Āraṇyaka*, London (Oriental Translation Fund N.S. XVIII)
+      1908 — 15 adhyāyas: I–II Mahāvrata · **III–VI the Kauṣītaki Brāhmaṇa Upaniṣad**
+      (III the path after death, IV the nature of Brahman, V the unity of the Self,
+      VI definitions of Brahman) · VII–VIII the Saṃhitā Upaniṣad · IX the strife of the
+      senses · X the internal Agnihotra · XI the presages of death · XII the spell of
+      the Bilva amulet · XIII–XIV the Brahman offering · XV the Vaṃśa. Keith p. x:
+      "The Mahāvrata section is followed by the Kauṣītaki Brāhmaṇa Upaniṣad, forming
+      books iii–vi of the Āraṇyaka." Adhyāyas I–II stand to the KB as AiĀ I stands to
+      the AB (HOS 25 p. 38) and correspond to Śāṅkhāyana Śrautasūtra xvii–xviii.
+      This matches the GRETIL text and this packet's own count exactly.
+    the_competing_countings: >
+      At least three other sequences are in circulation for the Kauṣītaki Upaniṣad's
+      position: chapters **1–4** (Cowell's 1861 standalone edition, i.e. the Upaniṣad
+      numbered on its own), chapters **6–9**, and chapters **1, 7, 8, 9**. The last is
+      traceable to Poley via Weber, *HIL* p. 50 n. †, who quotes the claim "that the
+      Kauṣītaki-Brāhmaṇa consists of nine adhyāyas, the first, seventh, eighth, and
+      ninth of which form the Kauṣītaki-Brāhmaṇa-Upaniṣad" and adds "I have not
+      succeeded in finding any statement to this effect elsewhere."
+      **Adopt Keith's III–VI within the 15-adhyāya Āraṇyaka, and say explicitly that
+      the others are alternative countings** rather than picking one silently. Our
+      GRETIL witness marks the equivalence in its own reference strings, so the
+      mapping is machine-checkable, not a judgement call.
+
+  # -------------------------------------------------------------------------
+  # COMMENTARY LANDSCAPE — recorded here only because it bears on which base
+  # text is readable at all. The Sāyaṇa COVERAGE MAP across the corpus is P2-b's.
+  # -------------------------------------------------------------------------
+  commentaries:
+    on_the_aitareya_brahmana: >
+      Sāyaṇa's *Vedārthaprakāśa*, complete, and in print twice — Sāmaśramī's
+      Bibliotheca Indica edition (Calcutta 1895–1906, 4 vols + a separately issued 1906
+      preface) and Ānandāśrama Sanskrit Series 32 (Poona 1896, ed. Kāśīnātha Śāstrī
+      Agāśe) whose Part I covers **pañcikās 1–4 only** — its own title page says so:
+      "(THE FIRST FOUR PANCHIKAS ONLY.)". Aufrecht 1879 prints selected extracts from
+      Sāyaṇa as an Anhang (pp. 239–403); Keith calls them "excellently chosen, and
+      admirably edited".
+    on_the_aitareya_aranyaka: >
+      **Sāyaṇa's commentary on the whole Āraṇyaka exists and is printed twice.** Keith,
+      *AiĀ* 1909 Introd. §II: "Sāyaṇa's commentary on the whole Āraṇyaka. Besides the
+      edition of Rājendralāla Mitra and that in the Ānandāśrama series, I have used MSS.
+      C, I, and W… In all probability it was genuinely composed by Sāyaṇa himself; it
+      agrees with his Ṛgveda commentary in general, and **was written after the
+      commentary on the Aitareya Brāhmaṇa**. It was written probably under Bukka I, who
+      was certainly reigning in A.D. 1354."
+      **Do not conflate Śaṅkara-on-the-Upaniṣad with Sāyaṇa-on-the-Āraṇyaka.** Keith
+      enumerates six distinct works: Śaṅkara on the Upaniṣad (AiĀ II.4–6 only, printed
+      often); Śaṅkara on Book II (unprinted, MSS P and X, both inaccurate); Śaṅkara on
+      Book III (unprinted, MS X only); Ānandatīrtha's super-commentary on II–III
+      (printed, Ānandāśrama); Viśveśvaratīrtha on II–III (unprinted); and Sāyaṇa on all
+      five (printed).
+      **Consequence that matters: for Āraṇyakas I (Mahāvrata), IV (Mahānāmnī) and V —
+      which is to say for the accented material and for the Mahāvrata — Sāyaṇa is the
+      ONLY commentary that exists, and it is in print.** Śaṅkara never touched them.
+      Attribution trap flagged by Keith: the Ānandāśrama edition *of the Upaniṣad*
+      ascribes its commentary to Vidyāraṇyamuni, i.e. Mādhava, Sāyaṇa's brother —
+      "This attribution to Mādhava is an error."
+    on_the_kaushitaki_brahmana: >
+      **NOT Sāyaṇa.** Zero occurrences of सायण in Lindner, in Sarma, or in the
+      commentary volumes; every one of Keith's ~40 Sāyaṇa references in HOS 25 is to the
+      Aitareya. Two commentaries exist:
+      **(a) Vināyaka Bhaṭṭa, son of Mādhava Bhaṭṭa** — the North Indian vulgate
+      commentary, all 30 adhyāyas, **never published in full**. Keith p. 103: "Lindner's
+      edition does not include the commentary of Vināyakabhaṭṭa … as the important work
+      could not be edited from the available MSS… the comment on Adhyāya x has been
+      edited by R. Löbbecke in 1908." Otherwise only Weber's extracts (*Ind. Stud.* II,
+      292 ff.) and quotations in Maṅgaladeva Śāstrī 1955. Vināyaka also cites a **lost
+      Mahākauṣītakibrāhmaṇa**.
+      **(b) Udaya**, *Kauṣītakibrāhmaṇa-vyākhyāna*, epithet *Sukhadā* — the Kerala
+      commentary, all 30 adhyāyas in three daśakas with one lacuna at the end of adhyāya
+      28, and **this is the one actually in print**, in Sarma's three-volume set. Sarma
+      judges Udaya superior to Vināyaka.
+    on_the_shankhayana_aranyaka: >
+      Essentially none. Keith 1908: "Of native commentaries I have only seen that of
+      **Śaṅkarānanda on the Kauṣītaki Upaniṣad**" — i.e. ŚĀ iii–vi only, printed in
+      Cowell, Bibliotheca Indica 1861. **ŚĀ i–ii and vii–xv have no commentary at all.**
+      This is the least-commented text in the packet and, with the Mahāvrata in i–ii and
+      the Saṃhitopaniṣad in vii–viii, arguably the one where a commentary would help most.
+
+  # -------------------------------------------------------------------------
+  unresolved_discrepancy_aitareya_aranyaka_khanda_total:
+    the_problem: >
+      The Ānandāśrama edition of the AiĀ with Sāyaṇa (ASS 38, 1898) closes with an
+      explicit tally: **( आदितः संकलनाः — आर॰ ५  अध्या॰ १८  ख॰ ५५ )** — five āraṇyakas,
+      eighteen adhyāyas, **fifty-five khaṇḍas**. The adhyāya figure matches this
+      packet's independent count exactly (5+7+2+1+3 = 18). The khaṇḍa figure does not:
+      our two witnesses give 75 counting every numbered unit, or 72 if Keith is followed
+      that AiĀ II.5, II.6 and II.7 are undivided.
+    what_i_can_and_cannot_say: >
+      I can say the divergence is real and is about **khaṇḍa bracketing across editions**,
+      the same phenomenon documented above for the Kauṣītaki Brāhmaṇa. I cannot say which
+      adhyāyas Sāyaṇa's edition divides differently, because that requires reading the
+      ASS 38 page images and their OCR is Devanāgarī-only and poor.
+    action: >
+      Do NOT record a khaṇḍa total for the Aitareya Āraṇyaka until this is settled off
+      the page images. Record the structure by adhyāya (18), which all witnesses agree
+      on, and treat khaṇḍa addresses as edition-specific until the ASS 38 division is
+      collated against Keith's.
+
+  structures_verified:
+    aitareya_brahmana: "8 pañcikās × 5 adhyāyas = 40 adhyāyas; 285 khaṇḍas. See concordance."
+    kaushitaki_brahmana:
+      adhyayas: 30
+      adhyaya_count_is_settled: >
+        30, on three independent grounds. Keith HOS 25's Contents lists I–XXX. Pāṇini
+        V.1.62 teaches name-formation for Brāhmaṇas of thirty and of forty adhyāyas,
+        and Weber's identification of those with the Śāṅkhāyana (30) and the Aitareya
+        (40) is endorsed by Weber (*HIL* p. 45) and Keith (*AiĀ* 1909 p. 16: "Weber's
+        conjecture … is almost certainly correct"; HOS 25 p. 38: "Pāṇini (v.1.62)
+        doubtless knew the Kauṣītaki as consisting of thirty Adhyāyas only"). A variant
+        32-adhyāya reckoning — adding Śāṅkhāyana Āraṇyaka i–ii as two further books of
+        the Brāhmaṇa — is attested in Vināyaka's commentary on KB v.5 and rejected by
+        Keith as non-normal; it may lie behind the *Mahākauṣītaka* of Āśvalāyana
+        Gṛhyasūtra iii.4.4 and Śāṅkhāyana Gṛhya iv.10.
+      khanda_totals_by_witness:
+        - "**276** — the vulgate. Stated by a manuscript colophon itself, quoted by
+           Lindner from Bodleian Sansc. 6: 'asmin brāhmaṇe sarvasaṅkhyā || adhyāya 30,
+           khaṇḍikā 276, granthasaṅkhyā 2829'. This is the count of Lindner's printed
+           text (Jena 1887), of the Ānandāśrama edition, of Keith's translation and of
+           Ganga Sagar Rai's 1987 edition."
+        - "**272** — Sreekrishna Sarma 1968, the Kerala recension."
+        - "**271** — what GRETIL's Tokunaga file actually yields when counted
+           mechanically from its own reference strings (this packet's count). One short
+           of Sarma's printed total; the file is self-declared unproofread."
+        - "**260** — Burnell's Malayalam manuscript M, per Lindner."
+      per_adhyaya_GRETIL_Sarma: "5,9,12,10,10,10,12,12,6,10,9,10,7,7,6,10,7,9,7,6,7,6,11,8,14,14,12,8,8,9  (= 271)"
+      WARNING_THE_KHANDA_DIVISIONS_DO_NOT_MATCH: >
+        **This is the sharpest practical warning in the packet.** 276 against 272 looks
+        like a rounding problem. It is not. The *bracketing* differs adhyāya by adhyāya:
+        Lindner's adhyāya 27 has 7 khaṇḍas where Sarma has 12; Lindner's 26 has 17 where
+        Sarma has 14. Only **five khaṇḍas are genuinely absent** from Sarma — 16.10 and
+        26.3–6 — and everything else in the 276/272 gap is re-bracketing of the same
+        text. Sarma follows the Kerala/Malayalam line (Lindner's MS M, from Burnell's
+        collection — Keith HOS 25 p. 103 calls it "a MS. with a good, but not perfect,
+        tradition" and thinks Lindner underused it); Lindner and Keith follow the North
+        Indian vulgate preserved in Vināyaka's commentary and most MSS.
+        **Consequence: a KB khaṇḍa address does NOT transfer between the GRETIL Sanskrit
+        (Sarma) and Keith's English translation (Lindner).** They diverge from adhyāya 3
+        onward. Do not join them on the khaṇḍa number.
+        **The fix exists and is cheap:** Ganga Sagar Rai, *Śāṅkhāyana Brāhmaṇam*, Ratna
+        Publications, Varanasi 1987, prints the full Lindner↔Sarma comparative table.
+        That table is the mapping, and acquiring it is the single highest-value action
+        for this node. archive.org: `uvgr_shankhayana-brahmanam-ed-and-trans-by-ganga-sagar-ray-1987-varanasi-ratna-publications`
+        (342 leaves, Sanskrit + Hindi translation, all 30 adhyāyas).
+        Until that table is transcribed, the KB node must not be marked `structured`.
+      the_226_figure: >
+        English Wikipedia and vedicheritage.gov.in both state the KB has "30 chapters and
+        226 Khaṇḍas". That figure matches no witness — not 276, not 272, not 271, not
+        260 — and is unsourced in both places. **Second confirmed structural error on the
+        same government portal.** Do not carry 226.
+        **And the portal contradicts itself in its own markup.** Its Kauṣītaki page
+        carries a 30-row adhyāya/khaṇḍa navigation table whose entries sum to **271**,
+        and it serves exactly **271 recitation files, one per khaṇḍa**. Its own data
+        agrees with GRETIL to the khaṇḍa; only its prose sentence says 226. The
+        per-adhyāya vectors differ from GRETIL in exactly two places and cancel:
+        GRETIL  5 9 12 10 10 **10** 12 12 6 10 9 10 7 7 6 10 **7** 9 7 6 7 6 11 8 14 14 12 8 8 9 = 271
+        portal  5 9 12 10 10 **11** 12 12 6 10 9 10 7 7 6 10 **6** 9 7 6 7 6 11 8 14 14 12 8 8 9 = 271
+      which_recension_the_portal_follows: >
+        **The Kerala line, with Sarma.** Its khaṇḍa census (271) and its audio (271 files)
+        both track GRETIL/Sarma, not Lindner's 276. That is useful: the portal's audio is
+        khaṇḍa-aligned to the e-text we already hold, which means the recitation can be
+        joined to the Sanskrit without the concordance work the Keith join requires.
+        Three independent counts now say 271 for the Sarma line — this packet's count of
+        the GRETIL reference strings, the portal's navigation table, and the file count
+        of the portal's audio series.
+    aitareya_aranyaka:
+      books: 5
+      structure: "Ār.1: 5 adhyāyas / 22 khaṇḍas (4,4,8,3,3) · Ār.2: 7 adhyāyas / 26 khaṇḍas (8,4,8,3,1,1,1) · Ār.3: 2 adhyāyas / 12 khaṇḍas (6,6) · Ār.4: 1 undivided unit (Mahānāmnī) · Ār.5: 3 adhyāyas / 14 khaṇḍas (6,5,3)"
+      note: >
+        TITUS/Doyama (from Keith 1909) and Sanskrit Wikisource agree on this exactly,
+        independently. Āraṇyaka 2 also carries a second, continuous khaṇḍa numbering
+        1–26 in parentheses in the Devanāgarī witness ('(एकविंशः)' at 2.4.1,
+        '(पञ्चविंशः)' at 2.6.1, '(२६)' at 2.7.1) — a fourth address form, book-local.
+      colophon: >
+        The text calls itself the āraṇyaka-kāṇḍa OF the Aitareya Brāhmaṇa:
+        'ityaitareyabrāhmaṇāraṇyakakāṇḍe … āraṇyake … khaṇḍaḥ', closing
+        'iti bahvṛcabrāhmaṇāraṇyakam'. Relevant to layer modelling: in its own idiom
+        the Āraṇyaka is a section of the Brāhmaṇa, not a peer of it.
+    shankhayana_aranyaka:
+      adhyayas: 15
+      khandas: 146
+      per_adhyaya: "8,18,7,15,8,20,23,11,8,8,8,8,1,2,1  (counted from GRETIL)"
+      minor_divergence_to_watch: >
+        Keith 1908 cites 'ii, 1-17' where GRETIL's text has 18 khaṇḍas in adhyāya 2.
+        Small, but it is the same class of edition-specific re-bracketing that is a
+        serious problem in the Kauṣītaki Brāhmaṇa, and Keith's ŚĀ i–ii follows
+        Friedländer's text while GRETIL's follows Bhim Dev. Check before aligning.
+      content_map: >
+        1–2 Mahāvrata · 3–6 Kauṣītaki Upaniṣad · 7–8 Saṃhitopaniṣad (parallel to AiĀ 3)
+        · 9–11 āntaram agnihotram / adhyātma · 12 mantras · 13–14 brahmayajña, vairāgya
+        (late) · 15 vaṃśa.
+
+  embedded_upanisads:
+    aitareya_upanisad:
+      locus: "Aitareya Āraṇyaka II.4 – II.6 (āraṇyaka 2, adhyāyas 4, 5, 6)"
+      mapping:
+        - "AiU 1.1 = AiĀ II.4.1  (ātmā vā idam eka evāgra āsīt)"
+        - "AiU 1.2 = AiĀ II.4.2"
+        - "AiU 1.3 = AiĀ II.4.3"
+        - "AiU 2   = AiĀ II.5, UNDIVIDED  (puruṣe ha vā ayam ādito garbho bhavati)"
+        - "AiU 3   = AiĀ II.6, UNDIVIDED  (ko 'yam ātmeti vayam upāsmahe)"
+      the_precision: >
+        **Write 'AiĀ 2.5', not 'AiĀ 2.5.1'.** Keith, *Aitareya Āraṇyaka* 1909, headnote
+        to Index V, p. 354, states it flatly: "As II, 5 and 6 have no Khaṇḍas, the II is
+        repeated where necessary to avoid ambiguity." Only II.4 is subdivided, into
+        three. Verified independently against the TITUS/Doyama text, where units 10, 11
+        and 12 — adhyāyas 5, 6 and 7 of āraṇyaka 2 — carry no Paragraph divisions at
+        all, while unit 9 (adhyāya 4) carries three. Sanskrit Wikisource prints
+        '2.5.1' and '2.6.1', supplying a khaṇḍa number that is not in the text.
+        A three-level address is therefore WRONG for two of the five sections, and any
+        schema that requires uniform depth will silently invent structure here.
+      also: >
+        Keith p. 9: the numbered sub-sections inside the Upaniṣad in Rājendralāla
+        Mitra's edition and in Max Müller's SBE I translation "seem to be attributable
+        to Rājendralāla himself, as there is no trace of them in any of the MSS.", and
+        printed editions of the *Upaniṣad* follow **Śaṅkara's** sectioning, "which
+        differs greatly from that of Sāyaṇa." So AiU-internal section numbers are
+        editorial and edition-specific. Cite by the Āraṇyaka address, always.
+        Keith's crit. note at the end of II.6 records that "the majority of the MSS. of
+        the text, and of Sāyaṇa's commentary, and of Ānandatīrtha's own commentary, and
+        his ṭīkā, add a seventh Adhyāya" — the vāṅ-me-manasi śānti. Hence AiĀ II.7,
+        which both our witnesses carry. It is not part of the Upaniṣad proper.
+      note: >
+        Do NOT create an upanishad/ text node for this — it lives in aranyaka/ and is
+        cross-referenced, per README 'Embedded texts live once'. The existing
+        `upanishad: enumerated` entry in the śākhā status file already says so and
+        should stay a pointer.
+    kausitaki_upanisad:
+      locus: "Śāṅkhāyana Āraṇyaka adhyāyas 3–6 (= KauṣU 1–4)"
+      evidence: >
+        The GRETIL Śāṅkhāyana Āraṇyaka marks the concordance in its own reference
+        strings: 'śā 3,1 = ku 1,1', 'śā 4,1 = ku 2,1', 'śā 5,1 = ku 3,1',
+        'śā 6,1 = ku 4,1'. Four adhyāyas, one-to-one.
+      note: >
+        A standalone Devanāgarī Kauṣītaki-Brāhmaṇa-Upaniṣad exists on Sanskrit
+        Wikisource and is a slightly different recension from the ŚĀ-embedded text
+        (opens 'चित्रो ह वै गार्ग्यायणिः' against GRETIL's 'citro ha vai gāṅgyāyaniḥ').
+        Record it as a variant witness, not as the home node.
+
+open_questions_for_merge:
+  - id: two-texts-one-layer
+    question: >
+      The rigveda/shakala brāhmaṇa layer holds two texts and the āraṇyaka layer holds
+      two. Does `brahmana/` gain `aitareya/` and `kaushitaki/` subdirectories, and
+      `aranyaka/` gain `aitareya/` and `shankhayana/`? The filesystem path is the
+      Prisma join key, so this is a one-hand decision and is not taken here.
+      Records below use today's paths plus a `text` discriminator.
+  - id: kaushitaki-shakha-affiliation
+    question: >
+      If the Kauṣītaki/Śāṅkhāyana material turns out to belong to a śākhā distinct from
+      Śākala, both the Kauṣītaki Brāhmaṇa and the Śāṅkhāyana Āraṇyaka nodes move out of
+      rigveda/shakala/ entirely. The rigveda/bashkala/ status file currently declares
+      only a saṃhitā layer, so a move would mean creating layers there. See the
+      scholarship section below. **Not resolved by assertion in this packet.**
+  - id: aitareya-aranyaka-as-brahmana-kanda
+    question: >
+      The AiĀ's own colophons style it the āraṇyaka-kāṇḍa of the Aitareya Brāhmaṇa.
+      The repo models āraṇyaka as a sibling layer of brāhmaṇa. Worth a note in the
+      node's `notes` so a reader is not surprised by the colophon; not worth changing
+      the model over.
+
+records:
+
+  # =========================================================================
+  # AITAREYA BRĀHMAṆA
+  # =========================================================================
+
+  - node_path: sources/vedas/rigveda/shakala/brahmana
+    text: aitareya-brahmana
+    veda: rigveda
+    organization: null
+    shakha: shakala
+    layer: brahmana
+    edition: >
+      Theodor Aufrecht, *Das Aitareya Brāhmaṇa. Mit Auszügen aus dem Commentare von
+      Sāyaṇācārya und anderen Beilagen*, Bonn 1879 — electronically entered, converted
+      and edited in Wordcruncher format by Fco. Javier Martínez García,
+      Erlangen/Madrid 1991–1992; TITUS version by Jost Gippert, Frankfurt a.M.,
+      31.1.1997, last revised 21.4.2012 (copyright statement dated 1.11.2013).
+    url: https://titus.fkidg1.uni-frankfurt.de/texte/etcs/ind/aind/ved/rv/ab/ab.htm
+    script: transliteration
+    svara_source?: >
+      no — verified by counting. All 285 units concatenated (702,836 chars),
+      NFC-normalised: U+0951/U+0952 = 0, U+1CD0–U+1CFF = 0, combining U+0301 = 0,
+      U+0300 = 0. Aufrecht 1879 prints the Aitareya Brāhmaṇa without accent.
+    text_layer: unicode
+    license: >
+      public-domain (mūla text). Aufrecht 1879 is itself long out of copyright.
+      TITUS asserts over its own edition: "Copyright TITUS Project, Frankfurt a/M,
+      1.11.2013. No parts of this document may be republished in any form without prior
+      permission by the copyright holder." Per protocol rule 9 that notice does not
+      attach to the mūla text. What is genuinely TITUS's / Martínez García's is the
+      structural markup, the word-index links and the retrieval engine — do not
+      republish those; extract text.
+    status: found-complete
+    where_i_looked: n/a
+    notes: >
+      COMPLETE and verified complete by exhaustive walk: units ab001.htm … ab285.htm all
+      return substantive pages; ab286.htm returns TITUS's 1330-byte "not (yet) available"
+      stub. 285 units = 285 khaṇḍas exactly.
+      Structure is labelled in the source: 'Chapter: N / pañcikā N' at each pañcikā head
+      and 'adʰyāya N, kʰaṇḍaḥ x-y' at each adhyāya head, giving BOTH the continuous
+      1–40 adhyāya number and the khaṇḍa span. This is what makes the concordance table
+      in the summary mechanically derivable rather than asserted.
+      NOTE — GRETIL does NOT hold the Aitareya Brāhmaṇa. Its Brāhmaṇa index lists
+      "Aitareya-Brahmana (input by …) Restricted download / proprietary format from
+      TITUS — Converted file(s) not available at present". TITUS is the only
+      transliterated machine-readable witness.
+      Editorial marks in the text: '+' marks an emendation (prāśnīyā+t); '/' marks a
+      word boundary inside a sandhi-fused form (vedā/rabdhayajño), NOT an accent — a
+      stripper must not treat it as punctuation.
+      Aufrecht's volume also contains extracts from Sāyaṇa's commentary; the TITUS
+      e-text carries the mūla only.
+    date_logged: 2026-08-01
+
+  - node_path: sources/vedas/rigveda/shakala/brahmana
+    text: aitareya-brahmana
+    veda: rigveda
+    organization: null
+    shakha: shakala
+    layer: brahmana
+    edition: >
+      Sanskrit Wikisource, *ऐतरेय ब्राह्मणम्*, 8 pañcikā pages plus a two-part
+      viṣayasūcī. No editor named. Provenance stated on the index page verbatim:
+      "ऐतरेयब्राह्मणस्य प्रतिलिपिरियं श्रीपीटरफ्रैण्डस्य जालस्थते उपलब्धायाः htm
+      सञ्चिकाया यस्या उपयोगः संवर्धनञ्च विहितम्। अस्याः सञ्चिकायाः टङ्कनानन्तरं ज्ञातं
+      यत् पीटरफ्रैण्डस्य जालस्थले उपलब्धा rtf सञ्चिकायाम् ऐतरेयब्राह्मणस्य
+      सम्पूर्णालेखोऽस्ति।" — i.e. copied and enhanced from Peter Freund's HTML files,
+      with the note that a complete RTF exists on the same site. Peter Freund is the
+      founder of the Muktabodha Indological Research Institute, so the real upstream is
+      Muktabodha's digital text.
+    url: https://sa.wikisource.org/wiki/ऐतरेय_ब्राह्मणम्
+    script: devanagari-unicode
+    svara_source?: >
+      no — 409,828 chars across the 8 pañcikās, NFC-normalised: U+0951/U+0952 = 1
+      (a single stray mark in pañcikā 6, noise), Vedic Extensions = 0.
+    text_layer: unicode
+    license: >
+      public-domain (mūla text) + CC-BY-SA 4.0 on the Wikisource compilation.
+      Attribution owed to the anonymous Wikisource contributors and, upstream, to
+      Peter Freund / Muktabodha.
+    status: found-complete
+    where_i_looked: n/a
+    notes: >
+      COMPLETE: khaṇḍa numerals run 1–30, 1–41, 1–50, 1–32, 1–34, 1–36, 1–34, 1–28 =
+      285, matching TITUS exactly. Two numerals (3.21, 6.24) are missing from the
+      markup while their text is present — wiki typos, worth fixing upstream, not
+      textual lacunae.
+      This page carries something TITUS does not: extensive <ref> footnotes that are a
+      running viṣaya/adhikaraṇa index (Mīmāṃsā-style topic headings) plus linked
+      Ṛgveda references for every pratīka. Those footnotes are somebody's editorial
+      apparatus and are NOT part of the mūla — strip them before indexing, and note
+      that their author is unattributed, which is a rule-10 problem the merge pass
+      should record rather than paper over.
+      It also carries the Sanskrit adhyāya colophons ('इत्यष्टमपञ्चिकायां
+      पञ्चमोऽध्यायः') that establish the 5-adhyāyas-per-pañcikā count, and editorial
+      continuous-adhyāya notes ('अध्याय ३५ खण्डः १-८'). It is therefore the best single
+      witness for the citation-convention work.
+      Sub-pages `/विषयसूची(पञ्चिका १-४)` and `/विषयसूची(पञ्चिका ५-८)` hold the topic index.
+      Downloadable raw via ?action=raw.
+    date_logged: 2026-08-01
+
+  # =========================================================================
+  # KAUṢĪTAKI (ŚĀṄKHĀYANA) BRĀHMAṆA
+  # =========================================================================
+
+  - node_path: sources/vedas/rigveda/shakala/brahmana
+    text: kaushitaki-brahmana
+    veda: rigveda
+    organization: null
+    shakha: shakala   # PROVISIONAL — see open_questions_for_merge / scholarship section
+    layer: brahmana
+    edition: >
+      GRETIL, *Kauṣītakibrāhmaṇa (or Śāṅkhāyanabrāhmaṇa)*. Data entry Muneo Tokunaga,
+      March–April 1995, based on the edition by **E. R. Sreekrishna Sarma, Wiesbaden
+      1968 (Verzeichnis der orientalischen Handschriften in Deutschland, Supplementband
+      9,1)**. Initial normalisation Reinhold Grünendahl; TEI conversion Maximilian
+      Mehner. Version of 2020-07-31.
+    url: https://gretil.sub.uni-goettingen.de/gretil/corpustei/sa_kauSItakibrAhmaNa.xml
+    script: transliteration
+    svara_source?: "no — 422,159 chars NFC-normalised: U+0951/0952 = 0, Vedic Ext = 0, U+0301 = 0."
+    text_layer: unicode
+    license: >
+      public-domain (mūla text). GRETIL declares CC-BY-NC-SA 4.0 over the file and adds
+      the standard disclaimer "provided to GRETIL in good faith that no copyright rights
+      have been infringed … will be immediately removed pending resolution of the claim."
+      **FLAGGED, NOT ADJUDICATED (rule 9, final clause):** Sarma 1968 is a genuine
+      critical edition in the VOHD series — manuscript collation and editorial judgement
+      — which is precisely the edge case the protocol says to flag rather than decide.
+      The mūla is ancient and free; Sarma's constituted readings are the live question.
+      Attribution to Sarma and to Tokunaga is owed regardless.
+    status: found-complete
+    where_i_looked: n/a
+    notes: >
+      COMPLETE: 30 adhyāyas, 271 khaṇḍas, no gaps — counted from GRETIL's own
+      KB_adhyāya,khaṇḍa.sentence reference scheme. Ends KB_30,9.36 with the double
+      'iti ha sma āha kauṣītakiḥ' closing formula.
+      TWO WARNINGS from GRETIL's own legacy header, both material:
+        (1) verbatim — "*************[The text is not proofread.]**************"
+        (2) verbatim — "Note that preverbs are partly united with main verbs for
+            convenience in word-search." The token stream is therefore NOT the printed
+            token stream. Do not use this file as the basis of a word index or a
+            sandhi-split without re-separating preverbs.
+      The plaintext transformation writes intra-sentence word boundaries as periods
+      ('asmin.vai.loka.ubhaye.deva.manuṣyā.āsuḥ'), and carries bracketed ritual-context
+      tags '(agnyādhāna)', '(soma: hotraka.śastrāṇi(tṛtīya.savanam))' which are
+      Tokunaga's, not the text's. Strip both.
+      SINGLE WITNESS. No second machine-readable Kauṣītaki Brāhmaṇa was found — not on
+      TITUS, not on Wikisource in any language, not in Devanāgarī anywhere. This is the
+      most fragile of the four texts in digital terms and the one most worth a second
+      independent transcription.
+      Reference form here is adhyāya,khaṇḍa.sentence — a fourth convention again, and a
+      2-level one. There is no pañcikā tier in the KB.
+    date_logged: 2026-08-01
+
+  - node_path: sources/vedas/rigveda/shakala/brahmana
+    text: kaushitaki-brahmana
+    veda: rigveda
+    organization: null
+    shakha: shakala
+    layer: brahmana
+    edition: "— any Devanāgarī digital TEXT (searchable, not page images) —"
+    url: null
+    script: devanagari-unicode
+    svara_source?: "n/a — not found"
+    text_layer: null
+    license: unknown
+    status: not-found
+    where_i_looked: >
+      Sanskrit Wikisource (allpages + search for कौषीतकि / शाङ्खायन / ब्राह्मण — returns
+      only कौषीतकिब्राह्मणोपनिषत्, the Upaniṣad, and Śāṅkhāyana *Śrautasūtra*);
+      Hindi Wikisource (search कौषीतकि ब्राह्मण, शाङ्खायन ब्राह्मण — zero results);
+      GRETIL full index (holds only the Tokunaga transliteration);
+      TITUS (…/ved/rv/kb/kb.htm returns the 1330-byte not-available stub);
+      sanskritdocuments.org/doc_veda (no Ṛgvedic Brāhmaṇa at all — its Brāhmaṇa holdings
+      are Taittirīya and Kauthuma);
+      sanskritweb.net (rigveda/ yajurveda/ samaveda/ sansdocs/ indexes walked — no
+      Ṛgvedic Brāhmaṇa or Āraṇyaka; its Brāhmaṇa material is Taittirīya only).
+    notes: >
+      **Scope of this not-found narrowed after further searching: Devanāgarī PAGE IMAGES
+      of the Śāṅkhāyana Brāhmaṇa DO exist and are free — see the
+      vedicheritage.gov.in/flipbook/Shankhayana_Brahmanam record below, 116 pages,
+      verified by reading page 30.** What does not exist anywhere is a searchable
+      Devanāgarī *text*.
+      The Aitareya has two machine-readable witnesses; its sibling has one, and that one
+      is romanised, self-declared unproofread, and normalised for word-search. Producing
+      a Devanāgarī Kauṣītaki text — by transliterating GRETIL, or by OCRing the
+      Ānandāśrama scan — is a concrete, bounded piece of work that would materially
+      improve the corpus's weakest node.
+    date_logged: 2026-08-01
+
+  # =========================================================================
+  # AITAREYA ĀRAṆYAKA
+  # =========================================================================
+
+  - node_path: sources/vedas/rigveda/shakala/aranyaka
+    text: aitareya-aranyaka
+    veda: rigveda
+    organization: null
+    shakha: shakala
+    layer: aranyaka
+    edition: >
+      TITUS, *Aitareya-Āraṇyaka*, on the basis of the edition by **Arthur Berriedale
+      Keith, *The Aitareya Āraṇyaka*, Oxford 1909**; electronically prepared by
+      **Eijiro Doyama, Osaka, 20.4.2017**; TITUS version by Jost Gippert,
+      Frankfurt a.M., 19.11.2017.
+    url: https://titus.fkidg1.uni-frankfurt.de/texte/etcs/ind/aind/ved/rv/aa/aa.htm
+    script: transliteration
+    svara_source?: >
+      **partial — yes for books 4 and 5, no for books 1–3.** Counted: 233,909 chars
+      NFC-normalised across all 18 units. Combining U+0301 (udātta) = 92, U+0300
+      (svarita) = 1, and every one of them falls in units 15–18. Unit 15 = Āraṇyaka 4
+      (Mahānāmnī), 30 marks. Units 16/17/18 = Āraṇyaka 5 adhyāyas 1/2/3, 15/26/21 marks
+      plus the single grave. Units 1–14 (Āraṇyakas 1, 2, 3) = zero.
+      NFC was applied first; these texts contain no Devanāgarī, so ś/ṇ etc. are
+      precomposed and every surviving combining acute sits on a vowel with no
+      precomposed form (vidā́ magʰavan, bŕ̥haspátir, ánu mā́ṃ, vā́g devy ā̀vīt).
+      They are real accent marks, not the U+0301/NFD artefact.
+    text_layer: unicode
+    license: >
+      public-domain (mūla text). Keith 1909 is US public domain (pre-1929). TITUS
+      asserts "Copyright TITUS Project, Frankfurt a/M, 20.11.2017. No parts of this
+      document may be republished…" — per rule 9 this does not attach to the mūla.
+      What is genuinely Doyama's and TITUS's: the digital constitution, the
+      page/line-of-edition apparatus and the markup. Credit Keith, Doyama and Gippert.
+    status: found-complete
+    where_i_looked: n/a
+    notes: >
+      COMPLETE and the single best artefact in this packet. 18 units aa001–aa018;
+      aa019 returns the not-available stub. Ends 'ity aitareyapañcamāraṇyake tṛtīyo
+      'dhyāyaḥ // iti pañcamāraṇyakaṃ samāptam'.
+      **It carries Keith's page and line numbers inline** ('Page of ed.: 75 / Line of
+      ed.: 1'), so the e-text joins to the 1909 print edition mechanically — page-exact
+      citation is possible without owning the scan. It also carries MS variants in
+      braces ('{ánu mā R}') and Keith's conjectures ('{"So I conjecture: ca kīrtayiṣet
+      all MSS. and edd."}') and Doyama's disagreements with Keith ('{Ed Keith puru
+      vā́raṃ}', '{Keith reads …}'). That is an apparatus criticus in the file. It must be
+      stripped for a reading text and it should be PRESERVED as structured data — it is
+      the only place in this packet where the manuscript disagreement is visible.
+      It opens with Keith's own editorial decision, verbatim: "{The Śānti-verses,
+      attached here or to other Adhyāyas in some MSS. and edd., are not adopted below,
+      because '(t)here can be no doubt that these verses form no integral part of the
+      Aitareya Āraṇyaka.' (Ed. Keith 77 n. 1.)}" — note that the Devanāgarī Wikisource
+      witness DOES print those śānti verses at the head. The two witnesses differ on
+      exactly the point Keith flags.
+      Structure map (unit → locus): 1–5 = Ār.1 adhy.1–5 · 6–12 = Ār.2 adhy.1–7 ·
+      13–14 = Ār.3 adhy.1–2 · 15 = Ār.4 (undivided) · 16–18 = Ār.5 adhy.1–3.
+      GRETIL does NOT hold the Aitareya Āraṇyaka (its Āraṇyaka index has only
+      Śāṅkhāyana, plus Kāṭhaka and Taittirīya as TITUS-only stubs).
+    date_logged: 2026-08-01
+
+  - node_path: sources/vedas/rigveda/shakala/aranyaka
+    text: aitareya-aranyaka
+    veda: rigveda
+    organization: null
+    shakha: shakala
+    layer: aranyaka
+    edition: >
+      Sanskrit Wikisource, *ऐतरेय आरण्यकम्* — the complete text on one page, with
+      duplicate sub-pages for Āraṇyaka 1 (adhyāyas 1–5) and Āraṇyaka 5 (adhyāyas 1–3)
+      and single pages for Āraṇyakas 2, 3, 4. No editor named.
+    url: https://sa.wikisource.org/wiki/ऐतरेय_आरण्यकम्
+    script: devanagari-unicode
+    svara_source?: >
+      no — ~89,000 chars NFC-normalised, U+0951/0952 = 0, Vedic Extensions = 0.
+      It drops the accents Keith prints in Āraṇyakas 4 and 5. It does preserve pluti
+      numerals (एवा ह्येवैवा ह्यग्ना३इ · विदो३म्) in the Mahānāmnī.
+    text_layer: unicode
+    license: "public-domain (mūla text) + CC-BY-SA 4.0 on the Wikisource compilation."
+    status: found-complete
+    where_i_looked: n/a
+    notes: >
+      COMPLETE: 75 khaṇḍas across the five āraṇyakas (22 + 26 + 12 + 1 + 14), numbered
+      natively as āraṇyaka.adhyāya.khaṇḍa (1.1.1 … 5.3.3), agreeing with TITUS/Doyama
+      exactly and independently. Carries the Sanskrit colophons
+      ('इत्यैतरेयब्राह्मणारण्यककाण्डे तृतीयारण्यके प्रथमाध्याये प्रथमः खण्डः ॥ १ ॥')
+      and, in Āraṇyaka 2 only, a parenthetical continuous khaṇḍa numbering 1–26.
+      Prints the śānti-verses at the head that Keith rejects — a real editorial
+      divergence from the TITUS witness, not a transcription error.
+      The main page is the complete text; the sub-pages are duplicates. Index only the
+      main page or you will double-count.
+      Devanāgarī with no accent is the right script for reading and the wrong source for
+      the svara apparatus. For book 3 (the Saṃhitopaniṣad) this is the readable witness;
+      for books 4–5 use TITUS.
+    date_logged: 2026-08-01
+
+  # =========================================================================
+  # ŚĀṄKHĀYANA (KAUṢĪTAKI) ĀRAṆYAKA
+  # =========================================================================
+
+  - node_path: sources/vedas/rigveda/shakala/aranyaka
+    text: shankhayana-aranyaka
+    veda: rigveda
+    organization: null
+    shakha: shakala   # PROVISIONAL — travels with the Kauṣītaki Brāhmaṇa, see open questions
+    layer: aranyaka
+    edition: >
+      GRETIL, *Śāṅkhāyana-Āraṇyaka*. Data entry **Martin Joachim Kümmel, Jena**, based
+      on the edition by **Bhim Dev, Hoshiarpur 1980 (Vishveshvaranand Indological
+      Series 70)**, and, for adhyāyas 7–15, on the edition published as an appendix to
+      **A. B. Keith, *Aitareya Āraṇyaka*, Oxford 1909, pp. 305–328**.
+      Legacy header carries "(c) this edition M. J. Kümmel 13/01/2015".
+      TEI conversion Maximilian Mehner; version of 2020-07-31.
+    url: https://gretil.sub.uni-goettingen.de/gretil/corpustei/sa_zaGkhAyana-AraNyaka.xml
+    script: transliteration
+    svara_source?: "no — 87,997 chars NFC-normalised: U+0951/0952 = 0, Vedic Ext = 0, U+0301 = 0."
+    text_layer: unicode
+    license: >
+      public-domain (mūla text). GRETIL declares CC-BY-NC-SA 4.0 over the file; Kümmel
+      asserts a copyright over his e-edition. Per rule 9 neither attaches to the mūla.
+      Bhim Dev 1980 is a modern edition and India has no published-edition right; the
+      Keith 1909 appendix is US public domain. Credit Bhim Dev, Keith and Kümmel.
+    status: found-complete
+    where_i_looked: n/a
+    notes: >
+      COMPLETE: 15 adhyāyas, 146 khaṇḍas (8,18,7,15,8,20,23,11,8,8,8,8,1,2,1),
+      closing 'iti śāṅkhāyanāraṇyakaṃ samāptam'. Reference form 'śā adhyāya,khaṇḍa'.
+      **It marks the Kauṣītaki Upaniṣad concordance in its own reference strings** —
+      'śā 3,1 = ku 1,1' through 'śā 6,1 = ku 4,1'. Adhyāyas 3–6 = KauṣU 1–4. That is a
+      machine-readable cross-reference, ready to use, no inference required.
+      Content map: 1–2 Mahāvrata · 3–6 Kauṣītaki Upaniṣad · 7–8 Saṃhitopaniṣad
+      (ŚĀ 7 opens with the same 'ṛtaṃ vadiṣyāmi' śānti as the Aitareya Saṃhitopaniṣad
+      frame; ŚĀ 8 is Sthavira Śākalya's prāṇa-vaṃśa, the parallel to AiĀ 3.2) ·
+      9–11 āntaram agnihotram and adhyātma · 12 mantras · 13–14 brahmayajña/vairāgya,
+      manifestly late (13 quotes the Bṛhadāraṇyaka 'ātmā vā are draṣṭavyaḥ' formula
+      and attributes it to Māṇḍūkeya) · 15 the vaṃśa.
+      **The vaṃśa in ŚĀ 15 is primary evidence for the Kauṣītaki/Śāṅkhāyana relation:**
+      'guṇākhyāc chāṅkhāyanād asmābhir adhītam | guṇākhyaś śāṅkhāyanaḥ kahoḷāt
+      kauṣītakeḥ | kahoḷaḥ kauṣītakir uddālakād āruṇeḥ …' — Śāṅkhāyana is the pupil of
+      Kahoḷa Kauṣītaki. The two names are teacher and pupil in one lineage, which is why
+      the same texts carry both names. Record that; it does not by itself settle the
+      śākhā question.
+      Kümmel marks conjectural restorations with a leading '+' (+anujapet, +pratipat) —
+      an apparatus, strip or preserve deliberately.
+      SINGLE WITNESS. Not on TITUS, not on Wikisource, no Devanāgarī anywhere.
+    date_logged: 2026-08-01
+
+  # =========================================================================
+  # EMBEDDED UPANIṢADS — pointers only. These do NOT get their own nodes.
+  # =========================================================================
+
+  - node_path: sources/vedas/rigveda/shakala/upanishad
+    text: aitareya-upanishad
+    veda: rigveda
+    organization: null
+    shakha: shakala
+    layer: upanishad
+    edition: "cross-reference only — no separate acquisition"
+    url: https://sa.wikisource.org/wiki/ऐतरेय_आरण्यकम्
+    script: n/a
+    svara_source?: "n/a — inherits from the Aitareya Āraṇyaka node"
+    text_layer: n/a
+    license: n/a
+    status: found-complete
+    where_i_looked: n/a
+    notes: >
+      LIVES IN aranyaka/, per README "Embedded texts live once". Locus verified by
+      reading, not by citation: **Aitareya Āraṇyaka 2.4.1–2.6.1**, i.e. āraṇyaka 2,
+      adhyāyas 4, 5, 6. AiU 1.1/1.2/1.3 = AiĀ 2.4.1/2.4.2/2.4.3 (ātmā vā idam eka
+      evāgra āsīt); AiU 2 = AiĀ 2.5.1; AiU 3 = AiĀ 2.6.1 (ko 'yam ātmeti vayam
+      upāsmahe). AiĀ 2.7.1 is the vāṅme-manasi śānti and the closing colophon of
+      āraṇyaka 2 — some editions attach it to the Upaniṣad, most do not; treat as
+      outside.
+      Do not create a duplicate text node. A separately-transmitted Aitareya-Upaniṣad
+      with the commentary ascribed to Śaṅkara exists on GRETIL
+      (sa_aitareyopaniSad-comm.xml, input by the Sansknet project) — that is a
+      *commentary* witness and belongs to the commentary tier, not here.
+    date_logged: 2026-08-01
+
+  - node_path: sources/vedas/rigveda/shakala/upanishad
+    text: kaushitaki-upanishad
+    veda: rigveda
+    organization: null
+    shakha: shakala
+    layer: upanishad
+    edition: "cross-reference only — no separate acquisition"
+    url: https://gretil.sub.uni-goettingen.de/gretil/corpustei/sa_zaGkhAyana-AraNyaka.xml
+    script: n/a
+    svara_source?: "n/a — inherits from the Śāṅkhāyana Āraṇyaka node"
+    text_layer: n/a
+    license: n/a
+    status: found-complete
+    where_i_looked: n/a
+    notes: >
+      LIVES IN aranyaka/. Locus: **Śāṅkhāyana Āraṇyaka adhyāyas 3–6 = Kauṣītaki
+      Upaniṣad 1–4**, marked explicitly in the GRETIL file's own reference strings
+      ('śā 3,1 = ku 1,1' … 'śā 6,1 = ku 4,1').
+      A standalone Devanāgarī *कौषीतकिब्राह्मणोपनिषत्* exists on Sanskrit Wikisource
+      (25,464 chars, unaccented, https://sa.wikisource.org/wiki/कौषीतकिब्राह्मणोपनिषत् )
+      and is a slightly divergent recension — it opens 'चित्रो ह वै गार्ग्यायणिः'
+      where the Āraṇyaka-embedded text has 'citro ha vai gāṅgyāyaniḥ'. Log it as a
+      variant witness for the Upaniṣad-as-transmitted-separately, not as the home node.
+    date_logged: 2026-08-01
+
+  # =========================================================================
+  # THE ACCENTED-PROSE HOLE — a not-found that is the point
+  # =========================================================================
+
+  - node_path: sources/vedas/rigveda/shakala/brahmana
+    text: aitareya-brahmana
+    veda: rigveda
+    organization: null
+    shakha: shakala
+    layer: brahmana
+    edition: "— any ACCENTED edition of any Ṛgvedic Brāhmaṇa or Āraṇyaka prose —"
+    url: null
+    script: null
+    svara_source?: "no — this record exists to say so"
+    text_layer: null
+    license: unknown
+    status: not-found
+    where_i_looked: >
+      TITUS Aitareya Brāhmaṇa (Aufrecht 1879) — 0 marks in 702,836 chars;
+      TITUS Aitareya Āraṇyaka (Keith 1909, Doyama) — marks present but ONLY in books
+      4–5, i.e. only on mantra, 0 in the prose of books 1–3;
+      Sanskrit Wikisource AB — 1 stray mark in 409,828 chars;
+      Sanskrit Wikisource AiĀ — 0;
+      GRETIL Kauṣītaki Brāhmaṇa — 0; GRETIL Śāṅkhāyana Āraṇyaka — 0;
+      sanskritweb.net (Sarma/Stiehl) — full site index walked: it publishes accented
+      Devanāgarī for the Ṛgveda Saṃhitā and for the Taittirīya Brāhmaṇa / Āraṇyaka /
+      Saṃhitā, and holds NOTHING for any Ṛgvedic Brāhmaṇa or Āraṇyaka;
+      sanskritdocuments.org/doc_veda — index walked; its accented Brāhmaṇa material is
+      Taittirīya (taittirIyabrAhmaNam, and an explicitly niḥsvara variant) and Kauthuma;
+      no Aitareya, no Kauṣītaki.
+    notes: >
+      **This is the P5 hole this packet exists to find, and the scholarship says it is
+      not a digitisation gap — it is an extinction.**
+      Keith, HOS 25 §43 p. 96, on the Aitareya Brāhmaṇa: "The text as preserved is
+      unaccented. It is no doubt the case that it originally was duly accented, but the
+      accents have not been preserved by the tradition." His index entry reads "Accents,
+      absence of in Brāhmaṇas of the Ṛgveda, 96" — covering the Kauṣītaki too.
+      Macdonell, *Vedic Grammar for Students* p. 448, lists the accented Brāhmaṇas
+      exhaustively: the Taittirīya and the Śatapatha, and no others.
+      The one printed exception is narrow and unreliable: Keith, *AiĀ* 1909 p. 10 —
+      Rājendralāla Mitra's edition and MSS A and E accent the non-Ṛgvedic verses quoted
+      in full in Āraṇyaka V, and those accents "are often obviously incorrect."
+      Two rules follow. (1) Encode these four texts as unaccented; there is nothing to
+      recover from print or from the web. (2) Do NOT generalise "Brāhmaṇa prose is
+      unaccented" — the Śatapatha and Taittirīya Brāhmaṇa falsify it, and sanskritweb.net
+      publishes a fully accented Taittirīya Brāhmaṇa in Devanāgarī today. The absence is
+      specific to the Ṛgvedic schools, and Keith's Pañcaviṃśa parallel (accented at the
+      Bhāṣikasūtra, gone by Kumārila) shows it is a datable loss.
+      Hand P2-c one specific manuscript query: does any Aitareya or Kauṣītaki MS anywhere
+      carry svara? Keith's answer for the MSS he saw is no.
+    date_logged: 2026-08-01
+
+
+  # =========================================================================
+  # PRINT EDITIONS — all pre-1929 unless noted, i.e. US public domain.
+  # Identifiers verified to resolve. Where several scans of one book exist, the
+  # recommended one is named — and so are the traps.
+  # =========================================================================
+
+  - node_path: sources/vedas/rigveda/shakala/brahmana
+    text: aitareya-brahmana
+    veda: rigveda
+    organization: null
+    shakha: shakala
+    layer: brahmana
+    edition: >
+      Martin Haug, *The Aitareya Brahmanam of the Rigveda*, Bombay 1863. 2 vols.
+      Vol. I = "SANSCRIT TEXT, WITH PREFACE, INTRODUCTORY ESSAY, AND A MAP OF THE
+      SACRIFICIAL COMPOUND"; Vol. II = "TRANSLATION, WITH NOTES". Published by the
+      Director of Public Instruction on behalf of Government; Bombay: Government
+      Central Book Depot; London: Trübner and Co.
+    url: https://archive.org/details/in.ernet.dli.2015.514124
+    script: devanagari-legacy-font
+    svara_source?: >
+      no — Haug prints the AB unaccented and never discusses accentuation of the
+      transmitted text. He treats accent only as the AB's subject matter (AB iii on
+      udātta, anudātta, anudāttatara, svarita: "It is to be repeated with all the four
+      accents"). The silence is the evidence.
+    text_layer: mixed
+    license: public-domain
+    status: found-complete
+    where_i_looked: n/a
+    notes: >
+      **TRAP: both Google-derived 1863 scans on archive.org are Vol. II.** The identifier
+      above (320 leaves, DLI) is the only Vol. I — the Sanskrit text — located. Its OCR
+      is Tesseract-Sanskrit: English front matter gibberish, Devanāgarī body usable.
+      Vol. II (translation), best OCR: `bub_gb_TJi6bIUc6kEC` (554 pp, ABBYY 11).
+      Others: `aitareyabrahman00deptgoog` (Harvard, older Google OCR),
+      `in.ernet.dli.2015.195962`.
+      The **1922 Allahabad reprint** (Panini Office) is the practical reading copy:
+      `aitareyabrahmana04hauguoft` (444 pp), translation complete for all 8 books, and it
+      **prints the 1863 pagination in square brackets**. Its editor's note: "To facilitate
+      references to the original edition, paging of that edition has been given in square
+      brackets… It has not been considered necessary to reprint the Sanskrit text, as
+      better editions of that text are now available." Numbering unchanged. Books I–IV
+      only, cleanest OCR of that range: `in.ernet.dli.2015.104263`.
+      **TRAP: all DLI items 404 on the conventional `<id>_djvu.txt` URL** — real filenames
+      are irregular (e.g. `…/2015.514124.The-Aitareya_djvu.txt`). Fetch
+      `https://archive.org/metadata/<id>` first.
+      Citation form: vol. I uses pañcikā + khaṇḍa in running heads
+      ('ऐतरेयब्राह्मणे चतुर्थपंचिका १४, १५, १६') with adhyāya in colophons; vol. II uses
+      bare 2-level 'book, khaṇḍa' and nothing else — '(see 2,31)', '(see 3,33-38)',
+      'See 1,1-5.'. No 3-number AB citation occurs anywhere in vol. II.
+    date_logged: 2026-08-01
+
+  - node_path: sources/vedas/rigveda/shakala/brahmana
+    text: aitareya-brahmana
+    veda: rigveda
+    organization: null
+    shakha: shakala
+    layer: brahmana
+    edition: >
+      Theodor Aufrecht, *Das Aitareya Brāhmaṇa. Mit Auszügen aus dem Commentare von
+      Sāyaṇācārya und anderen Beilagen*, Bonn: Adolph Marcus, 1879.
+    url: https://archive.org/details/in.ernet.dli.2015.56849
+    script: transliteration
+    svara_source?: >
+      no — unaccented. Aufrecht's 'Handschriften' section discusses MS classes and
+      readings with no mention of Accent or Betonung anywhere.
+    text_layer: mixed
+    license: public-domain
+    status: found-complete
+    where_i_looked: n/a
+    notes: >
+      **The critical text of the AB, and the base of the TITUS e-text.** Keith HOS 25
+      p. 102: "Aufrecht's text is of the greatest possible accuracy… there are but two
+      clear errors, both of word division," and "His excerpts from Sāyaṇa are excellently
+      chosen, and admirably edited."
+      Fully **romanised** — Devanāgarī appears only for the sub-khaṇḍa numerals.
+      **Brāhmaṇa only; the Āraṇyaka is not included.**
+      Contents: Vorrede I–XII · romanised text pp. 1–236 · a Śāṅkhāyanabrāhmaṇa 3,1
+      supplement · Anhang (1) Sāyaṇa extracts pp. 239–403, (2) Verzeichniss der erwähnten
+      Verse, (3) Namenverzeichniss, (4) Anmerkungen pp. 426–445 · Verbesserungen ·
+      "Zur Entgegnung" (reply to Ludwig). An unlisted Wortverzeichniss sits around
+      pp. 403–413 with 3-level entries ('atirātra 3, 41, 2'; 'ativāda 6, 33, 20').
+      Best OCR of the three scans — the Devanāgarī sub-numerals often survive
+      ('|| 30 || ४ ||'), which is what makes the printed A↔B concordance readable.
+      Alternatives: `in.ernet.dli.2015.537227`, `in.gov.ignca.8173` (same physical copy).
+      **p. 235 of this volume is the origin of the phantom "235 khaṇḍas"** — its final
+      text page's recto running head reads "Adhyāya 40, 5.   235". See khanda_count.
+      Keith p. 102 also records that the Ānandāśrama (1896), Nirṇaya Sāgara (1911) and
+      Bibliotheca Indica (Sāmaśramī) editions "agree in the text", and that Haug's 1863
+      text differs only by "mere blunders". **The AB text is stable across editions —
+      unlike the Kauṣītaki.**
+    date_logged: 2026-08-01
+
+  - node_path: sources/vedas/rigveda/shakala/brahmana
+    text: aitareya-brahmana
+    veda: rigveda
+    organization: null
+    shakha: shakala
+    layer: brahmana
+    edition: >
+      Aitareya Brāhmaṇa with **Sāyaṇa's Vedārthaprakāśa**, ed. Paṇḍita Satyavrata
+      Sāmaśramī, Bibliotheca Indica New Series nos. 874, 878, 879, 887, 882, published by
+      the Asiatic Society of Bengal, Calcutta: Satya Press, 1895–1906. 4 vols + a
+      separately issued preface (1906).
+    url: https://archive.org/details/in.ernet.dli.2015.292709
+    script: devanagari-legacy-font
+    svara_source?: "no"
+    text_layer: scanned-no-text
+    license: public-domain
+    status: found-partial
+    where_i_looked: n/a
+    notes: >
+      Volume coverage, as far as prefaces and colophons establish it:
+      vol. I (1895) `in.ernet.dli.2015.292709` = pañcikās 1–2 ·
+      vol. II (1896) `in.ernet.dli.2015.292710` = through pañcikā 3
+      (colophon इति तृतीयपञ्चिका समाप्ता) ·
+      vol. III (1896) `in.ernet.dli.2015.311863`, better OCR at
+      `nszc_the-aitareya-brahmana-rig-veda-vol-3-vedartha-prakash-sayana-acharya-edited`
+      = pañcikās 5–6 (its own preface: पञ्चमषष्ठपञ्चिकात्मके… तृतीयभागे) ·
+      vol. IV `in.ernet.dli.2015.486802`, pt. 2 `in.ernet.dli.2015.292712` = pañcikās 7–8 ·
+      preface (1906) `in.ernet.dli.2015.292713`.
+      **The text layer is Devanāgarī-only OCR and it is poor — zero Latin characters.**
+      Logged `found-partial` because per-volume coverage is inferred rather than seen;
+      the edition as a set is complete. Confirm visually against the page images before
+      building any concordance on it.
+      Citation form: pañcikā + continuous adhyāya 1–40 (vol. III preface:
+      तदेतस्यैतरेयकस्यादितः पञ्चविंशत्यध्यायाः, "the first 25 adhyāyas").
+    date_logged: 2026-08-01
+
+  - node_path: sources/vedas/rigveda/shakala/brahmana
+    text: aitareya-brahmana
+    veda: rigveda
+    organization: null
+    shakha: shakala
+    layer: brahmana
+    edition: >
+      *Aitareya Brāhmaṇam with the Bhāṣya of Śrīmat Sāyaṇācārya*, Ānandāśrama Sanskrit
+      Series no. 32, Part I, ed. Paṇḍita Kāśīnātha Śāstrī Agāśe, pub. Hari Nārāyaṇa Āpṭe,
+      Poona: Ānandāśrama Press, 1896.
+    url: https://archive.org/details/11799015bsb
+    script: devanagari-legacy-font
+    svara_source?: "no"
+    text_layer: scanned-no-text
+    license: public-domain
+    status: found-partial
+    where_i_looked: n/a
+    notes: >
+      **Genuinely partial, and its own title page says so: "(THE FIRST FOUR PANCHIKAS
+      ONLY.)"** Part I = pañcikās 1–4. 569 images; the PDF is 332 MB.
+      1977 Ānandāśrama reprints (Agāśe + Gaṇapatrāo Yādavarāo Nātū), all with OCR:
+      `dytz_aitareya-brahmana-commentary-sayana-bhashya-by-sayana-edited-by-kashinath-shastr` ·
+      `aqxM_aitareya-brahmanam-edited-by-kashinath-shastri-1977-pune-anandashram-press` ·
+      `xJzO_aitareya-brahmnam-by-sayana-acharya-edited-by-kashinath-shastri-1977-poona-aanand-ashram-press` ·
+      `YiXI_aitareya-brahmana-by-sayanacharya-edited-by-kashinath-shastri-1977-pune-aanand-ashram`.
+      Citation form: 3-level, pañcikā.adhyāya.khaṇḍa.
+      Pañcikās 5–8 with Sāyaṇa must come from Sāmaśramī.
+    date_logged: 2026-08-01
+
+  - node_path: sources/vedas/rigveda/shakala/brahmana
+    text: aitareya-brahmana + kaushitaki-brahmana   # one volume covers both
+    veda: rigveda
+    organization: null
+    shakha: shakala
+    layer: brahmana
+    edition: >
+      Arthur Berriedale Keith, *Rigveda Brahmanas: the Aitareya and Kauṣītaki Brāhmaṇas
+      of the Rigveda, translated from the original Sanskrit*, Harvard Oriental Series
+      vol. 25, ed. C. R. Lanman, Cambridge, Mass.: Harvard University Press, 1920.
+      xii + 555 pp.
+    url: https://archive.org/details/in.ernet.dli.2015.84867
+    script: roman
+    svara_source?: "n/a — translation"
+    text_layer: unicode
+    license: >
+      public-domain — published 1920, US PD (pre-1929); Keith d. 1944, so PD in
+      life-plus-70 jurisdictions since 2015. Free to host in full.
+    status: found-complete
+    where_i_looked: n/a
+    notes: >
+      **Translation only — no Sanskrit — and it covers BOTH Brāhmaṇas.** The single most
+      useful English artefact in this packet.
+      Structure: INTRODUCTION pp. 1–103 in eight sections, of which **§1 is a
+      khaṇḍa-by-khaṇḍa AB↔KB concordance** (pp. 1–21) and §8 is "Commentaries and
+      Editions"; TRANSLATION OF THE AITAREYA BRAHMANA pp. 105–344; TRANSLATION OF THE
+      KAUSITAKI BRAHMANA pp. 345–530; General Index 531–546; Sanskrit Index 547–555.
+      §43 (p. 96) is the authoritative statement that the Ṛgvedic Brāhmaṇas are
+      unaccented and that the accent was **lost**, not absent. §3 (p. 36) is Keith's
+      objection to the pañcikā citation scheme.
+      Best scan: `in.ernet.dli.2015.84867` (581 leaves, Osmania copy — TOC, colophons and
+      running heads all legible). Also `rigvedabrahmana00keitgoog` (586, good);
+      `flln_harvard-oriental-series-vol.-25-ed-by-c.-r.-lanman-rig-ved-aitareya-kaushitaki-b`
+      (589, good but a non-English OCR engine yields 'Adhyàyas', 'Paficika');
+      `ryfa-rigveda-brahmanas-the-aitareya-and-kausitaki-trans` (Motilal 1971 reprint,
+      page-for-page identical pagination — safe to cite from);
+      `in.gov.ignca.23771` (fair to poor, heavy speckle).
+      Citation form: pañcikā.khaṇḍa primary with continuous adhyāya in parentheses
+      ('i. 12 (iii. 1).', 'viii. 1 (xxxvi. 1).'); for the KB, flat adhyāya.khaṇḍa in
+      lowercase roman ('KB. xxix. 4').
+      **KB WARNING: Keith translates Lindner's vulgate. Its khaṇḍa numbers do not align
+      with the GRETIL/Sarma Sanskrit from adhyāya 3 onward.** See structures_verified.
+    date_logged: 2026-08-01
+
+  - node_path: sources/vedas/rigveda/shakala/brahmana
+    text: kaushitaki-brahmana
+    veda: rigveda
+    organization: null
+    shakha: shakala
+    layer: brahmana
+    edition: >
+      Bruno Lindner, *Das Kaushîtaki Brâhmana. Erster Theil: Text*, Jena: Hermann
+      Costenoble, 1887.
+    url: https://archive.org/details/kaushitakibrahma00linduoft
+    script: devanagari-legacy-font
+    svara_source?: "no — Keith p. 103, of both KB editions: 'Neither is punctuated.'"
+    text_layer: mixed
+    license: public-domain
+    status: found-complete
+    where_i_looked: n/a
+    notes: >
+      **The critical text of the KB in the vulgate recension — all 30 adhyāyas,
+      276 khaṇḍas.** Carries the MS colophon that fixes the vulgate count, from Bodleian
+      Sansc. 6: 'asmin brāhmaṇe sarvasaṅkhyā || adhyāya 30, khaṇḍikā 276,
+      granthasaṅkhyā 2829'.
+      **Volume II was never published.** The title page reads "HERAUSGEGEBEN UND
+      UEBERSETZT von B. LINDNER … TEXT", and the Vorwort promises "der zweite Theil, der
+      die Uebersetzung und Anmerkungen enthält, wird in kurzer Zeit nachfolgen." Keith,
+      33 years later: "the second volume of the edition, which was to have contained a
+      translation and notes, has never appeared." Rai's 1987 survey lists no second part.
+      **The 'übersetzt' on the title page is a promise, not a description** — catalogue
+      records that describe this book as a translation are wrong. Keith HOS 25 is what
+      filled the gap, 33 years on.
+      **Use the two scans together; they are complementary.** `kaushitakibrahma00linduoft`
+      (184 leaves) has usable Devanāgarī OCR but German front matter as gibberish;
+      `india.history.resource.89733` (178 leaves) has Latin-script OCR, so the Vorwort,
+      Einleitung, MS list, the 276-khaṇḍikā colophon and the KB↔AB concordance are
+      readable there and only there.
+      Does NOT include Vināyaka's commentary — Keith p. 103: "the important work could
+      not be edited from the available MSS."
+      Lindner found both names used inside the same manuscript: in Bodleian O, one
+      scribe's colophons read *Kauṣītakibr.* at the end of adhyāya 15 and
+      *Śāṅkhāyanabr.* at the end of adhyāya 30.
+    date_logged: 2026-08-01
+
+  - node_path: sources/vedas/rigveda/shakala/brahmana
+    text: kaushitaki-brahmana
+    veda: rigveda
+    organization: null
+    shakha: shakala
+    layer: brahmana
+    edition: >
+      E. R. Sreekrishna Sarma (ed.), *Kauṣītaki-Brāhmaṇa*, Verzeichnis der orientalischen
+      Handschriften in Deutschland, Supplementband 9,1, Wiesbaden: Franz Steiner, 1968 —
+      and the three-volume Indian issue carrying **Udaya's** *Kauṣītakibrāhmaṇa-vyākhyāna*.
+    url: https://archive.org/details/shankhayana-kaushitaki-brahmanam
+    script: devanagari-legacy-font
+    svara_source?: "no"
+    text_layer: mixed
+    license: >
+      **copyright-link-only for the apparatus; the mūla is public-domain.**
+      1968 is in copyright in most jurisdictions and Sarma is a true critical edition —
+      the protocol's flagged edge case (rule 9, final clause). Udaya's commentary is a
+      pre-modern text and PD in itself; Sarma's constitution of it is the live question.
+      **FLAGGED, NOT ADJUDICATED. Link; do not host.**
+    status: found-complete
+    where_i_looked: n/a
+    notes: >
+      The Kerala recension — the base of GRETIL's e-text. 30 adhyāyas, 272 khaṇḍas.
+      The set at this identifier is vol. I Text (119 leaves 2-up ≈ 238 pp) + vol. II
+      Udaya on adhyāyas 1–11 (364 leaves) + vol. III Udaya on adhyāyas 12–30 (386 leaves),
+      all with Devanāgarī OCR and unrestricted.
+      **Anomaly worth flagging rather than exploiting: the same 1968 text is
+      lending-restricted elsewhere on archive.org (`kausitakibrahman0000ersr`, 238 pp,
+      whose `_djvu.txt` returns 401) but sits open here.** Cite and link; do not mirror.
+      **Udaya's is the only PRINTED commentary on the Kauṣītaki Brāhmaṇa** — Vināyaka's,
+      the vulgate one, has never been published in full. Given Keith's judgement that the
+      KB is "needlessly and notoriously hard to understand" and its "almost interminable
+      use of the phrase *tasyoktaṃ brāhmaṇam*", vols II–III are the only route into a
+      commented KB that exists.
+      Colophon of the commentary: …तेनोदयाख्यावता विप्रेन्द्रेण कृते… कौषीतकिब्राह्मणव्याख्याने
+      सुखदे सताम्… — work title *Kauṣītakibrāhmaṇa-vyākhyāna*, epithet *Sukhadā*, in three
+      daśakas. One lacuna at the end of adhyāya 28, where the editor notes
+      इतः परं अध्यायसमाप्तिः मातृकासु न दृश्यते. Sarma judges Udaya superior to Vināyaka.
+    date_logged: 2026-08-01
+
+  - node_path: sources/vedas/rigveda/shakala/brahmana
+    text: kaushitaki-brahmana
+    veda: rigveda
+    organization: null
+    shakha: shakala
+    layer: brahmana
+    edition: >
+      Ganga Sagar Rai (ed. and Hindi tr.), *Śāṅkhāyana Brāhmaṇam*, Varanasi: Ratna
+      Publications, 1987.
+    url: https://archive.org/details/uvgr_shankhayana-brahmanam-ed-and-trans-by-ganga-sagar-ray-1987-varanasi-ratna-publications
+    script: devanagari-legacy-font
+    svara_source?: "no"
+    text_layer: mixed
+    license: "copyright-link-only — 1987. Link only. The mūla within it is PD."
+    status: found-complete
+    where_i_looked: n/a
+    notes: >
+      **The highest-priority acquisition for the Kauṣītaki node, for one reason: it prints
+      the Lindner↔Sarma khaṇḍa concordance table.** That table is the only thing that will
+      let the GRETIL Sanskrit be joined to Keith's English. Until it is transcribed, the
+      KB node cannot honestly be marked `structured`.
+      342 leaves; Sanskrit text + Hindi translation, all 30 adhyāyas. Also the only
+      complete modern translation of the KB into an Indian language.
+    date_logged: 2026-08-01
+
+  - node_path: sources/vedas/rigveda/shakala/brahmana
+    text: kaushitaki-brahmana
+    veda: rigveda
+    organization: null
+    shakha: shakala
+    layer: brahmana
+    edition: >
+      *Śāṅkhāyana Brāhmaṇam*, Ānandāśrama Sanskrit Series no. 65, ed. Gulābarāya
+      Vājeśaṃkara Chāyā, Poona 1911 (1st ed.); 2nd ed. 1977.
+    url: https://archive.org/details/zPxz_rigved-antargata-shankhayana-brahmanam-edited-by-gulab-rai-vaje-shankar-chaya-19
+    script: devanagari-legacy-font
+    svara_source?: "no"
+    text_layer: mixed
+    license: public-domain
+    status: found-complete
+    where_i_looked: n/a
+    notes: >
+      Text only, no commentary. 126 leaves. 2nd ed. 1977 (द्वितीयेयमावृत्तिः) at
+      `Lbyu_shankhayana-brahmana-no.-65-anand-ashram-series` (124 leaves).
+      **Keith's verdict, and it should be honoured: "it has only the value of a very
+      mediocre manuscript… It is practically, as opposed to Lindner's text, of no value
+      whatever."** Useful as clean Devanāgarī typesetting for display; never as a witness.
+      Its title page is the source of the Bāṣkala attribution —
+      ऋग्वेदीयबाष्कलशाखायाः "कौषीतकि" इत्यपरसंज्ञं शाङ्खायनब्राह्मणम् — see
+      kaushitaki_shakha_affiliation.
+      **TRAP: `shAkhAyana-kauShitaki-brAhmaNa` is a partial re-scan of this edition,
+      pages 1–80 only, stopping at adhyāya 22. Skip it.**
+    date_logged: 2026-08-01
+
+  - node_path: sources/vedas/rigveda/shakala/aranyaka
+    text: aitareya-aranyaka
+    veda: rigveda
+    organization: null
+    shakha: shakala
+    layer: aranyaka
+    edition: >
+      Arthur Berriedale Keith, *The Aitareya Āraṇyaka, edited from the manuscripts in the
+      India Office and the Library of the Royal Asiatic Society, with introduction,
+      translation, notes, indexes and an appendix containing the portion hitherto
+      unpublished of the Śāṅkhāyana Āraṇyaka*, Anecdota Oxoniensia, Aryan Series pt. 9,
+      Oxford: Clarendon Press, 1909. iv + 390 pp.
+    url: https://archive.org/details/aitareyarayaka0000unse
+    script: devanagari-legacy-font
+    svara_source?: >
+      **partial, and its own editor warns against it.** Keith p. 10: "In the edition of
+      Rājendralāla and in the MSS. A and E only are accents used. These accents are
+      clearly confined to those verses not occurring in the Ṛgveda Saṃhitā which are
+      quoted in full in the Āraṇyaka V. Unfortunately in the edition the accents are often
+      obviously incorrect… The MSS. also, as often, are carelessly and inaccurately
+      accented, and it is therefore not possible to lay stress on the accentuation of any
+      rare words." Critical notes add "Accents do not appear in A, D, P, O, K, L, S",
+      "E omits accents, and K has the accents in many cases obviously wrong", and of
+      Āraṇyaka IV "This Adhyāya is not accented at all in R".
+      **This is the only accented printed source in the entire packet.**
+    text_layer: mixed
+    license: >
+      public-domain — 1909, US PD; Keith d. 1944, PD in life-plus-70 jurisdictions
+      since 2015.
+    status: found-complete
+    where_i_looked: n/a
+    notes: >
+      **Sanskrit text AND translation in one volume, all five āraṇyakas, with a full
+      apparatus criticus over MSS A B C D F G K L O P W X.**
+      Structure: Introduction p. i (§II the commentaries, §III divisions and date, §V the
+      Upaniṣads) · TEXT AND CRITICAL NOTES p. 75 · TRANSLATION AND NOTES p. 161 ·
+      **APPENDIX: ŚĀṄKHĀYANA ĀRAṆYAKA VII–XV p. 305** · INDEXES p. 329.
+      The Appendix is the **editio princeps of Śāṅkhāyana Āraṇyaka VII–XV**, in roman
+      transliteration, from Berlin MS Orient. fol. 630 and Bodleian Sansk. e. 2 — and it
+      opens with an **AiĀ↔ŚĀ concordance table**, which is precisely what collating the
+      two Saṃhitopaniṣads (AiĀ 3 against ŚĀ 7–8) requires. It is also the source GRETIL
+      used for ŚĀ 7–15.
+      No Sanskrit commentary is printed; Sāyaṇa, Śaṅkara and Ānandatīrtha are quoted and
+      discussed in the English notes only.
+      **Best scan: `aitareyarayaka0000unse` (412 pp, Claremont copy, fully public,
+      excellent English OCR and usable Devanāgarī).** Also `in.ernet.dli.2015.195520`
+      (410, best DLI, complete) and `in.gov.ignca.23677` (404, good).
+      **TRAP — do NOT use `in.ernet.dli.2015.405755`:** a Devanāgarī OCR engine was run
+      over the English pages, the `_djvu.txt` is unusable, and the scan is about thirty
+      leaves short. `aitareyaaranyaka0000arth` is the 1969 reprint, borrow-only.
+      Citation form: 3-level āraṇyaka, adhyāya, khaṇḍa, arabic — but II.5 and II.6 have
+      no khaṇḍas; see the Aitareya Upaniṣad entry.
+    date_logged: 2026-08-01
+
+  - node_path: sources/vedas/rigveda/shakala/aranyaka
+    text: aitareya-aranyaka
+    veda: rigveda
+    organization: null
+    shakha: shakala
+    layer: aranyaka
+    edition: >
+      *Aitareyāraṇyakam with Sāyaṇabhāṣya*, Ānandāśrama Sanskrit Series no. 38, ed.
+      Bābāśāstrī Phaḍke, pub. Hari Nārāyaṇa Āpṭe, Poona: Ānandāśrama Press, 1898
+      (śaka 1820).
+    url: https://archive.org/details/AitareyaAranyaka1897No.38AnandAshramSeries
+    script: devanagari-legacy-font
+    svara_source?: "no — not verified as accented; the Sāyaṇa editions print unaccented text."
+    text_layer: mixed
+    license: public-domain
+    status: found-complete
+    where_i_looked: n/a
+    notes: >
+      **Sāyaṇa on all five āraṇyakas — complete.** This is the commentary that covers
+      Āraṇyakas I (Mahāvrata), IV (Mahānāmnī) and V, where Śaṅkara does not reach at all.
+      **METADATA TRAP: archive.org titles this "1897". The title page reads śaka 1820 =
+      CE 1898.** Cite 1898.
+      Cleanest filing is the direct series PDF:
+      https://archive.org/download/Anandashram_Samskrita_Granthavali_Anandashram_Sanskrit_Series/ASS_038_Aitareyaranyakam_with_Sayanabhashya_-_Babasastri_Phadke_1898.pdf
+      Mirrors: `in.ernet.dli.2015.486800` (306) · `in.ernet.dli.2015.345000` (304).
+      Its closing colophon is a gift and a problem at once:
+      **( आदितः संकलनाः — आर॰ ५  अध्या॰ १८  ख॰ ५५ )** — 5 āraṇyakas, 18 adhyāyas,
+      55 khaṇḍas. The adhyāya count matches every other witness; the khaṇḍa count does
+      not. See unresolved_discrepancy_aitareya_aranyaka_khanda_total.
+      Citation form: 3-level, '[ऐ॰ आ॰ २ अ॰ ४ ख॰ २]'; colophons
+      'तृतीयारण्यके प्रथमाध्याये प्रथमः खण्डः ॥ १ ॥'.
+    date_logged: 2026-08-01
+
+  - node_path: sources/vedas/rigveda/shakala/aranyaka
+    text: aitareya-aranyaka
+    veda: rigveda
+    organization: null
+    shakha: shakala
+    layer: aranyaka
+    edition: >
+      Rājendralāla Mitra (ed.), *The Aitareya Āraṇyaka of the Ṛg Veda, with the commentary
+      of Sāyaṇa Āchārya*, Bibliotheca Indica New Series 325, 329, 335, 337, 345,
+      Calcutta: Ganeśa Press, 1876.
+    url: https://archive.org/details/india.history.resource.85672
+    script: devanagari-legacy-font
+    svara_source?: >
+      **partial — this is one of only two witnesses Keith names as printing accents at
+      all**, on the non-Ṛgvedic verses quoted in full in Āraṇyaka V. Keith warns they
+      "are often obviously incorrect, one word having two accents, or a series of words
+      being incorrectly accented so as to show that an error in printing must have taken
+      place." **If accented Ṛgvedic Āraṇyaka material is ever needed, this edition and
+      MSS A and E are the entire supply — and it is unreliable.** Worth checking against
+      the page images.
+    text_layer: mixed
+    license: public-domain
+    status: found-complete
+    where_i_looked: n/a
+    notes: >
+      Sanskrit only, no translation. Complete, all five āraṇyakas, with Sāyaṇa.
+      520 leaves; better OCR than `in.ernet.dli.2015.344820` (518 leaves, whose metadata
+      year "1627" is junk).
+      **Uses a 4-LEVEL citation — āraṇyaka · adhyāya · khaṇḍa · ṛc** (running head
+      '१आ० । ४अ० । २क० । ६-८ऋ० | १०७'). Any address parser must tolerate the extra level.
+      Keith p. 9 notes that the numbered sub-sections in Mitra's edition, carried over
+      into Max Müller's SBE I, "seem to be attributable to Rājendralāla himself, as there
+      is no trace of them in any of the MSS." Do not treat them as textual.
+    date_logged: 2026-08-01
+
+  - node_path: sources/vedas/rigveda/shakala/aranyaka
+    text: shankhayana-aranyaka
+    veda: rigveda
+    organization: null
+    shakha: shakala
+    layer: aranyaka
+    edition: >
+      Arthur Berriedale Keith, *The Śāṅkhāyana Āraṇyaka, with an Appendix on the
+      Mahāvrata*, Oriental Translation Fund New Series vol. XVIII, London: Royal Asiatic
+      Society, 1908. xv + 85 pp.
+    url: https://archive.org/details/sankhayanaaranya00keitrich
+    script: roman
+    svara_source?: "n/a — translation"
+    text_layer: unicode
+    license: "public-domain — 1908."
+    status: found-complete
+    where_i_looked: n/a
+    notes: >
+      **Translation only — no Sanskrit, no commentary.** All 15 adhyāyas with descriptive
+      titles, plus 'Appendix. The Mahavrata' pp. 73–85.
+      Keith names his base texts and they are three different ones: "For books i and ii
+      the translation follows the text of Dr. W. F. Friedlander (Berlin, 1900), for iii-vi
+      that of Cowell, for vii-xv that published by myself." **So this English is a
+      composite over three Sanskrit sources, only one of which — his own 1909 appendix —
+      is what GRETIL used.** Note it before aligning text to translation.
+      Best scan `sankhayanaaranya00keitrich` (116 leaves, Toronto, cleanest text layer).
+      Also `TheSankhayanaAranyakaWithAnAppendixOnTheMahavrata` (98) ·
+      `in.ernet.dli.2015.37909` (108) · `sankhayanaaranya015788mbp` (99, diacritics
+      mangled) · `in.ernet.dli.2015.213476` (98, fair-poor).
+      **TRAP: `dli.ernet.242119` has garbage OCR and its metadata year "1905" is wrong.**
+      Citation form: 2-level, adhyāya in lowercase roman ('i, 1', 'ii, 1-17', 'xii, 20'),
+      khaṇḍas marked inline as '(1.)', '(2.)'.
+    date_logged: 2026-08-01
+
+  - node_path: sources/vedas/rigveda/shakala/aranyaka
+    text: shankhayana-aranyaka
+    veda: rigveda
+    organization: null
+    shakha: shakala
+    layer: aranyaka
+    edition: >
+      E. B. Cowell (ed. and tr.), *The Kauṣītaki-Brāhmaṇa-Upaniṣad, with the commentary of
+      Śaṅkarānanda*, Bibliotheca Indica, Calcutta 1861.
+    url: https://archive.org/details/kaushtakibrhmaa00mdgoog
+    script: devanagari-legacy-font
+    svara_source?: "no"
+    text_layer: mixed
+    license: public-domain
+    status: found-partial
+    where_i_looked: n/a
+    notes: >
+      Covers **ŚĀ iii–vi only** — the Kauṣītaki Upaniṣad — with Śaṅkarānanda, the only
+      commentary that exists on any part of the Śāṅkhāyana Āraṇyaka. Keith used it as his
+      base text for those four adhyāyas.
+      Coverage NOT independently verified against the page images; a second copy is at
+      `dli.bengal.10689.10032`. Logged `found-partial` against the coverage claim, not
+      against the edition.
+      Cowell numbers the Upaniṣad as chapters 1–4 standing alone, which is one of the
+      competing countings documented in shankhayana_aranyaka_numbering_is_unstable.
+    date_logged: 2026-08-01
+
+  - node_path: sources/vedas/rigveda/shakala/aranyaka
+    text: shankhayana-aranyaka
+    veda: rigveda
+    organization: null
+    shakha: shakala
+    layer: aranyaka
+    edition: "W. F. Friedländer, Sanskrit text of Śāṅkhāyana Āraṇyaka i–ii (the Mahāvrata), Berlin 1900"
+    url: null
+    script: null
+    svara_source?: "n/a — not found"
+    text_layer: null
+    license: unknown
+    status: not-found
+    where_i_looked: >
+      archive.org, searched under the title, under Friedlander/Friedländer as creator,
+      and under Śāṅkhāyana title variants. Not present under any searched form.
+    notes: >
+      This is the missing piece for **ŚĀ i–ii, the Mahāvrata** — the only part of the
+      Śāṅkhāyana Āraṇyaka whose Sanskrit is not otherwise available in a public-domain
+      edition. Keith's 1909 appendix covers vii–xv; Cowell 1861 covers iii–vi. GRETIL's
+      text of i–ii rests on Bhim Dev, Hoshiarpur 1980, which is modern and not freely
+      available.
+      **Unconfirmed negative.** The search was archive.org-centric; a German digital
+      library (MDZ/BSB Munich, GDZ Göttingen) was not checked and is the likely home of
+      a Berlin 1900 dissertation. Worth one more look before this is treated as lost.
+    date_logged: 2026-08-01
+
+  # =========================================================================
+  # VEDIC HERITAGE PORTAL FLIPBOOKS (IGNCA, Govt. of India)
+  # Complete page-image scans of all four texts, free, no registration.
+  # Not discoverable by URL guessing and not indexed usefully — the paths are
+  # irregular and the plausible guesses 404. Every one below was verified by
+  # fetching the flipbook HTML, counting the img/N.jpg references, and READING
+  # sample page images to identify the edition and check for svara marks.
+  # Harvest pattern: https://vedicheritage.gov.in/flipbook/<NAME>/img/<N>.jpg
+  # =========================================================================
+
+  - node_path: sources/vedas/rigveda/shakala/brahmana
+    text: aitareya-brahmana
+    veda: rigveda
+    organization: null
+    shakha: shakala
+    layer: brahmana
+    edition: >
+      *Ṛgvedīyam Aitareyabrāhmaṇam*, "śrīmat-sāyaṇācārya-kṛta-'Vedārthaprakāśa'-nāma-
+      bhāṣyeṇa sahitam, 'Saralā'-khyayā hindī-vyākhyayā copetam, ṭippaṇyādi-samanvitam" —
+      i.e. with **Sāyaṇa's Vedārthaprakāśa AND a Hindi commentary called *Saralā*, with
+      notes**. Editor and translator **Dr. Sudhākara Mālavīya** (Sanskrit–Pali Dept.,
+      Kāśī Hindu Viśvavidyālaya); prefatory essay by Paṇḍita A. Mu. Rāmanātha Dīkṣita,
+      former head of the Veda department, Prācya Vidyā Dharmavijñāna Saṃkāya, BHU.
+      Series: **Prācyabhāratī Granthamālā 14**. Publisher: **Tārā Book Agency, Vārāṇasī**.
+      Part I = "प्रथमो भागः [प्रथमतः - चतुर्थपञ्चिकान्तः]", pañcikās 1–4.
+    url: https://vedicheritage.gov.in/flipbook/Aitareya_Brahmana_Vol_I/
+    script: devanagari-legacy-font   # page images, no text layer
+    svara_source?: "no — sampled pages carry no svara marks."
+    text_layer: scanned-no-text
+    license: >
+      **Mixed, and the split matters.** The mūla text and Sāyaṇa's bhāṣya are
+      public-domain and remain so however this volume is typeset (rule 9). Mālavīya's
+      *Saralā* Hindi commentary, his ṭippaṇīs and Dīkṣita's prefatory essay are modern
+      original work and are the editors' — link, do not host, do not extract.
+      Hosted free by IGNCA / Ministry of Culture, Government of India.
+    status: found-complete
+    where_i_looked: n/a
+    notes: >
+      **775 page images** in vol. I. Vol. II at
+      https://vedicheritage.gov.in/flipbook/Aitareya_Brahmana_Vol_II/ — **816 images**,
+      presumably pañcikās 5–8 (not verified page by page).
+      Identified by reading the title page (img/4.jpg). Verified as substantive by
+      reading img/30.jpg, a page of the viṣayānukramaṇikā which numbers adhyāyas
+      **both ways at once**: "[१०] द्वितीयपञ्चिकायाः पञ्चमोऽध्यायः" — continuous adhyāya
+      10 in brackets, pañcikā 2 adhyāya 5 in words. That matches this packet's
+      concordance table exactly and is a fifth independent confirmation of it.
+      **This is the most usable form of the Aitareya Brāhmaṇa that exists for a reader
+      who wants the tradition's own explanation**: mūla + Sāyaṇa + a modern Indian-language
+      commentary, complete, free. Nothing on archive.org combines all three.
+      Its viṣayānukramaṇikā is the same genre as — and possibly the source of — the
+      topic-heading footnotes carried by the Sanskrit Wikisource text.
+      Harvestable as sequential JPEGs; ~100–230 kB per page.
+    date_logged: 2026-08-01
+
+  - node_path: sources/vedas/rigveda/shakala/brahmana
+    text: kaushitaki-brahmana
+    veda: rigveda
+    organization: null
+    shakha: shakala
+    layer: brahmana
+    edition: >
+      *Ṛgvede Śāṅkhāyanabrāhmaṇam* — Devanāgarī, text only, no commentary. Running head
+      "ऋग्वेदे शाङ्खायनब्राह्मणम्" with the adhyāya in brackets at the outer margin
+      ("[८ अध्यायः]"). Edition not named on the sampled page; the format, extent and
+      absence of commentary are consistent with **Ānandāśrama Sanskrit Series 65**
+      (ed. Gulābarāya Vājeśaṃkara Chāyā) — **attribution unverified**, per rule 7.
+    url: https://vedicheritage.gov.in/flipbook/Shankhayana_Brahmanam/
+    script: devanagari-legacy-font
+    svara_source?: "no — verified by reading page 30 at full resolution. No svara marks anywhere on the page."
+    text_layer: scanned-no-text
+    license: >
+      public-domain (mūla text). Hosted free by IGNCA / Ministry of Culture, Govt. of
+      India. If the edition is Ānandāśrama 65 (1911) the whole volume is PD.
+    status: found-complete
+    where_i_looked: n/a
+    notes: >
+      **116 page images. This is the ONLY Devanāgarī Kauṣītaki/Śāṅkhāyana Brāhmaṇa in
+      any digital form that this packet located** — it exists nowhere on Wikisource in
+      any language, not on TITUS, not on sanskritdocuments, not on sanskritweb.
+      Verified by reading img/30.jpg: continuous Devanāgarī prose with khaṇḍa numerals
+      ॥३॥ ॥४॥ inline, no commentary, no accent. Citation form 2-level, adhyāya.khaṇḍa.
+      **ATTRIBUTION DOUBT, recorded not resolved:** the sampled page carries no edition
+      statement. Identify from the title page (img/1–8) before this is cited as a
+      specific edition. If it is Ānandāśrama 65, remember Keith's verdict — "practically,
+      as opposed to Lindner's text, of no value whatever" — and use it for display, not
+      as a witness.
+      116 pages for 30 adhyāyas and ~276 khaṇḍas is dense but plausible for a text-only
+      Devanāgarī setting; do not assume it is abridged without checking the last page.
+    date_logged: 2026-08-01
+
+  - node_path: sources/vedas/rigveda/shakala/aranyaka
+    text: aitareya-aranyaka
+    veda: rigveda
+    organization: null
+    shakha: shakala
+    layer: aranyaka
+    edition: >
+      Aitareyāraṇyakam with **Sāyaṇa's bhāṣya** — mūla in bold display lines, Sāyaṇa as
+      running prose, with critical footnotes on manuscript variants ("१ ख. ग. घ. 'न्ति ।
+      तेने ।") and an alternative-reading apparatus ("* आयतस्येति पाठम्"). Running head
+      "ऐतरेयारण्यकम्" with a dual locus at the outer margin. Edition not named on the
+      sampled page; **306 images matches the leaf count of Ānandāśrama Sanskrit Series 38
+      (Bābāśāstrī Phaḍke, Poona 1898)** — attribution probable but UNVERIFIED.
+    url: https://vedicheritage.gov.in/flipbook/Aitareya_Aranyakam/
+    script: devanagari-legacy-font
+    svara_source?: "no — verified by reading page 40 at full resolution; no svara marks."
+    text_layer: scanned-no-text
+    license: >
+      public-domain (mūla text and Sāyaṇa's bhāṣya). Hosted free by IGNCA / Ministry of
+      Culture, Govt. of India. If ĀSS 38 (1898), the whole volume is PD.
+    status: found-complete
+    where_i_looked: n/a
+    notes: >
+      **306 page images.** Verified by reading img/40.jpg — body page ३३, Āraṇyaka 1,
+      with Sāyaṇa's commentary present and substantial.
+      **Its running head resolves a numbering question:** "अध्या॰२ ख॰४(८)]" — adhyāya 2,
+      khaṇḍa 4, with **(८) = the continuous khaṇḍa number within the āraṇyaka**. Āraṇyaka
+      1 adhyāya 1 has 4 khaṇḍas, so adhyāya 2 khaṇḍa 4 is the 8th of the book. That
+      matches this packet's structure exactly and confirms that the Sāyaṇa editions carry
+      the same dual numbering Aufrecht uses for the Brāhmaṇa.
+      Cross-references inside the commentary use the 3-level form "[ ए॰ आ॰ ५ अ॰ १ ख॰ ४ ]".
+      **Sāyaṇa is the only commentary on Āraṇyakas I, IV and V** — Śaṅkara never touched
+      them — so this scan is the only free route into the Mahāvrata and Mahānāmnī with a
+      traditional explanation attached.
+      Same caution as the Śāṅkhāyana flipbook: confirm the edition from the title page
+      before citing it as ĀSS 38. The leaf count is suggestive, not proof.
+    date_logged: 2026-08-01
+
+  - node_path: sources/vedas/rigveda/shakala/aranyaka
+    text: shankhayana-aranyaka
+    veda: rigveda
+    organization: null
+    shakha: shakala
+    layer: aranyaka
+    edition: "Śāṅkhāyanāraṇyakam — Devanāgarī scan, edition not identified."
+    url: https://vedicheritage.gov.in/flipbook/Sankhayana_Aranyakam/
+    script: devanagari-legacy-font
+    svara_source?: "not checked — page images only, no page read at full resolution."
+    text_layer: scanned-no-text
+    license: "unknown pending identification; the mūla is public-domain regardless (rule 9)."
+    status: found-partial
+    where_i_looked: n/a
+    notes: >
+      **Only 58 page images** — flagged as `found-partial` for that reason and that
+      reason alone. Fifty-eight pages for fifteen adhyāyas and 146 khaṇḍas is possible
+      for a dense text-only Devanāgarī setting but is small enough to warrant checking
+      the last page against 'iti śāṅkhāyanāraṇyakaṃ samāptam' before the coverage claim
+      is trusted. Protocol rule: log the actual extent, not the title page's promise —
+      here the extent is not yet established either way.
+      Page images fetch fine (img/20.jpg = 674 kB, 200). Edition unidentified; no page
+      was read at resolution. **This is the one open verification task left in the packet
+      and it is about ten minutes of work.**
+    date_logged: 2026-08-01
+
+  - node_path: sources/vedas/rigveda/shakala/aranyaka
+    text: aitareya-aranyaka
+    veda: rigveda
+    organization: null
+    shakha: shakala
+    layer: aranyaka
+    edition: >
+      "Contribution of Aitareya Aranyaka to Phonetics" — a 5-page paper in the Vijñāna
+      Bhāratī series hosted by the Vedic Heritage Portal. Author not extracted (the PDF
+      carries a large rotated watermark that defeats pdftotext).
+    url: https://vedicheritage.gov.in/Vijnana_Bharati/15.pdf
+    script: roman
+    svara_source?: "n/a — secondary literature"
+    text_layer: mixed
+    license: unknown
+    status: found-complete
+    where_i_looked: n/a
+    notes: >
+      Logged because it is directly on **AiĀ book 3, the node this project has flagged as
+      a sleeper for the svara apparatus** — and because it is a piece of secondary
+      literature on exactly that text from an Indian institutional source, which is rare.
+      6.6 MB, 5 pages, fetches cleanly. `pdftotext` returns scrambled output from the
+      watermark; extract with layout preservation or read the page images.
+      Not a source text. Recorded for the reading list, not for the corpus.
+    date_logged: 2026-08-01
+
+  # =========================================================================
+  # RECITATION AUDIO — the accent that survives in the voice
+  # =========================================================================
+
+  - node_path: sources/vedas/rigveda/shakala/brahmana
+    text: kaushitaki-brahmana
+    veda: rigveda
+    organization: null
+    shakha: shakala
+    layer: brahmana
+    edition: >
+      Kauṣītaki Brāhmaṇa recitation series, Vedic Heritage Portal (IGNCA, Ministry of
+      Culture, Government of India). Reciter(s) not named on the media files; the series
+      is embedded in Bootstrap modals on /brahmanas/kausitaki-shankhyayana-brahmana/ and
+      is therefore invisible to a normal page scrape.
+    url: https://vedicheritage.gov.in/Kaushitaki_Brahmana/RVKB-01.01.mp4
+    script: n/a
+    svara_source?: >
+      **yes — in the voice.** This is the only surviving carrier of accent for any of
+      the four texts. The printed and digital texts are all flat; a recitation is not.
+      Whether these reciters render svara or chant monotone (which is what Haug reports
+      hearing for the Aitareya in 1863) is an audio question and is NOT settled here —
+      **listen before claiming it.** That listening is BV's, not a collector's.
+    text_layer: n/a
+    license: >
+      unknown — Government of India / IGNCA, terms not stated on the media endpoint.
+      **Check terms before ingesting**, per the protocol's seed-source note on
+      vedicheritage.gov.in. And per this repo's rules, audio never enters git: this is a
+      `recordings/_recordings.yaml` manifest entry, not a file to commit.
+    status: found-partial
+    where_i_looked: n/a
+    notes: >
+      **THE BIGGEST FIND IN THE PACKET. The Kauṣītaki Brāhmaṇa is recorded khaṇḍa by
+      khaṇḍa, and the files are directly addressable at a predictable URL.**
+      Pattern: `https://vedicheritage.gov.in/Kaushitaki_Brahmana/RVKB-{adhyāya:02d}.{khaṇḍa:02d}.mp4`
+      **CENSUS — done by me, by HEAD-probing the full 30 × 20 grid, not inferred from the
+      page: 268 files present, HTTP 200, Content-Type video/mp4.** Sizes 13–34 MB.
+      Per-adhyāya count, with no gaps inside any adhyāya:
+        5,9,9,10,10,11,12,12,6,10,9,10,7,7,6,10,7,9,7,6,7,6,11,8,14,14,12,8,7,9 = **268**
+      **Alignment to the GRETIL/Sarma text is close but NOT exact, and this must not be
+      glossed.** GRETIL's vector is
+        5,9,12,10,10,10,12,12,6,10,9,10,7,7,6,10,7,9,7,6,7,6,11,8,14,14,12,8,8,9 = 271.
+      They differ in three adhyāyas: **adhyāya 3 (audio 9, text 12 — three khaṇḍas with
+      no recording), adhyāya 6 (audio 11, text 10), adhyāya 29 (audio 7, text 8).**
+      Everywhere else they agree exactly, which is 27 of 30 adhyāyas — good enough to
+      auto-align most of the text and bad enough that a blind join would silently
+      mis-file audio in three places. Resolve those three before building the mapping.
+      Logged `found-partial` for that reason: the series is not a complete khaṇḍa census.
+      **The other three texts have NO recitation media on the portal** — I diffed all four
+      pages; only the Kauṣītaki page contains .mp4 references. For the Aitareya
+      Brāhmaṇa/Āraṇyaka the only recitation is event footage on YouTube, not a systematic
+      series: `3QpDeeg7-Is` (Veda Rakshanam Trust pārāyaṇam), `COpkpo4HARY` (2nd Rig Veda
+      Brahmana Aranyaka Parayanam, Alwarthirunagar, Chennai, 2023), `Pf_aQP998zA`
+      (Aitareya Brahmanam recitation at Ayodhya), and the *Arya Rishi* channel
+      (`-J01GRRlMrc`, 35 videos, verified NOT a complete series). A Facebook page
+      `sarvaveda4` posts numbered "Rigveda Aitareya Brahmana Paatha" items and may be a
+      real series — worth a dedicated crawl.
+      **Why this matters more than its size suggests:** the project's thesis is that the
+      Brāhmaṇa layer is more fragile than the Saṃhitā because it has fewer carriers and
+      no permutation checksum. Here is the least-carried of the two Ṛgvedic Brāhmaṇas,
+      recorded end to end, by a government body, and effectively undiscoverable. If the
+      accent is in those voices it is the only place it still is.
+    date_logged: 2026-08-01
+
+  # =========================================================================
+  # THE ONE ACCENTED WITNESS — and it is exactly where the thesis predicts
+  # =========================================================================
+
+  - node_path: sources/vedas/rigveda/shakala/aranyaka
+    text: aitareya-aranyaka
+    veda: rigveda
+    organization: null
+    shakha: shakala
+    layer: aranyaka
+    edition: >
+      *Ṛgvedīya Aitareyopaniṣat*, sasvara (accented) Devanāgarī edition,
+      sanskritdocuments.org. Credited only: **"Encoded and proofread by Premraj Ware."**
+      **NO SOURCE EDITION IS NAMED** — a rule-6 problem recorded, not papered over.
+    url: https://sanskritdocuments.org/doc_upanishhat/aitareyopaniShatsasvarA.html
+    script: devanagari-unicode
+    svara_source?: >
+      **YES — verified by counting.** NFC-normalised: 5,601 Devanāgarī characters,
+      **329 marks in U+0951/U+0952 and 33 in Vedic Extensions U+1CD0–U+1CFF**
+      (including U+1CDA VEDIC TONE DOUBLE SVARITA, e.g. एवा᳚ग्र, मरीचीर्मरमा᳚पः).
+      88 of 115 Devanāgarī lines carry marks; the 27 that do not are headings and
+      colophons. The accent runs through the **prose body**, not merely the śānti:
+      आत्मा वा इदमेक एवा᳚ग्र आसीन्नान्यत्किञ्च॑न मि॒षत् । स ईक्षत लोकान्नु सृ॑जा इ॒ति ॥ १॥
+    text_layer: unicode
+    license: >
+      public-domain (mūla text). sanskritdocuments.org's standard terms apply to the
+      encoding. Attribution owed to Premraj Ware.
+    status: found-complete
+    where_i_looked: n/a
+    notes: >
+      **This is the single accented witness to any Ṛgvedic Āraṇyaka prose that exists in
+      digital form, and its locus is the whole point.** It covers exactly AiĀ II.4–II.6 —
+      the Aitareya Upaniṣad — and its own colophons say so:
+      'इत्यैतरेय-द्वितीयारण्यके चतुर्थोऽध्यायः' · 'इत्यैतरेयारण्यके पञ्चमोऽध्यायः' ·
+      'इत्यैतरेयाण्यके षष्ठोऽध्यायः' (sic, for °āraṇyake), closing
+      'इत्यैतरेयोपनिषत्सम्पूर्णा'.
+      **It also settles the khaṇḍa question at that locus independently.** Its khaṇḍas run
+      **continuously 1–5 across the three adhyāyas** — adhyāya 4 holds khaṇḍas 1, 2, 3;
+      adhyāya 5 holds khaṇḍa 4; adhyāya 6 holds khaṇḍa 5. That is exactly what Keith
+      reports from a manuscript colophon, that such a number "really means that this is
+      the fourth Khaṇḍa of the whole Upaniṣad", and it corroborates his statement that
+      AiĀ II.5 and II.6 are not internally divided.
+      **The reading this supports, and it is the project's thesis in miniature:** the
+      embedded Upaniṣad kept its svara because it kept being recited; the Brāhmaṇa prose
+      on either side of it lost the svara because it stopped being recited. The boundary
+      between accent and no-accent falls inside one text, at a section break, and it
+      tracks liturgical use rather than genre.
+      **DO NOT OVERSTATE IT.** Keith says the AiĀ manuscripts accent only the fully-quoted
+      non-Ṛgvedic verses of Āraṇyaka V, and that even those are "carelessly and
+      inaccurately accented". An accented Upaniṣad *prose* text is therefore almost
+      certainly a modern notation of the living Upaniṣad-recitation practice, not a
+      manuscript reading — and with no source edition named there is no way to tell whose
+      practice. `svara_source?` is honestly `yes`; whether those svaras are *right* is
+      exactly the question the hand-off seam reserves for BV and the Ghanapāṭhi.
+      Formats available: HTML, ITX, and PDF in Devanāgarī, Tamil, Telugu, Kannada,
+      Gujarati. Note the `.itx` is the transliteration source and carries **no** accent
+      characters — take the HTML or the Devanāgarī PDF, not the ITX.
+      Fetching requires a browser User-Agent; the site returns HTTP 406 otherwise.
+    date_logged: 2026-08-01
+
+  # =========================================================================
+  # TRANSLATIONS — free, verified-open access points
+  # =========================================================================
+
+  - node_path: sources/vedas/rigveda/shakala/brahmana
+    text: aitareya-brahmana
+    veda: rigveda
+    organization: null
+    shakha: shakala
+    layer: brahmana
+    edition: >
+      Martin Haug, *The Aitareya Brahmanam of the Rigveda*, Bombay 1863 — both volumes,
+      as direct PDFs, mirrored by wilbourhall.org.
+    url: https://www.wilbourhall.org/pdfs/Vedas/Aitereya/The_Aitareya_Brahmanam_of_the_Rigveda__T.pdf
+    script: roman
+    svara_source?: "n/a — translation. Vol. I (Sanskrit) is unaccented."
+    text_layer: mixed
+    license: public-domain
+    status: found-complete
+    where_i_looked: n/a
+    notes: >
+      **The cleanest single access point for Haug, and it solves the vol. I problem.**
+      Vol. I (Sanskrit text): `…/The_Aitareya_Brahmanam_of_the_Rigveda__S.pdf`
+      — 11,405,404 bytes, verified HTTP 200, application/pdf.
+      Vol. II (translation): `…/The_Aitareya_Brahmanam_of_the_Rigveda__T.pdf`
+      — 18,333,481 bytes, verified HTTP 200, application/pdf.
+      Both volumes at one host, direct download, no flipbook, no borrow queue — better
+      than the archive.org route, where the only vol. I is a mediocre DLI scan and the
+      standard `_djvu.txt` URLs 404.
+      **Haug pp. 72–73 is where the monotone-recitation testimony lives.** See
+      accents_in_the_prose_layers.
+      Keith HOS 25 is additionally available in Google Books **full view** (downloadable
+      EPUB and PDF) at https://books.google.com/books?id=r0YX8KwyemkC — the Harvard copy,
+      the same scan behind archive.org's `rigvedabrahmana00keitgoog`.
+    date_logged: 2026-08-01
+
+  # =========================================================================
+  # NEGATIVE RESULTS — sites crossed off, so nobody spends the hour again
+  # =========================================================================
+
+  - node_path: sources/vedas/rigveda/shakala/brahmana
+    text: aitareya-brahmana
+    veda: rigveda
+    organization: null
+    shakha: shakala
+    layer: brahmana
+    edition: "— machine-readable Sāyaṇa bhāṣya on any of the four texts —"
+    url: null
+    script: null
+    svara_source?: "n/a — not found"
+    text_layer: null
+    license: unknown
+    status: not-found
+    where_i_looked: >
+      sanskritdocuments.org (full doc_veda index scraped — no Ṛgvedic Brāhmaṇa material
+      of any kind, with or without commentary);
+      **Muktabodha** (muktabodha.org reachable, but muktabodha-digital-library.org gates
+      entry behind a WebGL check that fails headless; and its own scope statement covers
+      "Śaiva… Vīraśaiva, Pāñcarātra, Śrīvidyā, Śākta, Nātha… Yoga" — **no Vedic
+      Brāhmaṇas**. Its Vedic holding is the Gokarna *manuscript* archive of ritual MSS,
+      not Sāyaṇa e-texts. Note the irony: the Sanskrit Wikisource Aitareya Brāhmaṇa
+      credits Peter Freund, Muktabodha's founder, so a Muktabodha AB text does exist
+      somewhere — it is simply not in the public digital library);
+      ashtadhyayi.com (up, no Brāhmaṇa holdings surfaced);
+      Hindi Wikisource (404 on the Veda category);
+      **vaidikasamrakshana.com — NO DNS RECORD, domain gone**;
+      **shastranidhi.in — NO DNS RECORD, domain gone**;
+      **is1.mum.edu/vedicreserve/ (Maharishi Vedic Reserve) — host resolves to
+      192.103.45.66 but ports 80 and 443 are both closed; vedicreserve.mum.edu does not
+      resolve. The server is down, not the path**;
+      vedicgranth.org (alive, but an Arya Samaj polemics site whose Brāhmaṇa "texts" are
+      an unlabelled Google Drive link — no usable holdings);
+      sacred-texts.com (the complete Brāhmaṇa holding is the Śatapatha in SBE 12/26/41/43/44
+      — no Aitareya, no Kauṣītaki, no Āraṇyakas, no Keith);
+      wisdomlib.org (has no text; what it has is a 2016 secondary study, Sanghamitra
+      Mukherjee, *Aitareya Brāhmaṇa analysis*, ~51,000 words — scholarship, in copyright,
+      not the text);
+      HathiTrust (**UNCHECKED, not absent** — both catalog. and babel. are behind a
+      Cloudflare bot check that defeated plain fetch and headless browsing alike).
+    notes: >
+      **Everything Sāyaṇa on these texts is page images or print. Nothing is searchable.**
+      Given how much of this packet's value turns on Sāyaṇa — he is the *only* commentator
+      on Aitareya Āraṇyaka I, IV and V — the shortest path to a searchable Sāyaṇa is OCR
+      of the Vedic Heritage flipbooks: 775 + 816 + 306 = **1,897 page images**, fetchable
+      as `img/{N}.jpg` with no auth and no observed rate limiting. That is a bounded,
+      well-defined job and it would be the single largest addition to this node.
+      ⚠️ **POISONED SOURCE — do not cite:**
+      `shastradeep.com/shruti-vedas/rigveda/aitareya-brahmana` surfaces in search results
+      looking like a text source. Its own banner reads **"This article is AI-generated and
+      has not yet been Human Verified."** Exactly the failure mode this project exists to
+      avoid, and it is now in the search index above the real sources.
+    date_logged: 2026-08-01

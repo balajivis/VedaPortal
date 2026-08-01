@@ -1,0 +1,1612 @@
+# P1-a — accented-Devanāgarī publisher ecosystem sweep
+# Schema: COLLECTION-PROTOCOL.md §1. Staging only — do not merge by hand from here.
+# Collector: agent, 2026-08-01. svara_verified? is BV's field and is never set here.
+
+summary:
+  packet: P1-a
+  date: 2026-08-01
+  scope: >-
+    sanskritweb.net (Ulrich Stiehl / Subramania Sarma), stotrasamhita (GitHub + .net),
+    sanskritdocuments.org/doc_veda, VedaVMS (vedavms.in / Vedamahasabha),
+    VedicReserve (vedicreserve.miu.edu, Maharishi International University),
+    Svādhyāya Maṇḍalaṁ / Aundh (Satavlekar) print lineage, Muktabodha.
+    Explicitly NOT touched (other packets): GRETIL, DCS, VedaWeb, TITUS/SARIT,
+    the Anukramaṇī hunt (P0-a); the legacy-font remap of `Entire Rig Veda Samhita.pdf` (P0-b).
+
+  hypothesis_verdict: >-
+    CONFIRMED, but not by the publisher the lead named. sanskritweb/Sarma is a
+    Taittirīya-only house (plus two Sāmaveda gāna books) and does NOT span thirteen
+    śākhās. The genuine one-sweep-many-nodes publishers turned out to be
+    (a) sanskritdocuments.org — the deepest ACCENTED UNICODE holdings, Taittirīya only,
+    and (b) VedicReserve/MIU — the broadest ŚĀKHĀ SPREAD (11 of 13 represented), but
+    legacy-encoded and accented only at the Saṃhitā layer.
+    Together with VedaVMS/KYVeda they fill or partly fill 30 of the 50 nodes.
+    LATE ADDITION on P0-a's tip: github.com/KYVeda/texts is the upstream of VedaVMS and is the
+    single best artefact located in this packet — the Taittirīya corpus as Baraha PLAIN TEXT
+    including pada-, krama-, jaṭā- and ghana-pāṭha. It removes the legacy-font remap for that
+    entire śākhā.
+
+  ecosystem_map:
+    - publisher: sanskritweb.net
+      who: "Ulrich Stiehl (Heidelberg) hosts; editors Subramania Sarma (Chennai),
+            Vijayaraghavan Bashyam (Hyderabad), Ramesh Srinivasan"
+      covers: "Taittirīya TB / TA / Ekāgni-kāṇḍa / TS kāṇḍa 1 only / Taittirīya Prātiśākhya;
+               Sāmaveda Kauthuma Grāmageya- and Āraṇyaka-gāna; Rigveda (Kashyap/SAKSI reprint)"
+      format: "accented Unicode Devanāgarī PDF (TB/TA/EK/TS); legacy 8-bit for TP and Sansknet files"
+      terms: "no site-wide licence; per-item restrictions — see licence_traps"
+      note: "This IS the source family behind two of our three good files. Its ceiling is Taittirīya."
+    - publisher: stotrasamhita
+      who: "community GitHub org (github.com/StotraSamhita), tech by H. L. Prasād; stotrasamhita.net"
+      covers: "Taittirīya Brāhmaṇa and Āraṇyaka only (repo `vedamantra-book`), in 6 scripts"
+      format: "XeLaTeX + Siddhanta font → Unicode Devanāgarī PDF; ITRANS/TeX source in git"
+      terms: "PDF colophon: FOR PERSONAL USE ONLY / NOT FOR COMMERCIAL PRINTING/DISTRIBUTION.
+              GitHub repos carry NO licence file."
+      note: "Our Taittiriya-Brahmanam.pdf AND Taittiriya-Aranyaka-Sanskrit.pdf are both from here."
+    - publisher: sanskritdocuments.org
+      who: "volunteer network; Taittirīya corpus encoded by Muralidhara B A, with permission
+            acknowledged to Professor Anathakrishna (Chamarajendra Sanskrit College, Bangalore)"
+      covers: "Taittirīya Saṃhitā (all 7 kāṇḍas), Taittirīya Brāhmaṇa, Taittirīya Āraṇyaka —
+               each accented AND in a separate niḥsvara edition; Rigveda Śākala mandalas 1–10;
+               Sāmaveda Kauthuma Saṃhitā (unaccented); ~90 sūkta-level extracts"
+      format: "HTML + .itx (ITRANS source, accents as backtick/apostrophe) + PDF in
+               Devanāgarī, Tamil, Telugu, Kannada, Gujarati"
+      terms: "verbatim, from the .itx header and site footer — see licence_traps"
+      note: "THE find of this packet. Raw text, not just PDF. Taittirīya coverage is complete."
+    - publisher: "VedaVMS (vedavms.in) / Vedamahasabha — source repo github.com/KYVeda/texts"
+      who: "compiler credited in PDF metadata only as 'Venkat'; versioned releases to 2026"
+      source_repo_finding: >-
+        VERIFIED ON THE P0-a TIP: github.com/KYVeda/texts IS the upstream of vedavms.in — same
+        corpus, same filenames, same "Corrections" companions, and one file is literally named
+        `तैत्तिरीय संहिता प्रथम काण्डम् (VEDAVMS).docx`. 4,901 files, last push 2026-07-29.
+        It ships 855 Baraha `.brh` PLAIN-TEXT source files alongside the .docx/.pdf, which
+        REMOVES THE LEGACY-FONT REMAP PROBLEM ENTIRELY for the whole Taittirīya corpus.
+        Repo has NO LICENSE file (GitHub API `license: null`); README states only
+        "These files are Krishna Yahur Veda Mantra files ... PDF, Doc, BRH (Baraha coded files)".
+      covers: "Taittirīya complete and then some: TS kāṇḍas 1–7, TB 1.1–3.12, TA 1–8,
+               Ekāgni-kāṇḍa, PLUS pada-pāṭha and krama-pāṭha for every prapāṭhaka of TS 1–7,
+               plus Rudra/Chamaka ghana and jaṭā"
+      format: "MS Word 2016 → PDF, BRHDevanagariRN / BRHDevanagariExtra legacy fonts (WinAnsi,
+               no ToUnicode). Accents present in the encoding; not Unicode."
+      terms: "no copyright, licence or terms statement anywhere on the site (checked
+              docs_sanskrit.html and about.html)"
+      note: "The only source found that publishes pada-pāṭha and krama-pāṭha of the whole TS.
+             That is unique and directly serves the recitation/comprehension mission."
+    - publisher: VedicReserve (vedicreserve.miu.edu), Maharishi International University
+      who: "Maharishi Vedic Literature Collection"
+      covers: "Rigveda (mandala + aṣṭaka), Sāmaveda Kauthuma Saṃhitā, Vājasaneyi Mādhyandina
+               Saṃhitā, Vājasaneyi Kāṇva Saṃhitā, Kāṭhaka Saṃhitā, Maitrāyaṇī Saṃhitā,
+               Kapiṣṭhala-Kaṭha Saṃhitā, Taittirīya Saṃhitā, Atharvaveda Śaunaka Saṃhitā,
+               8 Brāhmaṇas, 6 Āraṇyakas, 15 Upaniṣads, 5 Prātiśākhyas, Kalpa/Śikṣā/Nirukta"
+      format: "two classes, verified by sampling: (1) legacy 8-bit MSTT31* subset fonts with a
+               text layer; (2) pure image scans with no text layer at all"
+      terms: "no copyright, licence or terms statement found on the site or in the PDFs"
+      note: "Broadest śākhā spread of anything found. But accents are present ONLY in the
+             Saṃhitā-layer files (plus Maitrāyaṇīya Āraṇyaka); its Brāhmaṇas, Āraṇyakas,
+             Upaniṣads, Prātiśākhyas and Sūtras are UNACCENTED. Verified, not assumed."
+    - publisher: Svādhyāya Maṇḍalaṁ / Aundh (Śrīpād Dāmodar Sātavlekar, d. 1968)
+      who: "Swadhyaya Mandal, Aundh / Pardi / Surat"
+      covers: "the 1942 Aundh Grāmageya-gānam named in our own Sāmaveda PDF's preface;
+               Sātavlekar's accented Saṃhitās of all four Vedas"
+      format: "print; scans on archive.org"
+      terms: "print editions; scans carry archive.org item-level terms"
+      note: "NOT independently online as accented e-text. It is the PRINT ANCESTOR of the
+             Sarma Sāmaveda files we already hold, not a separate digital source.
+             Left to a scan-oriented packet — flagged, not worked."
+    - publisher: Muktabodha
+      who: "Muktabodha Indological Research Institute"
+      covers: "Vedic MANUSCRIPT IMAGES from Gokarna — Āśvalāyana Ṛgveda, Baudhāyana and
+               Hiraṇyakeśin Taittirīya"
+      format: "manuscript image PDFs, not searchable e-text"
+      terms: "site terms-and-conditions page not quotable from the library index"
+      note: "Out of scope for accented e-text. Relevant to a manuscript packet, not this one."
+
+  coverage_matrix:
+    legend: >-
+      A = accented, text layer present (unicode or legacy-encoded — see the record).
+      U = text layer present but UNACCENTED (verified, not assumed).
+      N = numerically notated (Sāmagāna digits over syllables — NOT 'unaccented').
+      S = scan, no text layer.
+      — = absent from this entire ecosystem (see the not-found records).
+      · = layer does not exist for this śākhā.
+    rows:
+      rigveda/shakala:                 { samhita: A, brahmana: U, aranyaka: U, upanishad: U, apparatus: U }
+      rigveda/bashkala:                { samhita: "—", apparatus: "—" }
+      yajurveda/krishna/taittiriya:    { samhita: A, brahmana: A, aranyaka: A, upanishad: "A (embedded)", apparatus: A }
+      yajurveda/krishna/maitrayani:    { samhita: S, aranyaka: A, upanishad: U }
+      yajurveda/krishna/katha:         { samhita: S, brahmana: U, upanishad: U }
+      yajurveda/krishna/kapishthala:   { samhita: S }
+      yajurveda/shukla/madhyandina:    { samhita: A, brahmana: "—", aranyaka: "—", upanishad: U, apparatus: U }
+      yajurveda/shukla/kanva:          { samhita: S, brahmana: "—", upanishad: U }
+      samaveda/kauthuma:               { samhita: "A + N", brahmana: U, aranyaka: U, upanishad: U, apparatus: U }
+      samaveda/ranayaniya:             { samhita: "—" }
+      samaveda/jaiminiya:              { samhita: "—", brahmana: U, aranyaka: U, upanishad: "—" }
+      atharvaveda/shaunaka:            { samhita: A, brahmana: S, upanishad: U, apparatus: U, aranyaka: "· none exists" }
+      atharvaveda/paippalada:          { samhita: "—", upanishad: U }
+
+  prioritised_holes:
+    - hole: "Taittirīya Saṃhitā kāṇḍas 2–7"
+      verdict: SOLVED, twice over, and better than expected.
+      primary: >-
+        sanskritdocuments.org/doc_veda/taittirIyasamhitA — ALL SEVEN kāṇḍas, accented Unicode
+        Devanāgarī. Verified: HTML page carries 1,351,613 Devanāgarī chars and 124,877 svara
+        marks; the PDF is 649 pages and closes with `इति सप्तमं काण्डं संपूर्णम्`. Available as
+        .itx ITRANS SOURCE (accents as \` anudātta / \' svarita), as HTML, and as PDF in five
+        scripts. A separate niḥsvara edition also exists — do not grab the wrong one.
+      secondary: >-
+        vedavms.in — TS kāṇḍas 1–7 as seven PDFs, accented but BRH-legacy-encoded, PLUS the
+        pada-pāṭha and krama-pāṭha of every prapāṭhaka of all seven kāṇḍas. Nothing else found
+        anywhere publishes TS pada+krama complete.
+      note_on_the_named_lead: >-
+        sanskritweb has ONLY kāṇḍa 1 (ts-1-1..ts-1-8, ed. Vijayaraghavan Bashyam, Hyderabad
+        2005) and its own page still solicits volunteers to finish the rest. The lead's
+        highest-value hypothesis was false for this specific hole.
+    - hole: "Taittirīya Brāhmaṇa licence"
+      verdict: >-
+        DISSOLVED, per the coordinator's correction — not by replacement. The TB is an ancient
+        text; typesetting it creates no new copyright, so the stotrasamhita personal-use notice
+        does not attach to the mūla text. Our existing Taittiriya-Brahmanam.pdf stands as usable.
+      but_also: >-
+        A materially BETTER TB was found anyway, and should be taken on quality grounds rather
+        than licence grounds: sanskritdocuments.org/doc_veda/taittirIyabrAhmaNam is accented
+        Unicode with a real text layer (562,152 Devanāgarī chars / 88,766 svara marks in the
+        HTML; 299-page PDF; .itx source). Our current TB yields 32,095 chars / 5,871 svara over
+        40 pages of PDF and has no source form.
+      new_finding: >-
+        The README flags only the Brāhmaṇa. Our `Taittiriya-Aranyaka-Sanskrit.pdf` carries the
+        IDENTICAL stotrasamhita "FOR PERSONAL USE ONLY / NOT FOR COMMERCIAL PRINTING/
+        DISTRIBUTION" colophon and is additionally AES-encrypted with copy:no. Same analysis,
+        same conclusion — but the caveat list is incomplete as written.
+    - hole: "the three empty target śākhās"
+      verdict: PARTLY SOLVED — two of three.
+      madhyandina: >-
+        SOLVED for the Saṃhitā. vedicreserve.miu.edu/yajur_veda/shukla_yajur_veda.pdf, 295 pp,
+        running head `वाजसनेयिमाध्यन्दिनशाखीय` (recension confirmed from the file itself, not the
+        link text), legacy-encoded with accent glyphs at 13.9% density. The Śatapatha Brāhmaṇa
+        is NOT in this ecosystem in any form — see the not-found record.
+      shaunaka: >-
+        SOLVED for the Saṃhitā. vedicreserve.miu.edu/atharva_veda/atharva_veda.pdf, 713 pp,
+        legacy-encoded, accent glyphs at 10.8% density. Bonus: it carries per-sūkta
+        ṛṣi/devatā/chandas headers inline — see cross_packet_notes.
+      kanva: >-
+        NOT SOLVED. The only Kāṇva Vājasaneyi Saṃhitā anywhere in this ecosystem is
+        vedicreserve.miu.edu/yajur_veda/kanwa_shukla_yajur_veda.pdf, and it is a PURE SCAN —
+        158 pages, 31 characters of text layer across the whole file. Kāṇva is the biggest
+        remaining gap in the packet.
+
+  licence_traps:
+    - trap: "Sāmaveda gāna files — WE ALREADY HOST THE RESTRICTED ONES"
+      where: "sources/vedas/samaveda/kauthuma/samhita/ — both PDFs"
+      finding: >-
+        `Sama Veda -- Gramegeya (Village songs).pdf` and `Sama Veda Aranyaka Ganam.pdf` are
+        byte-for-byte sanskritweb's GG-dev.pdf (331 pp / 1002 KB) and AG-dev.pdf (120 pp /
+        473 KB), confirmed by page count, byte size and embedded PDF Title strings.
+      verbatim_site_terms: >-
+        "These preliminary PDF files of the complete song books are not printable due to
+        copyright reasons. These files requiring Acrobat 5 or higher must not be offered for
+        download elsewhere on the internet. The corrected final Gana editions will be published
+        as printed books available through the book trade."
+      verbatim_in_file: >-
+        "© Copyright by Subramania Sarma, Chennai 2006. All rights reserved. No part of this
+        work may be reproduced, stored in a retrieval system, or transmitted, in any form or by
+        any means, electronic, mechanical, photocopying, recording, internet, or otherwise,
+        without the prior written permission of the author of this work."
+      assessment_under_corrected_reading: >-
+        The gāna text and its numeric notation are ancient and PD; Sarma's typesetting of them
+        creates no new copyright. license for the mūla text = public-domain. BUT the
+        "must not be offered for download elsewhere on the internet" clause is aimed squarely at
+        rehosting, and the repo currently does exactly that. This is a HUMAN DECISION, not
+        mine: the analysis says the text is free, the publisher's stated wish says otherwise,
+        and the README does not yet flag these two files at all.
+    - trap: "Rigveda on sanskritweb is the SAKSI/Kashyap edition — and so is our own copy"
+      finding: >-
+        `sources/vedas/rigveda/shakala/samhita/Entire Rig Veda Samhita.pdf` carries PDF metadata
+        Title "Rigveda-Samhita edited by R.L. Kashyap", Author "Prof. R.L. Kashyap and
+        Prof. S. Sadagopan", Subject "Sri Aurobindo Kapali Sastry Institute (www.veda.com)",
+        Keywords "Hosted by www.sanskritweb.net". It IS sanskritweb's RV.pdf.
+      verbatim_site_terms: >-
+        "Professor Kashyap granted to U.Stiehl permission to offer the PDF files for download by
+        students so that they may print out the Rigveda hymns selected by their professors for
+        study purposes. Students specializing in Vedic literature should buy the printed edition"
+      conflict: >-
+        COLLECTION-PROTOCOL §4 says: "Do not ingest: Kashyap/SAKSI ... Reference by citation
+        only." The file already in the repo is a SAKSI edition. Flagging, not adjudicating.
+      remedy: >-
+        Two clean non-SAKSI accented alternatives were verified — sanskritdocuments r01–r10
+        (accented UNICODE, 4,678 svara marks in 30 sampled pages) and VedicReserve rk_veda
+        (legacy, accented). Either removes the conflict, and the sanskritdocuments one removes
+        the need for a font remap entirely. Relevant to P0-b.
+    - trap: "sanskritdocuments personal-use notice"
+      verbatim: >-
+        "This text is prepared by volunteers and is to be used for personal study and research.
+        The file is not to be copied or reposted for promotion of any website or individuals or
+        for commercial purpose without permission. Please help to maintain respect for
+        volunteer spirit."
+      assessment: >-
+        Same shape as the TB notice. Mūla text = public-domain under the corrected reading.
+        The encoding and proofreading labour is the volunteers'; there is a named permission
+        chain (Muralidhara B A / Prof. Anathakrishna) which is worth honouring by attribution.
+    - trap: "silence is not permission"
+      finding: >-
+        VedaVMS and VedicReserve state NO terms at all — no copyright line, no licence, no
+        terms page. Recorded as license: public-domain for the mūla text with
+        license_apparatus: unknown. Absence of a notice is not a grant; it is an unknown.
+    - trap: "one dead link"
+      finding: "sanskritdocuments.org/doc_veda/sv-kauthuma-saswara.pdf returns HTTP 404.
+                The linked accented Sāmaveda does not exist; only the unaccented one does."
+
+  corrected_reading_impact:
+    additional_candidates_back_in_scope: 5
+    detail: >-
+      Under the original brief these would have been discarded or downgraded on their notices;
+      under the corrected reading all five are in scope for their mūla text:
+      (1) our own Taittiriya-Brahmanam.pdf — retained, no replacement hunt run;
+      (2) our own Taittiriya-Aranyaka-Sanskrit.pdf — same colophon, newly identified, retained;
+      (3) sanskritweb/Sarma Grāmageya-gānam — "all rights reserved" notice;
+      (4) sanskritweb/Sarma Āraṇyaka-gānam — same;
+      (5) the whole sanskritdocuments Taittirīya corpus (TS + TB + TA) under its
+          personal-study-only notice — which is precisely the corpus that solves hole #1.
+      Time not spent hunting a "clean-licensed TB" went into the TS 2–7 hunt instead, which is
+      where the actual deliverable was.
+    critical_edition_flag: >-
+      None of the primary candidates recorded below is a critical edition with an apparatus
+      criticus. Sarma's TB/TA are constituted from Grantha manuscripts collated against three
+      named printed editions — that is closer to editorial work than to reproduction, and is
+      flagged in the relevant records for a human to look at. VedaVMS ships separate
+      "Corrections" PDFs alongside each text, which are the compiler's own editorial notes and
+      should be treated as his.
+
+  cross_packet_notes:
+    - to: P0-a
+      note: >-
+        The VedicReserve Atharvaveda Śaunaka Saṃhitā carries per-sūkta ṛṣi / devatā / chandas
+        headers inline in the text, e.g. "अथर्वा ऋषिः । वाचस्पतिर्देवता । ... अनुष्टुप् छन्दसी".
+        That is Anukramaṇī data embedded in a running Saṃhitā, machine-extractable once the
+        legacy font is remapped. Directly serves the blocked Anukramaṇī harness.
+    - to: P0-b
+      note: >-
+        `Entire Rig Veda Samhita.pdf` = sanskritweb RV.pdf. Its fonts are DV-Sanskrit-Normal /
+        DV-Sanskrit-Bold / DV2-Sanskrit-Normal / DV2-Sanskrit-Bold (Type 1C, Custom encoding,
+        embedded+subset). That names the remap target precisely. HOWEVER — the remap may be
+        unnecessary: sanskritdocuments r01–r10 is the same text in accented Unicode with .itx
+        source, and is not a SAKSI edition. Worth checking before spending the hours.
+    - to: P2-a
+      note: >-
+        For the endangered set, this ecosystem's answer is "the text exists as an image, not as
+        text". Kāṭhaka, Maitrāyaṇī, Kapiṣṭhala and Kāṇva Saṃhitās are all present at VedicReserve
+        and all four are pure scans. Two genuine text-layer finds for the endangered set:
+        Jaiminīya Talavakāra Brāhmaṇa (846 pp) and Jaiminīya Āraṇyaka (69 pp), both legacy,
+        both unaccented.
+    - to: "repo maintainer"
+      note: >-
+        yajurveda/krishna/katha/_status.yaml says "Kathaka Samhita (Subramania Sarma's
+        electronic edition exists — see sanskritweb.net)". That pointer is WRONG. sanskritweb's
+        "Kathakam" (ka-1/2/3.pdf, yv-kathaka.pdf) is chapters 10–12 of Book 3 of the TAITTIRĪYA
+        Brāhmaṇa, which that tradition treats as a separate book of that name — the site says so
+        itself. It is not the Kāṭhaka Saṃhitā of the Kaṭha śākhā. Attribution correction, logged
+        here and not written into any _status.yaml.
+
+  inbound_intelligence_p0a:
+    - item: "KYVeda/texts — CONFIRMED, and better than reported"
+      licence: >-
+        (a) NO LICENCE. GitHub API returns `license: null`; there is no LICENSE, COPYING or
+        licence statement anywhere in the 4,901-file tree, and README.md is three lines of
+        description. Under the corrected reading: mūla text public-domain, license_apparatus
+        unknown. Silence is not a grant.
+      accent_roundtrip: >-
+        (b) Baraha markers do NOT collapse to a two-way distinction, and a naive two-rule map
+        WOULD LOSE DATA. Measured in `saMhitA/02/TS 2 Sanskrit.brh` (178,981 chars):
+        q=13,688 (anudātta → U+0952), #=8,375 (svarita → U+0951), $=581, &=752,
+        ~M=587, (gg)=155. The $ and & marks and the nasal markers carry distinctions beyond
+        U+0951/U+0952 and need Vedic Extensions (U+1CD0–1CFF) to round-trip.
+        VERDICT: lossless round-trip is achievable but requires a full Baraha-Vedic mapping
+        table, not `q→U+0952, #→U+0951`. Budget for the table; do not assume two rules.
+      kanda_coverage: >-
+        (c) GENUINE, verified from the file tree rather than directory names. `.brh` files per
+        kāṇḍa: K1=125, K2=96, K3=82, K4=116, K5=113, K6=96, K7=83 — all seven, none empty.
+        Top-level dirs: saMhitA, TS-Padam (221 .brh), TS-Kramam (176 .brh),
+        "TS Jatai Ghanam Project", "Ghana Maala", "Ghana Sandhi", brAhmaNa (29 .brh),
+        AraNyaka, ekAgni, upaniShat, SikShA, "Unicode Project".
+      why_it_matters: >-
+        This is the strongest single result of the packet. It supplies the Taittirīya
+        Saṃhitā in saṃhitā-, pada-, krama-, jaṭā- AND GHANA-pāṭha as plain text with accents.
+        BV's `svara_verified?` workflow is settled against the Ghanapāṭhi — this is that text,
+        machine-readable. Nothing else found in the sweep comes close.
+      note: >-
+        The repo's "Unicode Project" folder also holds a stray
+        `वाजसनेयि-माध्यन्दिन-शुक्लयजुर्वेदः (उदीच्यः पाठः) उदात्तस्वरेणाङ्कितः-1.pdf` — an accented
+        Mādhyandina reference the compilers collected. Incidental, but relevant to that node.
+    - item: "GRETIL accent warning — heeded, and it cuts the other way for avs_acu.htm"
+      method_check: >-
+        My own counts throughout this packet targeted U+0951, U+0952 and U+1CD0–U+1CF9
+        explicitly and never U+0301, so the decomposed-ś trap did not affect any record here.
+      gretil_avs_finding: >-
+        `avs_acu.htm` (Atharvaveda-Saṃhitā, Śaunaka, ACCENTED TEXT) is GENUINELY ACCENTED but is
+        NOT DEVANĀGARĪ — it is Roman transliteration, 0 Devanāgarī characters, ~490k Latin.
+        Its accents are combining marks on Latin vowels, and here the U+0301s are real:
+        NFD acute total 85,649 minus 6,684 belonging to ś = 78,965 genuine udātta, plus 1,248
+        grave (svarita). The file's own header table documents the scheme (`e udatta é`,
+        `e svarita è`, `long u udatta ū́`).
+        So the same codepoint is a false positive on GRETIL's Ṛgveda and a true positive here.
+        The rule that generalises is: check what the mark sits ON, not just that it is present.
+      licence: >-
+        Verbatim from the file: "COPYRIGHT AND TERMS OF USAGE AS FOR SOURCE FILE." — it defers
+        to the TITUS source terms rather than granting anything. Not CC.
+    - item: "TITUS — holdings and terms recorded, no bulk content fetched"
+      fetched: "only texte2.htm, the public index. No text files retrieved."
+      terms: >-
+        All-rights-reserved, per the coordinator. The site's own etikett.htm returns 404;
+        the operative statement reachable is the one mirrored into GRETIL's header,
+        "COPYRIGHT AND TERMS OF USAGE AS FOR SOURCE FILE". A large fraction of the Vedic
+        holdings are additionally marked "TITUS Members only" and are not publicly reachable
+        at all. Treat as link-only pending the human-level permission request.
+      holdings_relevant_to_this_packet:
+        atharvaveda_shaunaka: "Atharvaveda-Saṃhitā (Śaunaka), data entry V. Petr, adaptation
+          P. Vavroušek (Praha) — public HTML UTF-8 with index; plain-text retrieval members-only."
+        atharvaveda_paippalada: "Paippalāda recension — Witzel, Bastiaansen, Griffiths,
+          Zehnder; 'under preparation', preliminary HTML, TITUS MEMBERS ONLY. This is the
+          Paippalāda my not-found record predicted would live in academic channels."
+        shukla_madhyandina: "Vājasaneyi-Saṃhitā (data entry M. Kümmel) — public HTML UTF-8 AND
+          a public HTML DEVANĀGARĪ UTF-8 version. Śatapatha-Brāhmaṇa (Mādhyandina), books
+          1–11 and 13–14 Lehmann/Ananthanarayana/Gardner, book 12 Fushimi — complete text,
+          public HTML."
+        shukla_kanva: "Śatapatha-Brāhmaṇa (Kāṇva recension), J. Gippert — 'under preparation',
+          no version published. Bṛhad-Āraṇyaka-Upaniṣad in BOTH Mādhyandina and Kāṇva
+          recensions (Albino/Narten) — public, incl. a Devanāgarī UTF-8 version.
+          Īśa-Upaniṣad in both recensions."
+        endangered_set: "Kapiṣṭhala-Kāṭha-Saṃhitā and Maitrāyaṇī-Saṃhitā (both M. Fushimi,
+          public HTML) — i.e. as TEXT, where this packet's ecosystem had only scans.
+          Kāṭhaka-Brāhmaṇa remnants and Kāṭhaka-Āraṇyaka (members-only). Jaiminīya-Brāhmaṇa
+          (members-only). Pañcaviṃśa/Tāṇḍya-Mahā-Brāhmaṇa."
+      consequence_for_my_not_found_records: >-
+        IMPORTANT QUALIFICATION. My Śatapatha not-found record (madhyandina/brahmana) and my
+        Kāṇva assessment stand AS WRITTEN — they are scoped to the accented-Devanāgarī
+        publisher ecosystem this packet owns — but TITUS demonstrably HAS the Śatapatha
+        (Mādhyandina, complete, public) and a Devanāgarī Vājasaneyi-Saṃhitā. Those records
+        should be read as "absent from the publisher ecosystem", not "absent from the world",
+        and each now carries a pointer. The licence, not the availability, is the blocker there.
+
+  nodes_fillable: 30
+  nodes_not_found: 5
+  node_accounting: >-
+    44 records over 35 distinct node_paths (several nodes carry two or three alternative
+    sources, deliberately). 5 node_paths are not-found; 30 are fillable —
+    22 found-complete and 8 found-partial. Against the repo's 50-node scope that moves
+    coverage from 6/50 to 36/50 if all are accepted, though 6 of the fills are page-image
+    scans with no text layer and 1 is a members-only academic resource.
+  did_not_touch: >-
+    No file under sources/vedas/ was created, modified, moved or renamed, and no _status.yaml
+    was edited. NOTE FOR THE COORDINATOR: yajurveda/krishna/taittiriya/_status.yaml shows an
+    mtime during this session's window. It was not me — my only writes this session were to
+    this file. Another concurrent packet likely touched it.
+  method: >-
+    Every record below was verified by fetching a sample to
+    /private/tmp/.../scratchpad and running the §3 pdftotext test. Where a file is
+    legacy-encoded (Devanāgarī count 0), accent presence was verified a second way — by
+    counting the encoding's accent glyphs against a calibrated density baseline, and by reading
+    the raw extraction. Claims of "accented" on publisher pages were NOT taken at face value;
+    two of them (sanskritdocuments sv-kauthuma, VedicReserve's Brāhmaṇa tier) turned out to be
+    unaccented on inspection.
+
+records:
+
+# ─────────────────────────────────────────────────────────────────────────────
+# RIGVEDA / ŚĀKALA
+# ─────────────────────────────────────────────────────────────────────────────
+
+- node_path: rigveda/shakala/samhita
+  veda: rigveda
+  organization: null
+  shakha: shakala
+  layer: samhita
+  edition: "Ṛgveda Saṃhitā, mandalas 1–10; encoded by sanskritdocuments.org volunteers; ITRANS source"
+  url: https://sanskritdocuments.org/doc_veda/r01.html
+  script: devanagari-unicode
+  svara_source?: "yes — sampled r01.pdf, 30 pages: 30,507 Devanāgarī chars, 4,678 svara marks (U+0951/U+0952)"
+  svara_verified?: pending — BV
+  text_layer: unicode
+  license: public-domain
+  status: found-complete
+  where_i_looked: ""
+  notes: >-
+    Ten files r01–r10, each as HTML + .itx (ITRANS source) + PDF in five scripts. Site page
+    describes them as "with anudAtta and svarita vedic accents" and sampling confirms it.
+    license_apparatus: the volunteer encoding carries sanskritdocuments' personal-study notice
+    (quoted in summary.licence_traps); no original front matter or translation in the file.
+    THIS IS THE CLEAN ALTERNATIVE to the SAKSI/Kashyap file already in the repo — see
+    summary.licence_traps and cross_packet_notes → P0-b. Not a critical edition.
+  date_logged: 2026-08-01
+
+- node_path: rigveda/shakala/samhita
+  veda: rigveda
+  organization: null
+  shakha: shakala
+  layer: samhita
+  edition: "Maharishi Vedic Literature Collection, Ṛk Veda — by mandala (10 files) and by aṣṭaka (8 files)"
+  url: https://vedicreserve.miu.edu/rk_veda.htm
+  script: devanagari-legacy-font
+  svara_source?: "yes — sampled rk_ved_m1.pdf: no Unicode Devanāgarī, but legacy accent glyphs at 12.1% of characters, consistent with fully accented text"
+  svara_verified?: pending — BV
+  text_layer: legacy-encoding
+  license: public-domain
+  status: found-complete
+  where_i_looked: ""
+  notes: >-
+    SECOND RECORD FOR THE SAME NODE — deliberate, offered as an alternative, not a duplicate.
+    153 pp for mandala 1. Fonts are MSTT31* subsets, WinAnsi, no ToUnicode. Recoverable by
+    codepage remap; do NOT send to OCR. Site states no terms of any kind — license_apparatus:
+    unknown. Prefer the sanskritdocuments record above unless a second witness is wanted.
+  date_logged: 2026-08-01
+
+- node_path: rigveda/shakala/brahmana
+  veda: rigveda
+  organization: null
+  shakha: shakala
+  layer: brahmana
+  edition: "Maharishi Vedic Literature Collection, Aitareya Brāhmaṇa"
+  url: https://vedicreserve.miu.edu/brahmana.htm
+  script: devanagari-legacy-font
+  svara_source?: "no — sampled 30 pp: text layer present (54,780 chars) but zero accent glyphs. Verified unaccented, not assumed."
+  svara_verified?: pending — BV
+  text_layer: legacy-encoding
+  license: public-domain
+  status: found-complete
+  where_i_looked: ""
+  notes: >-
+    158 pp. Direct file brahmanas/aitareya_brahmana.pdf. Kauṣītaki/Śāṅkhāyana Brāhmaṇa is
+    listed in the site index but resolves to a stotram page, not a PDF — absent in practice.
+    license_apparatus: unknown (no terms stated anywhere on site).
+  date_logged: 2026-08-01
+
+- node_path: rigveda/shakala/aranyaka
+  veda: rigveda
+  organization: null
+  shakha: shakala
+  layer: aranyaka
+  edition: "Maharishi Vedic Literature Collection, Aitareya Āraṇyaka"
+  url: https://vedicreserve.miu.edu/aranyak.htm
+  script: devanagari-legacy-font
+  svara_source?: "no — sampled 42 pp: 45,872 chars of text layer, zero accent glyphs"
+  svara_verified?: pending — BV
+  text_layer: legacy-encoding
+  license: public-domain
+  status: found-complete
+  where_i_looked: ""
+  notes: >-
+    47 pp, aranyaka/aitareya_aranyaka.pdf. The Aitareya Upaniṣad is embedded here — per README
+    it lives in this layer and is cross-referenced, not duplicated. Śāṅkhāyana Āraṇyaka is on
+    the same page but is a PURE SCAN (81 pp, 31 chars of text layer).
+    license_apparatus: unknown.
+  date_logged: 2026-08-01
+
+- node_path: rigveda/shakala/apparatus/pratishakhya
+  veda: rigveda
+  organization: null
+  shakha: shakala
+  layer: apparatus
+  edition: "Maharishi Vedic Literature Collection, Ṛk Veda Prātiśākhya"
+  url: https://vedicreserve.miu.edu/rk_veda_pratishakhya.htm
+  script: devanagari-legacy-font
+  svara_source?: "no — sampled 46 pp: 32,272 chars, 4 accent glyphs (noise). Unaccented."
+  svara_verified?: pending — BV
+  text_layer: legacy-encoding
+  license: public-domain
+  status: found-complete
+  where_i_looked: ""
+  notes: "51 pp, pratishakhyas/rk_veda_pratishakhya.pdf. A Prātiśākhya is a metatext about
+    accent; it does not itself need to be accented. license_apparatus: unknown."
+  date_logged: 2026-08-01
+
+# ─────────────────────────────────────────────────────────────────────────────
+# RIGVEDA / BĀṢKALA
+# ─────────────────────────────────────────────────────────────────────────────
+
+- node_path: rigveda/bashkala/samhita
+  veda: rigveda
+  organization: null
+  shakha: bashkala
+  layer: samhita
+  edition: null
+  url: null
+  script: null
+  svara_source?: "no — nothing to check"
+  svara_verified?: pending — BV
+  text_layer: null
+  license: unknown
+  status: not-found
+  where_i_looked: >-
+    sanskritweb.net/rigveda/ (Śākala only, SAKSI reprint); sanskritdocuments.org/sanskrit/veda
+    full 90-entry index — one Bāṣkala-adjacent item only, `khilas1` (Khilāni, with three
+    archive.org scan cross-references, incl. Sātavlekar); vedicreserve.miu.edu rk_veda.htm and
+    the full index_of_vedic_literature.htm A–Z (no Bāṣkala entry); vedavms.in docs index
+    (Taittirīya only); stotrasamhita GitHub org repo list (28 repos, no Rigveda).
+  notes: >-
+    Confirms the existing _status.yaml: "no complete text survives". The only trace of the
+    Bāṣkala orbit anywhere in this ecosystem is the Khilāni supplement at
+    sanskritdocuments.org/doc_veda/khilas1.html, which is not the Bāṣkala Saṃhitā and should
+    not be filed as though it were. A documented absence, as briefed.
+  date_logged: 2026-08-01
+
+# ─────────────────────────────────────────────────────────────────────────────
+# YAJURVEDA / KṚṢṆA / TAITTIRĪYA — the anchor śākhā
+# ─────────────────────────────────────────────────────────────────────────────
+
+- node_path: yajurveda/krishna/taittiriya/samhita
+  veda: yajurveda
+  organization: krishna
+  shakha: taittiriya
+  layer: samhita
+  edition: "Taittirīya Saṃhitā, complete (7 kāṇḍas); encoded and proofread by Muralidhara B A,
+    permission acknowledged to Professor Anathakrishna (Chamarajendra Sanskrit College,
+    Chamarajpet, Bangalore); sanskritdocuments.org; .itx last updated 22 Sep 2024, PDF typeset 22 May 2026"
+  url: https://sanskritdocuments.org/doc_veda/taittirIyasamhitA.html
+  script: devanagari-unicode
+  svara_source?: >-
+    yes — HTML in full: 1,351,613 Devanāgarī chars, 124,877 svara marks (U+0951, U+0952 and
+    Vedic Extensions incl. U+1CDA double svarita). PDF sampled 40 pp: 78,881 dev / 13,006 svara.
+  svara_verified?: pending — BV
+  text_layer: unicode
+  license: public-domain
+  status: found-complete
+  where_i_looked: ""
+  notes: >-
+    THIS CLOSES PRIORITY HOLE #1. All seven kāṇḍas — verified by reading the tail of the
+    649-page PDF, which ends `इति सप्तमं काण्डं संपूर्णम्७॥ इति तैत्तिरीय-संहिता ॥`.
+    Three usable forms: HTML, .itx ITRANS source (accents as backtick=anudātta,
+    apostrophe=svarita — the best ingest target, it is plain text), and PDF in Devanāgarī /
+    Tamil / Telugu / Kannada / Gujarati.
+    WARNING: the same page also serves a niḥsvara (unaccented) edition of every kāṇḍa under
+    headers reading `(निःस्वरः) प्रथमं काण्डम्` etc. Take the accented set.
+    license_apparatus: sanskritdocuments' volunteer/personal-study notice, quoted verbatim in
+    summary.licence_traps. No original introduction, commentary or translation in the file.
+    Not a critical edition — no apparatus criticus, no manuscript sigla.
+  date_logged: 2026-08-01
+
+- node_path: yajurveda/krishna/taittiriya/samhita
+  veda: yajurveda
+  organization: krishna
+  shakha: taittiriya
+  layer: samhita
+  edition: "VedaVMS / Vedamahasabha, Kṛṣṇa-Yajurvedīya Taittirīya Saṃhitā, kāṇḍas 1–7,
+    versioned releases (K1 v3.1 Jul 2025 … K6 v2.0 Apr 2026); compiler credited only as 'Venkat'"
+  url: https://vedavms.in/docs_sanskrit.html
+  script: devanagari-legacy-font
+  svara_source?: >-
+    yes — sampled TS kāṇḍa 2 (201 pp) and kāṇḍa 6 (158 pp). No Unicode Devanāgarī (BRH fonts,
+    WinAnsi, no ToUnicode), but BRH accent glyphs at 11.4% and 11.5% density respectively,
+    and raw extraction shows them in svara position, e.g. `xuÉålÉþ pÉÉaÉ–kÉårÉå–lÉÉåmÉþ kÉÉuÉÌiÉ`.
+  svara_verified?: pending — BV
+  text_layer: legacy-encoding
+  license: public-domain
+  status: found-complete
+  where_i_looked: ""
+  notes: >-
+    SECOND SOURCE FOR THE SAME NODE — kept because of what it uniquely carries. Beyond the
+    saṃhitā-pāṭha it publishes the PADA-PĀṬHA and the KRAMA-PĀṬHA of every prapāṭhaka of all
+    seven kāṇḍas (TS 1.1–7.5), plus first/last-pañcāti and alphabetical + pañcāti-wise indices.
+    Nothing else found in this sweep publishes TS pada+krama complete, and that is exactly the
+    material a recitation-to-comprehension project needs.
+    Fonts BRHDevanagariRN / BRHDevanagariExtra — but see the KYVeda record below: the upstream
+    repo ships Baraha PLAIN TEXT, so the remap is avoidable. Files are Word-2016-generated,
+    unencrypted.
+    license_apparatus: unknown — the site states no copyright, licence or terms at all.
+    Each text ships a companion "Corrections" PDF; those are the compiler's own editorial
+    notes and should be treated as his, not as PD mūla.
+    SUPERSEDED FOR INGEST by the KYVeda/texts record immediately below, which is the same
+    corpus in plain-text source form. Retained because vedavms.in is the citable public face.
+  date_logged: 2026-08-01
+
+- node_path: yajurveda/krishna/taittiriya/samhita
+  veda: yajurveda
+  organization: krishna
+  shakha: taittiriya
+  layer: samhita
+  edition: "KYVeda/texts — the upstream source repository of VedaVMS/Vedamahasabha.
+    Baraha-coded plain text (.brh) plus .docx and .pdf. Last push 2026-07-29."
+  url: https://github.com/KYVeda/texts
+  script: transliteration
+  svara_source?: >-
+    yes — Baraha ASCII accent markers, verified by fetching `saMhitA/02/TS 2 Sanskrit.brh`
+    (178,981 chars): q=13,688 anudātta, #=8,375 svarita, plus $=581, &=752, ~M=587, (gg)=155.
+    Sample line: `vAqyaqvya(gg)# SveqtamA la#Betaq BUti#kAmo vAqyur vai kShepi#ShThA deqvatA`.
+  svara_verified?: pending — BV
+  text_layer: unicode
+  license: public-domain
+  status: found-complete
+  where_i_looked: ""
+  notes: >-
+    THE BEST INGEST TARGET FOUND IN THIS PACKET, and it closes priority hole #1 in a second,
+    independent way. Plain text, no font remap, no PDF extraction.
+    COVERAGE VERIFIED FROM THE FILE TREE, not directory names — .brh files per kāṇḍa:
+    K1=125, K2=96, K3=82, K4=116, K5=113, K6=96, K7=83. All seven kāṇḍas, none empty.
+    Also carries, for the same śākhā: TS-Padam (221 .brh), TS-Kramam (176 .brh),
+    "TS Jatai Ghanam Project" (jaṭā and ghana), "Ghana Maala", "Ghana Sandhi", brAhmaNa
+    (29 .brh), AraNyaka, ekAgni, upaniShat, SikShA. Five scripts each
+    (Baraha/Sanskrit/Tamil/Tamil-Latha/Malayalam).
+    THE GHANAPĀṬHA MATTERS SPECIFICALLY: the protocol's hand-off seam says svara_verified? is
+    settled against the Ghanapāṭhi. This repo is that text in machine-readable form.
+    ACCENT ROUND-TRIP CAVEAT — do not assume a two-rule map. `q`→U+0952 and `#`→U+0951 covers
+    only two of six observed markers; `$`, `&`, `~M` and `(gg)` carry further distinctions and
+    need Vedic Extensions (U+1CD0–1CFF). A full Baraha-Vedic mapping table is required for a
+    lossless conversion. This is the one place a naive importer will silently lose data.
+    license_apparatus: unknown — NO LICENSE file anywhere in 4,901 files, GitHub API reports
+    `license: null`, README is three lines. Silence, not a grant. The mūla text is PD under the
+    corrected reading; the Baraha encoding and the "Corrections" files are the compilers'.
+    `script` recorded as transliteration because the .brh files are ASCII; the .docx/.pdf
+    renderings are legacy-font Devanāgarī (see the VedaVMS record above).
+  date_logged: 2026-08-01
+
+- node_path: yajurveda/krishna/taittiriya/samhita
+  veda: yajurveda
+  organization: krishna
+  shakha: taittiriya
+  layer: samhita
+  edition: "Taittirīya Saṃhitā, Book 1 only, ed. Vijayaraghavan Bashyam, Hyderabad 2005;
+    hosted sanskritweb.net. Constituted from 7 named printed editions incl. Ananta Shastri
+    (2nd ed. 1957), Sonatakke 1970, Weber (Leipzig 1871), and a Grantha-script Chennai 2004 text."
+  url: http://www.sanskritweb.net/yajurveda/
+  script: devanagari-unicode
+  svara_source?: "yes — ts-1-1.pdf sampled: 6,732 dev / 1,599 svara over 12 pp; ts-1-5.pdf: 9,882 dev / 2,313 svara"
+  svara_verified?: pending — BV
+  text_layer: unicode
+  license: public-domain
+  status: found-partial
+  where_i_looked: ""
+  notes: >-
+    THE NAMED LEAD, AND IT FALLS SHORT. Eight files ts-1-1 … ts-1-8 cover kāṇḍa 1 ONLY. The
+    site itself states the full text is 7 kāṇḍas / 44 prapāṭhakas and then invites help:
+    "Indians willing to help editing the TS are invited to contact Mr. Bashyam". The project
+    stalled after 2005. Recorded for completeness and because the typesetting quality is high,
+    but it is superseded for this node by the two records above.
+    ts-find.pdf (whole TS in searchable transliteration, unaccented) and keith.pdf (Keith's
+    out-of-copyright English translation, 341 pp) are also there.
+    license_apparatus: no terms stated for the TS section; Bashyam's editorial constitution
+    from seven printed witnesses is arguably editorial work — flagged for a human.
+  date_logged: 2026-08-01
+
+- node_path: yajurveda/krishna/taittiriya/brahmana
+  veda: yajurveda
+  organization: krishna
+  shakha: taittiriya
+  layer: brahmana
+  edition: "Taittirīya Brāhmaṇam, complete (3 aṣṭakas); sanskritdocuments.org, same encoder
+    lineage as the Saṃhitā (Muralidhara B A / Prof. Anathakrishna)"
+  url: https://sanskritdocuments.org/doc_veda/taittirIyabrAhmaNam.html
+  script: devanagari-unicode
+  svara_source?: "yes — HTML in full: 562,152 Devanāgarī chars, 88,766 svara marks. PDF 40 pp sampled: 73,095 dev / 11,265 svara."
+  svara_verified?: pending — BV
+  text_layer: unicode
+  license: public-domain
+  status: found-complete
+  where_i_looked: ""
+  notes: >-
+    Recommended UPGRADE for our existing Taittiriya-Brahmanam.pdf — on quality, not licence.
+    The licence question is dissolved (see summary.prioritised_holes #2); this is simply a
+    better artefact: real Unicode text layer, .itx source, 299-page PDF, five scripts, and a
+    separate niḥsvara edition at doc_veda/taittirIyabrAhmaNamniHsvaraH.html.
+    Our current copy yields 32,095 chars / 5,871 svara over 40 pp of PDF with no source form.
+    license_apparatus: sanskritdocuments volunteer/personal-study notice, quoted verbatim in
+    summary.licence_traps. Not a critical edition.
+  date_logged: 2026-08-01
+
+- node_path: yajurveda/krishna/taittiriya/brahmana
+  veda: yajurveda
+  organization: krishna
+  shakha: taittiriya
+  layer: brahmana
+  edition: >-
+    Taittirīya Brāhmaṇa, ed. Subramania Sarma, Chennai 2004–2005, from Grantha manuscripts
+    collated against three printed works: Hari Narayana Apte, 1898 (Ānandāśrama);
+    Pushpendra Kumar, 1998 (Nag Prakashan); G. K. Seethaaraman, 2000 ("Your Family Friend").
+    768 pp typeset at 16 pt. Hosted sanskritweb.net.
+  url: http://www.sanskritweb.net/yajurveda/tb-deva.pdf
+  script: devanagari-unicode
+  svara_source?: "yes — tb-1-01.pdf sampled: 5,297 dev / 1,149 svara over 12 pp"
+  svara_verified?: pending — BV
+  text_layer: unicode
+  license: public-domain
+  status: found-complete
+  where_i_looked: ""
+  notes: >-
+    The ancestor edition of the stotrasamhita PDF we hold — its own colophon thanks Stiehl and
+    Sarma. Three forms: per-chapter files (tb-1-01 … tb-3-12), whole text tb-deva.pdf (2.5 MB),
+    transliterated searchable tb-find.pdf, and print-resolution bilingual tb-comb.pdf (4 MB).
+    ATTRIBUTION CARE: files ka-1/2/3.pdf on the same page are labelled "Kathakam" and are
+    chapters 10–12 of Book 3 of THIS Brāhmaṇa, not the Kāṭhaka Saṃhitā. See
+    summary.cross_packet_notes → repo maintainer.
+    CRITICAL-EDITION FLAG: constituted from Grantha manuscripts collated against three named
+    printed editions. That is editorial constitution, closer to a critical edition than to
+    reproduction. Not adjudicating — flagged for a human, per instruction.
+    license_apparatus: no terms stated for the Yajurveda section of the site.
+  date_logged: 2026-08-01
+
+- node_path: yajurveda/krishna/taittiriya/aranyaka
+  veda: yajurveda
+  organization: krishna
+  shakha: taittiriya
+  layer: aranyaka
+  edition: "Taittirīya Āraṇyaka, complete; sanskritdocuments.org, same encoder lineage"
+  url: https://sanskritdocuments.org/doc_veda/taittirIyaAraNyaka.html
+  script: devanagari-unicode
+  svara_source?: "yes — HTML in full: 236,980 Devanāgarī chars, 36,745 svara marks. PDF sampled: 73,853 dev / 10,785 svara."
+  svara_verified?: pending — BV
+  text_layer: unicode
+  license: public-domain
+  status: found-complete
+  where_i_looked: ""
+  notes: >-
+    124-page PDF plus .itx source plus five scripts. Embedded texts live HERE per README —
+    Taittirīya Upaniṣad = prapāṭhakas 7–9, Mahānārāyaṇa = 10 — cross-referenced, not duplicated.
+    Upgrade path for our Taittiriya-Aranyaka-Sanskrit.pdf, which is AES-encrypted (copy:no) and
+    carries the same stotrasamhita personal-use colophon as the TB — a caveat the repo README
+    does not currently record.
+    license_apparatus: sanskritdocuments volunteer/personal-study notice.
+  date_logged: 2026-08-01
+
+- node_path: yajurveda/krishna/taittiriya/aranyaka
+  veda: yajurveda
+  organization: krishna
+  shakha: taittiriya
+  layer: aranyaka
+  edition: >-
+    Taittirīya Āraṇyaka, ed. Subramania Sarma, Chennai 2004, from Grantha manuscripts and
+    A. Mahadeva Sastri et al., "The Taittiriya Aranyaka", 3 vols. in one, 1985 (Motilal).
+    Final proofread files of November 2005. Hosted sanskritweb.net.
+  url: http://www.sanskritweb.net/yajurveda/ta-deva.pdf
+  script: devanagari-unicode
+  svara_source?: "yes — ta-01.pdf sampled: 5,041 dev / 955 svara over 12 pp"
+  svara_verified?: pending — BV
+  text_layer: unicode
+  license: public-domain
+  status: found-complete
+  where_i_looked: ""
+  notes: >-
+    Ten chapter files ta-01 … ta-10 including the two embedded Upaniṣads, plus whole-text
+    ta-deva.pdf (1 MB), ta-find.pdf (transliterated, searchable) and ta-comb.pdf (bilingual,
+    print resolution). Same critical-edition flag as the TB record: constituted from Grantha
+    manuscripts against a named printed edition. license_apparatus: no terms stated.
+  date_logged: 2026-08-01
+
+- node_path: yajurveda/krishna/taittiriya/upanishad
+  veda: yajurveda
+  organization: krishna
+  shakha: taittiriya
+  layer: upanishad
+  edition: "Taittirīya Upaniṣad, standalone accented file; ed. Subramania Sarma lineage, sanskritweb.net"
+  url: http://www.sanskritweb.net/sansdocs/taitt-up.pdf
+  script: devanagari-unicode
+  svara_source?: "yes — same typesetting lineage as ta-07..09, which sampled at 955 svara/12 pp"
+  svara_verified?: pending — BV
+  text_layer: unicode
+  license: public-domain
+  status: found-complete
+  where_i_looked: ""
+  notes: >-
+    RECORDED BUT DO NOT INGEST AS A SEPARATE TEXT. The Taittirīya Upaniṣad is TA 7–9 and the
+    Mahānārāyaṇa is TA 10; README says embedded texts live once, in their home layer. This
+    standalone file (Devanāgarī + transliteration) is logged only so a later collector does not
+    "discover" it and duplicate the Āraṇyaka. Cross-reference target, not a node fill.
+    license_apparatus: no terms stated.
+  date_logged: 2026-08-01
+
+- node_path: yajurveda/krishna/taittiriya/apparatus/pratishakhya
+  veda: yajurveda
+  organization: krishna
+  shakha: taittiriya
+  layer: apparatus
+  edition: "Taittirīya Prātiśākhya, Sanskrit text with W. D. Whitney's English translation
+    (Journal of the American Oriental Society, 1871); proofread by Ramesh Srinivasan against
+    Whitney's edition. Hosted sanskritweb.net."
+  url: http://www.sanskritweb.net/yajurveda/tp-comb.pdf
+  script: devanagari-legacy-font
+  svara_source?: "no — 12,599 chars over 12 pp, zero Unicode Devanāgarī, zero svara. Font is
+    Sanskrit99ps (Type 1C, WinAnsi). Sūtra text, correctly unaccented."
+  svara_verified?: pending — BV
+  text_layer: legacy-encoding
+  license: public-domain
+  status: found-complete
+  where_i_looked: ""
+  notes: >-
+    Whitney 1871 is copyright-expired outright, independent of the corrected reading. Bilingual
+    Sanskrit + English on facing text, 160 KB. The Devanāgarī is legacy-encoded (Sanskrit99ps)
+    while the English is URW-PalladioUS and extracts cleanly. First apparatus-tier fill in the
+    repo — the apparatus tier currently holds nothing.
+    A second, unaccented-but-Unicode witness exists at vedicreserve.miu.edu
+    (pratishakhyas/taittiriya_pratishakhya.pdf, 12 pp, legacy MSTT31* fonts).
+    license_apparatus: Whitney's translation is itself PD (1871).
+  date_logged: 2026-08-01
+
+- node_path: yajurveda/krishna/taittiriya/apparatus/kalpa
+  veda: yajurveda
+  organization: krishna
+  shakha: taittiriya
+  layer: apparatus
+  edition: "Ekāgni Kāṇḍam, ed. Subramania Sarma, Chennai 2004, from Grantha manuscripts and
+    G. K. Seethaaraman 2000; final files November 2005. Hosted sanskritweb.net."
+  url: http://www.sanskritweb.net/yajurveda/ek-deva.pdf
+  script: devanagari-unicode
+  svara_source?: "yes — ek-01.pdf sampled: 10,991 dev / 2,529 svara over 12 pp. The densest accent
+    ratio of anything sampled in this packet."
+  svara_verified?: pending — BV
+  text_layer: unicode
+  license: public-domain
+  status: found-complete
+  where_i_looked: ""
+  notes: >-
+    The Ekāgni Kāṇḍa is the domestic-ritual (gṛhya) mantra collection of the Taittirīya school —
+    apparatus/kalpa tier. Two chapter files plus whole-text ek-deva.pdf, transliterated
+    ek-find.pdf and bilingual ek-comb.pdf. VedaVMS also publishes it (Ekaagni Kaandam v1.0,
+    Oct 2025, with a pada section) in BRH legacy encoding.
+    Broader Kalpa material for this śākhā — Āpastamba and Baudhāyana śrauta/gṛhya/śulba sūtras —
+    is at vedicreserve.miu.edu/kalp.htm, legacy-encoded and UNACCENTED (sampled
+    apastamba_dharma_sutra.pdf, 34 pp, 47,738 chars, zero accent glyphs).
+    license_apparatus: no terms stated on the site.
+  date_logged: 2026-08-01
+
+# ─────────────────────────────────────────────────────────────────────────────
+# YAJURVEDA / KṚṢṆA / MAITRĀYAṆĪ
+# ─────────────────────────────────────────────────────────────────────────────
+
+- node_path: yajurveda/krishna/maitrayani/samhita
+  veda: yajurveda
+  organization: krishna
+  shakha: maitrayani
+  layer: samhita
+  edition: "Maharishi Vedic Literature Collection, Maitrāyaṇī Saṃhitā (Kṛṣṇa Yajurveda)"
+  url: https://vedicreserve.miu.edu/yajur_veda.htm
+  script: devanagari-unicode
+  svara_source?: "cannot be assessed from the file — it is an image. Pages 1–40 and 60–90 both
+    yield ~31 characters. No text layer exists to check."
+  svara_verified?: pending — BV
+  text_layer: scanned-no-text
+  license: public-domain
+  status: found-partial
+  where_i_looked: ""
+  notes: >-
+    yajur_veda/maitrayani_krishna_yajur_veda.pdf, 494 pp, 34.8 MB. A PURE SCAN — the only
+    complete Maitrāyaṇī Saṃhitā located in this ecosystem, and it carries no text at all.
+    Recorded as found-partial because the images are real and complete; it is a page-image
+    witness, not a usable text. `script` is recorded as devanagari-unicode-by-appearance only
+    in the sense that the printed page is Devanāgarī; there is nothing encoded.
+    Edition not identifiable from the file — no title page metadata. Do not attribute.
+    license_apparatus: unknown (no terms stated on site).
+  date_logged: 2026-08-01
+
+- node_path: yajurveda/krishna/maitrayani/aranyaka
+  veda: yajurveda
+  organization: krishna
+  shakha: maitrayani
+  layer: aranyaka
+  edition: "Maharishi Vedic Literature Collection, Maitrāyaṇīya Āraṇyaka"
+  url: https://vedicreserve.miu.edu/aranyak.htm
+  script: devanagari-legacy-font
+  svara_source?: "yes — sampled 26 pp: 30,782 chars, accent glyphs at 3.1% density. Accented,
+    and the only accented Āraṇyaka-layer file at VedicReserve."
+  svara_verified?: pending — BV
+  text_layer: legacy-encoding
+  license: public-domain
+  status: found-complete
+  where_i_looked: ""
+  notes: >-
+    31 pp, aranyaka/maitrayaniya_aranyaka.pdf. A real text-layer, accented find for an
+    endangered śākhā — the strongest single result for Maitrāyaṇī in this packet.
+    ATTENTION, MERGER: `yajurveda/krishna/maitrayani/_status.yaml` currently declares only
+    `samhita` and `upanishad` layers. This is an āraṇyaka-layer text for that śākhā. I have NOT
+    created the node and have not touched the _status.yaml — a human should decide whether the
+    Maitrāyaṇīya Āraṇyaka warrants adding the layer, since "absence is encoded by absence" and
+    creating layers is not a collector's call.
+    license_apparatus: unknown.
+  date_logged: 2026-08-01
+
+- node_path: yajurveda/krishna/maitrayani/upanishad
+  veda: yajurveda
+  organization: krishna
+  shakha: maitrayani
+  layer: upanishad
+  edition: "Maharishi Vedic Literature Collection, Fifteen Upanishads series"
+  url: https://vedicreserve.miu.edu/upanishad.htm
+  script: devanagari-legacy-font
+  svara_source?: "no — the Fifteen Upanishads series is unaccented throughout; sampled three of
+    the fifteen (Katha, Mundaka, Brihadaranyaka), all zero accent glyphs against real text layers"
+  svara_verified?: pending — BV
+  text_layer: legacy-encoding
+  license: public-domain
+  status: found-partial
+  where_i_looked: >-
+    vedicreserve.miu.edu/upanishad.htm — the fifteen-file series does NOT include the
+    Maitrāyaṇīya Upaniṣad. sanskritdocuments doc_veda index (90 entries) — not present.
+  notes: >-
+    found-partial, and honestly so: the VedicReserve Upaniṣad set is a real, complete,
+    unaccented resource but the Maitrāyaṇīya Upaniṣad specifically is NOT among its fifteen.
+    Recorded here so the gap is visible rather than implied. The existing _status.yaml already
+    notes that this Upaniṣad's attribution and textual history are debated — nothing found in
+    this sweep bears on that either way, and nothing has been written into `shakha`.
+    license_apparatus: unknown.
+  date_logged: 2026-08-01
+
+# ─────────────────────────────────────────────────────────────────────────────
+# YAJURVEDA / KṚṢṆA / KAṬHA
+# ─────────────────────────────────────────────────────────────────────────────
+
+- node_path: yajurveda/krishna/katha/samhita
+  veda: yajurveda
+  organization: krishna
+  shakha: katha
+  layer: samhita
+  edition: "Maharishi Vedic Literature Collection, Kāṭhaka Saṃhitā (Kṛṣṇa Yajurveda)"
+  url: https://vedicreserve.miu.edu/yajur_veda.htm
+  script: null
+  svara_source?: "cannot be assessed — no text layer. 440 pp, ~31 characters extractable."
+  svara_verified?: pending — BV
+  text_layer: scanned-no-text
+  license: public-domain
+  status: found-partial
+  where_i_looked: >-
+    sanskritweb.net/yajurveda/ — the "Kathakam" files there (ka-1/2/3.pdf, yv-kathaka.pdf) are
+    NOT this text, see notes; sanskritdocuments doc_veda 90-entry index — absent;
+    vedavms.in — Taittirīya only; stotrasamhita GitHub — Taittirīya only.
+  notes: >-
+    yajur_veda/kathaka_krishna_yajur_veda.pdf, 440 pp, 32.8 MB, pure scan.
+    CORRECTS AN EXISTING REPO POINTER. `yajurveda/krishna/katha/_status.yaml` says
+    "Kathaka Samhita (Subramania Sarma's electronic edition exists — see sanskritweb.net)".
+    It does not. sanskritweb's "Kathakam" is chapters 10–12 of Book 3 of the TAITTIRĪYA
+    Brāhmaṇa, which that tradition treats as a separately-titled book; the site states this
+    itself ("Chapters 10, 11, 12 of Book 3 of Taittiriya Brahmana are often treated as separate
+    book with title Kathakam"). I verified ka-1.pdf is accented Unicode Taittirīya material
+    (4,837 dev / 1,027 svara) and yv-kathaka.pdf is the same text in legacy DV-TTVedic encoding.
+    Neither is the Kāṭhaka Saṃhitā of the Kaṭha śākhā. Logged here; no _status.yaml touched.
+    So for this node the honest position is: the only witness in this ecosystem is a scan.
+    license_apparatus: unknown.
+  date_logged: 2026-08-01
+
+- node_path: yajurveda/krishna/katha/upanishad
+  veda: yajurveda
+  organization: krishna
+  shakha: katha
+  layer: upanishad
+  edition: "Maharishi Vedic Literature Collection, Fifteen Upanishads no. 3 — Kaṭha Upaniṣad"
+  url: https://vedicreserve.miu.edu/upanishads/fifteen_upanishads_03_katha.pdf
+  script: devanagari-legacy-font
+  svara_source?: "no — sampled 9 pp: 7,277 chars of text layer, 14 accent glyphs (noise level).
+    Verified unaccented."
+  svara_verified?: pending — BV
+  text_layer: legacy-encoding
+  license: public-domain
+  status: found-complete
+  where_i_looked: ""
+  notes: >-
+    13 pp. Complete text, legacy-encoded, unaccented. Fills a node that held nothing.
+    license_apparatus: unknown (no terms stated on site).
+  date_logged: 2026-08-01
+
+- node_path: yajurveda/krishna/katha/brahmana
+  veda: yajurveda
+  organization: krishna
+  shakha: katha
+  layer: brahmana
+  edition: "Maharishi Vedic Literature Collection, Kāṭhaka Brāhmaṇa (fragment)"
+  url: https://vedicreserve.miu.edu/brahmanas/kathaka_brahmana.pdf
+  script: devanagari-legacy-font
+  svara_source?: "no — 9,126 chars of text layer, zero accent glyphs"
+  svara_verified?: pending — BV
+  text_layer: legacy-encoding
+  license: public-domain
+  status: found-partial
+  where_i_looked: ""
+  notes: >-
+    10 pages only, 86 KB — this is a fragment, not a Brāhmaṇa, and is recorded as found-partial
+    for that reason. The Kaṭha Brāhmaṇa survives only in fragments, so a 10-page file is
+    plausibly the whole of what exists; I could not establish that from the file itself and am
+    not asserting it. ATTENTION, MERGER: katha/_status.yaml declares no brāhmaṇa layer.
+    Same caution as the Maitrāyaṇī Āraṇyaka — flagged, node not created.
+    license_apparatus: unknown.
+  date_logged: 2026-08-01
+
+# ─────────────────────────────────────────────────────────────────────────────
+# YAJURVEDA / KṚṢṆA / KAPIṢṬHALA
+# ─────────────────────────────────────────────────────────────────────────────
+
+- node_path: yajurveda/krishna/kapishthala/samhita
+  veda: yajurveda
+  organization: krishna
+  shakha: kapishthala
+  layer: samhita
+  edition: "Maharishi Vedic Literature Collection, Kapiṣṭhala-Kaṭha Saṃhitā"
+  url: https://vedicreserve.miu.edu/yajur_veda.htm
+  script: null
+  svara_source?: "cannot be assessed — no text layer. 358 pp, ~31 characters extractable."
+  svara_verified?: pending — BV
+  text_layer: scanned-no-text
+  license: public-domain
+  status: found-partial
+  where_i_looked: >-
+    sanskritweb.net (Taittirīya only); sanskritdocuments doc_veda 90-entry index (absent);
+    vedavms.in (Taittirīya only); stotrasamhita GitHub (absent).
+  notes: >-
+    yajur_veda/Kapisthala_Katha_Samhita.pdf, 358 pp, 17.1 MB, pure scan.
+    A genuine find for a fragmentary śākhā that currently holds nothing — this is the only
+    Kapiṣṭhala witness located anywhere in the sweep, and it is images. Recorded as
+    found-partial: real and complete as pages, unusable as text without OCR, and OCR of
+    accented Vedic Devanāgarī is not a solved problem.
+    Edition unidentifiable from the file. Do not attribute.
+    license_apparatus: unknown.
+  date_logged: 2026-08-01
+
+# ─────────────────────────────────────────────────────────────────────────────
+# YAJURVEDA / ŚUKLA / MĀDHYANDINA — previously empty
+# ─────────────────────────────────────────────────────────────────────────────
+
+- node_path: yajurveda/shukla/madhyandina/samhita
+  veda: yajurveda
+  organization: shukla
+  shakha: madhyandina
+  layer: samhita
+  edition: "Maharishi Vedic Literature Collection, Vājasaneyi-Mādhyandina-śākhīya Yajurveda Saṃhitā"
+  url: https://vedicreserve.miu.edu/yajur_veda/shukla_yajur_veda.pdf
+  script: devanagari-legacy-font
+  svara_source?: >-
+    yes — sampled 30 pp: 28,222 chars, legacy accent glyphs at 13.9% density; raw extraction
+    shows them in svara position, e.g. `îÄWe TvoôjRe Tv;ÿ v;Öyvÿ Sq deÖvo vÿæ sivÖt;`.
+  svara_verified?: pending — BV
+  text_layer: legacy-encoding
+  license: public-domain
+  status: found-complete
+  where_i_looked: ""
+  notes: >-
+    FILLS ONE OF THE THREE EMPTY TARGET ŚĀKHĀS. 295 pp, 40 adhyāyas.
+    Recension confirmed FROM THE FILE, not from the link text: the running head on every page
+    reads `वाजसनेयिमाध्यन्दिनशाखीय` and the first page carries it above `यजुर्वेदसंहिता`.
+    Isha Upaniṣad = adhyāya 40 of this Saṃhitā and is embedded here per README; a standalone
+    unaccented copy exists at vedicreserve upanishads/fifteen_upanishads_01_isha.pdf —
+    cross-reference, do not duplicate.
+    Beware a same-directory file `Shukla_YajurVed-1.pdf` (61 pp, 23 MB): it is a PURE SCAN and
+    a different artefact. Take shukla_yajur_veda.pdf.
+    license_apparatus: unknown (no terms stated on site).
+  date_logged: 2026-08-01
+
+- node_path: yajurveda/shukla/madhyandina/brahmana
+  veda: yajurveda
+  organization: shukla
+  shakha: madhyandina
+  layer: brahmana
+  edition: null
+  url: null
+  script: null
+  svara_source?: "no — nothing found to check"
+  svara_verified?: pending — BV
+  text_layer: null
+  license: unknown
+  status: not-found
+  where_i_looked: >-
+    vedicreserve.miu.edu/brahmana.htm — enumerated all 8 PDFs on the page (aitareya, chandogya,
+    gopatha, jaimini_talavakara, kathaka, shadvimsha, taittiriya, vamsha). NO Śatapatha.
+    The site's A–Z index lists "Kanviyam Sthatapatha Brahmana" but the entry resolves to
+    brahmana.htm, where no Śatapatha file of either recension exists — a dangling index entry.
+    sanskritdocuments.org doc_veda — full 90-entry index enumerated, no Śatapatha, no
+    Vājasaneyi Brāhmaṇa; only a Mādhyandina EXTRACT
+    (doc_veda/mAddhyandinAnAmoShadhyanuvAkaH — VS 12.6, the oṣadhi anuvāka).
+    sanskritweb.net — Krishna Yajurveda / Taittirīya only, no Śukla material at all.
+    vedavms.in docs_sanskrit.html — Taittirīya only.
+    stotrasamhita GitHub org — 28 repos enumerated via API, no Śatapatha.
+  notes: >-
+    A real absence and worth stating plainly: THE ŚATAPATHA BRĀHMAṆA — the largest Brāhmaṇa in
+    the corpus and the home of the Bṛhadāraṇyaka — is not present in this entire publisher
+    ecosystem in ANY form, accented or not, scan or text, in either recension. Every other
+    major Brāhmaṇa is. This is the single most conspicuous hole the sweep found.
+    Consequence: the Mādhyandina āraṇyaka layer and Bṛhadāraṇyaka are equally unsourced here,
+    since both live inside the Śatapatha. A standalone unaccented Bṛhadāraṇyaka exists at
+    vedicreserve upanishads/fifteen_upanishads_11_brihadaranyaka.pdf (53 pp, legacy, verified
+    unaccented) but per README it must live in its home layer, which we do not have.
+    NOT ABSENT FROM THE WORLD — scope this record to the publisher ecosystem. TITUS
+    (titus.uni-frankfurt.de/texte/texte2.htm#ved) HAS the Śatapatha-Brāhmaṇa in the Mādhyandina
+    recension, complete and PUBLIC: books 1–11 and 13–14 entered under W. P. Lehmann's guidance
+    by H. S. Ananthanarayana, adapted by J. R. Gardner; book 12 by M. Fushimi; served as HTML
+    UTF-8 with index. TITUS also has the Vājasaneyi-Saṃhitā (M. Kümmel) with a public
+    DEVANĀGARĪ UTF-8 version, and the Bṛhad-Āraṇyaka-Upaniṣad in both recensions.
+    TITUS is all-rights-reserved with no CC licence; its own etikett.htm returns 404 and the
+    reachable statement is "COPYRIGHT AND TERMS OF USAGE AS FOR SOURCE FILE". So the blocker
+    for this node is LICENCE, not availability. Link only; a permission request is being
+    considered at the human level. Also worth trying: archive.org for Weber's edition (PD).
+  date_logged: 2026-08-01
+
+- node_path: yajurveda/shukla/madhyandina/apparatus/pratishakhya
+  veda: yajurveda
+  organization: shukla
+  shakha: madhyandina
+  layer: apparatus
+  edition: "Maharishi Vedic Literature Collection, Śukla-Yajur-Veda Prātiśākhya (Vājasaneyi Prātiśākhya)"
+  url: https://vedicreserve.miu.edu/pratishakhyas/shukla_yajur_veda_pratishakhya.pdf
+  script: devanagari-legacy-font
+  svara_source?: "no — 21,065 chars over 24 pp, 3 accent glyphs (noise). Unaccented, as expected for a sūtra text."
+  svara_verified?: pending — BV
+  text_layer: legacy-encoding
+  license: public-domain
+  status: found-complete
+  where_i_looked: ""
+  notes: "28 pp. Apparatus-tier fill for a śākhā that held nothing. license_apparatus: unknown."
+  date_logged: 2026-08-01
+
+# ─────────────────────────────────────────────────────────────────────────────
+# YAJURVEDA / ŚUKLA / KĀṆVA — previously empty, still the weakest node
+# ─────────────────────────────────────────────────────────────────────────────
+
+- node_path: yajurveda/shukla/kanva/samhita
+  veda: yajurveda
+  organization: shukla
+  shakha: kanva
+  layer: samhita
+  edition: "Maharishi Vedic Literature Collection, Vājasaneyi Saṃhitā (Kāṇva recension)"
+  url: https://vedicreserve.miu.edu/yajur_veda/kanwa_shukla_yajur_veda.pdf
+  script: null
+  svara_source?: "cannot be assessed — no text layer. 158 pp, 31 characters extractable across the file."
+  svara_verified?: pending — BV
+  text_layer: scanned-no-text
+  license: public-domain
+  status: found-partial
+  where_i_looked: >-
+    vedicheritage.gov.in/samhitas/yajurveda/vajasaneyi-kanva-samhita/ — page structure is
+    "Samhita Patha 1-10 … 31-40" with no text or download offered;
+    sanskritdocuments.org doc_veda 90-entry index — one Kāṇva EXTRACT only
+    (doc_veda/kANvAnAmoShadhisUktam, the oṣadhi sūkta); sanskritweb.net — no Śukla material;
+    vedavms.in — Taittirīya only; stotrasamhita GitHub — absent.
+  notes: >-
+    THE PACKET'S BIGGEST REMAINING GAP, and stated as such. Kāṇva is one of the three empty
+    target śākhās and it is the one this sweep did NOT close. The only complete Kāṇva Vājasaneyi
+    Saṃhitā anywhere in the ecosystem is this 158-page, 9.3 MB pure scan.
+    Recorded found-partial rather than not-found because a complete page-image witness genuinely
+    exists and is worth linking — but there is no accented Kāṇva e-text in this ecosystem, and
+    that is the finding.
+    Śatapatha (Kāṇva) and Bṛhadāraṇyaka (Kāṇva) are equally absent — see the Mādhyandina
+    brāhmaṇa not-found record.
+    PARTIAL RELIEF FROM TITUS, recorded but not resolving this node. TITUS serves the
+    Bṛhad-Āraṇyaka-Upaniṣad and Īśa-Upaniṣad in BOTH Mādhyandina and Kāṇva recensions
+    (data entry M. Albino and J. Narten), publicly, including a Devanāgarī UTF-8 version — so
+    Kāṇva is not wholly textless. But the Kāṇva Vājasaneyi SAṂHITĀ is not separately served,
+    and the Śatapatha-Brāhmaṇa (Kāṇva recension, J. Gippert) is marked "under preparation" with
+    no version published at all. TITUS is all-rights-reserved; link only.
+    Still worth trying: archive.org for Weber's "The Vajasaneyi Samhita in the Madhyandina and
+    the Kanva Sakha with the commentary of Mahidhara" (PD scan), which covers both recensions.
+    license_apparatus: unknown.
+  date_logged: 2026-08-01
+
+# ─────────────────────────────────────────────────────────────────────────────
+# SĀMAVEDA / KAUTHUMA
+# ─────────────────────────────────────────────────────────────────────────────
+
+- node_path: samaveda/kauthuma/samhita
+  veda: samaveda
+  organization: null
+  shakha: kauthuma
+  layer: samhita
+  edition: "Maharishi Vedic Literature Collection, Sāmaveda Saṃhitā (Pūrvārcika + Uttarārcika)"
+  url: https://vedicreserve.miu.edu/sama_veda/sama_veda.pdf
+  script: devanagari-legacy-font
+  svara_source?: >-
+    yes — sampled 30 pp: 26,287 chars, legacy accent glyphs at 17.2% density, the highest ratio
+    measured in this packet. This is the ĀRCIKA (mantra text) carrying udātta/anudātta marking,
+    NOT numeric gāna notation. Digits present (1,624/40 pp) are verse and reference numbers.
+  svara_verified?: pending — BV
+  text_layer: legacy-encoding
+  license: public-domain
+  status: found-complete
+  where_i_looked: ""
+  notes: >-
+    257 pp. Per sanskritweb's own cross-reference this is the edition by Jost Gippert,
+    Ralph Bunker and Peter Freund. Complements rather than replaces our two gāna song-books:
+    this is the ārcika, they are the gāna. Both are needed and they are different things.
+    license_apparatus: unknown (no terms stated on site).
+  date_logged: 2026-08-01
+
+- node_path: samaveda/kauthuma/samhita
+  veda: samaveda
+  organization: null
+  shakha: kauthuma
+  layer: samhita
+  edition: "Grāmageya-gānam and Āraṇyaka-gānam, ed. Subramania Sarma, Chennai 2006, from the
+    Svādhyāya Maṇḍalaṁ (Aundh) 1942 edition of Nārāyaṇasvāmi Dīkṣita named in the preface"
+  url: http://www.sanskritweb.net/samaveda/
+  script: devanagari-unicode
+  svara_source?: >-
+    partial, and the distinction matters — NUMERICALLY NOTATED, not unaccented. Our held copies
+    sampled at 40 pp: Grāmageya 20,369 dev / 0 svara / 3,535 digits; Āraṇyaka-gāna 23,710 dev /
+    0 svara / 2,681 digits. Zero U+0951/U+0952 is CORRECT for gāna: Sāmagāna marks the seven
+    notes with figures 1–7 over the syllables. Do not record these as unaccented.
+  svara_verified?: pending — BV
+  text_layer: unicode
+  license: public-domain
+  status: found-complete
+  where_i_looked: ""
+  notes: >-
+    THE SOURCE OF TWO FILES WE ALREADY HOLD, now positively identified: our
+    `Sama Veda -- Gramegeya (Village songs).pdf` and `Sama Veda Aranyaka Ganam.pdf` are
+    sanskritweb's GG-dev.pdf and AG-dev.pdf — matched on page count (331/120), byte size
+    (1,027,927 ≈ 1002 KB, 484,210 ≈ 473 KB) and embedded PDF Title strings naming Sarma as editor.
+    Both are RC4-encrypted with print:no copy:no, which is why they resist extraction.
+    LICENCE TRAP — the sharpest one found. Site terms and in-file notice quoted verbatim in
+    summary.licence_traps; the operative clause is "must not be offered for download elsewhere
+    on the internet", and the repo currently does exactly that. Under the corrected reading the
+    gāna text and its numeric notation are PD and `license` is recorded as public-domain
+    accordingly — but the rehosting question is a human decision and the repo README does not
+    presently flag these two files at all.
+    Printable SAMPLE pages (gg-sample.pdf, ag-sample.pdf) are offered separately and are
+    unencrypted — the free-and-clear way to cite the typesetting.
+    Sarma states the Ūha-gāna and Ūhya-gāna "are in preparation"; as of this sweep they are
+    still not published, so the gāna corpus remains 2 of 4 books.
+    license_apparatus: Sarma's 2006 editorial constitution and any preface are his.
+  date_logged: 2026-08-01
+
+- node_path: samaveda/kauthuma/samhita
+  veda: samaveda
+  organization: null
+  shakha: kauthuma
+  layer: samhita
+  edition: "Sāmaveda Saṃhitā, Kauthuma śākhā; sanskritdocuments.org, ITRANS by Anshuman Pandey lineage"
+  url: https://sanskritdocuments.org/doc_veda/sv-kauthuma.html
+  script: devanagari-unicode
+  svara_source?: >-
+    NO — and the site's own summary implies otherwise, so this is a verify-don't-trust result.
+    Full HTML: 157,467 Devanāgarī chars, ZERO svara marks. The 32,470 digits are the
+    prapāṭhaka/ardha/verse reference numbers (`१ १ १ ०१०१a`), NOT Sāmagāna numeric notation
+    over syllables. Unaccented and unnotated.
+  svara_verified?: pending — BV
+  text_layer: unicode
+  license: public-domain
+  status: found-partial
+  where_i_looked: ""
+  notes: >-
+    Recorded as found-partial: the text is complete and it is clean Unicode with .itx source,
+    which makes it valuable for concordance and lookup work — but it carries no accent and no
+    gāna notation, so it cannot serve recitation. The linked accented edition
+    doc_veda/sv-kauthuma-saswara.pdf returns HTTP 404 — a dead link, not an available resource.
+    Take the VedicReserve ārcika record above if accent is needed.
+    license_apparatus: sanskritdocuments volunteer/personal-study notice.
+  date_logged: 2026-08-01
+
+- node_path: samaveda/kauthuma/brahmana
+  veda: samaveda
+  organization: null
+  shakha: kauthuma
+  layer: brahmana
+  edition: "Maharishi Vedic Literature Collection — Chāndogya, Ṣaḍviṃśa, Vaṃśa, Sāmavidhāna group"
+  url: https://vedicreserve.miu.edu/brahmana.htm
+  script: devanagari-unicode
+  svara_source?: >-
+    no — Chāndogya Brāhmaṇa sampled 33 pp: 19,221 Unicode Devanāgarī chars, zero svara marks.
+    Genuinely Unicode (fonts Raja + VedicTrans97) and genuinely unaccented.
+  svara_verified?: pending — BV
+  text_layer: mixed
+  license: public-domain
+  status: found-partial
+  where_i_looked: ""
+  notes: >-
+    text_layer is `mixed` because the group is: Chāndogya Brāhmaṇa (38 pp, real Unicode,
+    unaccented), Vaṃśa Brāhmaṇa (2 pp, no extractable text), Ṣaḍviṃśa Brāhmaṇa (226 pp, PURE
+    SCAN, 8 MB). The Pañcaviṃśa / Tāṇḍya-Mahā-Brāhmaṇa — the principal Kauthuma Brāhmaṇa — is
+    listed in the site's A–Z index but has NO file on brahmana.htm. Absent in practice.
+    found-partial is the honest status: some of the Brāhmaṇa tier, not the main text of it.
+    license_apparatus: unknown.
+  date_logged: 2026-08-01
+
+- node_path: samaveda/kauthuma/apparatus/pratishakhya
+  veda: samaveda
+  organization: null
+  shakha: kauthuma
+  layer: apparatus
+  edition: "Maharishi Vedic Literature Collection, Sāma Veda Prātiśākhya (Puṣpa Sūtram)"
+  url: https://vedicreserve.miu.edu/pratishakhyas/sama_veda_pratishakhya.pdf
+  script: devanagari-legacy-font
+  svara_source?: "no — 48,895 chars over 40 pp, 60 accent glyphs (0.1%, noise). Unaccented."
+  svara_verified?: pending — BV
+  text_layer: legacy-encoding
+  license: public-domain
+  status: found-complete
+  where_i_looked: ""
+  notes: >-
+    45 pp. The Puṣpa Sūtra is the Sāmaveda's lakṣaṇa text governing how ārcika verses become
+    gāna melodies — directly relevant to reading our two gāna books.
+    license_apparatus: unknown.
+  date_logged: 2026-08-01
+
+# ─────────────────────────────────────────────────────────────────────────────
+# SĀMAVEDA / JAIMINĪYA — endangered, the priority recording target
+# ─────────────────────────────────────────────────────────────────────────────
+
+- node_path: samaveda/jaiminiya/brahmana
+  veda: samaveda
+  organization: null
+  shakha: jaiminiya
+  layer: brahmana
+  edition: "Maharishi Vedic Literature Collection, Jaiminīya (Talavakāra) Brāhmaṇa"
+  url: https://vedicreserve.miu.edu/brahmanas/jaimini_talavakara_brahmana.pdf
+  script: devanagari-legacy-font
+  svara_source?: "no — sampled 29 pp: 33,024 chars of text layer, zero accent glyphs. Verified unaccented."
+  svara_verified?: pending — BV
+  text_layer: legacy-encoding
+  license: public-domain
+  status: found-complete
+  where_i_looked: ""
+  notes: >-
+    846 pages — the largest single text located in this sweep, and a real text-layer resource
+    for a śākhā the repo describes as "very few reciters remain — the priority recording
+    target". The existing _status.yaml calls the Jaiminīya Brāhmaṇa "a major un-mined text";
+    this is a minable copy of it, once the legacy encoding is remapped.
+    Unaccented, so it serves comprehension and concordance work, not recitation.
+    The Kena (Talavakāra) Upaniṣad is embedded in the Jaiminīya Upaniṣad Brāhmaṇa and per
+    README is cross-referenced from here, not duplicated. A standalone unaccented Kena exists
+    at vedicreserve upanishads/fifteen_upanishads_02_kena.pdf.
+    license_apparatus: unknown.
+  date_logged: 2026-08-01
+
+- node_path: samaveda/jaiminiya/aranyaka
+  veda: samaveda
+  organization: null
+  shakha: jaiminiya
+  layer: aranyaka
+  edition: "Maharishi Vedic Literature Collection, Jaiminīya Āraṇyaka"
+  url: https://vedicreserve.miu.edu/aranyaka/jaiminiya_aranyaka.pdf
+  script: devanagari-legacy-font
+  svara_source?: "no — sampled 40 pp: 50,609 chars, zero accent glyphs"
+  svara_verified?: pending — BV
+  text_layer: legacy-encoding
+  license: public-domain
+  status: found-complete
+  where_i_looked: ""
+  notes: "69 pp. Second text-layer fill for an endangered śākhā. Unaccented.
+    license_apparatus: unknown."
+  date_logged: 2026-08-01
+
+- node_path: samaveda/jaiminiya/samhita
+  veda: samaveda
+  organization: null
+  shakha: jaiminiya
+  layer: samhita
+  edition: null
+  url: null
+  script: null
+  svara_source?: "no — nothing found to check"
+  svara_verified?: pending — BV
+  text_layer: null
+  license: unknown
+  status: not-found
+  where_i_looked: >-
+    sanskritweb.net/samaveda/ — Kauthuma gānas only; the page's three onward pointers
+    (MUM VedicReserve, sanskritdocuments, sacred-texts) all resolve to Kauthuma as well.
+    sanskritdocuments doc_veda 90-entry index — only sv-kauthuma, no Jaiminīya.
+    vedicreserve.miu.edu/sama_veda.htm — one file, the Kauthuma Saṃhitā.
+    vedavms.in, stotrasamhita GitHub — no Sāmaveda material at all.
+  notes: >-
+    The Jaiminīya Saṃhitā and its gāna tradition — the thing that most distinguishes this
+    śākhā, and the thing most at risk — is absent from every publisher in this ecosystem.
+    The Brāhmaṇa and Āraṇyaka are here; the Saṃhitā is not.
+    Sarma's stated plan ("The other song books and additional Samaveda documents, e.g. Shikshas
+    and Brahmanas, are in preparation") covers Kauthuma only. A documented absence, and
+    precisely the kind this project exists to record.
+  date_logged: 2026-08-01
+
+# ─────────────────────────────────────────────────────────────────────────────
+# SĀMAVEDA / RĀṆĀYANĪYA
+# ─────────────────────────────────────────────────────────────────────────────
+
+- node_path: samaveda/ranayaniya/samhita
+  veda: samaveda
+  organization: null
+  shakha: ranayaniya
+  layer: samhita
+  edition: null
+  url: null
+  script: null
+  svara_source?: "no — nothing found to check"
+  svara_verified?: pending — BV
+  text_layer: null
+  license: unknown
+  status: not-found
+  where_i_looked: >-
+    sanskritweb.net/samaveda/ — Sarma's editions are explicitly "Ganas of the Kauthumas";
+    no Rāṇāyanīya material, and none announced among the texts "in preparation".
+    sanskritdocuments doc_veda 90-entry index — absent.
+    vedicreserve.miu.edu/sama_veda.htm and the full A–Z index_of_vedic_literature.htm — absent.
+    vedavms.in, stotrasamhita GitHub — absent.
+  notes: >-
+    Zero presence across the entire ecosystem. Consistent with the existing _status.yaml note
+    that Rāṇāyanīya is "close to Kauthuma; differences mainly in gana tradition" — the
+    differences live exactly in the gāna material, which is the part nobody has digitised for
+    this śākhā. A documented absence; nothing to link.
+  date_logged: 2026-08-01
+
+# ─────────────────────────────────────────────────────────────────────────────
+# ATHARVAVEDA / ŚAUNAKA — previously empty
+# ─────────────────────────────────────────────────────────────────────────────
+
+- node_path: atharvaveda/shaunaka/samhita
+  veda: atharvaveda
+  organization: null
+  shakha: shaunaka
+  layer: samhita
+  edition: "Maharishi Vedic Literature Collection, Atharvaveda Saṃhitā (Śaunaka), 20 kāṇḍas"
+  url: https://vedicreserve.miu.edu/atharva_veda/atharva_veda.pdf
+  script: devanagari-legacy-font
+  svara_source?: >-
+    yes — sampled 30 pp: 34,823 chars, legacy accent glyphs at 10.8% density; raw extraction
+    shows them in svara position, e.g. `ye i]ÿWÖ¯;" pÿ·rÖy≤Ntô ivê;ÿ ÂÖp;…,ô …b.[ÿt"`.
+  svara_verified?: pending — BV
+  text_layer: legacy-encoding
+  license: public-domain
+  status: found-complete
+  where_i_looked: ""
+  notes: >-
+    FILLS ONE OF THE THREE EMPTY TARGET ŚĀKHĀS. 713 pp, 2.5 MB, complete Śaunaka Saṃhitā.
+    HIGH-VALUE SIDE FINDING — the file carries per-sūkta ANUKRAMAṆĪ HEADERS inline, giving
+    ṛṣi, devatā and chandas for each sūkta, e.g.
+    `(१-४) चतुऋचस्यास्य सूक्तस्याथर्वा ऋषिः । वाचस्पतिर्देवता । (१-३) प्रथमादितृचस्यानुष्टुप् (४) चतुर्थ्या ऋचश्च
+    चतुष्पदा विराडुरोबृहती छन्दसी`. Once the legacy font is remapped this is machine-extractable
+    ṛṣi/devatā/chandas data for the whole Atharvaveda — see cross_packet_notes → P0-a, whose
+    Anukramaṇī harness is the currently-blocked build-order #1.
+    NO ĀRAṆYAKA LAYER EXISTS for the Atharvaveda; absence encoded by absence, per README.
+    license_apparatus: unknown (no terms stated on site).
+  date_logged: 2026-08-01
+
+- node_path: atharvaveda/shaunaka/samhita
+  veda: atharvaveda
+  organization: null
+  shakha: shaunaka
+  layer: samhita
+  edition: >-
+    Atharvaveda-Saṃhitā, Śaunaka recension, ACCENTED TEXT. Based on Chatia Orlandi,
+    "Gli inni dell'Atharvaveda (Śaunaka)", Pisa 1991, collated with R. Roth and W. D. Whitney,
+    "Atharva Veda Sanhita", Berlin 1856. Input by Vladimir Petr and Petr Vavroušek; TITUS
+    redaction by Jost Gippert, 31 Jan 1997; books 11–20 improved by Arlo Griffiths (Leiden,
+    2000), Philipp Kubisch (Bonn, 2007); revised by Arlo Griffiths, Aug 2009.
+  url: http://gretil.sub.uni-goettingen.de/gretil/1_sanskr/1_veda/1_sam/avs_acu.htm
+  script: transliteration
+  svara_source?: >-
+    yes, and measured carefully because of the known GRETIL false-positive trap. Under NFD:
+    85,649 combining acute total, of which 6,684 belong to ś — leaving 78,965 genuine udātta —
+    plus 1,248 combining grave (svarita). The file's own header legend documents the scheme
+    (`e udatta é`, `e svarita è`, `long u udatta ū́`, `voc. r udatta ŕ̥`). NOT Devanāgarī:
+    zero characters in U+0900–U+097F, ~490k Latin.
+  svara_verified?: pending — BV
+  text_layer: unicode
+  license: copyright-link-only
+  status: found-complete
+  where_i_looked: ""
+  notes: >-
+    SECOND WITNESS for the Śaunaka Saṃhitā, and a genuinely complementary one: the VedicReserve
+    record above is accented legacy-font DEVANĀGARĪ, this is accented Unicode ROMAN. Two
+    independent encodings of the same accented text can validate each other mark-for-mark —
+    which is worth more than either alone for a project whose whole point is svara fidelity.
+    THE TRAP, STATED FOR THE RECORD: a naive U+0301 count on GRETIL's Ṛgveda returns thousands
+    of hits that are all decomposed ś, and P0-a measured that text at zero real accents. Here
+    the U+0301s ARE accents. The same codepoint, opposite verdicts. Normalise, then check what
+    the mark sits on — do not count blind, and do not generalise either result to the other.
+    LICENCE — quoted verbatim from the file: "COPYRIGHT AND TERMS OF USAGE AS FOR SOURCE FILE."
+    It grants nothing and defers to TITUS, which is all-rights-reserved. license recorded as
+    copyright-link-only, NOT public-domain: unlike a typeset PD text, this is a transliteration
+    with editorial collation across two printed editions and four named revisers, which is the
+    "value is genuinely editorial" case the correction told me to flag rather than adjudicate.
+    LINK ONLY. Do not ingest pending the human-level permission question.
+  date_logged: 2026-08-01
+
+- node_path: atharvaveda/shaunaka/brahmana
+  veda: atharvaveda
+  organization: null
+  shakha: shaunaka
+  layer: brahmana
+  edition: "Maharishi Vedic Literature Collection, Gopatha Brāhmaṇa"
+  url: https://vedicreserve.miu.edu/brahmanas/gopatha_brahmana.pdf
+  script: null
+  svara_source?: "cannot be assessed — no text layer. 92 pp, ~31 characters extractable."
+  svara_verified?: pending — BV
+  text_layer: scanned-no-text
+  license: public-domain
+  status: found-partial
+  where_i_looked: ""
+  notes: >-
+    92 pp, 12.9 MB, PURE SCAN. The only Gopatha Brāhmaṇa located in this ecosystem. Complete as
+    page images; unusable as text. Recorded found-partial on that basis.
+    license_apparatus: unknown.
+  date_logged: 2026-08-01
+
+- node_path: atharvaveda/shaunaka/upanishad
+  veda: atharvaveda
+  organization: null
+  shakha: shaunaka
+  layer: upanishad
+  edition: "Maharishi Vedic Literature Collection, Fifteen Upanishads nos. 5 and 6 — Muṇḍaka, Māṇḍūkya"
+  url: https://vedicreserve.miu.edu/upanishad.htm
+  script: devanagari-legacy-font
+  svara_source?: "no — Muṇḍaka sampled: 3,162 chars of text layer, zero accent glyphs. Unaccented."
+  svara_verified?: pending — BV
+  text_layer: legacy-encoding
+  license: public-domain
+  status: found-complete
+  where_i_looked: ""
+  notes: >-
+    Muṇḍaka 7 pp; Māṇḍūkya in the same series. Both traditionally assigned to the Śaunaka
+    school — that assignment is per tradition and is stated in the existing _status.yaml, not
+    asserted afresh here. Fills a node that held nothing.
+    license_apparatus: unknown.
+  date_logged: 2026-08-01
+
+- node_path: atharvaveda/shaunaka/apparatus/pratishakhya
+  veda: atharvaveda
+  organization: null
+  shakha: shaunaka
+  layer: apparatus
+  edition: "Maharishi Vedic Literature Collection — Atharva Veda Prātiśākhya, and the
+    Śaunakīya Caturādhyāyikā listed separately"
+  url: https://vedicreserve.miu.edu/atharva_veda_pratishakhya.htm
+  script: devanagari-legacy-font
+  svara_source?: "no — 2,010 chars over 6 pp, zero accent glyphs. Unaccented sūtra text."
+  svara_verified?: pending — BV
+  text_layer: legacy-encoding
+  license: public-domain
+  status: found-partial
+  where_i_looked: ""
+  notes: >-
+    found-partial: the page's A–Z index lists two titles (Atharva Veda Prātiśākhya AND
+    Atharva Veda Prātiśākhya (Caturādhyāyī)) but resolves to a single 6-page PDF. Six pages is
+    too short for the Śaunakīya Caturādhyāyikā, which the existing _status.yaml names as this
+    śākhā's prātiśākhya. What is served here is probably an extract; I could not establish
+    which text it is from the file, and am not guessing.
+    license_apparatus: unknown.
+  date_logged: 2026-08-01
+
+# ─────────────────────────────────────────────────────────────────────────────
+# ATHARVAVEDA / PAIPPALĀDA
+# ─────────────────────────────────────────────────────────────────────────────
+
+- node_path: atharvaveda/paippalada/samhita
+  veda: atharvaveda
+  organization: null
+  shakha: paippalada
+  layer: samhita
+  edition: null
+  url: null
+  script: null
+  svara_source?: "no — nothing found to check"
+  svara_verified?: pending — BV
+  text_layer: null
+  license: unknown
+  status: not-found
+  where_i_looked: >-
+    vedicreserve.miu.edu/atharva_veda.htm — one file, the Śaunaka Saṃhitā; the full A–Z
+    index_of_vedic_literature.htm has no Paippalāda entry.
+    sanskritdocuments.org doc_veda — full 90-entry index enumerated; the only Atharvan items
+    beyond Śaunaka extracts are ArAtrikamatharvavedaparishiShTa (a Pariśiṣṭa) and
+    ganapatiaccent (Gaṇapati Atharvaśīrṣa) — neither is Paippalāda.
+    sanskritweb.net — no Atharvaveda section exists at all.
+    vedavms.in, stotrasamhita GitHub — absent.
+  notes: >-
+    Wholly absent from this ecosystem, which is expected: the Paippalāda critical editions are
+    an active international academic project (Orissa manuscripts, rediscovered 1957) and that
+    work publishes through academic channels, not through the devotional-typesetting houses
+    surveyed here. Not a failure of searching — a structural feature of who publishes what.
+    CONFIRMED BY TITUS, which is exactly where I predicted it would be: TITUS lists
+    "Atharvaveda-Saṃhitā (Paippalāda recension), data entry by M. Witzel (Harvard),
+    C. Bastiaansen, A. Griffiths and Th. Zehnder (Leiden; under preparation)" — preliminary
+    HTML UTF-8, and it is TITUS MEMBERS ONLY, i.e. not publicly reachable. It also points to
+    the Paippalāda Recension project at Zürich. So the text exists in digital form, is
+    incomplete, and is behind a membership wall with all-rights-reserved terms.
+    not-found stands for this packet: nothing linkable and nothing ingestible.
+  date_logged: 2026-08-01
+
+- node_path: atharvaveda/paippalada/upanishad
+  veda: atharvaveda
+  organization: null
+  shakha: paippalada
+  layer: upanishad
+  edition: "Maharishi Vedic Literature Collection, Fifteen Upanishads no. 4 — Praśna Upaniṣad"
+  url: https://vedicreserve.miu.edu/upanishads/fifteen_upanishads_04_prashna.pdf
+  script: devanagari-legacy-font
+  svara_source?: "no — the Fifteen Upanishads series is unaccented throughout (three sampled, all zero accent glyphs)"
+  svara_verified?: pending — BV
+  text_layer: legacy-encoding
+  license: public-domain
+  status: found-complete
+  where_i_looked: ""
+  notes: >-
+    A second witness for a node we already hold (Prashna Upanishad - Swami Sarvanand
+    [Sanskrit-English].pdf). Logged because the held copy is a Sanskrit-English devotional
+    edition and this is a bare-text one; different uses. Shākhā attribution is per tradition
+    and is already caveated in the existing _status.yaml — nothing new asserted.
+    license_apparatus: unknown.
+  date_logged: 2026-08-01

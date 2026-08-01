@@ -1,0 +1,1226 @@
+# P0-a — Machine-readable sweep: GRETIL · DCS · VedaWeb · TITUS. Anukramaṇī first.
+# Schema: COLLECTION-PROTOCOL.md §1. Staging only — do not merge by hand; see _collection/README.md.
+# Collector: agent. All accent claims below were measured on files actually downloaded,
+# not read off a description page. Method is recorded per record in `svara_source?`.
+
+summary:
+  packet: P0-a
+  date: 2026-08-01
+  anukramani_harness: UNBLOCKED
+  anukramani_verdict: >
+    A complete, parseable Ṛgveda Anukramaṇī exists: Akavarapu & Bhattacharya (IIT Kanpur),
+    WSC 2023, github.com/mahesh-ak/WSC2023, Apache-2.0. Ten plain-text files, one per maṇḍala,
+    period-delimited: hymn.verses.ṛṣi.devatā.chandas, with per-verse ranges in parentheses where
+    a hymn's devatā/chandas changes mid-hymn. I counted it: 1028/1028 hymns, exactly matching the
+    canonical per-maṇḍala hymn counts (191/43/62/58/87/75/104/103/114/191); zero empty ṛṣi,
+    devatā or chandas fields; 336 distinct ṛṣi strings, 212 devatā labels, 38 chandas labels.
+    One malformed row (RV 8.31, ṛṣi field missing → 4 fields not 5) and the verse-count column
+    sums to 10534 against the canonical 10552. Both are logged below as known defects, not
+    blockers. This is the held-out validation set the build plan asked for, and nothing else
+    found in this sweep supplies ṛṣi or Anukramaṇī-chandas at all.
+  best_source_per_priority:
+    1_anukramani: "mahesh-ak/WSC2023 — the only machine-readable Anukramaṇī found. No substitute exists."
+    2_rv_samhita_accented: >
+      VedaWeb vedaweb-data rigveda/versions/eichler.csv — accented Devanāgarī Unicode,
+      10552/10552 stanzas, 175,308 svara marks (U+0951/U+0952). CC-BY-NC-SA-4.0.
+      Same text upstream at detlef108.de as HTML. For accented transliteration instead:
+      aufrecht.csv (126,122 vowel-acutes) or vnh.csv (128,554).
+    3_dcs: >
+      github.com/OliverHellwig/sanskrit, dcs/data/conllu/files/<Text>/ — CoNLL-U, CC-BY-4.0,
+      ~1.1 GB, 270 texts, no API. Broad Vedic coverage but ZERO accent anywhere (7.16M chars
+      scanned, no combining marks at all). Morphology/sandhi-split layer only.
+    4_vedaweb: >
+      Data on GitHub (VedaWebProject/vedaweb-data) — TEI-P5 + CSV + JSON, fully fetchable.
+      The web platform and REST API at vedaweb.uni-koeln.de return HTTP 418 to every
+      non-browser client, so the API is NOT scriptable. Use the GitHub mirror.
+    5_titus_sarit: >
+      TITUS holds the deepest Vedic collection of anything found — including ACCENTED
+      DEVANĀGARĪ UNICODE for the Taittirīya Saṃhitā, Vājasaneyi Saṃhitā, Ṛgveda and
+      Atharvaveda, which exists nowhere else openly. Working index:
+      titus.uni-frankfurt.de/texte/texte2.htm#ved. But it is ALL-RIGHTS-RESERVED: "No parts of
+      this document may be republished in any form without prior permission by the copyright
+      holder." GRETIL's "restricted download / proprietary format" label is misleading — the
+      format is fine, the LICENCE is the blocker.
+      SARIT holds ZERO Vedic material (confirmed by enumerating all 88 XML files in
+      sarit/SARIT-corpus). Drop it from the Vedic packets.
+    6_padapatha: >
+      RV: accented padapāṭha exists at detlef108.de (RV-with-Padapatha-D-UTF8.html, Devanāgarī,
+      406,301 svara marks; and RV-Padapatha-TA3-paada-UTF8.html, transliteration, 131,823
+      vowel-acutes). GRETIL's and VedaWeb's RV padapāṭha are UNACCENTED — verified, 0 marks.
+      Taittirīya: KYVeda/texts TS-Padam covers all 7 kāṇḍas in Baraha .BRH (accent preserved as
+      ASCII q/# markers) + .docx. TITUS also holds an RV padapāṭha (all-rights-reserved).
+      No machine-readable padapāṭha found for any other śākhā.
+  still_unavailable:
+    - >
+      Kātyāyana's SARVĀNUKRAMAṆĪ itself as typed text — CONFIRMED NOT-FOUND across GRETIL,
+      sanskritdocuments, TITUS, Wikisource, Muktabodha and vedicreserve. The only
+      machine-readable form in existence is the OCR layer of Macdonell's 1886 Anecdota
+      Oxoniensia scan on archive.org, and it is dirty. Śaunaka's Anuvākānukramaṇī: same, worse.
+      The WSC2023 dataset is therefore a hand-annotation of a text that itself has no clean
+      digital edition — which is worth knowing before treating it as ground truth.
+    - "Sāmaveda in DCS — absent entirely. Kauthuma SV exists at GRETIL but unaccented and word-boundary-mangled."
+    - "Vājasaneyi Kāṇva Saṃhitā — no machine-readable text found anywhere in this sweep."
+    - >
+      Accented machine-readable text for any Yajurveda śākhā under an OPEN licence. It exists
+      at TITUS in accented Devanāgarī Unicode (TS, VS) — but all-rights-reserved. The only
+      openly-obtainable route is the KYVeda Baraha files, Taittirīya only, licence unstated.
+    - >
+      A prātiśākhya in machine-readable form under an open licence. GRETIL's section headed
+      "Pratisakhyas" contains only the Nirukta and the Ṛgvidhāna — no prātiśākhya at all.
+      TITUS has the Taittirīya-Prātiśākhya, all-rights-reserved. Packet P2-b starts from there.
+    - >
+      Śatapatha Brāhmaṇa kāṇḍa 12 — absent from GRETIL (its index says so) and absent from DCS.
+      Neither source is complete and combining them does not close it.
+    - "No open machine-readable Taittirīya Saṃhitā / Brāhmaṇa / Āraṇyaka, Vājasaneyi Saṃhitā, or Kāṭhaka Saṃhitā at GRETIL — all marked 'restricted / proprietary format from TITUS'."
+  license_flag_for_BV: >
+    The accented Ṛgveda (eichler / aufrecht / vnh / padapatha via VedaWeb, and GRETIL's Vedic
+    corpus generally) is CC-BY-NC-SA-4.0. That is NonCommercial and is NOT compatible with this
+    repo's CC-BY-SA-4.0 for redistribution. DCS is CC-BY-4.0 and is clean. WSC2023 is Apache-2.0
+    and is clean. Decide whether accented RV text is redistributed or link-only.
+
+records:
+
+# ─────────────────────────────────────────────────────────────────────────────
+# PRIORITY 1 — ANUKRAMAṆĪ
+# ─────────────────────────────────────────────────────────────────────────────
+
+- node_path: sources/vedas/rigveda/shakala/apparatus/anukramani
+  veda: rigveda
+  organization: null
+  shakha: shakala
+  layer: apparatus
+  edition: >
+    V.S.D.S. Mahesh Akavarapu & Arnab Bhattacharya, "Creation of a Digital Rig Vedic Index
+    (Anukramaṇī) for Computational Linguistic Tasks", Computational Sanskrit & Digital
+    Humanities, 18th World Sanskrit Conference, 2023, pp. 89–96 (ACL Anthology 2023.wsc-csdh.6).
+    Hand-annotated from Kātyāyana's Sarvānukramaṇī, cross-checked against Maharishi
+    International University "Vedic Reserve" materials. IIT Kanpur.
+  url: https://github.com/mahesh-ak/WSC2023/tree/main/Anukramani
+  script: transliteration
+  svara_source?: "no — verified: IAST with diacritics, zero Devanāgarī, zero U+0951/U+0952. Accent is not applicable to an index."
+  svara_verified?: pending — BV
+  text_layer: unicode
+  license: Apache-2.0
+  status: found-complete
+  where_i_looked: n/a
+  notes: >
+    Ten files Anukramani/Mandala_1.txt … Mandala_10.txt, raw at
+    https://raw.githubusercontent.com/mahesh-ak/WSC2023/main/Anukramani/Mandala_1.txt (HTTP 200).
+    Header row in every file: `hymn.verses.seer.divinity.meter`. Fields period-delimited;
+    multiple entries within a field comma-delimited; verse ranges in parentheses,
+    e.g. `3.12.vaiśvāmitro madhucchandāḥ.(1-3)aśvinau,(4-6)indraḥ,(7-9)viśvedevāḥ,(10-12)sarasvatī.gāyatrī`.
+    The `.` separator is safe because the IAST uses real precomposed Unicode (madhucchandāḥ,
+    not madhucchanda.h).
+    MEASURED COVERAGE: 1028 rows total; per maṇḍala 191/43/62/58/87/75/104/103/114/191 —
+    exact match to the canonical hymn counts. 0 rows with an empty ṛṣi, devatā or chandas.
+    336 distinct ṛṣi strings (top: maitrāvaruṇirvasiṣṭhaḥ 103, bārhaspatyo bharadvājaḥ 59).
+    212 distinct devatā labels (indraḥ 275, agniḥ 223, pavamānaḥ somaḥ 113).
+    38 distinct chandas labels (triṣṭup 579, gāyatrī 253, jagatī 195, anuṣṭup 178).
+    KNOWN DEFECTS — fix in the harness, do not silently normalise:
+      (a) RV 8.31 has 4 fields, not 5 — the ṛṣi field is missing. Parser must tolerate.
+      (b) The `verses` column sums to 10534; the canonical RV stanza count is 10552
+          (VedaWeb's stanza-indexed CSVs all have exactly 10552 rows). 18-stanza gap, unlocated.
+      (c) Chandas label typo `jagatiī` occurs 9 times alongside `jagatī` 195 times.
+      (d) Devatā/ṛṣi labels are deliberately NOT decomposed: `mitrāvaruṇau` is one label,
+          not Mitra + Varuṇa. The paper states this explicitly. Any clustering that treats
+          dual/group deities as atomic labels inherits that choice.
+    The repo also ships `dcs_w2v.vec` (23.7 MB word2vec over DCS lemmas) and points to
+    HuggingFace models mahesh27/vedicberta-base and mahesh27/div-class-roberta — not needed
+    for the harness, but they are the published baseline (RoBERTa, 77.3% devatā accuracy)
+    against which any embedding/clustering result should be compared.
+  date_logged: 2026-08-01
+
+- node_path: sources/vedas/rigveda/shakala/apparatus/anukramani
+  veda: rigveda
+  organization: null
+  shakha: shakala
+  layer: apparatus
+  edition: >
+    Not applicable — this record covers the SEARCH for hymn-level ṛṣi/devatā/chandas in the
+    four large machine-readable Sanskrit corpora, i.e. the sources the build plan assumed
+    would carry it.
+  url: null
+  script: null
+  svara_source?: n/a
+  svara_verified?: pending — BV
+  text_layer: n/a
+  license: n/a
+  status: not-found
+  where_i_looked: >
+    (1) GRETIL full index gretil.html (1.03 MB, fetched): case-insensitive search for
+    "anukram" returns ZERO hits. GRETIL holds no Anukramaṇī of any Veda. Its section heading
+    "Pratisakhyas" is also mislabelled — it contains only the Nirukta and the Ṛgvidhāna, no
+    prātiśākhya.
+    (2) VedaWeb vedaweb-data: full file tree enumerated. rigveda/info/ holds addressees.json,
+    strata.json, stanza_properties.json, rv_locations, grassmann_enum, matched_lemmata —
+    no ṛṣi and no Anukramaṇī chandas. addressees.json (1028 entries) is Geldner's German/English
+    hymn headings ("An Agni" / "Agni") — a devatā PROXY only, editorially Geldner's, not the
+    tradition's, and it carries no ṛṣi and no metre. The TEI body confirms this: each hymn div
+    has <div type="dedication"><div type="addressee"> and stanza-level <lg type="strata">, and
+    nothing else at hymn level. stanza_properties.json is Grassmann/Oldenberg/Arnold/Wüst/Witzel
+    stratification flags, not metre names.
+    (3) DCS (github.com/OliverHellwig/sanskrit): CoNLL-U token annotation only; chapter headers
+    carry text_id/chapter_id/citation, no ṛṣi/devatā/chandas.
+    (4) arXiv 2503.18226 "Mapping Hymns and Organizing Concepts in the Rigveda" — releases no
+    metadata dataset; works from the Jamison–Brereton translation.
+    (5) detlef108.de (Eichler) — text and padapāṭha only, no index.
+  notes: >
+    This is the finding that matters: the ṛṣi and the Anukramaṇī chandas exist in exactly ONE
+    open machine-readable place (WSC2023, record above). The śākhā-blind corpora do not carry
+    the tradition's own labels. Treat WSC2023 as a single point of failure and mirror it.
+  date_logged: 2026-08-01
+
+# ─────────────────────────────────────────────────────────────────────────────
+# PRIORITY 2 — ṚGVEDA ŚĀKALA SAṂHITĀ, MACHINE-READABLE, ACCENTED
+# ─────────────────────────────────────────────────────────────────────────────
+
+- node_path: sources/vedas/rigveda/shakala/samhita
+  veda: rigveda
+  organization: null
+  shakha: shakala
+  layer: samhita
+  edition: >
+    Detlef Eichler's Devanāgarī Unicode rendering of the Aufrecht / van Nooten–Holland text,
+    as redistributed by the VedaWeb project (Cologne Center for eHumanities, Univ. of Cologne).
+    Declared in vedaweb_corpus.tei as biblFull xml:id="eichler", title "Ṛgveda-Saṁhitā",
+    author Detlef Eichler.
+  url: https://github.com/VedaWebProject/vedaweb-data/blob/main/rigveda/versions/eichler.csv
+  script: devanagari-unicode
+  svara_source?: >
+    yes — MEASURED on the downloaded file (3.4 MB): 1,002,069 Devanāgarī characters;
+    100,507 × U+0952 (anudātta) and 74,801 × U+0951 (svarita) = 175,308 svara marks;
+    0 characters in Vedic Extensions U+1CD0–1CFF. Sample RV 1.1.1a reads
+    अ॒ग्निमी॑ळे पु॒रोहि॑तं य॒ज्ञस्य॑ दे॒वमृ॒त्विज॑म्.
+  svara_verified?: pending — BV
+  text_layer: unicode
+  license: CC-BY-NC-SA-4.0
+  status: found-complete
+  where_i_looked: n/a
+  notes: >
+    Raw fetch URL that opens:
+    https://raw.githubusercontent.com/VedaWebProject/vedaweb-data/main/rigveda/versions/eichler.csv
+    Tab-separated, 21,035 rows keyed `MM.HHH.VV<TAB>pāda<TAB>text`, covering exactly 10,552
+    distinct stanzas — the complete Śākala Saṃhitā including the vālakhilyas.
+    LICENCE IS NONCOMMERCIAL. The licence is not in a LICENSE file; it is inside
+    rigveda/TEI/vedaweb_corpus.tei, per-source, in <availability><licence>. The repo README
+    says "Every source on this repository contains a specific CC licence. For details see the
+    <teiHeader> in vedaweb_corpus.tei" — so licence is PER FILE and must be read there, not
+    assumed. eichler/aufrecht/padapatha/vnh/lubotsky are all CC-BY-NC-SA-4.0 with the standard
+    GRETIL good-faith copyright disclaimer attached. addressees/strata/stanza_properties/zurich
+    are CC-BY-4.0.
+    This file is byte-comparable to detlef108.de/RV-D-UTF8.html (175,323 marks there vs 175,308
+    here — the 15 extra are in that page's front matter), confirming the chain
+    Aufrecht/vNH → Eichler → GRETIL & VedaWeb. Prefer the VedaWeb CSV: it is versioned, has a
+    stated licence, and is already stanza-keyed.
+  date_logged: 2026-08-01
+
+- node_path: sources/vedas/rigveda/shakala/samhita
+  veda: rigveda
+  organization: null
+  shakha: shakala
+  layer: samhita
+  edition: >
+    Theodor Aufrecht, Die Hymnen des Ṛgveda, 2nd ed. 1877 (as digitised in the GRETIL/Eichler
+    chain); and Barend A. van Nooten & Gary B. Holland, Rig Veda: A Metrically Restored Text,
+    Harvard Oriental Series 50, Harvard University Press 1994 — two separate accented
+    transliteration files.
+  url: https://github.com/VedaWebProject/vedaweb-data/tree/main/rigveda/versions
+  script: transliteration
+  svara_source?: >
+    yes — MEASURED. aufrecht.csv: 126,122 vowel+combining-acute (U+0301 on a vowel), plus 1,686
+    vowel+grave; 21,097 lines / 10,552 stanzas. vnh.csv: 128,554 vowel+acute; 39,691 lines /
+    10,552 stanzas (pāda-per-line). Counting note: a naïve U+0301 count is wrong because NFD(ś)
+    = s + U+0301; the figures above count acutes on VOWELS only.
+  svara_verified?: pending — BV
+  text_layer: unicode
+  license: CC-BY-NC-SA-4.0
+  status: found-complete
+  where_i_looked: n/a
+  notes: >
+    aufrecht.csv (1.7 MB) — sample: `agním īḷe puróhitaṁ yajñásya devám r̥tvíjam`.
+    vnh.csv (1.9 MB) — metrically restored, one pāda per line: `agním īḷe puróhitaṁ` /
+    `yajñásya devám r̥tvíjam` / `hótāraṁ ratnadhā́tamam`. Use vnh.csv when pāda boundaries or
+    metre matter; aufrecht.csv when matching the printed vulgate.
+    vnh's TEI availability note explicitly credits the van Nooten–Holland HOS 50 edition. That
+    edition is in copyright (HUP 1994); the online derivative is distributed under CC-BY-NC-SA
+    with GRETIL's good-faith disclaimer. Treat as link-only until someone checks HUP's position.
+    Also present in the same directory: lubotsky.csv (Lubotsky's Ṛgvedic word concordance),
+    zurich.xlsx and vedaweb_zurich.xlsx (12.6 MB / 10.9 MB, Univ. Zürich morphological
+    database, CC-BY-4.0 — the cleanest licence of the set).
+  date_logged: 2026-08-01
+
+- node_path: sources/vedas/rigveda/shakala/samhita
+  veda: rigveda
+  organization: null
+  shakha: shakala
+  layer: samhita
+  edition: >
+    Detlef Eichler, "Rigveda Page", detlef108.de — the upstream personal site behind both
+    GRETIL's and VedaWeb's Ṛgveda. Built on Aufrecht + van Nooten/Holland. Site last revised
+    2025-06-04.
+  url: http://www.detlef108.de/Rigveda.htm
+  script: devanagari-unicode
+  svara_source?: >
+    yes — MEASURED on downloaded HTML.
+    RV-D-UTF8.html (3.6 MB): 1,023,214 Devanāgarī chars, 175,323 × U+0951/U+0952.
+    RV-with-Padapatha-D-UTF8.html (8.3 MB): 2,469,683 Devanāgarī chars, 406,301 × U+0951/U+0952
+    — saṃhitā AND padapāṭha, both accented.
+    RV-Padapatha-TA3-paada-UTF8.html (2.1 MB): 131,823 vowel+acute, transliterated padapāṭha.
+    RVA-T-UTF8.html (1.9 MB): 126,135 vowel+acute, Aufrecht-style accented transliteration.
+    RV-T-UTF8.html (2.1 MB): accented but via combining marks BELOW the line (U+0331 style,
+    Devanāgarī-convention accents transferred to Latin) — 0 vowel+acute, so an acute-based
+    detector will wrongly call this unaccented. Sample: `a̱gninā̍ ra̱yim a̍śnava̱t`.
+    RV-D-NA-SNR-UTF8.html: 871,221 Devanāgarī chars, 0 svara marks — the "NA" in a filename
+    means No Accents.
+  svara_verified?: pending — BV
+  text_layer: unicode
+  license: unknown
+  status: found-complete
+  where_i_looked: >
+    Read http://www.detlef108.de/Notes-to-the-Rigveda-Page.htm in full and grepped both pages
+    for copyright / licence / Creative Commons / public domain / permission — NO licence
+    statement of any kind on the site.
+  notes: >
+    Link-only per binding rule 1. The same content is available under an explicit
+    CC-BY-NC-SA-4.0 through VedaWeb and GRETIL — prefer those for anything redistributed.
+    The Notes page is itself a useful apparatus document: it records exactly where this text
+    departs from the printed vulgate (kampas not shown; ch not doubled in gachati; final m not
+    nasalised before labials; Aufrecht's ṚPr 4.36 visarga-dropping restored in the UTF-8 files;
+    ṚPr 4.17 n→nt insertion NOT observed in transliteration but IS applied in the Devanāgarī
+    files). Anyone diffing this against a Ghanapāṭhi's recitation needs that list first.
+    Also on the site: per-maṇḍala PDFs, ITRANS sources, RV-Statistics.htm, RV-SelectedMantras
+    with audio.
+  date_logged: 2026-08-01
+
+- node_path: sources/vedas/rigveda/shakala/samhita
+  veda: rigveda
+  organization: null
+  shakha: shakala
+  layer: samhita
+  edition: >
+    GRETIL (Göttingen Register of Electronic Texts in Indian Languages, SUB Göttingen) —
+    "Ṛgveda, input by Barend A. Van Nooten and Gary B. Holland, converted and revised by
+    Detlef Eichler". TEI-P5.
+  url: https://gretil.sub.uni-goettingen.de/gretil/corpustei/sa_Rgveda-edAufrecht.xml
+  script: transliteration
+  svara_source?: >
+    NO — verified against the advertised claim, which is wrong. The GRETIL index and its
+    downstream descriptions call this file accented. The delivered file is NOT.
+    Measured on the plaintext transformation (1.49 MB): 0 Devanāgarī, 0 U+0951/U+0952,
+    0 Vedic Extensions, 0 vowel+acute. Body reads `agnim īḻe purohitaṁ yajñasya devam ṛtvijam`
+    against the accented `agním īḷe puróhitaṁ`. The 12,728 raw U+0301 in the file are all
+    NFD(ś); none sit on a vowel.
+  svara_verified?: pending — BV
+  text_layer: unicode
+  license: CC-BY-NC-SA-4.0
+  status: found-complete
+  where_i_looked: n/a
+  notes: >
+    Three formats, all HTTP 200:
+      TEI-P5  gretil/corpustei/sa_Rgveda-edAufrecht.xml
+      HTML    gretil/corpustei/transformations/html/sa_Rgveda-edAufrecht.htm
+      plain   gretil/corpustei/transformations/plaintext/sa_Rgveda-edAufrecht.txt  (1,494,070 B)
+    Reference format `RV_1,001.01` with pāda letters. Cumulative download of the whole Sanskrit
+    corpus: https://gretil.sub.uni-goettingen.de/gretil/1_sanskr.zip
+    Licence text is inside each file, not on the index page, and reads: "This e-text was
+    provided to GRETIL in good faith that no copyright rights have been infringed… Distributed
+    under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License."
+    USE THIS FILE ONLY WHERE ACCENT DOES NOT MATTER (concordance, lemma alignment, search).
+    For accent take VedaWeb eichler.csv or detlef108.de. This is the single most likely
+    mistake for a later collector to make, because everything says "accented".
+  date_logged: 2026-08-01
+
+- node_path: sources/vedas/rigveda/shakala/samhita
+  veda: rigveda
+  organization: null
+  shakha: shakala
+  layer: samhita
+  edition: >
+    Ṛgveda-Khilāni, input by Muneo Tokunaga; GRETIL TEI-P5 conversion.
+  url: https://gretil.sub.uni-goettingen.de/gretil/corpustei/sa_RgvedakhilAni.xml
+  script: transliteration
+  svara_source?: "no — verified: 0 Devanāgarī, 0 U+0951/U+0952, 0 vowel+acute over 102,084 chars."
+  svara_verified?: pending — BV
+  text_layer: unicode
+  license: CC-BY-NC-SA-4.0
+  status: found-partial
+  where_i_looked: n/a
+  notes: >
+    Plaintext 117,233 B. Reference `RvKh_1,1.1`. Adhyāyas 1–5 present. Note DCS has the khilāni
+    too (64 chunks, khilas 1–4) and VedaWeb does not. The Khilāni are where the Śrī Sūkta lives
+    (Khila 2.6), which the śākhā tree will eventually need to place.
+  date_logged: 2026-08-01
+
+# ─────────────────────────────────────────────────────────────────────────────
+# PRIORITY 3 — DCS
+# ─────────────────────────────────────────────────────────────────────────────
+
+- node_path: sources/vedas/_reference/dcs
+  veda: null
+  organization: null
+  shakha: null
+  layer: apparatus
+  edition: >
+    Oliver Hellwig, The Digital Corpus of Sanskrit (DCS), 2010–2026. Morphologically tagged,
+    sandhi-split, lemmatised, with a dependency treebank layer. Site footer dated Feb 2026 —
+    actively maintained.
+  url: https://github.com/OliverHellwig/sanskrit/tree/master/dcs/data/conllu/files
+  script: transliteration
+  svara_source?: >
+    NO — and this is structural, not an oversight. 7.16 MILLION characters scanned across 60
+    randomly chosen files spanning 20 Vedic texts (RV, RVKh, AVŚ, AVP, MS, KS, TS, VSM, TB, TĀ,
+    ŚBM, AB, JB, PB, KauṣB, GB, BĀU, ChU, AĀ, Nirukta), plus the Vedic Prose Corpus and the
+    30 MB treebank file: ZERO U+0301, U+0300, U+0951, U+0952, U+1CD0–1CFF, and in fact zero
+    combining marks of any kind — the encoding is precomposed NFC IAST, so an accent could not
+    be hiding as a decomposed sequence. Maintainer confirms in prose: dcs/data/rigveda/readme.md
+    says the pada file "contains the padas of the Rigveda (without accents)".
+    CAUSE: the pipeline sandhi-splits and re-serialises word forms from an annotation database.
+    Accent is a property of the saṃhitāpāṭha surface string; DCS's surface is a reconstructed
+    sandhi-resolved word (`agnim īḍe` for saṃhitā `agnim īḷe`; `saḥ it` for `sed`). The
+    `Unsandhied` MISC field is the same accentless reconstruction.
+  svara_verified?: pending — BV
+  text_layer: unicode
+  license: CC-BY-4.0
+  status: found-partial
+  where_i_looked: >
+    Probed for an API and found none: /dcs/api/ 404, /dcs/api.php 404, /dcs/rest/ 404,
+    /robots.txt 404; /dcs/index.php?contents=api returns 200 but is byte-identical to the
+    homepage (unknown `contents` values silently fall back). Grep for "api" across Home,
+    Functions, Help, Corpus, Texts and Vedic Conc. pages: zero hits.
+    dcs.uni-heidelberg.de — DNS NXDOMAIN. No second repo under OliverHellwig.
+    No files/Vedic/ grouping exists — the layout is flat, one directory per text.
+    No LICENSE file at repo root (so the GitHub API reports license: null).
+  notes: >
+    ACCESS: bulk files only, no API. Canonical site http://www.sanskrit-linguistics.org/dcs/
+    (HTTP 200, HTTP-only, no HTTPS). Repo master.zip fetches 200; ~1.78 GB total,
+    conllu subtree 1,118.9 MB (15,900 .conllu + 7,227 .conllu_parsed, 270 texts).
+    Path: dcs/data/conllu/files/<TextName>/. Filename encodes Text-NNNN-citation-chapterID.
+    FORMAT: UD-compliant CoNLL-U, columns ID/FORM/LEMMA/UPOS/XPOS/FEATS/HEAD/DEPREL/DEPS/MISC.
+    XPOS almost always `_`. HEAD/DEPREL populated only where the chapter is in the Vedic
+    Treebank (RV, AVŚ, KauśS are). MISC carries LemmaId, OccId, Unsandhied, WordSem,
+    Punctuation, and `IsMantra` (true where the word is in a mantra per Bloomfield's Vedic
+    Concordance) — that last flag is directly useful to this project.
+    VEDIC COVERAGE, measured by chunk count (śākhā-blind, so re-file by hand):
+      Ṛgveda 1028 chunks — COMPLETE, exactly 1028 sūktas, per-maṇḍala counts all correct.
+      Ṛgvedakhilāni 64 (khilas 1–4).
+      Atharvaveda Śaunaka 519 — all 19 kāṇḍas present but 1–7 ~complete and 8–19 thin
+        (kāṇḍa 17 has 1 chunk, 14 has 2, 19 has 3).
+      Atharvaveda Paippalāda 257 — only 6 of 20 kāṇḍas (1, 4, 5, 10, 12, 19).
+      Maitrāyaṇīsaṃhitā 353 — books 1–2 heavy, 3–4 sparse. Annotated with Kyoko Amano's
+        "Spirits" project.
+      Kāṭhakasaṃhitā 174 — selective, 21 of 40 sthānakas.
+      Taittirīyasaṃhitā 219 — all 7 kāṇḍas, very uneven (kāṇḍa 4 has 3 chunks, 7 has 2);
+        prose kāṇḍas favoured over the mantra kāṇḍas.
+      Vājasaneyisaṃhitā Mādhyandina 15 — adhyāyas 1–15 of 40 only.
+      Sāmaveda — ABSENT. Vājasaneyi Kāṇva — ABSENT.
+      Śatapatha Mādhyandina 240 — kāṇḍas 1–6, 10, 13 only.
+      Aitareyabrāhmaṇa 285 — COMPLETE, 8 pañcikās.
+      Kauṣītaki/Śāṅkhāyana Brāhmaṇa 116 — complete.
+      Jaiminīyabrāhmaṇa 389 — book 1 essentially complete (364), books 2 (15) and 3 (10)
+        barely started. Jaiminīya-Upaniṣad-Brāhmaṇa 145, all 4 books.
+      Pañcaviṃśa 169 — prapāṭhakas 1–15 of 25. Ṣaḍviṃśa 48 complete. Sāmavidhāna 25 complete.
+      Gopathabrāhmaṇa 233 — COMPLETE, pūrva 135 + uttara 98.
+      Taittirīyabrāhmaṇa 62 — sparse (1:23, 2:33, 3:6).
+      Aitareya-Āraṇyaka 58 (book 4 absent). Śāṅkhāyanāraṇyaka 145 (all 15).
+      Taittirīyāraṇyaka 33 — selective, only 1, 2, 3, 5; 4 and 6–10 absent.
+      Kaṭhāraṇyaka 9 (only 2, 3).
+      Upaniṣads: Bṛhadāraṇyaka 47 complete, Chāndogya 153 complete, Aitareya 13, Kauṣītaki 2,
+        Kaṭha 6, Taittirīya 31, Muṇḍaka 6, Śvetāśvatara 12. Īśā/Praśna/Māṇḍūkya absent.
+      Vedāṅga/ritual: Nirukta 31, Kauśikasūtra 141, Vaitānasūtra 43, AV-Pariśiṣṭa 8,
+        Ṛgvidhāna, Ṛgveda-Vedāṅgajyotiṣa, ~35 Śrauta/Gṛhya/Dharma sūtras.
+    TWO EXTRA ASSETS IN THE SAME REPO, both worth taking:
+      corpus/VPC/ — Vedic Prose Corpus (82 MB, Sellmer + Amano), sentence-per-line, cited
+        1.2.3, 58 texts across Āraṇyaka/Brāhmaṇa/Śrauta/Gṛhya/Dharma/Śulba/Upaniṣad plus
+        ritual COMMENTARIES (Dārila, Keśava, Devapāla, Bhavatrāta, Agnisvāmin, Varadattasuta).
+        Live search UI: https://huggingface.co/spaces/OliverHellwig/vpcsearch (200).
+      papers/2023wsc/data/vc.xml (50 MB) — a new XML edition of BLOOMFIELD'S VEDIC CONCORDANCE
+        with citations/variants/pratīkas resolved and ~14k entries added (BhārŚ, BaudhŚ,
+        BaudhGS, KāṭhGS, VaikhŚ, ŚāṅkhĀ). This is probably the highest-value single Vedic file
+        in the repo for a cross-śākhā project. CAVEAT: derives from Franceschini (2007); its own
+        copyright notice at people.fas.harvard.edu/~witzel/VedicConcordance/ReadmeEng.html may
+        attach separately — check before redistributing this one file.
+      papers/2020lrec/treebank/sanskrit-2023.conllu (30.5 MB) — the whole treebank as one file.
+      dcs/data/rigveda/pada-and-analysis.dat — pada-level, carries DCS lemma + occurrence IDs.
+        This is the right join key for aligning an accented RV layer onto DCS by
+        (maṇḍala, sūkta, stanza, pāda).
+    LICENCE — the repo and the website disagree, but both are attribution-only:
+      website index.php?contents=impressum, with rel="license" to creativecommons.org/licenses/by/3.0/:
+        "Copyright © 2010-2021 by Oliver Hellwig. The Digital Corpus of Sanskrit by Oliver
+         Hellwig is licensed under a Creative Commons Attribution 3.0 Unported License."
+      dcs/data/readme.md and dcs/data/conllu/readme.md:
+        "The data … are licensed under the Creative Commons BY 4.0 (CC BY 4.0) license."
+      No ShareAlike, no NonCommercial. Treat CC-BY-4.0 as governing the GitHub data (most
+      specific, most recent) and cite both. Required citation is the @Manual{dcs} block in the
+      readmes: Hellwig, Oliver, "The Digital Corpus of Sanskrit (DCS)", 2010–2024.
+    DOC/DATA MISMATCH: dcs/data/conllu/readme.md references ./files/lookup/pos.csv, which is
+    not in the repo (lookup/ has dictionary.csv, word-senses.csv, chapter-info.xml,
+    sembank-attestations.xml, sembank-relations.csv only).
+    The Nov 2018 MySQL dump linked from dcs/data/readme.md is 8 years stale — ignore it.
+    ŚĀKHĀ WARNING: DCS is śākhā-blind and flat. "Sāmaveda" is absent but "Pañcaviṃśa" and
+    "Ṣaḍviṃśa" are present — those ARE Kauthuma/Rāṇāyanīya material and must be re-filed under
+    the śākhā, not left as free-floating "Brāhmaṇas".
+  date_logged: 2026-08-01
+
+# ─────────────────────────────────────────────────────────────────────────────
+# PRIORITY 4 — VEDAWEB 2.0
+# ─────────────────────────────────────────────────────────────────────────────
+
+- node_path: sources/vedas/_reference/vedaweb
+  veda: rigveda
+  organization: null
+  shakha: shakala
+  layer: apparatus
+  edition: >
+    VedaWeb, Cologne Center for eHumanities (CCeH), Univ. of Cologne, with Univ. Zürich;
+    TEI version 2020, revised 2023 and 2024. Editors Daniel Kölligan (Würzburg) and
+    Uta Reinöhl (Freiburg); technical realisation Francisco Mondaca; 2023/24 revision
+    Anna Fischer. Funded by the DFG. VedaWeb 2.0 (DFG project 470926253) is rebuilding the
+    platform on "Tekst" (github.com/VedaWebProject/Tekst, AGPL-3.0); the original platform repo
+    VedaWebProject/vedaweb is now ARCHIVED.
+  url: https://github.com/VedaWebProject/vedaweb-data
+  script: transliteration
+  svara_source?: >
+    yes, per source file — see the three RV records above for measured counts. The TEI body
+    carries the accented Zurich text in ISO-15919 (`tvám agne dyúbhis tvám āśuśukṣáṇis`).
+    The padapāṭha file is the exception and is UNACCENTED (measured 0).
+  svara_verified?: pending — BV
+  text_layer: unicode
+  license: mixed — CC-BY-4.0 and CC-BY-NC-SA-4.0 per source; see notes
+  status: found-complete
+  where_i_looked: n/a
+  notes: >
+    TEXTS: the Ṛgveda Śākala Saṃhitā and nothing else. VedaWeb 2.0 is scoped to "Old Indo-Aryan
+    texts" and the Rigveda is still the only text loaded. No Yajurveda, no Sāmaveda, no
+    Atharvaveda.
+    ACCESS — IMPORTANT OPERATIONAL FINDING: vedaweb.uni-koeln.de is behind bot detection and
+    returns HTTP 418 with a "Bot Detection" HTML page to every non-browser client. Verified
+    against /rigveda/about, /rigveda (landing), /rigveda/api/document/id/0100101 and
+    /rigveda/v3/api-docs, with a full Chrome UA, Accept/Referer/Sec-Fetch headers and a cookie
+    jar — all 418. THE REST API IS NOT SCRIPTABLE. Documented endpoints
+    (vedaweb.uni-koeln.de/rigveda/swagger-ui.html, /rigveda/api/document/id/<id>) exist but
+    cannot be reached programmatically. Use the GitHub data mirror instead; it is complete and
+    it is what the API serves.
+    EXPORT FORMATS on GitHub, all raw-fetchable:
+      rigveda/TEI/rv_book_01..10.tei — TEI-P5, 240 MB total (book 1 alone is 43.8 MB), plus
+        vedaweb.odd, vedaweb.rng (schema) and vedaweb_corpus.tei (the corpus header carrying
+        all per-source licences).
+      rigveda/versions/ — aufrecht.csv, vnh.csv, eichler.csv, padapatha.csv, lubotsky.csv,
+        zurich.xlsx, vedaweb_zurich.xlsx.
+      rigveda/info/ — addressees.json, strata.json, stanza_properties.json, rv_locations.json/.tsv,
+        grassmann_enum.json, revised_grassmann_mapping.csv, matched_lemmata.json,
+        leipzig_mapping.json, codes_abbreviations.csv, translation_version_stanza_coverage.md.
+      rigveda/translations/ — deu (Geldner, Grassmann, Otto), eng (Griffith, Macdonell, Müller,
+        Oldenberg), fra (Renou), rus (Elizarenkova), por (Geraldes).
+      rigveda/external-resources/ — concordances to Delbrück 1888, Ludwig, Oldenberg.
+    TEI STRUCTURE, verified by reading rv_book_02.tei directly:
+      <div type="hymn"> → <div type="dedication"><div type="addressee"> (de/en) and
+      <div type="group">; then per stanza <div type="stanza"> containing
+      <lg type="strata"> (Arnold labels per pāda), <lg source="zurich"> with the accented
+      ISO-15919 text per pāda, and per token <fs type="zurich_info"> with surface form,
+      Grassmann lemma (with @correction pointing into the lemma register), grammatical class,
+      and Leipzig-glossing morphosyntax (case/number/gender/mood/tense/voice…).
+      NO ṚṢI AND NO CHANDAS NAME AT HYMN LEVEL. Metre information is Arnold's stratification,
+      not the Anukramaṇī's chandas.
+    LICENCE IS PER SOURCE and lives only in vedaweb_corpus.tei <teiHeader>:
+      CC-BY-4.0: addressees, strata, stanza_properties, zurich.
+      CC-BY-NC-SA-4.0: aufrecht, padapatha, vnh, eichler, lubotsky, and the translations.
+      publicationStmt <availability> for the corpus as a whole reads only
+      "Please see the licensing terms for each source".
+    The README warns "There will be a new update of the source data and the TEI files in 2025" —
+    as of this sweep the last commit to vedaweb-data is 2026-06-26, so that update has landed;
+    pin a commit SHA if reproducibility matters.
+  date_logged: 2026-08-01
+
+- node_path: sources/vedas/rigveda/shakala/apparatus/hymn-metadata
+  veda: rigveda
+  organization: null
+  shakha: shakala
+  layer: apparatus
+  edition: >
+    "Rigveda – Addressees", compiled by Daniel Kölligan (Würzburg) for CCeH, 2020, from
+    Karl Friedrich Geldner, Der Rig-Veda, Harvard University Press 1951 (hymn headings).
+  url: https://github.com/VedaWebProject/vedaweb-data/blob/main/rigveda/info/addressees.json
+  script: roman
+  svara_source?: n/a — this is metadata, not text
+  svara_verified?: pending — BV
+  text_layer: unicode
+  license: CC-BY-4.0
+  status: found-complete
+  where_i_looked: n/a
+  notes: >
+    1028 entries keyed `MM.HHH`, each a pair of [German, English] pairs: the hymn's addressee
+    and its hymn-group. Example `"01.001": [["An Agni","Agni"], ["1. Gruppe: Lieder des
+    Madhucchandas","1. group: hymns of Madhucchandas"]]`.
+    THIS IS NOT THE ANUKRAMAṆĪ. It is Geldner's editorial hymn heading — a devatā proxy with no
+    ṛṣi and no chandas, and it reflects a 20th-century German Indologist's judgement, not the
+    tradition's own labelling. Its real value is as an INDEPENDENT second opinion to diff
+    against the WSC2023 devatā column: where Geldner and Kātyāyana disagree about who a hymn
+    addresses, that disagreement is itself a finding worth surfacing, and it is exactly the kind
+    of named-readings-side-by-side the project's content discipline asks for.
+    Companion files at the same licence: strata.json (Arnold 1905 metrical stratification, via
+    Gunkel & Ryan — 2.1 MB, the standard chronological-layer dataset) and stanza_properties.json
+    (2373 entries of Grassmann/Oldenberg/Arnold/Wüst/Witzel flags, via Gunkel & Scarlata).
+  date_logged: 2026-08-01
+
+# ─────────────────────────────────────────────────────────────────────────────
+# PRIORITY 5 — TITUS / SARIT
+# ─────────────────────────────────────────────────────────────────────────────
+
+- node_path: sources/vedas/_reference/titus
+  veda: null
+  organization: null
+  shakha: null
+  layer: apparatus
+  edition: >
+    TITUS — Thesaurus Indogermanischer Text- und Sprachmaterialien, Univ. Frankfurt a/M
+    (Jost Gippert). Per-text copyright dates observed 2009–2010.
+  url: https://titus.uni-frankfurt.de/texte/texte2.htm#ved
+  script: mixed — devanagari-unicode and transliteration served in parallel trees
+  svara_source?: >
+    YES — and this is the most important single fact in this record, because it contradicts
+    what everyone downstream says about TITUS. Independently re-measured by me on the served
+    pages, not taken on report:
+      /texte/etcd/ind/aind/ved/yvs/ts/ts001.htm (HTTP 200, 75,612 B) — Taittirīya Saṃhitā
+        adhyāya 1 in Devanāgarī: 9,938 Devanāgarī chars, 706 × U+0951 (svarita) and
+        841 × U+0952 (anudātta), 0 Vedic Extensions.
+      /texte/etcs/ind/aind/ved/rv/mt/rv001.htm (HTTP 200, 38,994 B) — Ṛgveda in
+        transliteration: 0 Devanāgarī, 251 vowel+combining-acute (U+0301, NFD).
+    Sub-agent additionally measured etcd Vājasaneyi Saṃhitā vs001 (405/432), Atharvaveda
+    avs001 (21/36), Ṛgveda rv001 (138/188), and confirmed several texts are unaccented even in
+    transliteration (Pañcaviṃśa, Sāmavidhāna, Aitareya Br., Jaiminīya-Up.-Br. all 0).
+    U+1CD0–1CFF is used NOWHERE in TITUS — accents are the basic U+0951/U+0952 pair only.
+  svara_verified?: pending — BV
+  text_layer: unicode
+  license: copyright-link-only
+  status: found-complete
+  where_i_looked: >
+    Index URLs tested: titus.uni-frankfurt.de/indexe.htm → 200 but it is the general homepage
+    with no direct Vedic link. titus.fkidg1.uni-frankfurt.de/texte/etcs/ind/aind/ved/vedtx.htm
+    → 200 but it is a SOFT-404 reading "Sorry, the requested page is not (yet) available",
+    page dated 30.4.99 — this URL circulates widely and is dead; do not cite it.
+    titus.uni-frankfurt.de/texte/etcs/ind/aind/ved/vedtx.htm → hard 404.
+    The working index is /texte/texte2.htm#ved (200, 327,940 B), a single flat all-languages page.
+  notes: >
+    LICENCE IS THE BLOCKER, NOT THE FORMAT. Verbatim, on every text page:
+      "This text is part of the TITUS edition of … Copyright TITUS Project, Frankfurt a/M,
+       [date]. No parts of this document may be republished in any form without prior
+       permission by the copyright holder."
+    All rights reserved. No CC. LINK ONLY, and not even quotable at length without permission.
+    A request to the TITUS Project is the correct next action if accented Yajurveda matters —
+    and it does, because TITUS is the only place it exists in Unicode.
+    CORRECTING THE RECORD: GRETIL describes TITUS as "restricted download / proprietary format"
+    and that phrase has propagated into every downstream description including, until this
+    sweep, this project's assumptions. It is wrong on both counts for the web corpus. There are
+    three delivery paths:
+      (1) /texte/etcs/… — public UTF-8 transliteration, accents as NFD U+0301. No font hacks.
+      (2) /texte/etcd/… — public UTF-8 Devanāgarī with real U+0951/U+0952 accent marks.
+      (3) /private/texte/indica/vedica/…*.txt — labelled "TITUS Members only" but NOT actually
+          access-controlled (rvarpp.txt 5,132,357 B and av.txt 798,190 B both returned 200 with
+          full payload, no auth, no cookie). THIS is what GRETIL means by "proprietary format":
+          legacy DOS-codepage plain text (CP437 bytes, not valid UTF-8) in a Harvard-Kyoto-ish
+          scheme with ASCII accent markers (`/` before an accented vowel, `\` for svarita).
+          It is not WordCruncher binary.
+      The separate "TITUS Text Retrieval Engine" (/texte/textex.htm) is a query UI, not an export.
+    THAT THE FILES ARE FETCHABLE DOES NOT MAKE THEM AVAILABLE. Binding rule 1 applies: record
+    the URL, take nothing. Do not scrape.
+    VEDIC HOLDINGS (from texte2.htm) — the deepest of any source in this sweep:
+      Ṛgveda saṃhitā-pāṭha, PADA-PĀṬHA, van Nooten/Holland metrically restored, synoptic, Khilāni.
+      Atharvaveda Śaunaka; Paippalāda (marked "preliminary", on the members path).
+      Taittirīya SAṂHITĀ, BRĀHMAṆA and ĀRAṆYAKA (Āraṇyaka is prapāṭhakas 1, 4, 5 only).
+      Maitrāyaṇī Saṃhitā; Kāṭhaka Saṃhitā; KAPIṢṬHALA-KĀṬHA; Kāṭhaka-Brāhmaṇa (remnants);
+        Kāṭhaka-Āraṇyaka.
+      Vājasaneyi Saṃhitā; Śatapatha in BOTH Mādhyandina and Kāṇva recensions.
+        (The Kāṇva VS itself is not held — only the Kāṇva Śatapatha.)
+      Sāmaveda Saṃhitā (Kauthuma); Jaiminīya-Brāhmaṇa; Pañcaviṃśa/Tāṇḍya;
+        Jaiminīya-Upaniṣad-Br.; Mantra-Br.; Devatādhyāya-Br.; Vaṃśa-Br.
+      Aitareya Brāhmaṇa and Āraṇyaka; Kauṣītaki Br.
+      Gopatha-Br.; ~30 Śrauta/Gṛhya/Dharma/Śulba-sūtras; TAITTIRĪYA-PRĀTIŚĀKHYA; Nighaṇṭu;
+        Nirukta; Upaniṣads.
+      Listed by TITUS itself as DESIDERATA (i.e. absent): Ṣaḍviṃśa-Br., Ārṣeya-Br.,
+      Ārṣeya-Kalpa, Drāhyāyaṇa-ŚS, Lāṭyāyana-ŚS, Sāmavidhāna-Br.
+    TITUS holds NO Anukramaṇī — 0 hits for "anukram" across the full 327 KB index.
+    This record covers four of the six śākhās the project has empty (Kapiṣṭhala, Kāṭha,
+    Maitrāyaṇī, Jaiminīya) — packet P2-a should start here, and its deliverable is likely
+    "exists, accented, all-rights-reserved" rather than "not-found".
+  date_logged: 2026-08-01
+
+- node_path: sources/vedas/_reference/sarit
+  veda: null
+  organization: null
+  shakha: null
+  layer: apparatus
+  edition: "SARIT — Search and Retrieval of Indic Texts. TEI-P5 corpus."
+  url: https://github.com/sarit/SARIT-corpus
+  script: devanagari-unicode
+  svara_source?: n/a — no Vedic material to carry accent
+  svara_verified?: pending — BV
+  text_layer: unicode
+  license: CC-BY-SA-3.0
+  status: not-found
+  where_i_looked: >
+    Enumerated the ENTIRE SARIT-corpus tree — 121 paths, 88 XML files — and grepped it:
+      rgveda / rigveda / atharva / samaveda / yajur  → NONE
+      brahmana / aranyaka                            → NONE
+      taittiriya / satapatha / maitrayani            → NONE
+      kathaka / vajasaneyi / jaiminiya               → NONE
+      aitareya / pancavimsa                          → NONE
+      "samhita" matches only aṣṭāṅgahṛdaya-, bhela-, caraka-, suśruta-saṃhitā — all ĀYURVEDA.
+      "veda" matches only ayurvedasūtram, Cakrapāṇidatta's Āyurvedadīpikā, and Jitāri's
+      Vedaprāmāṇyasiddhi.
+    Site sarit.indology.info returned 502 on four consecutive attempts before a 200 — it is an
+    eXist-db app and availability is unreliable. sarit.github.io → 200.
+  notes: >
+    SARIT holds ZERO Vedic saṃhitā, brāhmaṇa or āraṇyaka. Its corpus is Nyāya/Mīmāṃsā/Buddhist
+    pramāṇa, Dharmaśāstra, Āyurveda, alaṃkāra and kāvya (Manusmṛti, Kauṭalya, Nyāyamañjarī,
+    Tantravārttika, Vākyapadīya, Patañjalayogaśāstra, Ratnakīrti/Jñānaśrīmitra, Mahābhārata,
+    Skandapurāṇa). Śāstra, not Veda.
+    DROP SARIT FROM THE VEDIC PACKETS. It stays relevant to sources/smriti/ and to any later
+    darśana work, at CC-BY-SA-3.0 — which, unlike almost everything else in this sweep, IS
+    compatible with this repo's CC-BY-SA-4.0.
+    Licence is declared per file in the TEI <publicationStmt>, not in a root LICENSE (there is
+    none — LICENSE, LICENSE.md and README.md all 404; the README is .org). Note the boilerplate
+    `<availability status="restricted">` wrapper contradicts the CC-BY-SA grant inside it;
+    the grant governs.
+  date_logged: 2026-08-01
+
+# ─────────────────────────────────────────────────────────────────────────────
+# ANUKRAMAṆĪ — THE PRIMARY TEXTS THEMSELVES
+# ─────────────────────────────────────────────────────────────────────────────
+
+- node_path: sources/vedas/rigveda/shakala/apparatus/anukramani
+  veda: rigveda
+  organization: null
+  shakha: shakala
+  layer: apparatus
+  edition: >
+    Kātyāyana, Sarvānukramaṇī, ed. Arthur Anthony Macdonell, "Kâtyâyana's Sarvânukramanî of the
+    Rigveda: with extracts from Shadgurusishya's commentary entitled Vedârthadîpikâ",
+    Anecdota Oxoniensia, Clarendon Press, Oxford 1886.
+  url: https://archive.org/details/katyayanassarvan00katy
+  script: mixed — Devanāgarī text with roman editorial apparatus
+  svara_source?: "no — an index text; accent not applicable."
+  svara_verified?: pending — BV
+  text_layer: scanned-no-text
+  license: public-domain
+  status: found-partial
+  where_i_looked: >
+    Typed/critical machine-readable text searched for and NOT FOUND at:
+      GRETIL full index (1,033,721 B, 6,465 links) — 0 hits for "anukram";
+        …/corpustei/sa_bRhaddevatA.xml → 404, directory listing → 403.
+      sanskritdocuments.org/doc_veda/ (200, 149,391 B) — 0 hits for "anukram".
+      TITUS texte2.htm (200, 327,940 B) — 0 hits for "anukram".
+      sa.wikisource.org/wiki/सर्वानुक्रमणी → 404; API search for अनुक्रमणी → 3 total hits,
+        none a Sarvānukramaṇī text.
+      muktabodha.org → 200 (406 without a browser UA); /digital-library-2/ → 200 but exposes no
+        etext catalogue; muktalib5.org → connection timeout after 45 s.
+      vedicreserve.miu.edu → 200 but the landing page is nearly empty; 0 hits.
+  notes: >
+    THE SARVĀNUKRAMAṆĪ HAS NO CLEAN DIGITAL EDITION. What exists is the OCR layer of this scan.
+    archive.org rights: licenseurl = None; possible-copyright-status = "The Library of Congress
+    is unaware of any copyright restrictions for this item" — public domain by age (1886).
+    Formats available: .pdf (25.9 MB), _djvu.txt (881,515 B), _djvu.xml (6.8 MB),
+    _hocr.html (12.9 MB), _chocr.html.gz, _jp2.zip (199 MB), _toc.xml, _page_numbers.json.
+    _djvu.txt analysed: 476,803 chars, of which 199,032 Devanāgarī and 119,035 ASCII letters —
+    mixed, as expected (Macdonell's English preface in roman, the sūtra text and Ṣaḍguruśiṣya's
+    Vedārthadīpikā in Devanāgarī).
+    OCR QUALITY — usable as a discovery aid or a correction seed, NOT as a citable text:
+      Systematic Devanāgarī error class र्वा → वै: the title itself comes out as सवैनुक्रमणी
+      and सवैनुकमणयारभः for सर्वानुक्रमणी. Also महपैयः for महर्षयः, द्मधिकं for अध्यधिकं.
+      Roman transliteration is stripped of diacritics and mangled: Sarvanukramazi /
+      Sarvanukramavzi / Sarvanukramazt for Sarvānukramaṇī (ṇ→z), Anuvakanukramazi,
+      Vedarthadipika. Stray footnote digits injected mid-line.
+    Per COLLECTION-PROTOCOL §3 this is the scanned-no-text case with an OCR layer attached —
+    not the legacy-encoding case. OCR correction here is real work and should be scoped as such
+    (packet P2-b), not assumed away.
+    ŚAUNAKA'S ANUVĀKĀNUKRAMAṆĪ: NOT FOUND as typed text anywhere (0 hits at GRETIL,
+    sanskritdocuments, TITUS, Wikisource). archive.org has 2 scans only —
+    "Katyayana Sarvanukramani Saunaka Anuvakanukramani" and
+    "sarvanukramanivivritti_anuvakanukramani_-CGV-PSS-0350-0391". Macdonell's preface notes it
+    survives only as an 18-line abstract in his MS P1.
+  date_logged: 2026-08-01
+
+- node_path: sources/vedas/rigveda/shakala/apparatus/brhaddevata
+  veda: rigveda
+  organization: null
+  shakha: shakala
+  layer: apparatus
+  edition: >
+    Śaunakīya Bṛhaddevatā, Sanskrit Wikisource text, 8 adhyāyas. (The standard printed edition
+    is Macdonell, Harvard Oriental Series 5–6, 1904 — scans on archive.org; the Wikisource
+    text does not state which edition it follows.)
+  url: https://sa.wikisource.org/wiki/बृहद्देवता
+  script: devanagari-unicode
+  svara_source?: >
+    no — and correctly so. This is a śloka text about the deities of the ṛcs, not a saṃhitā;
+    it is not transmitted with svara. Chapter 1 fetched via the MediaWiki API
+    (action=parse&prop=wikitext): 12,724 chars of which 10,902 Devanāgarī, 0 accent marks.
+  svara_verified?: pending — BV
+  text_layer: unicode
+  license: CC-BY-SA-4.0
+  status: found-complete
+  where_i_looked: >
+    NOT at GRETIL (0 hits for "rhaddevat" in the full index; corpustei/sa_bRhaddevatA.xml → 404),
+    not at TITUS, not at sanskritdocuments, not at vedicreserve. archive.org has 3 items, all
+    scans including Macdonell's HOS edition.
+  notes: >
+    Complete and clean: /अध्यायः १ … /अध्यायः ८, clean Unicode Devanāgarī. Opens correctly:
+      ।। अथ शौनकीयबृहद्देवताप्रारम्भः ।।
+      मन्त्रदृग्भ्यो नमस्कृत्वा समाम्नायानुपूर्वशः ।
+      सूक्तर्गर्धर्चपादानाम् ऋग्भ्यो वक्ष्यामि दैवतम् ।। १ ।।
+    THIS MATTERS FOR THE HARNESS. The Bṛhaddevatā is the tradition's OTHER devatā index — it
+    assigns deities to ṛcs independently of, and sometimes against, Kātyāyana. Since the
+    Sarvānukramaṇī itself has no clean digital text, the Bṛhaddevatā is the only primary
+    Anukramaṇī-class text obtainable in usable Unicode, and it gives a second traditional
+    reading to set beside WSC2023's Kātyāyana labels and VedaWeb's Geldner addressees. Three
+    independent devatā assignments, two traditional and one philological — that is exactly the
+    named-readings-side-by-side structure the content discipline calls for.
+    Wikisource is CC-BY-SA-4.0 — compatible with this repo. Its RV sūkta pages also
+    cross-reference the Bṛhaddevatā (65 search hits), which is directly useful for corpus linking.
+    CAVEAT: no edition is declared on the Wikisource text and no proofreading status is stated.
+    Verify a sample against Macdonell HOS 5–6 before treating it as settled.
+  date_logged: 2026-08-01
+
+# ─────────────────────────────────────────────────────────────────────────────
+# PRIORITY 6 — PADAPĀṬHA
+# ─────────────────────────────────────────────────────────────────────────────
+
+- node_path: sources/vedas/rigveda/shakala/apparatus/padapatha
+  veda: rigveda
+  organization: null
+  shakha: shakala
+  layer: apparatus
+  edition: >
+    Two independent digitisations.
+    (a) "Ṛgvedasaṃhitā, Padapāṭha", input by members of the Sansknet project (source site now
+        expired), held by GRETIL and mirrored by VedaWeb — UNACCENTED.
+    (b) Detlef Eichler's padapāṭha, detlef108.de — ACCENTED, in both Devanāgarī and
+        transliteration.
+  url: https://github.com/VedaWebProject/vedaweb-data/blob/main/rigveda/versions/padapatha.csv
+  script: transliteration
+  svara_source?: >
+    partial — the two digitisations differ and this is the point of the record.
+    (a) MEASURED on VedaWeb padapatha.csv (1.8 MB, 10,552 rows = complete): 0 Devanāgarī,
+        0 U+0951/U+0952, 0 Vedic Extensions, 0 vowel+acute. UNACCENTED. Sample:
+        `agnim | īl̥e | puraḥ-hitam | yajñasya | devam | r̥tvijam | hotāram | ratna-dhātamam`.
+        Same for GRETIL sa_RgvedasaMhitApadapATha.txt (1.94 MB): 0 vowel+acute.
+        (Raw U+0301 counts of ~11.9k in both are all NFD(ś) — not accents.)
+    (b) MEASURED on detlef108.de: RV-with-Padapatha-D-UTF8.html carries 406,301 × U+0951/U+0952
+        across saṃhitā + padapāṭha; RV-Padapatha-TA3-paada-UTF8.html carries 131,823
+        vowel+acute. Sample: `ágne | yám | yajñám | adhvarám / viśvátaḥ | pari-bhū́ḥ | ási ||`.
+        ACCENTED.
+  svara_verified?: pending — BV
+  text_layer: unicode
+  license: >
+    (a) CC-BY-NC-SA-4.0 (GRETIL/VedaWeb). (b) unknown — no licence statement anywhere on
+    detlef108.de.
+  status: found-complete
+  where_i_looked: n/a
+  notes: >
+    If the padapāṭha is wanted for word-boundary and compound analysis, take (a) — it is
+    licensed, versioned and stanza-keyed. If it is wanted for the accent argument — which is
+    this project's actual purpose, since the padapāṭha is where the underlying independent
+    accent of each word is visible before sandhi obscures it — (a) IS USELESS and you must take
+    (b) or remap the legacy PDF in packet P0-b.
+    GRETIL's index page describes its padapāṭha as accented. It is not. Verified.
+    Alternative pointers not yet verified: a searchable RV padapāṭha CGI at flaez.ch/cgi-bin/rv.pl,
+    and an academia.edu item "Rigveda Padapātha Text with Accents" linked from detlef108.de.
+  date_logged: 2026-08-01
+
+- node_path: sources/vedas/yajurveda/krishna/taittiriya/apparatus/padapatha
+  veda: yajurveda
+  organization: krishna
+  shakha: taittiriya
+  layer: apparatus
+  edition: >
+    KYVeda / VedaVMS — "a group of working professionals … compiling Veda Books on specific
+    subjects" (vedavms.in). Community-prepared, no named editor, no printed edition cited.
+    ATTRIBUTION IS SELF-DECLARED AND UNVERIFIED — no critical edition is named anywhere in the
+    repo, and the README is three lines long.
+  url: https://github.com/KYVeda/texts/tree/master/TS-Padam
+  script: transliteration
+  svara_source?: >
+    yes — accent is preserved, but in Baraha's ASCII convention, not Unicode.
+    Fetched TS-Padam/TS-1.1/TS 1.1 Sanskrit Padam.BRH (24,159 B, HTTP 200). File is
+    ISO-8859 plain text, CRLF. Accent is encoded as inline ASCII markers: `q` = anudātta,
+    `#` = svarita/udātta, `$` and `~` for further marks. Opening line reads
+    `yo vedAdau svara#H proqkto veqdAnte# ca praqtiShThi#taH |`.
+    So: accent survives, but a Unicode conversion pass (Baraha → Devanāgarī + U+0951/U+0952)
+    is required before this is usable. It is NOT a scan and NOT OCR.
+  svara_verified?: pending — BV
+  text_layer: unicode
+  license: unknown
+  status: found-complete
+  where_i_looked: n/a
+  notes: >
+    COVERAGE: TS-Padam holds all 44 praśnas across all 7 kāṇḍas —
+    1.1–1.8, 2.1–2.6, 3.1–3.5, 4.1–4.7, 5.1–5.7, 6.1–6.6, 7.1–7.5. This is a COMPLETE
+    Taittirīya Saṃhitā padapāṭha, which nothing else in this sweep supplies for any śākhā
+    other than the Ṛgveda.
+    Each praśna directory carries the same text in Sanskrit (Devanāgarī), Tamil, Malayalam and
+    Kannada scripts, as .BRH + .docx + .pdf. 4,706 files repo-wide: 1,887 docx, 1,521 pdf,
+    855 .BRH, 128 xlsx, 94 rtf, 71 txt. The .BRH files are the machine-readable layer; the
+    .docx are text-bearing too; the PDFs are typeset output.
+    The same repo also holds TS-Kramam, "TS Jatai Ghanam Project", saMhitA/ (kāṇḍas 01–07),
+    brAhmaNa/ (TB 1.1–1.4 in Baraha + Kāṭhakam, Aśvamedham, Acchidram) and AraNyaka/ (TA 1–4 in
+    Baraha) — i.e. the Taittirīya vikṛti-pāṭhas and the TB/TĀ. That is a large part of packets
+    P1-a and P1-b sitting in one place, and it is the obvious replacement candidate for the
+    non-redistributable Taittiriya-Brahmanam.pdf already flagged in sources/README.md.
+    LICENCE: no LICENSE file, no licence statement in the README, and vedavms.in's "Terms of
+    Use" page was not read in this sweep. LINK ONLY until someone reads those terms. Do not
+    copy these files into the repo.
+    Repo is live: last push 2026-07-29.
+  date_logged: 2026-08-01
+
+# ─────────────────────────────────────────────────────────────────────────────
+# OTHER ŚĀKHĀS — what the machine-readable sweep turned up in passing
+# (recorded here because P0-a is the sweep; deepening belongs to P1-a / P1-b / P2-a)
+# ─────────────────────────────────────────────────────────────────────────────
+
+- node_path: sources/vedas/atharvaveda/shaunaka/samhita
+  veda: atharvaveda
+  organization: null
+  shakha: shaunaka
+  layer: samhita
+  edition: >
+    Atharvaveda-Saṃhitā, Śaunaka recension, input by Vladimir Petr and Petr Vavroušek in
+    cooperation with Jost Gippert, Arlo Griffiths and Philipp Kubisch. GRETIL, two parallel
+    files: accented and unaccented.
+  url: https://gretil.sub.uni-goettingen.de/gretil/1_sanskr/1_veda/1_sam/avs_acu.htm
+  script: transliteration
+  svara_source?: >
+    YES — measured, and this is the ONLY accented text in GRETIL's entire Vedic section.
+    avs_acu.htm (1.11 MB): 67,699 vowel+combining-acute plus 1,060 vowel+grave over 11,395
+    referenced lines. Sample `(AVŚ_1,1.1a) yé triṣaptā́ḥ pariyánti víśvā rūpā́ṇi bíbhrataḥ |`.
+    The companion avs___u.htm (1.02 MB) is the same text with 0 vowel+acute — the `___u` /
+    `_acu` filename pair is the accented/unaccented distinction.
+  svara_verified?: pending — BV
+  text_layer: unicode
+  license: CC-BY-NC-SA-4.0
+  status: found-complete
+  where_i_looked: n/a
+  notes: >
+    Reference format `AVŚ_1,1.1a`, pāda-level. 11,395 referenced lines in both files.
+    Legacy .htm, not TEI — GRETIL has not converted this pair to corpustei, so it must be
+    scraped out of HTML rather than parsed as XML. Worth the trouble: it is the only accented
+    Vedic text GRETIL actually delivers.
+    DCS also has AVŚ (519 chunks) but unaccented and thin in kāṇḍas 8–19; use DCS for
+    morphology and this file for accent, joined on (kāṇḍa, sūkta, stanza, pāda).
+  date_logged: 2026-08-01
+
+- node_path: sources/vedas/atharvaveda/paippalada/samhita
+  veda: atharvaveda
+  organization: null
+  shakha: paippalada
+  layer: samhita
+  edition: >
+    Paippalāda-Saṃhitā, input by Arlo Griffiths, Thomas Zehnder, Philipp Kubisch, Duccio Lelli,
+    Alexander Lubotsky, Carmen Spiers and Michael Witzel — a composite of the published critical
+    editions (Zehnder kāṇḍa 2, Lubotsky kāṇḍa 5, Griffiths kāṇḍas 6–7, Kubisch kāṇḍa 20.1–30).
+    GRETIL TEI-P5.
+  url: https://gretil.sub.uni-goettingen.de/gretil/corpustei/sa_paippalAdasaMhitA.xml
+  script: transliteration
+  svara_source?: "no — verified: 0 Devanāgarī, 0 U+0951/U+0952, 0 vowel+acute over 901,371 chars of body text."
+  svara_verified?: pending — BV
+  text_layer: unicode
+  license: CC-BY-NC-SA-4.0
+  status: found-complete
+  where_i_looked: n/a
+  notes: >
+    Plaintext 1,071,543 B. Reference `PS_1,1.1`. ALL 20 KĀṆḌAS PRESENT — measured stanza counts
+    per kāṇḍa: 469/444/274/302/355/234/201/230/304/165/148/198/65/84/227/1321/452/658/909/634.
+    This is far better coverage than DCS, which has only 6 of 20 kāṇḍas (1, 4, 5, 10, 12, 19).
+    Since the Paippalāda is the endangered AV śākhā, this file is the single most complete
+    open machine-readable Paippalāda found in the sweep. Note the composite editorial base —
+    the kāṇḍas rest on different editors and different manuscript traditions, so `edition`
+    above is a list, not one book.
+  date_logged: 2026-08-01
+
+- node_path: sources/vedas/samaveda/kauthuma/samhita
+  veda: samaveda
+  organization: null
+  shakha: kauthuma
+  layer: samhita
+  edition: >
+    Sāmavedasaṃhitā, input by Anshuman Pandey, originally from "Sanskrit Documents";
+    GRETIL TEI-P5 conversion (2020-07-31, mass-converted from samavedu.htm).
+  url: https://gretil.sub.uni-goettingen.de/gretil/corpustei/sa_sAmavedasaMhitA.xml
+  script: transliteration
+  svara_source?: >
+    no — verified: 0 Devanāgarī, 0 U+0951/U+0952, 0 Vedic Extensions, 0 vowel+acute over
+    221,237 chars. NOTE this is a genuine absence, not the numeric-Sāma-notation case described
+    in COLLECTION-PROTOCOL §3 — there is no notation layer here either. The gāna (melody) is
+    simply not present.
+  svara_verified?: pending — BV
+  text_layer: unicode
+  license: CC-BY-NC-SA-4.0
+  status: found-partial
+  where_i_looked: n/a
+  notes: >
+    Self-identifies in the body as `sāmaveda saṃhitā kauthuma śākhā` — one of the very few files
+    in any of these corpora that names its own śākhā. Reference system documented in-file as
+    `ārcika | prapāṭhaka | ardha | daśati | verse | line`, e.g. `1 1 1 0101a`.
+    SERIOUS DEFECT, flagged in the file's own header: "The original encoding of this e-text
+    emulates Nagari script. Therefore WORD BOUNDARIES ARE NOT ALWAYS SPACED." Confirmed on
+    inspection — text runs together as `agnirvṛtrāṇi jaṅghanaddraviṇasyurvipanyayā`. Tokenising
+    this will need sandhi-splitting, and DCS cannot help because DCS HAS NO SĀMAVEDA AT ALL.
+    Only ~2,265 verse-reference tokens recovered, and the file is only 254 KB, so completeness
+    of the Uttarārcika is doubtful — do not claim complete without checking against the
+    1,875-verse Kauthuma count.
+    The Sāmaveda is the worst-served Veda in the entire machine-readable landscape: absent from
+    DCS, absent from VedaWeb, and present at GRETIL only in this unaccented, unspaced form.
+    That is a P2-a-grade hole and it should be logged as one.
+  date_logged: 2026-08-01
+
+- node_path: sources/vedas/samaveda/kauthuma/brahmana
+  veda: samaveda
+  organization: null
+  shakha: kauthuma
+  layer: brahmana
+  edition: >
+    Pañcaviṃśa-Brāhmaṇa (Tāṇḍya-Mahā-Brāhmaṇa), input by Martin Kümmel, Arlo Griffiths and
+    Masato Kobayashi. GRETIL TEI-P5.
+  url: https://gretil.sub.uni-goettingen.de/gretil/corpustei/sa_paJcaviMzabrAhmaNa.xml
+  script: transliteration
+  svara_source?: "no — verified: 0 Devanāgarī, 0 U+0951/U+0952, 0 vowel+acute over 374,658 chars."
+  svara_verified?: pending — BV
+  text_layer: unicode
+  license: CC-BY-NC-SA-4.0
+  status: found-complete
+  where_i_looked: n/a
+  notes: >
+    Plaintext 440,210 B. Reference `(pb 1.1.1)`. ALL 25 PRAPĀṬHAKAS present — measured. Better
+    than DCS, which stops at prapāṭhaka 15.
+    ATTRIBUTION NOTE, per binding rule 7: the Pañcaviṃśa is shared between the Kauthuma and
+    Rāṇāyanīya śākhās and neither GRETIL nor DCS says which recension is represented. Filed
+    under kauthuma provisionally; the Rāṇāyanīya claim is equally strong and unresolved here.
+    GRETIL also holds a Ṣaḍviṃśa and Sāmavidhāna via DCS but not as its own TEI.
+  date_logged: 2026-08-01
+
+- node_path: sources/vedas/atharvaveda/shaunaka/brahmana
+  veda: atharvaveda
+  organization: null
+  shakha: shaunaka
+  layer: brahmana
+  edition: "Gopatha-Brāhmaṇa, input by Arlo Griffiths. GRETIL TEI-P5."
+  url: https://gretil.sub.uni-goettingen.de/gretil/corpustei/sa_gopathabrAhmaNa.xml
+  script: transliteration
+  svara_source?: "no — verified: 0 Devanāgarī, 0 U+0951/U+0952, 0 vowel+acute over 322,029 chars."
+  svara_verified?: pending — BV
+  text_layer: unicode
+  license: CC-BY-NC-SA-4.0
+  status: found-complete
+  where_i_looked: n/a
+  notes: >
+    Plaintext 373,397 B. Reference `(gbr_1,1.1a)`. Both parts present (pūrva and uttara);
+    DCS independently confirms completeness at 233 chunks (135 pūrva + 98 uttara).
+    ATTRIBUTION NOTE: the Gopatha is the brāhmaṇa of the Atharvaveda as a whole and is claimed
+    by both the Śaunaka and Paippalāda lines. Filed under shaunaka provisionally — cross-
+    reference from paippalada rather than duplicating (embedded-texts-live-once rule applies by
+    analogy). A second GRETIL file sa_gopathabrAhmaNa-1.xml holds an alternative version of
+    GB 1,1.1–1,3.6 input by Oliver Hellwig.
+  date_logged: 2026-08-01
+
+- node_path: sources/vedas/rigveda/shakala/brahmana
+  veda: rigveda
+  organization: null
+  shakha: shakala
+  layer: brahmana
+  edition: >
+    Kauṣītaki-Brāhmaṇa (= Śāṅkhāyana-Brāhmaṇa), input by Muneo Tokunaga. GRETIL TEI-P5.
+  url: https://gretil.sub.uni-goettingen.de/gretil/corpustei/sa_kauSItakibrAhmaNa.xml
+  script: transliteration
+  svara_source?: "no — verified: 0 Devanāgarī, 0 U+0951/U+0952, 0 vowel+acute over 422,159 chars."
+  svara_verified?: pending — BV
+  text_layer: unicode
+  license: CC-BY-NC-SA-4.0
+  status: found-complete
+  where_i_looked: n/a
+  notes: >
+    Plaintext 472,629 B. Reference `(KB_1,1.1)`. All 30 adhyāyas present — measured.
+    Word separator in this file is a PERIOD, not a space: `asmin.vai.loka.ubhaye.deva.manuṣyā.āsuḥ`.
+    That is a padapāṭha-like segmentation carried into the running text and will break any
+    naïve sentence splitter. It is also, incidentally, useful — it is word-boundary information
+    that most of these files lack.
+    ATTRIBUTION DOUBT, carried forward from sources/vedas/rigveda/shakala/_status.yaml which
+    already flags it: the Kauṣītaki/Śāṅkhāyana Brāhmaṇa's association with Śākala vs
+    Bāṣkala/Śāṅkhāyana is unresolved. This sweep does not resolve it. Filed under shakala
+    following the existing _status.yaml, with the doubt preserved here rather than silently
+    settled.
+  date_logged: 2026-08-01
+
+- node_path: sources/vedas/rigveda/shakala/aranyaka
+  veda: rigveda
+  organization: null
+  shakha: shakala
+  layer: aranyaka
+  edition: "Śāṅkhāyana-Āraṇyaka, input by Martin Joachim Kümmel. GRETIL TEI-P5."
+  url: https://gretil.sub.uni-goettingen.de/gretil/corpustei/sa_zaGkhAyana-AraNyaka.xml
+  script: transliteration
+  svara_source?: "no — verified: 0 Devanāgarī, 0 U+0951/U+0952, 0 vowel+acute over 87,997 chars."
+  svara_verified?: pending — BV
+  text_layer: unicode
+  license: CC-BY-NC-SA-4.0
+  status: found-complete
+  where_i_looked: n/a
+  notes: >
+    Plaintext 105,601 B. Reference `śā 1,1`. All 15 adhyāyas present — measured; DCS agrees
+    (145 chunks, all 15).
+    SAME ATTRIBUTION DOUBT as the Kauṣītaki-Brāhmaṇa above — this is the Śāṅkhāyana line, not
+    demonstrably Śākala. The Aitareya-Āraṇyaka, which is the one the existing
+    rigveda/shakala/_status.yaml enumerates, is NOT in GRETIL and is available only via DCS
+    (58 chunks, book 4 absent) or TITUS.
+  date_logged: 2026-08-01
+
+- node_path: sources/vedas/yajurveda/krishna/maitrayani/samhita
+  veda: yajurveda
+  organization: krishna
+  shakha: maitrayani
+  layer: samhita
+  edition: "Maitrāyaṇī-Saṃhitā, input by TITUS; redistributed by GRETIL as legacy .htm."
+  url: https://gretil.sub.uni-goettingen.de/gretil/1_sanskr/1_veda/1_sam/maitrs_au.htm
+  script: transliteration
+  svara_source?: >
+    NO — verified against expectation. TITUS's Maitrāyaṇī is generally described as accented;
+    the file GRETIL serves is not. Measured on maitrs_au.htm (1.24 MB): 0 Devanāgarī,
+    0 U+0951/U+0952, 0 vowel+acute, 0 vowel+grave. The 8,929 raw U+0301 are all NFD(ś).
+    Sample: `iṣe tvā subhūtāya vāyavaḥ stha devo vaḥ savitā prārpayatu śreṣṭhatamāya karmaṇe`.
+  svara_verified?: pending — BV
+  text_layer: unicode
+  license: >
+    unknown — the file header says only "COPYRIGHT AND TERMS OF USAGE AS FOR SOURCE FILE",
+    i.e. it defers to TITUS's terms, which are not restated. Treat as link-only.
+  status: found-partial
+  where_i_looked: n/a
+  notes: >
+    Two files: maitrs_au.htm (analytic) and maitrs_pu.htm (plain). Legacy .htm, not converted to
+    corpustei. Completeness not established in this sweep — the file is 1.24 MB which is
+    plausible for the whole saṃhitā, but no per-kāṇḍa count was taken. DCS has 353 chunks with
+    books 1–2 heavy and 3–4 sparse.
+    The Maitrāyaṇī is on the P2-a endangered list; this is the only open machine-readable
+    Maitrāyaṇī found, and it is unaccented and of unstated licence. That combination is itself
+    the finding.
+  date_logged: 2026-08-01
+
+- node_path: sources/vedas/yajurveda/shukla/madhyandina/brahmana
+  veda: yajurveda
+  organization: shukla
+  shakha: madhyandina
+  layer: brahmana
+  edition: >
+    Śatapatha-Brāhmaṇa, Mādhyandina recension, input by John Robert Gardner (originally at the
+    "Vedavid" site); GRETIL legacy .htm, one file per kāṇḍa.
+  url: https://gretil.sub.uni-goettingen.de/gretil/1_sanskr/1_veda/2_bra/satapath/sb_01_u.htm
+  script: transliteration
+  svara_source?: "no — verified on kāṇḍa 1 (239,590 B): 0 Devanāgarī, 0 U+0951/U+0952, 0 vowel+acute."
+  svara_verified?: pending — BV
+  text_layer: unicode
+  license: >
+    unknown — header says only "COPYRIGHT AND TERMS OF USAGE AS FOR SOURCE FILE". Link-only.
+  status: found-partial
+  where_i_looked: n/a
+  notes: >
+    Files sb_01_u.htm … sb_14_u.htm. GRETIL'S OWN INDEX STATES "SatBr_12 not available" —
+    kāṇḍa 12 is missing, so this is 13 of 14 kāṇḍas. DCS is worse (kāṇḍas 1–6, 10, 13 only).
+    Neither source is complete; combining them still leaves kāṇḍa 12 absent.
+    This is the home layer of the Bṛhadāraṇyaka Upaniṣad (kāṇḍa 14), which per the
+    embedded-texts-live-once rule belongs here and is cross-referenced, not duplicated.
+    sb_14_u.htm IS present, so the Bṛhadāraṇyaka is obtainable in its home layer.
+    This is currently the ONLY machine-readable text found for the Mādhyandina śākhā beyond a
+    partial Vājasaneyi Saṃhitā in DCS (adhyāyas 1–15 of 40). Mādhyandina remains one of the
+    three empty target śākhās (packet P1-b) and this sweep does not fill it.
+  date_logged: 2026-08-01
+
+# ─────────────────────────────────────────────────────────────────────────────
+# NOT-FOUND — the machine-readable holes, per binding rule 2
+# ─────────────────────────────────────────────────────────────────────────────
+
+- node_path: sources/vedas/yajurveda/krishna/taittiriya/samhita
+  veda: yajurveda
+  organization: krishna
+  shakha: taittiriya
+  layer: samhita
+  edition: null
+  url: null
+  script: null
+  svara_source?: "no — no open machine-readable accented Taittirīya Saṃhitā found in this sweep."
+  svara_verified?: pending — BV
+  text_layer: n/a
+  license: n/a
+  status: not-found
+  where_i_looked: >
+    (1) GRETIL: entry exists but reads "Taittiriya-Samhita (input by …) — Restricted download /
+    proprietary format from TITUS — Converted file(s) not available at present". GRETIL serves
+    NOTHING. Same wording for Kāṭhaka-Saṃhitā and Vājasaneyi-Saṃhitā.
+    (2) VedaWeb: Ṛgveda only, no Yajurveda.
+    (3) DCS: has 219 chunks but coverage is very uneven (kāṇḍa 3 has 6 chunks, kāṇḍa 4 has 3,
+    kāṇḍa 7 has 2) and is entirely UNACCENTED — so it is not a saṃhitā source, only a
+    morphological layer. Logged as found-partial under the DCS record, not here.
+    (4) KYVeda/texts saMhitA/ directory (kāṇḍas 01–07) exists as .docx/.pdf/.BRH — that is a
+    real lead but it is a community compilation with no named edition and no licence, and it
+    belongs to P1-a. See the TS padapāṭha record above.
+    (5) TITUS itself — see the TITUS record.
+  notes: >
+    The Taittirīya is the best-attested living śākhā and the one this project already holds
+    PDFs for, and it has NO open, licensed, accented, machine-readable saṃhitā. That is the
+    central gap this sweep exposes on the Yajurveda side. The most promising route is not a
+    corpus at all — it is the KYVeda Baraha files plus a Baraha→Unicode conversion pass.
+  date_logged: 2026-08-01
+
+- node_path: sources/vedas/yajurveda/shukla/kanva/samhita
+  veda: yajurveda
+  organization: shukla
+  shakha: kanva
+  layer: samhita
+  edition: null
+  url: null
+  script: null
+  svara_source?: "no"
+  svara_verified?: pending — BV
+  text_layer: n/a
+  license: n/a
+  status: not-found
+  where_i_looked: >
+    GRETIL index: no Kāṇva Saṃhitā entry at all (only "Vajasaneyi-Samhita", restricted/TITUS,
+    and that is the Mādhyandina). DCS: no Vājasaneyi Kāṇva directory — the flat text list was
+    enumerated in full and it is absent. VedaWeb: Ṛgveda only. KYVeda: Kṛṣṇa Yajurveda only.
+    GRETIL does hold the Bṛhadāraṇyaka and Īśā Upaniṣads in the KĀṆVA recension
+    (sa_bRhadAraNyakopaniSadkANva-recension-comm.xml,
+    sa_IzopaniSad-or-IzAvAsyopaniSadkANva-recension-comm.xml, both with Śaṅkara's commentary,
+    input by Sansknet) — so the Kāṇva UPANIṢAD layer is obtainable while the SAṂHITĀ layer is not.
+  notes: >
+    Kāṇva is one of the three empty target śākhās (packet P1-b). This sweep confirms that no
+    machine-readable Kāṇva saṃhitā exists in any of the four large corpora. The upaniṣad-layer
+    files above are a partial fill and should be logged against
+    sources/vedas/yajurveda/shukla/kanva/upanishad when P1-b runs — noting that the
+    Bṛhadāraṇyaka's home layer is the Śatapatha Āraṇyaka, so per the embedded-texts rule the
+    Kāṇva Bṛhadāraṇyaka lives in the Kāṇva āraṇyaka/brāhmaṇa layer and is cross-referenced.
+  date_logged: 2026-08-01
+
+- node_path: sources/vedas/samaveda/jaiminiya/brahmana
+  veda: samaveda
+  organization: null
+  shakha: jaiminiya
+  layer: brahmana
+  edition: null
+  url: null
+  script: null
+  svara_source?: "no"
+  svara_verified?: pending — BV
+  text_layer: n/a
+  license: n/a
+  status: not-found
+  where_i_looked: >
+    GRETIL: "Jaiminiya-Brahmana (input by …) — Restricted download / proprietary format from
+    TITUS — Converted file(s) not available at present". Same for Jaiminīya-Upaniṣad-Brāhmaṇa
+    (Talavakāra-Brāhmaṇa). GRETIL serves nothing for either. GRETIL DOES serve
+    sa_jaiminIyagRhyasUtra.xml — the Gṛhyasūtra, not the Brāhmaṇa.
+    DCS: Jaiminīyabrāhmaṇa 389 chunks, but book 1 is essentially complete (364) while books 2
+    (15) and 3 (10) are barely started; Jaiminīya-Upaniṣad-Brāhmaṇa 145 chunks across all 4
+    books. Unaccented. So DCS gives ~a third of the JB and all of the JUB, morphology-only.
+    VedaWeb: Ṛgveda only.
+  notes: >
+    Jaiminīya is on the P2-a endangered list. The honest statement is: one third of the
+    Jaiminīya Brāhmaṇa is machine-readable (via DCS, unaccented, CC-BY), the rest is not open.
+    That is better than "not found" and worse than "sourced" — recorded here so P2-a starts
+    from the true position.
+  date_logged: 2026-08-01

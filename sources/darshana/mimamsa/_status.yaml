@@ -1,0 +1,26 @@
+tradition: mimamsa
+type: darshana
+tier: settled
+purpose: >
+  Not a peripheral commentary layer. The project adopts Mimamsa's six-fold ordering of evidence
+  as its ADJUDICATION RULE — the stated answer to "what would make us say a proposed reading is
+  WRONG." Take the method, leave the metaphysics: the apparatus is adopted, the theological
+  commitments (apauruseya, eternal, self-valid) are not.
+the_rule:
+  sutra: "Jaimini, Mimamsasutra 3.3.14"
+  text: "srutilingavakyaprakaranasthanasamakhyanam samavaye paradaurbalyam arthaviprakarsat"
+  verified: "three independent ways — GRETIL sutra text (Jaim_3,3.14), GRETIL Sabarabhasya (MS_3,3.14), and Jha's translation from a separate transmission line (Discourse III, Pada III, Adhikarana 7, Sutra 14)"
+  english: "Ganganatha Jha, Gaekwad's Oriental Series 66, pp. 449-464"
+  cautions:
+    - "sthana and krama are ONE criterion, not two. Sabara switches words mid-argument and Jha follows him — a naive reading of the list gets seven."
+    - "Section (F) of the bhasya is contested WITHIN the tradition: Mandana Misra makes it a separate adhikarana. A multi_traditional node — carry it, do not resolve it."
+texts:
+  mimamsa-sutra:      { status: sourced, note: "GRETIL, machine-readable IAST, with page concordance to three printed editions" }
+  shabara-bhashya:    { status: sourced, note: "Sanskrit machine-readable (GRETIL); English complete, all 12 adhyayas, Ganganatha Jha, PUBLIC DOMAIN, multiple Archive.org copies, checked volume by volume" }
+  slokavarttika:      { status: sourced, note: "Kumarila. Jha's English complete, PD" }
+  tantravarttika:     { status: sourced, note: "Kumarila. Jha's English, MS 1.2-3.8. ALSO: a 4.6 MB TEI-P5 Tantravarttika on GitHub via SARIT, CC BY-SA 4.0, marked down to the individual sutra — covering the whole vidhi/arthavada pada AND the vidhi-definition passage at MS 2.1.1-4. THE BEST DIGITAL SOURCE FOR THE vidhi/arthavada CLASSIFIER. Recovered only by probing behind SARIT's broken web app." }
+  brhati:             { status: sourced, note: "Prabhakara, Sanskrit, on Archive.org — including his commentary on MS 3.3.14 itself. Both sides of the school split on the one sutra the adjudication rule rests on." }
+findings:
+  - "THE BIGGEST GAP IS A STRUCTURAL BIAS RISK. The Brhati has NEVER been translated into English — no part of it. The Bhatta side is fully available in English; the Prabhakara side is Sanskrit-only. Since the entire reason for holding both is that their disagreement is DATA, a project that reads only what is translated will silently become a Bhatta project. Mitigation: Jha, 'The Prabhakara School of Purva Mimamsa', 1911, PD."
+  - "DO NOT BUDGET THE SIX-FOLD ORDERING AS ACQUISITION — IT IS ACQUIRED. Budget it as reading: sixteen pages of Jha with the Sanskrit alongside. Machine-readable coverage of this corpus is inversely correlated with need: DCS stops at MS 1.3.35, SARIT at MS 2.4 — both after the epistemology, before the hermeneutics."
+  - "English-language access to Mimamsa is essentially one man's life's work (Ganganatha Jha), and it is public domain."

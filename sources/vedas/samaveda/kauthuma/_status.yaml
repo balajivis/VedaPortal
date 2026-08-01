@@ -7,14 +7,18 @@ reciting_communities:
   - region: pan-India
     note: "The dominant printed and recited Samaveda tradition — enumerate specific communities before claiming more"
 layers:
-  samhita:   { status: sourced,    note: "Gramageya-gana + Aranyaka-gana PDFs in repo. NOTE: the Aranyaka-GANA is a song collection of the Samhita corpus, NOT the aranyaka layer. Kauthuma attribution of these PDFs assumed (dominant printed tradition) — verify." }
-  brahmana:  { status: enumerated, note: "Panchavimsha (Tandya-Maha) Brahmana and others" }
+  samhita:   { status: sourced, note: "TWO DIFFERENT THINGS, both needed. (a) ARCIKA — the mantra text, carrying udatta/anudatta: VedicReserve legacy-font, 17.2% accent-glyph density, the highest measured in the sweep. (b) GANA — the song-books we already hold, NUMERICALLY notated (0 svara, 3,535 digits per 40pp is CORRECT, not unaccented). sanskritdocuments sv-kauthuma is clean Unicode but has NEITHER accent NOR gana notation — good for concordance, cannot serve recitation; its linked accented edition 404s." }
+  brahmana:  { status: sourced, note: "PARTIAL AND HONESTLY SO. VedicReserve has Chandogya (real Unicode, unaccented), Vamsa (2pp, no text), Sadvimsa (226pp, PURE SCAN). The PANCAVIMSA / TANDYA-MAHA-BRAHMANA — the principal Kauthuma Brahmana — is in the site index but has NO file. Absent in practice. Sayana editions of Pancavimsa verified on Archive.org (DLI .487242, .345109, .369523)." }
   aranyaka:  { status: enumerated }
-  upanishad: { status: enumerated, note: "Chandogya Upanishad; Kena associated with Jaiminiya-Talavakara — verify per-shakha placement" }
+  upanishad: { status: enumerated, note: "Chandogya Upanisad; Kena associated with Jaiminiya-Talavakara — verify per-shakha placement" }
 apparatus:
-  pratishakhya: { status: enumerated, note: "Rk-tantra and related lakshana texts" }
-  anukramani:   { status: enumerated }
-  kalpa:        { status: enumerated }
+  pratishakhya: { status: sourced, note: "TWO texts. Rktantra — Surya Kanta 1933, which ALSO prints the Samavedasarvanukramani inside it. Puspasutra — IGNCA 2 vols (usable text layer) + B.R. Sharma Stuttgart 1985. WARNING: DLI copy in.ernet.dli.2015.61686 has an EMPTY _djvu.txt (139 bytes) — the DLI empty-text-layer trap." }
+  anukramani:   { status: sourced, note: "THE SAMAVEDA'S OWN INDEX. The Arseya Brahmana is functionally the earliest Samaveda anukramani — it lists the rsis of the samans of the Gramageya- and Aranya-ganas in 3 prapathakas / 82 khandas. Filed here for that reason though its traditional label is 'brahmana' — merge reviewer may prefer to cross-reference from the brahmana layer instead. Also inside Surya Kanta's Rktantra edition." }
+  padapatha:    { status: sourced, note: "PARTIAL. Only free object covers prapathakas 1-6 and is a library shelf scan. The definitive modern edition is B.R. Sharma, Harvard Oriental Series 57-58 (2000-01) — accented text, padapatha, and the commentaries of Madhava, Bharatasvamin and Sayana, from manuscripts across India and Europe." }
+  kalpa:        { status: sourced, note: "Latyayana Srautasutra (Vedantavagisa 1872, with Agnisvamin's bhasya), Drahyayana (Reuter 1904), Arseya Kalpa (B.R. Sharma 1976). Verified DLI identifiers." }
+  bhashya:      { status: sourced, note: "Sayana on the Samhita (Samasrami 1874-78) and on Pancavimsa (Vedantavagisa 1870/74). FLAG: the Sayana attribution on in.ernet.dli.2015.344920 follows the Bibliotheca Indica series pattern and was NOT independently confirmed in that item's own metadata." }
+findings:
+  - "Our two held gana PDFs are POSITIVELY IDENTIFIED as sanskritweb's GG-dev.pdf and AG-dev.pdf (Subramania Sarma, Chennai 2006, from the Svadhyaya Mandalam / Narayanasvami Diksita 1942 Aundh edition) — matched on page count, byte size and embedded PDF Title strings. Both RC4-encrypted, print:no copy:no. Publisher asks they not be offered for download elsewhere; under rule 9 the text is PD and the decision is a relationship one, not a legal one."
 sources:
-  - "Sama Veda -- Gramegeya (Village songs).pdf (attribution to Kauthuma unverified)"
-  - "Sama Veda Aranyaka Ganam.pdf (attribution to Kauthuma unverified)"
+  - "Sama Veda -- Gramegeya (Village songs).pdf = sanskritweb GG-dev.pdf, ed. Subramania Sarma — NUMERICALLY NOTATED gana, not unaccented"
+  - "Sama Veda Aranyaka Ganam.pdf = sanskritweb AG-dev.pdf, ed. Subramania Sarma"

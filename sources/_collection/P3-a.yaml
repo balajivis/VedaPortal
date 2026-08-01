@@ -1,0 +1,1674 @@
+# P3-a — Mīmāṃsā corpus
+#
+# Packet scope: Pūrva-Mīmāṃsā as APPARATUS OF METHOD — the sūtra, its bhāṣya, the two
+# rival vārttika traditions (Bhāṭṭa / Prābhākara), the technical manuals, and the
+# secondary literature that makes the method learnable.
+#
+# NOT in scope (owned elsewhere): Prātiśākhyas / Kalpa / Nirukta and the Sāyaṇa coverage
+# map (P2-b); manuscript catalogues (P2-c); Ṛgvedic Brāhmaṇas and Āraṇyakas (P3-b).
+#
+# THE FIREWALL, stated once because it governs what was prioritised:
+#   The project adopts Mīmāṃsā's METHOD, not its METAPHYSICS. Mīmāṃsā's own theological
+#   commitments — apauruṣeyatva (the Veda is authorless), nityatva (eternal), svataḥ-
+#   prāmāṇya (intrinsically valid) — are NOT adopted. They are the subject matter of
+#   MS 1.1.1–5 and of most of the Ślokavārttika, and that is precisely the part of the
+#   literature this packet ranks LOWEST. What is ranked highest is MS 3.3 (viniyoga —
+#   how a subsidiary is attached to its principal, i.e. how a reading is fixed) and
+#   MS 1.2 (vidhi vs arthavāda). Those are procedure, and procedure is what was sought.
+#   Note the irony worth recording: the digitally best-served part of this corpus is the
+#   part the project does not want. See summary.the_availability_inversion.
+#
+# ---------------------------------------------------------------------------
+# SCHEMA EXTENSION — documented once, per COLLECTION-PROTOCOL.md §1
+# ---------------------------------------------------------------------------
+# The protocol record is keyed on `node_path` = śākhā → layer. Mīmāṃsā texts are not
+# śākhā-bound: the Mīmāṃsāsūtra is a śāstra ABOUT the whole Veda and belongs to no
+# recension. Per the packet brief, `node_path` here is `sources/darshana/mimamsa/<text>`.
+#
+# Fields DROPPED as inapplicable, with reasons:
+#   veda, organization, shakha  — a darśana text has no recension. Forcing one would
+#                                 violate rule 7 (attribution doubt never goes silently
+#                                 into `shakha`).
+#   layer                       — replaced by `tier` below; saṃhitā/brāhmaṇa/āraṇyaka/
+#                                 upaniṣad does not apply to śāstra.
+#   svara_source?               — these are unaccented prose/verse śāstra. No svara marks
+#                                 exist to source. Recording "no" 30 times would be noise;
+#                                 recording it once, here, is the honest form.
+#   svara_verified?             — BV's field. Per the hand-off seam it is not present in
+#                                 this file at all.
+#
+# Fields ADDED, because partial coverage is the NORM in this literature and the protocol
+# has no way to say WHICH PART:
+#   tier          mula / bhashya / varttika / subcommentary / manual / lexicon / secondary
+#   author        the author of the work, distinct from `edition` (the modern editor)
+#   language      sanskrit / english — a translation is a different node from its original
+#   coverage      the EXACT sūtra range held. Mandatory. `found-partial` without this is
+#                 a useless record: "partial" spans 3% and 97% in this corpus.
+#   verified_how  what I actually did to check. Evidence, not claim.
+#
+# Fields CARRIED THROUGH unchanged: edition, url, script, text_layer, license, status,
+# where_i_looked, notes, date_logged.
+#
+# ---------------------------------------------------------------------------
+
+summary:
+  date: 2026-08-01
+  packet: P3-a
+  collector: agent
+
+  headline: >
+    The six-fold ordering is Jaimini, Mīmāṃsāsūtra 3.3.14 — VERIFIED, not taken on trust.
+    Every layer of it is obtainable today, free, and in a form you can cite: the sūtra in
+    machine-readable IAST, Śabara's bhāṣya on it in machine-readable IAST with page
+    concordance to three printed editions, a public-domain English translation of that
+    exact passage (Ganganatha Jha, GOS 66, pp. 449–464), Kumārila's Bhāṭṭa expansion of it
+    in English (Jha, Bibliotheca Indica, pp. ~1186–1222), and — the surprise of this packet —
+    Prabhākara's rival Prābhākara comment on the SAME sūtra, in Sanskrit, downloadable.
+    Both sides of the school split are in hand on the one sūtra the project needs most.
+
+  # =========================================================================
+  # 1. THE SIX-FOLD ORDERING — the packet's primary deliverable
+  # =========================================================================
+  six_fold_ordering:
+
+    primary_locus: "Jaimini, Mīmāṃsāsūtra 3.3.14"
+
+    verification_of_the_locus: >
+      The brief said "commonly cited around Jaimini 3.3.14 — verify this, do not take it
+      on trust." Verified three independent ways, all agreeing:
+        (a) GRETIL's Mīmāṃsāsūtra e-text (ed. B.D. Basu, Allahabad 1923–25) carries the
+            sūtra under the reference `Jaim_3,3.14`.
+        (b) GRETIL's Śābarabhāṣya e-text (ed. Andreas Pohlus, collated against six printed
+            editions) carries it under `MS_3,3.14`.
+        (c) Ganganatha Jha's English translation places it at Discourse III, Pāda III,
+            Adhikaraṇa (7), Sūtra (14) — an entirely separate transmission line (Baroda
+            1933, from the Gaekwad Sanskrit text) reaching the same address.
+      The citation 3.3.14 is correct. Use it.
+
+    sanskrit_sutra_text: >
+      śrutiliṅgavākyaprakaraṇasthānasamākhyānāṃ samavāye pāradaurbalyam arthaviprakarṣāt
+    sanskrit_source: "GRETIL sa_jaimini-mImAMsAsUtra.xml, ref Jaim_3,3.14 (IAST, Unicode)"
+    sanskrit_note: >
+      GRETIL prints it hyphenated (śruti-liṅga-vākya-prakaraṇa-sthāna-samākhyānāṃ) as a
+      reading aid. The compound is unhyphenated in the manuscripts and printed editions.
+      Both GRETIL's Mīmāṃsāsūtra file and its Śābarabhāṣya file give the same text; the
+      Śābarabhāṣya file gives it unhyphenated, and is the better one to quote from.
+
+    literal_gloss: >
+      "When śruti, liṅga, vākya, prakaraṇa, sthāna and samākhyā COME TOGETHER [samavāye —
+      i.e. bear on one and the same question, and conflict], the LATER IS WEAKER THAN THE
+      EARLIER [pāradaurbalyam], BECAUSE OF INCREASING REMOTENESS FROM THE MEANING
+      [arthaviprakarṣāt]."
+
+    the_ratio_in_one_line: >
+      arthaviprakarṣāt — "because of remoteness from the objective." This is the WHOLE
+      justification, and it is a single reason applied six times, not six ad-hoc rankings.
+      Śabara derives every step of the ladder from it, one pair at a time. That is what
+      makes it a procedure rather than a list, and it is why it can be applied to cases
+      Jaimini never saw.
+
+    published_english_translation_of_this_exact_passage:
+      obtainable: yes
+      translator: "Mahāmahopādhyāya Ganganatha Jha"
+      where: "Śābara-Bhāṣya, Vol. I (Adhyāyas I–III), Gaekwad's Oriental Series No. LXVI, Oriental Institute, Baroda, 1933"
+      pages: "449–464 (Adhikaraṇa 7 opens on p. 449; Sūtra 15 / Adhikaraṇa 8 opens on p. 464)"
+      url: "https://archive.org/details/shabarabhasyavol032868mbp"
+      license: public-domain
+      verified_how: >
+        Downloaded the OCR text layer, located the running headers
+        "DISCOURSE III, PĀDA III, ADHIKARAṆA (7)" on pp. 451–463, read the adhikaraṇa
+        heading, the sūtra, and the closing paragraph. Quoted below verbatim.
+
+      jha_translation_of_the_sutra: >
+        "AMONG 'DIRECT ASSERTION', 'INDICATIVE POWER', 'SYNTACTICAL CONNECTION',
+        'CONTEXT', 'PLACE' AND 'NAME', — THAT WHICH FOLLOWS IS WEAKER THAN THAT WHICH
+        PRECEDES; — BECAUSE IT IS MORE REMOTE FROM THE FINAL OBJECTIVE."
+
+      jha_adhikarana_heading: >
+        "ADHIKARAṆA (7): Among the six means of determining the connection of subsidiaries
+        — 'Direct Assertion', 'Indicative Power' and the rest, — that which precedes is
+        more authoritative than that which follows."
+
+      jha_closing_statement: >
+        "...among the several means of knowledge in the case in question — viz. (1) 'Direct
+        Assertion', (2) 'Indicative Power', (3) 'Syntactical Connection', (4) 'Context',
+        (5) 'Order' and (6) 'Name', — the one that precedes is more authoritative than what
+        follows, because in the case of the cognition obtained through it, even pondering
+        over it, it is found that there is no contrary cognition sublating it."
+
+    TERMINOLOGY_WARNING_read_before_using_jha: >
+      Jha renders `sthāna` as "PLACE" in the sūtra but as "Order" throughout the discussion.
+      This is NOT sloppiness — he is following Śabara, who himself substitutes `krama`
+      (sequence) for `sthāna` when he works the examples ("atha kramasamākhyayoḥ virodhe...",
+      "prakaraṇaṃ kramād balīyaḥ"). The two words name one thing: WHERE IN THE TEXTUAL
+      SEQUENCE the item stands. If the project builds a term table, `sthāna` and `krama`
+      must map to one concept or a downstream reader will invent a seventh criterion that
+      does not exist. Kumārila's Tantravārttika uses "Position" for the same slot.
+
+    the_six_with_sabara_own_definitions:
+      # These are Śabara's, from the bhāṣya on this sūtra, not modern glosses.
+      # Sanskrit quoted from GRETIL sa_jaimini-mImAMsAsUtra-1-7-comm.xml ad MS_3,3.14.
+      - rank: 1
+        term: śruti
+        sanskrit_definition: "yad arthasyābhidhānaṃ śabdasya śravaṇamātrād evāvagamyate, sa śrutyāvagamyate, śravaṇaṃ śrutiḥ"
+        gloss: "direct statement — meaning got from merely HEARING the word. Jha: 'Direct Assertion'."
+      - rank: 2
+        term: liṅga
+        sanskrit_definition: "yat tāvac chabdasyārtham abhidhātuṃ sāmarthyam, tal liṅgam"
+        gloss: "the capacity of a word to denote — inferential/indicative force. Jha: 'Indicative Power'."
+      - rank: 3
+        term: vākya
+        sanskrit_definition: "ekārtham anekaṃ padaṃ vākyam"
+        gloss: "several words expressing one idea — syntactic unity (ekavākyatā). Jha: 'Syntactical Connection'."
+      - rank: 4
+        term: prakaraṇa
+        sanskrit_definition: "kartavyasyetikartavyatākāṅkṣasya vacanaṃ prakaraṇam"
+        gloss: "the statement of a thing-to-be-done that still needs its how-to-do-it — i.e. mutual expectancy establishing a topic. Jha: 'Context'."
+      - rank: 5
+        term: sthāna
+        sanskrit_definition: "anekasyāmnāyamānasya saṃnidhiviśeṣāmnānamātraṃ hi kramaḥ"
+        gloss: "position in the recited sequence, nothing more. Śabara calls it krama throughout. Jha: 'Place' / 'Order'."
+      - rank: 6
+        term: samākhyā
+        sanskrit_definition: "laukikaś ca śabdaḥ samākhyā"
+        gloss: >
+          a name, and a WORLDLY (non-Vedic) one at that — e.g. calling a section
+          'pauroḍāśika'. Śabara: "na ca loka evaṃvidheṣv artheṣu pramāṇam" — ordinary
+          usage is not authoritative in matters of this kind. This is why it is last.
+          Jha: 'Name'.
+
+    why_this_ranking_is_usable_as_an_adjudication_rule: >
+      Two structural properties, both verified in the bhāṣya itself:
+      (1) It is PAIRWISE and TRANSITIVE-BY-ARGUMENT, not merely asserted. Śabara argues
+          six separate cases — (A) śruti > liṅga, (B) liṅga > vākya, (C) vākya > prakaraṇa,
+          (D) prakaraṇa > krama, (E) krama > samākhyā, (F) the general theory of sublation
+          — each with a pūrvapakṣa that says "these two are of EQUAL strength" (tulyabale
+          ete kāraṇe) and a siddhānta that defeats it by arthaviprakarṣa. The rule therefore
+          comes with its own worked objections. A project applying it inherits the
+          objections too, which is exactly what makes it checkable rather than dogmatic.
+      (2) It triggers ONLY ON CONFLICT. Śabara is explicit: "balīyān api hetur virudhyamānam
+          abalīyāṃsaṃ bādhitum arhati nāviruddham" — a stronger reason sets aside a weaker
+          one only when they CONFLICT, never when they agree. So the rule is silent in the
+          ordinary case and speaks only where evidence contradicts itself. That is precisely
+          the gap the project said distributional evidence leaves open.
+      One caveat the project must carry: section (F) is disputed WITHIN the tradition.
+      Jha's note records that Maṇḍana Miśra, in his Anukramaṇikā, treats (F) as a SEVENTH,
+      distinct adhikaraṇa under the same sūtra, where Śabara treats it as the closing move
+      of the sixth. The disagreement is about whether the sublation theory is general or
+      local. Log it; do not resolve it.
+
+  # =========================================================================
+  # 2. THE JAIMINI–ŚABARA–KUMĀRILA–PRABHĀKARA CORE
+  # =========================================================================
+  core_availability:
+
+    verdict: >
+      The four-author core is essentially SOLVED for Sanskrit and LARGELY SOLVED for
+      English, with two named holes (Ṭupṭīkā, Bṛhatī — neither ever translated). Everything
+      load-bearing is public domain. Nothing in this packet required linking-only to a
+      paywall except modern secondary scholarship.
+
+    jaimini_mimamsasutra:
+      status: found-complete
+      terms: public-domain
+      detail: >
+        All 12 adhyāyas, 2,727 sūtras, machine-readable Unicode IAST, from GRETIL
+        (ed. B.D. Basu, Sacred Books of the Hindus 27, Allahabad 1923–25). Structure
+        sanity-checked and correct: adhyāyas 3, 6 and 10 carry 8 pādas each, the rest 4.
+        This is a solved node.
+
+    sabara_sabarabhasya:
+      sanskrit_status: found-complete
+      english_status: found-complete
+      terms: public-domain
+      detail: >
+        Sanskrit: complete in print (Ānandāśrama SS, 7 parts, 1929–34; Kāśī SS 42, 1910;
+        Bibliotheca Indica ed. Mahesachandra Nyāyaratna 1863–89), all on Archive.org.
+        Machine-readable: GRETIL holds adhyāyas 1–7 only ("to be continued"), but that
+        RANGE INCLUDES 3.3.14, so the packet's target passage is machine-readable today.
+        English: Ganganatha Jha, 3 vols, Gaekwad's Oriental Series 66 / 70 / 73, Baroda
+        1933 / 1934 / 1936 — ALL TWELVE ADHYĀYAS. Confirmed complete, not assumed:
+        Vol I = Adhy. I–III, Vol II = Adhy. IV–VIII, Vol III = Adhy. IX–XII.
+
+    kumarila:
+      slokavarttika:
+        status: found-complete
+        detail: >
+          Jha's English translation (Bibliotheca Indica, Asiatic Society of Bengal,
+          Calcutta 1907) is COMPLETE for the Ślokavārttika — verified by reading the
+          contents through to Section 17, Citrākṣepaparihāra, which is the work's last
+          chapter. But note what "complete" means here: the Ślokavārttika comments ONLY on
+          MS 1.1.1–5. It is 100% of a text that is ~1% of the sūtra corpus, and it is the
+          epistemology-and-theology part — the part behind the project's firewall.
+      tantravarttika:
+        status: found-complete
+        detail: >
+          Jha's English translation, Bibliotheca Indica, Calcutta 1924, 2 vols continuously
+          paginated 1–1712, covering MS 1.2.1 → 3.8.44 — i.e. exactly the Tantravārttika's
+          own scope, complete. THIS IS THE HIGH-VALUE JHA VOLUME FOR THIS PROJECT: it
+          contains both the arthavāda pāda (MS 1.2, pp. 1–103) and the six-fold ordering
+          (MS 3.3.14, pp. ~1186–1222).
+      tuptika:
+        status: found-partial
+        detail: >
+          Sanskrit yes (Benares SS, ed. Gaṅgādhara Śāstrī, 1904). English NO — the Ṭupṭīkā,
+          Kumārila's commentary on MS 4–12, has never been translated into English so far as
+          this sweep could establish. See the not-found record.
+
+    prabhakara:
+      status: found-partial
+      detail: >
+        THE PACKET'S BEST UNEXPECTED RESULT. Prabhākara's Bṛhatī with Śālikanātha's
+        Ṛjuvimalā pañcikā, ed. S. Subrahmanya Sastri, Madras University Sanskrit Series,
+        IS ON ARCHIVE.ORG, and the volume covering MS 3.1.1–5.4.26 CONTAINS THE COMMENTARY
+        ON 3.3.14 — verified by locating `arthaviprakarṣāt` twice on facing pages 774–775
+        (once in Bṛhatī, once in Ṛjuvimalā) under the running header "adhi. 7". The project
+        asked for both sides of the Bhāṭṭa/Prābhākara split on the sūtra it cares about.
+        It has both.
+        The hard limit: NO ENGLISH. The Bṛhatī has never been translated. Jha's *The
+        Prābhākara School of Pūrva Mīmāṃsā* (1911) is an exposition, not a translation, and
+        it is public domain — that is the practical English route into Prabhākara.
+
+  # =========================================================================
+  # 3. VIDHI vs ARTHAVĀDA — where it is actually argued
+  # =========================================================================
+  vidhi_arthavada:
+    primary_locus: "Jaimini, Mīmāṃsāsūtra 1.2.1–18 (the arthavāda adhikaraṇas of Adhyāya I, Pāda II)"
+    the_hinge_sutra: "MS 1.2.7 — vidhinā tv ekavākyatvāt stutyarthena vidhīnāṃ syuḥ"
+    hinge_sutra_gloss: >
+      "But [the arthavādas], BECAUSE THEY FORM A SINGLE SENTENCE WITH THE INJUNCTION
+      [ekavākyatvāt], exist for the sake of PRAISING the injunctions [stutyarthena]."
+    why_this_is_the_classifier_the_project_wants: >
+      Read the pūrvapakṣa and the siddhānta together and the distinction stops being a
+      label and becomes a TEST.
+        Pūrvapakṣa (MS 1.2.1): "āmnāyasya kriyārthatvād ānarthakyam atadarthānāṃ tasmād
+        anityam ucyate" — since the Veda exists to enjoin action, the parts that do not
+        serve that purpose are USELESS, and so the Veda is declared unreliable there.
+        Śabara's examples are exactly the passages a modern reader trips over: "he wept,
+        and because he wept Rudra was called Rudra" (TS 1.5.1); "Prajāpati cut out his own
+        fat" (TS 2.1.1); "the gods, arriving at the sacrificial ground, did not know the
+        directions" (TS 6.1.5).
+        Siddhānta (MS 1.2.7): they are NOT independent assertions and were never meant to
+        be read as such. They are syntactically bound to an injunction and their function is
+        to make it attractive (prarocanā). Śabara's argument is a sentence-unity argument,
+        not a piety argument: the praise-words are sākāṅkṣa — they have unfulfilled
+        expectancy — so they CANNOT stand alone, and reading them alone is a grammatical
+        error before it is a hermeneutic one.
+      THE OPERATIONAL TEST, therefore: does the passage, taken by itself, leave a syntactic
+      expectancy unfilled? If yes, it is a vākyaśeṣa of some injunction and must be read
+      with it. THE CLASSIC MISREADING the project names — treating an arthavāda as a
+      standalone propositional claim about the world — is on this account a failure to
+      complete the sentence.
+    where_to_read_it:
+      sanskrit_sutra: "GRETIL sa_jaimini-mImAMsAsUtra.xml, Jaim_1,2.1 – 1,2.18"
+      sanskrit_bhasya: "GRETIL sa_jaimini-mImAMsAsUtra-1-7-comm.xml, MS_1,2.1 – MS_1,2.18"
+      english_bhasya: "Jha, Śābara-Bhāṣya Vol. I (GOS 66), pp. 51–64. MS 1.2.7 at pp. 54–56."
+      english_varttika: "Jha, Tantravārttika Vol. I (Bibliotheca Indica, 1924), pp. 1–103 — Adhyāya I Pāda II opens the translation."
+      compact_manual: "Laugākṣi Bhāskara, Arthasaṃgraha (tr. Thibaut 1882) and Āpadeva, Mīmāṃsānyāyaprakāśa (ed./tr. Edgerton 1929) — both give the fivefold classification of Vedic sentences (vidhi · mantra · nāmadheya · niṣedha · arthavāda) in a few pages. THIS IS THE ENTRY POINT, not Śabara."
+      best_digital_text: "SARIT's TEI-P5 Tantravārttika (CC BY-SA 4.0) — covers MS 1.2 AND MS 2.1.1–4, structurally addressable to the sūtra, Unicode Devanāgarī. See sources/darshana/mimamsa/tantravarttika/sarit-tei. This is the one to build the classifier against."
+    contestedness_note: >
+      The project's schema treats vidhi/arthavāda as `native_posthoc` classification that is
+      itself contested, and records who says so. Confirmed contested, and the contest has a
+      name: Bhāṭṭa and Prābhākara disagree on what an injunction even IS. For Kumārila the
+      force of a vidhi is bhāvanā (a productive urging aimed at a desired result — hence the
+      arthavāda's praise has real work to do in motivating). For Prabhākara it is niyoga
+      (a duty binding independently of any desire — praise is structurally less necessary).
+      That is not a footnote to the classification; it is a disagreement about its ground.
+      RECORD BOTH NAMES ON THE NODE. The primary texts for the two positions are Kumārila's
+      Tantravārttika ad MS 2.1.1–4 and Prabhākara's Bṛhatī / Śālikanātha's Prakaraṇapañcikā.
+
+  # =========================================================================
+  # 4. WHAT IS GENUINELY UNAVAILABLE
+  # =========================================================================
+  genuinely_unavailable:
+    - item: "Ṭupṭīkā (Kumārila on MS 4–12) in English"
+      note: >
+        No English translation located, and none is believed to exist. Sanskrit is fine
+        (Benares SS 1904, and inside the Ānandāśrama edition). Consequence: MS adhyāyas
+        4–12 have Śabara in English (Jha) but NO Bhāṭṭa vārttika in English. If the project
+        ever needs Kumārila on a sūtra above 3.8, it needs Sanskrit.
+    - item: "Bṛhatī (Prabhākara) in English — any part"
+      note: >
+        No translation located, complete or partial. The Prābhākara position is reachable
+        in English ONLY through exposition (Jha 1911, PD) or through modern in-copyright
+        monographs (Freschi 2012). The primary text is Sanskrit-only. This is the single
+        largest linguistic gap in the packet.
+    - item: "Bṛhatī — the text itself is incomplete"
+      note: >
+        Distinguish from the above. The Bṛhatī does not survive whole; the Madras edition
+        was issued in parts across three decades precisely because the material came in
+        pieces. Coverage of individual volumes was verified here by running-header analysis
+        rather than trusted from title pages — the title pages are ambiguous and one of
+        them is misleading (see the Bṛhatī records).
+    - item: "Muktabodha Digital Library — catalogue behind a server-side access gate"
+      note: >
+        Probed hard per rule 11 (twelve API/metadata paths, two advertised GitHub repos,
+        both legacy hostnames). The Turnstile gate is enforced server-side — every path
+        302s to /welcome — so this is a genuine access control, not a JS rendering
+        artefact, and I did not attempt to pass it. The probing was still worth it: it
+        established the correct legacy hostname (muktalib7.COM, not .org), the licence
+        (CC BY-NC 4.0 for the E-Text Library; all-rights-reserved for the Gokarna Vedic
+        Collection), and that their own advertised open-data repositories are currently
+        404 mid-migration. Low prior probability of Mīmāṃsā content regardless.
+    - item: "sanskritdocuments.org — no Pūrva-Mīmāṃsā at all"
+      note: >
+        Swept the site index and the śāstra / vedanta / major-works sections. The only hits
+        for the string "mīmāṃsā" are unrelated Vedānta and poetics titles
+        (tattvamīmāṃsā, śuddhādvaita...brahmavidyādhigamaprakāramīmāṃsā). NO Jaimini, no
+        Śabara, no Kumārila, no Prabhākara. Clean not-found; do not re-sweep.
+    - item: "Three GRETIL entries are indexed but DEAD"
+      note: >
+        sa_zabara-mImAMsAsUtrabhASya-1 (Somadeva Vasudeva's Śābarabhāṣya ad 1,1.1–5),
+        sa_kumArila-tantravArttika-2 (Kei Kataoka's Tantravārttika ad MS 2,1.2–4), and
+        sa_khaNDadeva-bhATTadIpikA1-3 are all listed on GRETIL's index page with three
+        links each (XML / HTML / plaintext). All nine URLs return 404. Verified with GET,
+        not just HEAD. The Kataoka file is the painful one — it is a critical edition of
+        exactly the vidhi-definition passage. Report to GRETIL; meanwhile treat as absent.
+        NOTE that SARIT independently covers that same passage (MS 2.1.1–4) in
+        ordinary-edition form, so the Kataoka loss now costs a critical apparatus rather
+        than the text itself. See rule_11_correction.
+
+  # =========================================================================
+  # 4b. A RECORD I GOT WRONG, AND WHAT FIXED IT
+  # =========================================================================
+  rule_11_correction: >
+    Binding rule 11 — "a resource absent from a rendered page is not an absent resource,
+    PROBE" — was added to COLLECTION-PROTOCOL.md by a concurrent packet while this one was
+    being written. Applying it retroactively overturned two records in this file. The
+    corrections are left visible rather than silently merged, because the failure mode is
+    more instructive than the fix.
+    WHAT I HAD WRITTEN: that SARIT could not be checked (its web app returns HTTP 502 and
+    400), and that no usable machine-readable Tantravārttika exists.
+    WHAT PROBING FOUND: SARIT's corpus lives on GitHub independently of its web
+    application, and it holds a 4.59 MB TEI-P5 Tantravārttika — encoded by Andrew Ollett
+    under Sheldon Pollock's SARIT project, based on the Ānandāśrama first edition,
+    structurally marked down to the individual sūtra, released under CC BY-SA 4.0.
+    It covers MS 1.2 through 2.4. It does NOT reach 3.3.14, so the six-fold ordering
+    findings are unaffected. But it covers the ENTIRE vidhi/arthavāda pāda AND the
+    vidhi-definition passage at MS 2.1.1–4 — which makes it the best digital source in
+    existence for the classifier the project actually needs. It was one HTTP request away,
+    behind a front end that looked dead.
+    THE LESSON, for the next collector rather than for me: in this field the web front ends
+    rot faster than the data. GRETIL indexes files it no longer serves. SARIT serves files
+    through a broken application. Muktabodha advertises open data repositories that 404
+    mid-migration. DCS renders its catalogue only in JavaScript but publishes the entire
+    corpus as CoNLL-U on GitHub. FOUR OF THE FIVE MAJOR DIGITAL HOLDERS IN THIS PACKET have
+    a working bulk path their own website either does not advertise or cannot reach.
+    Check GitHub, the API and the bulk dump BEFORE recording any not-found against a
+    digital library.
+
+  # =========================================================================
+  # 5. THE FINDING THAT SHOULD CHANGE HOW THE PROJECT PLANS
+  # =========================================================================
+  the_availability_inversion: >
+    Machine-readable coverage of this corpus is INVERSELY correlated with what the project
+    needs. Count it:
+      MS 1.1 (epistemology, apauruṣeyatva, svataḥ-prāmāṇya — BEHIND THE FIREWALL):
+        Śabara in GRETIL, Śabara in DCS with full morphological tagging, Kumārila's
+        Ślokavārttika, Sucaritamiśra's Kāśikā, Pārthasārathi's Śāstradīpikā, Umbeka's
+        Tātparyaṭīkā, Frauwallner's critical edition, Kataoka's critical editions, and a
+        complete PD English translation. Saturated.
+      MS 3.3 (viniyoga — THE PROJECT'S ACTUAL ADJUDICATION RULE):
+        one machine-readable text (GRETIL's Pohlus file), zero morphological tagging,
+        zero critical editions online, and PDF scans for everything else.
+    Two independent measurements make this concrete. DCS's Mīmāṃsāsūtrabhāṣya holding is
+    120 CoNLL-U files and stops at MS 1.3.35 — verified by enumerating the repository tree.
+    SARIT's TEI Tantravārttika stops at MS 2.4 — verified by walking every div in the file.
+    NEITHER REACHES 3.3.14, and neither is close. Two of the best-resourced digital
+    Sanskrit projects in the world both stopped short of the passage this project needs,
+    and both stopped in the same place: after the epistemology, before the hermeneutics.
+    CONSEQUENCE FOR PLANNING: do not budget the six-fold ordering as a text-acquisition
+    task. It is acquired. Budget it as a READING task on a 16-page passage (Jha GOS 66,
+    pp. 449–464) with the Sanskrit alongside. The project's own note — "bounded and
+    tractable; the Śābara-bhāṣya in full is a lifetime" — is exactly right, and the bound
+    is now measured: sixteen pages of English, one sūtra of Sanskrit, six worked arguments.
+
+  attribution_owed: >
+    Per rule 10. Nothing in this packet would exist without: Mahāmahopādhyāya GANGANATHA
+    JHA (1871–1941), who translated the Śābarabhāṣya, the Ślokavārttika AND the
+    Tantravārttika into English single-handed — the English-language access to Mīmāṃsā is
+    essentially one man's life's work; ANDREAS POHLUS, whose GRETIL Śābarabhāṣya is
+    collated against six printed editions and carries page concordances to three of them,
+    which is what made this packet's citations checkable; S. K. RAMANATHA SASTRI and
+    S. SUBRAHMANYA SASTRI of the University of Madras, who edited the Bṛhatī out of
+    fragments across thirty years; KEVALĀNANDA SARASVATĪ of Wai, for the seven-volume
+    Mīmāṃsākośa; and OLIVER HELLWIG, for DCS.
+
+# ===========================================================================
+# RECORDS
+# ===========================================================================
+
+records:
+
+  # -------------------------------------------------------------------------
+  # THE ANCHOR — MS 3.3.14. Kept as its own node deliberately: it is the single
+  # citation the whole adjudication rule rests on, and it must not be findable
+  # only by reading a 12-adhyāya record.
+  # -------------------------------------------------------------------------
+  - node_path: sources/darshana/mimamsa/mimamsa-sutra/3.3.14-viniyoga-pramana-krama
+    tier: mula
+    work: "Mīmāṃsāsūtra 3.3.14 — the ordering of the six means of viniyoga"
+    author: Jaimini
+    language: sanskrit
+    edition: "GRETIL e-text, based on the ed. of B.D. Basu, Allahabad 1923–1925 (Sacred Books of the Hindus, vol. 27); data entry by members of the Sansknet Project"
+    url: https://gretil.sub.uni-goettingen.de/gretil/corpustei/sa_jaimini-mImAMsAsUtra.xml
+    url_plaintext: https://gretil.sub.uni-goettingen.de/gretil/corpustei/transformations/plaintext/sa_jaimini-mImAMsAsUtra.txt
+    script: transliteration
+    text_layer: unicode
+    license: public-domain
+    status: found-complete
+    coverage: "the single sūtra 3.3.14, within a complete 12-adhyāya file"
+    verified_how: >
+      Downloaded the TEI XML, stripped markup, located the line bearing ref Jaim_3,3.14,
+      and reproduced it. Cross-checked the identical text in GRETIL's independent
+      Śābarabhāṣya file under ref MS_3,3.14, and cross-checked the address against Jha's
+      1933 English translation (Discourse III, Pāda III, Adhikaraṇa 7, Sūtra 14).
+    notes: >
+      TEXT: śrutiliṅgavākyaprakaraṇasthānasamākhyānāṃ samavāye pāradaurbalyam arthaviprakarṣāt
+      LICENSE: GRETIL asserts CC-BY-NC-SA 4.0 over the file. Per protocol rule 9, the
+      NC clause cannot attach to a 1st–2nd century CE sūtra; the mūla text is public
+      domain. GRETIL's normalization and TEI markup are a separate object and its terms
+      are recorded here verbatim for provenance. Cite GRETIL regardless of what licensing
+      requires (rule 10).
+      NEIGHBOURS worth having: 3.3.13 `ākhyā caivam atadarthatvāt` introduces samākhyā as
+      the sixth means; 3.3.14 then ranks all six. Read 3.3.8–14 as one unit.
+    date_logged: 2026-08-01
+
+  - node_path: sources/darshana/mimamsa/shabara-bhashya/3.3.14
+    tier: bhashya
+    work: "Śābarabhāṣya ad Mīmāṃsāsūtra 3.3.14"
+    author: "Śabarasvāmin"
+    language: sanskrit
+    edition: >
+      GRETIL e-text ed. Andreas Pohlus. Base text is a diplomatic transcription of the
+      editio princeps (Mahesachandra Nyāyaratna, Bibliotheca Indica 45, Calcutta 1863–1889),
+      with sandhi applied consistently, collated against five further editions.
+    url: https://gretil.sub.uni-goettingen.de/gretil/corpustei/sa_jaimini-mImAMsAsUtra-1-7-comm.xml
+    url_plaintext: https://gretil.sub.uni-goettingen.de/gretil/corpustei/transformations/plaintext/sa_jaimini-mImAMsAsUtra-1-7-comm.txt
+    script: transliteration
+    text_layer: unicode
+    license: public-domain
+    status: found-complete
+    coverage: "the full bhāṣya on 3.3.14, sections (A) through (F), ~4,500 words of Sanskrit"
+    verified_how: >
+      Extracted the body from the TEI XML and read the whole passage from the sūtra pratīka
+      to the closing `tasmāt teṣāṃ samavāye virodhe paradaurbalyam arthaviprakarṣād iti`.
+      All six comparison arguments present and intact.
+    notes: >
+      THIS IS THE SINGLE MOST USEFUL FILE IN THE PACKET. Pohlus embeds page-concordance
+      footnotes to three printed editions, so any sentence here can be cited to a physical
+      book. For 3.3.14 the concordance runs: Ānandāśrama SS 79 vol. 4 pp. 222–226; Gosvāmī
+      (Prācyabhāratī GM) vol. 4 pp. 211ff; Kāśī SS 42 vol. 1 pp. 195ff.
+      STRUCTURE of the passage, for anyone working it:
+        (A) śruti > liṅga        — example: 'aindryā gārhapatyam upatiṣṭhate'
+        (B) liṅga > vākya        — example: 'syonaṃ te sadanaṃ kṛṇomi'
+        (C) vākya > prakaraṇa    — example: the sūktavāka nigada
+        (D) prakaraṇa > krama    — example: the Śunaḥśepa narrative in the Rājasūya
+        (E) krama > samākhyā     — example: 'pauroḍāśika' and 'śundhadhvam daivyāya karmaṇe'
+        (F) the general theory of bādha (sublation) — DISPUTED, see summary.
+      Each of (A)–(E) has the same shape: a pūrvapakṣa asserting `tulyabale ete kāraṇe`
+      ("these two causes are of equal strength") and a siddhānta defeating it by
+      arthaviprakarṣa. The repetition is the method; do not skim it.
+      LICENSE: GRETIL asserts CC-BY-NC-SA 4.0. Recorded verbatim; rule 9 applies to the
+      2nd–5th century bhāṣya text.
+    date_logged: 2026-08-01
+
+  - node_path: sources/darshana/mimamsa/shabara-bhashya/3.3.14/english
+    tier: bhashya
+    work: "Śābarabhāṣya ad MS 3.3.14 — English"
+    author: "Śabarasvāmin, tr. Ganganatha Jha"
+    language: english
+    edition: "Śābara-Bhāṣya, Vol. I (Adhyāyas I–III), tr. Ganganatha Jha, ed. Benoytosh Bhattacharyya, Gaekwad's Oriental Series No. LXVI, Oriental Institute, Baroda, 1933"
+    url: https://archive.org/details/shabarabhasyavol032868mbp
+    url_alt: https://archive.org/details/in.ernet.dli.2015.70523
+    script: roman
+    text_layer: unicode
+    license: public-domain
+    status: found-complete
+    coverage: "pp. 449–464 = Discourse III, Pāda III, Adhikaraṇa (7), Sūtra (14), complete with Jha's Tantravārttika cross-notes"
+    verified_how: >
+      Downloaded the OCR text layer, located the adhikaraṇa heading and sūtra, walked the
+      running headers (pp. 450–463 all read "DISCOURSE III, PĀDA III, ADHIKARAṆA (7)"),
+      and read to the start of Sūtra (15) on p. 464. Quoted verbatim in the summary block.
+    notes: >
+      PUBLIC DOMAIN, CONFIRMED, not assumed. Published 1933 — beyond the US pre-1930 bright
+      line, so the reasoning is: Jha died in 1941; the work was PD in India by 1991 under
+      the then-applicable life+50 term, therefore not restored by the URAA on 1996-01-01,
+      therefore PD in the US. Archive.org serves it openly and has for years. Flagged rather
+      than hidden because it is a reasoning chain, not a bright-line date.
+      OCR QUALITY: usable but rough — an Osmania University scan with broken diacritics
+      ("SHABAKA-BHASYA", "PlDA"). Fine for reading and quoting with care; NOT fine as a
+      machine-readable source. Use the GRETIL Sanskrit for anything programmatic.
+      Jha's bracketed notes throughout are HIS, not Śabara's, and are drawn from the
+      Tantravārttika — he flags them "[Tantravārtika — Trans., p. NNNN]". Do not attribute
+      them to Śabara. Jha's editorial notes are the one genuinely authored layer in this
+      volume; rule 9's carve-out applies to them, though they are PD on the same reasoning.
+    date_logged: 2026-08-01
+
+  - node_path: sources/darshana/mimamsa/tantravarttika/3.3.14/english
+    tier: varttika
+    work: "Tantravārttika ad MS 3.3.14 — English"
+    author: "Kumārila Bhaṭṭa, tr. Ganganatha Jha"
+    language: english
+    edition: "Tantravārttika: A Commentary on Śabara's Bhāṣya on the Pūrvamīmāṃsā Sūtras of Jaimini, tr. Ganganatha Jha, Bibliotheca Indica, Asiatic Society of Bengal, Calcutta, 1924, Vol. II"
+    url: https://archive.org/details/in.ernet.dli.2015.24676
+    script: roman
+    text_layer: unicode
+    license: public-domain
+    status: found-complete
+    coverage: "Adhikaraṇa (7), Sūtra (14). Running headers 'ADH. III—PĀDA III—ADHI. (7)' verified continuously across pp. 1190–1222; the adhikaraṇa opens ~p. 1186."
+    verified_how: >
+      Downloaded the OCR text of Vol. II, located Kumārila's rendering of the sūtra and the
+      opening of his commentary, then walked page markers forward to the close of the
+      adhikaraṇa at p. 1222.
+    notes: >
+      Kumārila's translation of the sūtra, in Jha's English: "When there is a coalition of
+      Direct Declaration, Indicative Power, Syntactical Connection, Context, Position, and
+      Name, that which follows is always weaker than the one preceding it; because it is
+      more remote from the purpose in view."
+      HIS OPENING MOVE IS THE USEFUL ONE and it is a definition of the trigger condition:
+      "as no comparison could be made when each of them treated of different subjects, we
+      take them up as referring to one and the same subject; and that is why the sūtra
+      speaks of their 'samavāya', 'coalition', by which is meant the fact of their BEARING
+      UPON A SINGLE SUBJECT." That is the precondition for the whole rule and it is easy to
+      miss in Śabara. If the project builds an adjudication procedure, this sentence defines
+      when the procedure may be invoked at all.
+      PAGE PRECISION: the start page is approximate (~1186). The OCR mangles page numbers in
+      the 1180s (renders 1183 as "1163", "1161"). The END is solid — p. 1222 is legible and
+      carries the Adhikaraṇa (7) running header. Stated as approximate rather than guessed
+      precise.
+      Jha, in the Śābarabhāṣya volume, cross-refers to this passage twice, at Tantravārttika
+      trans. pp. 1215 and 1217–1222. Both fall inside the verified range.
+    date_logged: 2026-08-01
+
+  - node_path: sources/darshana/mimamsa/brhati/3.3.14
+    tier: varttika
+    work: "Bṛhatī and Ṛjuvimalā ad MS 3.3.14 — the Prābhākara comment on the six-fold ordering"
+    author: "Prabhākara Miśra, with Śālikanātha Miśra's Ṛjuvimalā pañcikā"
+    language: sanskrit
+    edition: "Bṛhatī of Prabhākara Miśra with the Ṛjuvimalā Pañcikā of Śālikanātha, ed. S. Subrahmanya Sastri, Madras University Sanskrit Series, University of Madras — the volume covering MS 3.1.1–5.4.26 (Archive.org labels it 'Part 4')"
+    url: https://archive.org/details/SWpM_brhati-of-prabhakara-misra-with-rjuvimala-pancika-of-salikanatha-part-4-s.-subramanya-shastri
+    script: devanagari-unicode
+    text_layer: scanned-no-text
+    license: public-domain
+    status: found-complete
+    coverage: "MS 3.3.14 present, at pp. ~774–775 under running header 'adhi. 7'. Volume as a whole covers MS 2.1 through 5.4 on header evidence."
+    verified_how: >
+      Downloaded the OCR text and searched for `arthaviprakarṣāt`. Two hits, on facing
+      pages — one in the Bṛhatī column, one in the Ṛjuvimalā column — inside a passage
+      running `atrocyate — śrutiliṅgayor virodhe śrutir balīyasī. kutaḥ? arthaviprakarṣāt`.
+      Then enumerated all Devanāgarī running headers of the form `a.N.pā.N` across the whole
+      volume to establish the range: adhyāyas 2 through 5, with 3.3 well attested.
+    notes: >
+      THIS RECORD IS THE PACKET'S BEST FIND AFTER THE ANCHOR ITSELF. The project explicitly
+      needs both sides because Kumārila–Prabhākara disagreement is data. On the one sūtra
+      the adjudication rule rests on, both sides are now in hand.
+      NO ENGLISH EXISTS. Sanskrit only. Reading it requires Sanskrit or a Sanskritist.
+      The OCR text layer is a Devanāgarī-model misfire over Latin front matter — the
+      title page is unreadable, the Sanskrit body is largely readable. `text_layer` is
+      recorded as `scanned-no-text` because it must NOT be treated as a reliable digital
+      text; it was used here only as a search index over the page images.
+      TITLE-PAGE WARNING, and this cost time: the Archive.org "Part N" numbering does NOT
+      track the Madras University Sanskrit Series numbering, and the title pages OCR so
+      badly that "ADHYĀYAS 2, 3, 4" on one volume actually means pādas 2–4 OF ADHYĀYA 1.
+      Coverage in this family MUST be established by running-header analysis of the body,
+      never by reading the title page. Anyone extending this packet: do the header count.
+      Andreas Pohlus's GRETIL bibliography independently describes this Madras edition
+      (his siglum E5) and assigns MS 3.1.1–5.4.26 to its third volume, which agrees with
+      the header evidence found here.
+    date_logged: 2026-08-01
+
+  # -------------------------------------------------------------------------
+  # MŪLA — the sūtra text
+  # -------------------------------------------------------------------------
+  - node_path: sources/darshana/mimamsa/mimamsa-sutra
+    tier: mula
+    work: "Mīmāṃsāsūtra (Pūrvamīmāṃsāsūtra), 12 adhyāyas"
+    author: Jaimini
+    language: sanskrit
+    edition: "GRETIL, based on the ed. of B.D. Basu, Allahabad 1923–1925 (Sacred Books of the Hindus, vol. 27); data entry by members of the Sansknet Project, normalization Reinhold Grünendahl, TEI conversion Maximilian Mehner"
+    url: https://gretil.sub.uni-goettingen.de/gretil/corpustei/sa_jaimini-mImAMsAsUtra.xml
+    url_plaintext: https://gretil.sub.uni-goettingen.de/gretil/corpustei/transformations/plaintext/sa_jaimini-mImAMsAsUtra.txt
+    script: transliteration
+    text_layer: unicode
+    license: public-domain
+    status: found-complete
+    coverage: "ALL 12 adhyāyas, 2,727 numbered sūtras, reference scheme Jaim_A,P.S"
+    verified_how: >
+      Parsed every reference marker in the file and tabulated max sūtra per pāda.
+      Result: adhy. 1 (32/53/35/30), 2 (49/29/29/32), 3 (27/43/46/51/53/47/51/44),
+      4 (48/30/41/41), 5 (35/23/44/26), 6 (52/31/41/47/56/39/40/42), 7 (23/21/36/20),
+      8 (43/32/36/18), 9 (58/60/43/60), 10 (58/73/75/59/88/79/73/70),
+      11 (70/68/55/56), 12 (44/38/32/40). Adhyāyas 3, 6 and 10 carry 8 pādas, the rest 4 —
+      which is the correct structure of the Mīmāṃsāsūtra and is a real integrity check,
+      not a formality.
+    notes: >
+      A SOLVED NODE. Complete, Unicode, machine-readable, structurally validated, free.
+      There is nothing further to acquire for the sūtra text itself.
+      SŪTRA NUMBERING VARIES BETWEEN EDITIONS in this literature — some editions merge or
+      split sūtras, and adhikaraṇa boundaries are themselves a matter of commentarial
+      disagreement (see the Maṇḍana Miśra note under the anchor record). The Basu/GRETIL
+      numbering AGREES WITH JHA'S at 3.3.14 and at 1.2.7, both checked directly. Do not
+      assume it agrees everywhere; check any citation that matters.
+      GRETIL asserts CC-BY-NC-SA 4.0 over the file; rule 9 applies. Credit GRETIL and the
+      Sansknet Project by name.
+    date_logged: 2026-08-01
+
+  - node_path: sources/darshana/mimamsa/mimamsa-sutra/print-editions
+    tier: mula
+    work: "Mīmāṃsāsūtra — printed Sanskrit editions"
+    author: Jaimini
+    language: sanskrit
+    edition: "several; see notes"
+    url: https://archive.org/details/kibd_mimamsa-sutras-by-jaimini-commentary-mimamsa-bhashya-by-shabara-svamin-sanskrit-
+    script: devanagari-unicode
+    text_layer: scanned-no-text
+    license: public-domain
+    status: found-complete
+    coverage: "full sūtra text, in every case printed together with Śabara's bhāṣya"
+    verified_how: "Archive.org advanced-search sweep on title:(mimamsa OR mimansa), 1,424 hits triaged; metadata pulled for the candidates below."
+    notes: >
+      The sūtra is almost never printed alone — it comes embedded in Śabara. So the print
+      editions of the sūtra ARE the print editions of the bhāṣya; see the next record.
+      One caution recorded honestly: the item linked above is flagged "Missing Pages" in its
+      own Archive.org title. Do not use it as a primary witness.
+    date_logged: 2026-08-01
+
+  # -------------------------------------------------------------------------
+  # ŚĀBARABHĀṢYA — the foundational commentary
+  # -------------------------------------------------------------------------
+  - node_path: sources/darshana/mimamsa/shabara-bhashya/sanskrit-machine-readable
+    tier: bhashya
+    work: "Mīmāṃsāsūtrabhāṣya (Śābarabhāṣya)"
+    author: "Śabarasvāmin"
+    language: sanskrit
+    edition: >
+      GRETIL, ed. Andreas Pohlus. Diplomatic transcription of the editio princeps
+      (Mahesachandra Nyāyaratna, Bibliotheca Indica 45, Calcutta 1863–1889 — the text
+      Frauwallner worked from), sandhi regularised, collated against: Ānandāśrama SS 79
+      (Abhyaṅkar/Jośī, 6 vols, Poona 1976–84); Musalgaonkar (Varanasi/Delhi 1979);
+      Gosvāmī (Prācyabhāratī GM 16/22/23/32, Varanasi 1984ff); Ramanatha Sastri (Madras
+      University Series, 1934ff); Ratna Gopala Bhatta (Kāśī SS 42, Benares 1910).
+    url: https://gretil.sub.uni-goettingen.de/gretil/corpustei/sa_jaimini-mImAMsAsUtra-1-7-comm.xml
+    url_plaintext: https://gretil.sub.uni-goettingen.de/gretil/corpustei/transformations/plaintext/sa_jaimini-mImAMsAsUtra-1-7-comm.txt
+    script: transliteration
+    text_layer: unicode
+    license: public-domain
+    status: found-partial
+    coverage: "Adhyāyas 1–7 of 12. GRETIL's own note: '[to be continued]'. 17,152 lines. Adhyāyas 8–12 ABSENT."
+    verified_how: "Downloaded (1.46 MB XML), read the TEI header in full, extracted and line-counted the body, and located MS_3,3.14 and MS_1,2.7 inside it."
+    notes: >
+      Adhyāyas 1–7 is enough for this project: BOTH the six-fold ordering (3.3) and the
+      vidhi/arthavāda pāda (1.2) fall inside the range. The missing 8–12 matter for
+      prayoga, prasaṅga, ūha and the puruṣārtha discussions — real content, but not the
+      project's adjudication apparatus.
+      THE HEADER IS ITSELF A BIBLIOGRAPHIC ASSET. Pohlus's German-language note documents
+      seven editions with their contents and dates, names the Tanjore and Adyar manuscripts
+      Frauwallner used (Sarasvatī Mahāl B 2082/D 6756, B 2083/D 6757, B 9567/D 6766; Adyar
+      22 H 65/69 119), and lists both translations. It is the best short bibliography of
+      the Śābarabhāṣya found anywhere in this sweep, and it is inside an XML file nobody
+      reads the header of. Extract it before doing any further edition work.
+      Footnote markers in the body ({*3/270*} and the like) carry the edition page
+      concordance. Strip them for reading; KEEP them for citing.
+    date_logged: 2026-08-01
+
+  - node_path: sources/darshana/mimamsa/shabara-bhashya/sanskrit-print
+    tier: bhashya
+    work: "Mīmāṃsādarśana with Śābarabhāṣya and Kumārila's Tantravārttika — Sanskrit print"
+    author: "Śabarasvāmin"
+    language: sanskrit
+    edition: "Ānandāśrama Sanskrit Series 97, ed. Subbā Śāstrī, Poona, 7 parts, 1929–1934"
+    url: https://archive.org/details/ass092mimamsadarsanawithtantravartikasabarabhashyapart1subbasastri1929_202003_736_d
+    url_parts: >
+      Parts 1–6 carry Archive.org identifiers prefixed ass092mimamsadarsana...part{1..6}...,
+      part 7 is ass097mimamsadarsanawithtantravartikasabarabhashyapart7subbasastri1934_202003_955_Q
+    script: devanagari-unicode
+    text_layer: scanned-no-text
+    license: public-domain
+    status: found-complete
+    coverage: "all 12 adhyāyas across 7 parts, with Tantravārttika and Ṭupṭīkā bound in"
+    verified_how: "Archive.org search returned all seven parts as a contiguous set; metadata confirms the series, editor and 1929–1934 date range."
+    notes: >
+      THE COMPLETE SANSKRIT, INCLUDING THE ADHYĀYAS GRETIL DOES NOT HAVE. This is the
+      fallback for MS 8–12 and the reference edition Pohlus collates as his E2.
+      Also available: Kāśī Sanskrit Series 42, ed. Ratna Gopala Bhatta, Benares 1910,
+      in two volumes (chs. 1–6, 6–12) — Pohlus's E6.
+      Scans, not text. Treat as page images.
+    date_logged: 2026-08-01
+
+  - node_path: sources/darshana/mimamsa/shabara-bhashya/english-jha
+    tier: bhashya
+    work: "Śābara-Bhāṣya, translated into English"
+    author: "Śabarasvāmin, tr. Ganganatha Jha"
+    language: english
+    edition: "Gaekwad's Oriental Series, gen. ed. B. Bhattacharyya, Oriental Institute, Baroda: No. LXVI (Vol. I, Adhy. I–III) 1933; No. LXX (Vol. II, Adhy. IV–VIII) 1934; No. LXXIII (Vol. III, Adhy. IX–XII) 1936. Reprinted Baroda 1973–74."
+    url: https://archive.org/details/shabarabhasyavol032868mbp
+    url_vol2: https://archive.org/details/in.ernet.dli.2015.56842
+    url_vol3: https://archive.org/details/in.ernet.dli.2015.282804
+    url_all_three: https://archive.org/details/Shabara.Bhasya.tr.by.Ganganath.Jha
+    script: roman
+    text_layer: unicode
+    license: public-domain
+    status: found-complete
+    coverage: "ALL TWELVE ADHYĀYAS. Vol I = I–III, Vol II = IV–VIII, Vol III = IX–XII."
+    verified_how: >
+      The brief warned that partial translations are endemic and must be checked. Checked:
+      opened Vol. I and read its title page ("SHABARA-BHASYA Vol. I ADHYAYAS I-III ...
+      IN THREE VOLUMES"), and confirmed Vols II and III by Archive.org metadata giving
+      1934 and 1936 with the matching GOS numbers. The three volumes tile I–XII with no
+      gap and no overlap. Independently corroborated by Pohlus's GRETIL header, which
+      cites "Śābarabhāṣya translated into English by Ganganatha Jha, 3 Bände (GOS 66,
+      1933; 70, 1934; 73, 1936)".
+    notes: >
+      THE SINGLE MOST IMPORTANT ENGLISH RESOURCE IN THIS PACKET, and the answer to the
+      brief's question: yes, Jha's Śābarabhāṣya is public domain and yes, it is reachable —
+      in at least a dozen separate Archive.org uploads, several flagged CC0 or
+      Public Domain Mark by their uploaders.
+      A FOURTH VOLUME appears in some Archive.org uploads
+      (shabara4ganganathjhagos_202003_425_u) at only 335 KB against ~30 MB for the others.
+      It is not a fourth adhyāya-range. Do not mistake it for missing content; identify it
+      before citing.
+      One uploader's copy carries a Cornell University Library notice: "There are no known
+      copyright restrictions in the United States on the use of the text." Recorded per
+      rule 9's habit of quoting notices verbatim — this one HELPS rather than restricts.
+    date_logged: 2026-08-01
+
+  - node_path: sources/darshana/mimamsa/shabara-bhashya/dcs-tagged
+    tier: bhashya
+    work: "Mīmāṃsāsūtrabhāṣya — sandhi-split, morphologically tagged"
+    author: "Śabarasvāmin; corpus by Oliver Hellwig"
+    language: sanskrit
+    edition: "Digital Corpus of Sanskrit (DCS), text ID 572; CoNLL-U dump on GitHub, OliverHellwig/sanskrit"
+    url: http://www.sanskrit-linguistics.org/dcs/index.php?contents=texte
+    url_data: https://github.com/OliverHellwig/sanskrit/tree/master/dcs/data/conllu/files
+    script: transliteration
+    text_layer: unicode
+    license: unknown
+    status: found-partial
+    coverage: "MS 1.1.1 – 1.3.35 ONLY. 120 CoNLL-U files, one per sūtra. Adhyāya 1, pādas 1–3. DOES NOT REACH 3.3.14. Does not reach 1.2 in full? — it does: 1.2.1–53 all present."
+    verified_how: >
+      Enumerated the full repository tree via the GitHub API (24,561 entries), filtered to
+      the Mīmāṃsāsūtrabhāṣya directory, parsed the reference embedded in each filename
+      (`MīSūBhā, A, P, S`) and computed the max sūtra per pāda: (1,1)→32, (1,2)→53,
+      (1,3)→35. Explicitly tested for a 3.3.14 file: NONE.
+    notes: >
+      GOOD NEWS AND BAD NEWS ON ONE NODE. The good: MS 1.2.1–53 IS fully covered, so the
+      ENTIRE vidhi/arthavāda pāda is available lemmatised and sandhi-split — that is a
+      genuine asset for building a term index around the injunction/praise distinction.
+      The bad: coverage stops at 1.3.35 and the six-fold ordering is nowhere near it.
+      This node is the concrete evidence for summary.the_availability_inversion.
+      LICENSE: the GitHub repository declares NO license (GitHub API reports license: null)
+      and the DCS site's copyright page is JavaScript-rendered and could not be read.
+      Recorded `unknown` rather than guessed. Rule 9 covers the underlying bhāṣya text; it
+      does NOT cover Hellwig's morphological annotation, which is genuine original scholarly
+      work and the thing you would actually be reusing. RESOLVE THE LICENSE BEFORE
+      INGESTING. Ask Hellwig directly — he is responsive and the corpus is widely reused.
+    date_logged: 2026-08-01
+
+  # -------------------------------------------------------------------------
+  # KUMĀRILA — the Bhāṭṭa school
+  # -------------------------------------------------------------------------
+  - node_path: sources/darshana/mimamsa/slokavarttika/english-jha
+    tier: varttika
+    work: "Ślokavārttika, translated into English"
+    author: "Kumārila Bhaṭṭa, tr. Ganganatha Jha"
+    language: english
+    edition: "Ślokavārttika, translated from the original Sanskrit with extracts from the commentaries of Sucarita Miśra (the Kāśikā) and Pārtha Sārathi Miśra (the Nyāyaratnākara), by Ganganatha Jha. Bibliotheca Indica, New Series nos. 965, 986, 1017, 1055, 1091 and 1157. Asiatic Society of Bengal, Calcutta, 1907."
+    url: https://archive.org/details/fine_slokavartika-of-kumarilabhatta-englishtranslation-ganganathajha-1907-bibliotheca
+    url_alt: https://archive.org/details/in.ernet.dli.2015.196130
+    script: roman
+    text_layer: unicode
+    license: public-domain
+    status: found-complete
+    coverage: >
+      COMPLETE for the Ślokavārttika — all sections through 17 (Citrākṣepaparihāra), which
+      is the work's final chapter. But the Ślokavārttika itself comments only on
+      MS 1.1.1–5. So: 100% of a text covering ~0.2% of the sūtras.
+    verified_how: >
+      Read the title page (fascicle numbers, series, date) and the full table of contents,
+      confirming sections run to 17 and end at Citrākṣepaparihāra — the known last chapter.
+      Not inferred from the page count.
+    notes: >
+      PUBLIC DOMAIN AND UNAMBIGUOUS — 1907, and the Cornell scan carries an explicit
+      "no known copyright restrictions" statement.
+      READ THE FIREWALL BEFORE PRIORITISING THIS. The Ślokavārttika is where Mīmāṃsā's
+      metaphysics lives: the eternality of the Veda, the absence of an author, the denial of
+      an omniscient being, svataḥ-prāmāṇya, the polemic against Buddhist epistemology. The
+      table of contents reads: "No omniscient person (111)", "Veda not due to human origin
+      (97-98)", "Absence of an Author safeguards the Veda against all reproach (68)". This
+      is exactly the material the project takes the method WITHOUT. It is superbly served
+      digitally and it is the lowest-priority item in this packet. Log it, shelve it.
+      Jha's extracts from Sucarita and Pārthasārathi are a bonus — two sub-commentaries in
+      English, partially, that exist nowhere else in translation.
+    date_logged: 2026-08-01
+
+  - node_path: sources/darshana/mimamsa/slokavarttika/sanskrit
+    tier: varttika
+    work: "Mīmāṃsāślokavārttika — Sanskrit"
+    author: "Kumārila Bhaṭṭa"
+    language: sanskrit
+    edition: >
+      Print: with Pārthasārathi Miśra's Nyāyaratnākara, ed. Rāma Śāstrī Tailaṅga,
+      Chowkhamba Sanskrit Series 11/12/15, Benares. Also ed. Swāmī Dvārikādāsa Śāstrī,
+      Tara Publishing House. With Sucaritamiśra's Kāśikā, ed. K. Sāmbaśiva Śāstrī,
+      Trivandrum Sanskrit Series 90 / 99 / 150, 1926 / 1929 / 1943. With Umbeka's
+      Tātparyaṭīkā, ed. S.K. Ramanatha Sastri, rev. K. Kunjunni Raja and R. Thangaswamy,
+      University of Madras 1940/1971.
+    url: https://archive.org/details/slokavartikanyayaratnakaraparthasarthimisraramasastritailanganachowkambhacomplete_202003_855_C
+    url_kasika_gretil: https://gretil.sub.uni-goettingen.de/gretil/corpustei/sa_sucaritamizra-mImAMsAzlokavArttika.xml
+    script: devanagari-unicode
+    text_layer: mixed
+    license: public-domain
+    status: found-complete
+    coverage: "print: complete. Machine-readable: only Sucaritamiśra's Kāśikā, and only in part — see notes."
+    verified_how: >
+      Archive.org sweep (42 hits on ślokavārttika title variants) triaged by editor and
+      series. GRETIL's two Ślokavārttika files downloaded and their TEI headers read.
+    notes: >
+      MACHINE-READABLE COVERAGE IS WORSE THAN THE INDEX SUGGESTS. GRETIL lists two files:
+        - sa_kumArila-mImAMsazlokavArttika-comm.xml (200 OK, 471 KB) — despite the name,
+          this is Sucaritamiśra's Kāśikā and covers ONLY Msv 5,4 – 5,6.29ab and
+          5,7.30 – 5,9, with GRETIL's own header flagging "Msv 5,6.29cd – 5,7.29cd
+          MISSING!" and "THE TEXT IS NOT PROOF-READ" and word boundaries not marked.
+        - sa_sucaritamizra-mImAMsAzlokavArttika.xml (200 OK, 1.23 MB) — the better file,
+          from Helmut Krasser, based on the Trivandrum edition, running through the
+          pramāṇa chapters to abhāvapariccheda. Use this one, not the first.
+      Note the Umbeka Tātparyaṭīkā edition was revised by K. KUNJUNNI RAJA — the same
+      scholar the brief names under secondary literature. He is a primary-text editor here,
+      not only a secondary author.
+    date_logged: 2026-08-01
+
+  - node_path: sources/darshana/mimamsa/tantravarttika/english-jha
+    tier: varttika
+    work: "Tantravārttika, translated into English"
+    author: "Kumārila Bhaṭṭa, tr. Ganganatha Jha"
+    language: english
+    edition: "Bibliotheca Indica, Asiatic Society of Bengal, Calcutta, 1924, 2 vols, continuously paginated 1–1712"
+    url: https://archive.org/details/in.ernet.dli.2015.282920
+    url_vol2: https://archive.org/details/in.ernet.dli.2015.24676
+    url_original_fascicles: https://archive.org/details/tantravartikacom00kumr
+    script: roman
+    text_layer: unicode
+    license: public-domain
+    status: found-complete
+    coverage: >
+      MS 1.2.1 → 3.8.44 — the Tantravārttika's entire scope, complete. Vol. I contents
+      page gives: Adhy. I pāda II p.1, pāda III p.104, pāda IV p.373; Adhy. II p.465
+      (pādas at 465/610/805/890); Adhy. III p.921 (pādas at 921/1053/1131/1269/1445/
+      1606/1595/1661). Vol. II opens at Adhyāya III.
+    verified_how: >
+      Read Vol. I's printed table of contents in full and transcribed the pāda-by-pāda page
+      map above; opened Vol. II and confirmed it begins at "ADHYĀYA III. Śeṣa-Lakṣaṇa.
+      PĀDA I." Coverage is stated from the book's own contents page, not estimated.
+    notes: >
+      THE HIGHEST-VALUE JHA VOLUME FOR THIS PROJECT, above the Ślokavārttika and arguably
+      above the Śābarabhāṣya translation, because its scope maps exactly onto what the
+      project needs: the arthavāda pāda at the front (MS 1.2, pp. 1–103) and the six-fold
+      ordering near the back (MS 3.3.14, pp. ~1186–1222). Both classifiers in one book.
+      The 1903 Archive.org item (tantravartikacom00kumr) is the ORIGINAL FASCICLE ISSUE —
+      publication ran 1903–1924 in parts. The 1924 two-volume set is the complete thing.
+      Use the 1924 volumes; keep the 1903 link for provenance.
+      An incomplete Archive.org upload exists titled "Kumarila Bhatta Tantravarttika Many
+      Pages Are Missing Ganga Nath Jha". Its own title is the warning. Do not use it.
+      The contents page lists Adhyāya III pāda VI at p.1606 and pāda VII at p.1595 — pāda
+      VII printed BEFORE pāda VI. Either a typo in the 1924 contents page or an OCR
+      transposition; not resolved here. Flagged so nobody builds a page index on it blind.
+    date_logged: 2026-08-01
+
+  - node_path: sources/darshana/mimamsa/tantravarttika/sanskrit
+    tier: varttika
+    work: "Tantravārttika — Sanskrit"
+    author: "Kumārila Bhaṭṭa"
+    language: sanskrit
+    edition: "Ānandāśrama Sanskrit Series 97, ed. Subbā Śāstrī, Poona, 7 parts, 1929–1934 (bound with the sūtra and Śābarabhāṣya). Also Benares 1882 ed."
+    url: https://archive.org/details/ass092mimamsadarsanawithtantravartikasabarabhashyapart1subbasastri1929_202003_736_d
+    url_alt: https://archive.org/details/in.ernet.dli.2015.273904
+    script: devanagari-unicode
+    text_layer: scanned-no-text
+    license: public-domain
+    status: found-complete
+    coverage: "complete in print (MS 1.2–3.8), bound within the Ānandāśrama Mīmāṃsādarśana"
+    verified_how: "Archive.org sweep; the seven Ānandāśrama parts located as a set."
+    notes: >
+      MACHINE-READABLE STATUS — CORRECTED. An earlier draft of this record asserted that no
+      usable machine-readable Tantravārttika exists. THAT WAS WRONG, and rule 11 caught it:
+      SARIT holds a full TEI-P5 Tantravārttika covering MS 1.2 – 2.4, CC BY-SA 4.0, on
+      GitHub, reachable even though SARIT's own web app is returning 502. See the record
+      `sources/darshana/mimamsa/tantravarttika/sarit-tei`. The error is left visible here
+      rather than quietly overwritten, because the failure mode — declaring a resource
+      absent on the evidence of a broken front end — is exactly what rule 11 exists to stop.
+      STILL TRUE: nothing machine-readable reaches MS 3.3.14, and GRETIL indexes Kei
+      Kataoka's critical edition of the Tantravārttika ad MS 2,1.2–4 whose three URLs
+      (XML, HTML, plaintext) all return 404, verified with GET not HEAD. SARIT now covers
+      that passage in ordinary-edition form, so the Kataoka loss costs a critical apparatus
+      rather than the text itself. Still worth emailing GRETIL about.
+      Someśvara Bhaṭṭa's Nyāyasudhā (c. 1250), the standard sub-commentary on the
+      Tantravārttika, is separately on Archive.org (in.ernet.dli.2015.282076, Chowkhamba).
+    date_logged: 2026-08-01
+
+  - node_path: sources/darshana/mimamsa/tuptika/sanskrit
+    tier: varttika
+    work: "Ṭupṭīkā — Kumārila on MS 4–12"
+    author: "Kumārila Bhaṭṭa"
+    language: sanskrit
+    edition: "ed. Gaṅgādhara Śāstrī, Benares Sanskrit Series nos. 73, 74, 78 & 81, Chowkhamba Sanskrit Book Depot, Benares, 1904"
+    url: https://archive.org/details/tuptikak00kuma
+    url_alt: https://archive.org/details/tuptika1904benaressanskritseries_667_
+    script: devanagari-unicode
+    text_layer: scanned-no-text
+    license: public-domain
+    status: found-complete
+    coverage: "MS adhyāyas 4–12 (the Ṭupṭīkā's own scope), complete"
+    verified_how: >
+      Downloaded the OCR text and read the title page: "Mīmāṃsāsūtrīya-Śābarabhāṣya-ṭīkā,
+      Mahad-Śrī-Kumārilasvāmi-viracitā", "A Gloss on Śabara's ...", Benares Sanskrit Series,
+      1904. Archive.org metadata confirms the series numbers and editor.
+    notes: >
+      Also bound within the Ānandāśrama Mīmāṃsādarśana (Pohlus's E2) and in the Chowkhamba
+      volume 'Śābara Bhāṣya with Ṭupṭīkā, Vārtikābharaṇa, Tantraśikhāmaṇi and Bhāṣya-
+      sandarbhayojinī, chapters 7 and 8', ed. Mandana Misra.
+      SANSKRIT ONLY. See the not-found record for English.
+    date_logged: 2026-08-01
+
+  - node_path: sources/darshana/mimamsa/tuptika/english
+    tier: varttika
+    work: "Ṭupṭīkā — English translation"
+    author: "Kumārila Bhaṭṭa"
+    language: english
+    edition: null
+    url: null
+    script: null
+    text_layer: null
+    license: null
+    status: not-found
+    coverage: "none located"
+    where_i_looked: >
+      Archive.org advanced-search on 'tuptika OR tupteeka' (15 hits, all Sanskrit, all
+      editions of the same 1904 Benares text or of Pārthasārathi's Tantraratna);
+      Archive.org creator-search on Ganganatha Jha (164 items — he translated the
+      Śābarabhāṣya, Ślokavārttika, Tantravārttika, Manusmṛti with Medhātithi, the
+      Tattvasaṅgraha, the Nyāyasūtras, the Praśastapādabhāṣya, and more, but NOT the
+      Ṭupṭīkā); Crossref bibliographic queries; GRETIL's complete Mīmāṃsā section (10
+      entries, none a Ṭupṭīkā); Pohlus's GRETIL bibliography of Śābarabhāṣya editions and
+      translations, which lists exactly two translations of anything in this family
+      (Jha's, and Frauwallner's German partial of MS 1.1.1–5) and no Ṭupṭīkā.
+    notes: >
+      Believed never translated. The consequence is precise and should be planned around:
+      for MS adhyāyas 4–12, English readers have Śabara (Jha) but NO Bhāṭṭa vārttika at all.
+      Since the six-fold ordering sits at 3.3, INSIDE the Tantravārttika's range, this gap
+      does not touch the project's adjudication rule. It would matter for prayoga, ūha,
+      prasaṅga and the puruṣārtha material of adhyāyas 4 and 6.
+    date_logged: 2026-08-01
+
+  # -------------------------------------------------------------------------
+  # PRABHĀKARA — the rival school
+  # -------------------------------------------------------------------------
+  - node_path: sources/darshana/mimamsa/brhati/sanskrit
+    tier: varttika
+    work: "Bṛhatī, with Śālikanātha Miśra's Ṛjuvimalā pañcikā"
+    author: "Prabhākara Miśra"
+    language: sanskrit
+    edition: >
+      Madras University Sanskrit Series, University of Madras. Begun by S.K. Ramanatha
+      Sastri (MUSS 3.1/3.2, 1934: MS 1.1.1–32, with a facsimile volume of the manuscripts);
+      continued by S. Subrahmanya Sastri (MUSS 24, 1962: MS 1.2.1–2.4.33; MUSS 25, 1964:
+      MS 3.1.1–5.4.26; MUSS 26, 1967: adhyāyas 8–12). Also A. Chinnaswami Sastri,
+      Chowkhamba Sanskrit Series, Benares, 1929ff.
+    url: https://archive.org/details/brhatirujvimalpancikasalikanthaed.ramanathasastris.k.vol1universityofmadras_202003_851_S
+    url_ms_1_2_to_2_4: https://archive.org/details/IxVw_brhati-of-prabhakara-mishra-with-rju-vimala-panchika-of-salika-natha-part-3-subrahamanya-shastr
+    url_ms_3_to_5: https://archive.org/details/SWpM_brhati-of-prabhakara-misra-with-rjuvimala-pancika-of-salikanatha-part-4-s.-subramanya-shastri
+    url_adhy_8_to_12: https://archive.org/details/cJZD_brhati-of-prabhakar-mishra-with-rju-vimala-of-salik-natha-part-v-s.-subrahmanya-sastri
+    script: devanagari-unicode
+    text_layer: scanned-no-text
+    license: public-domain
+    status: found-partial
+    coverage: >
+      Substantial but NOT complete, and the text itself is lacunose. Volumes located and
+      their ranges verified by running-header analysis:
+        · MS 1.1.1–32 (tarkapāda) — Ramanatha Sastri, MUSS 3.1, 1934
+        · MS 1.2 – 2.4          — Subrahmanya Sastri, MUSS 24, 1962 (Archive 'Part 3')
+        · MS 2.1 – 5.4          — Subrahmanya Sastri, MUSS 25, 1964 (Archive 'Part 4') ← contains 3.3.14
+        · adhyāyas 8–12         — Subrahmanya Sastri, MUSS 26, 1967 (Archive 'Part V')
+      Adhyāyas 6 and 7 not located in this sweep.
+    verified_how: >
+      For each volume, downloaded the OCR text and enumerated every Devanāgarī running
+      header matching `a.N.pā.N`, tabulating which adhyāya/pāda pairs actually appear in
+      the body. Then confirmed the 3.3.14 volume by string-searching for
+      `arthaviprakarṣāt` and reading the surrounding page.
+    notes: >
+      THE TITLE PAGES LIE, OR AT LEAST MISLEAD, AND SO DOES THE ARCHIVE.ORG PART NUMBERING.
+      The volume whose title page appears to read "ADHYĀYAS 2, 3, 4" in fact covers pādas
+      2–4 of adhyāya ONE plus adhyāya two. Established by header count, which disagreed
+      with my first reading of the title page and agreed with Pohlus's independent
+      bibliography. Rule: in this edition family, coverage is established from the body,
+      never from the cover.
+      The Bṛhatī does not survive complete. It was published in pieces across 33 years
+      (1934–1967) by two editors precisely because the material arrived in pieces. Absence
+      of adhyāyas 6–7 from this sweep may reflect an unlocated volume or a genuine textual
+      lacuna — NOT DETERMINED. Do not record it either way without checking the Madras
+      series list.
+      Śālikanātha's Ṛjuvimalā is printed alongside throughout and is often the more
+      tractable of the two — Prabhākara's own prose is famously difficult, which is why the
+      school is named after the commentator's clarifications as much as the master.
+    date_logged: 2026-08-01
+
+  - node_path: sources/darshana/mimamsa/brhati/english
+    tier: varttika
+    work: "Bṛhatī — English translation"
+    author: "Prabhākara Miśra"
+    language: english
+    edition: null
+    url: null
+    script: null
+    text_layer: null
+    license: null
+    status: not-found
+    coverage: "none located, complete or partial"
+    where_i_looked: >
+      Archive.org search on 'brihati Prabhakara / Brhati / rjuvimala' (39 hits — every one
+      Sanskrit, being the Madras and Chowkhamba editions and the Tamil-catalogued TDL
+      records of the same); Archive.org creator-sweep of Ganganatha Jha's 164 items (he
+      wrote ABOUT Prabhākara but did not translate the Bṛhatī); Crossref bibliographic
+      queries for Bṛhatī translations; OpenAlex full-text search (returned nothing usable);
+      GRETIL's Mīmāṃsā section (no Bṛhatī at all, in any language); Pohlus's bibliography.
+    notes: >
+      A REAL AND CONSEQUENTIAL GAP, and the largest linguistic one in this packet. The
+      project explicitly wants both sides of the Bhāṭṭa/Prābhākara disagreement, and one
+      side's foundational text is Sanskrit-only.
+      WHAT EXISTS INSTEAD, in descending order of usefulness:
+        1. Ganganatha Jha, *The Prābhākara School of Pūrva Mīmāṃsā*, 1911 — a full English
+           exposition of the school by the man who translated everything else. PUBLIC
+           DOMAIN. https://archive.org/details/dli.csl.4672 . This is the practical route.
+        2. Śālikanātha's Prakaraṇapañcikā — the school's own systematic manual, easier than
+           the Bṛhatī, partly machine-readable on GRETIL (prakaraṇa 1 only).
+        3. Elisa Freschi, *Duty, Language and Exegesis in Prābhākara Mīmāṃsā*, Brill 2012
+           (DOI 10.1163/9789004230248) — modern, in copyright, link only.
+      Note the asymmetry this creates and guard against it: the Bhāṭṭa side is fully
+      available in English and the Prābhākara side is not. A project that reads only what
+      is translated will silently become a Bhāṭṭa project. Given that the whole point of
+      holding both is that their disagreement is data, this is a methodological hazard,
+      not just an inconvenience.
+    date_logged: 2026-08-01
+
+  - node_path: sources/darshana/mimamsa/prakarana-pancika
+    tier: subcommentary
+    work: "Prakaraṇapañcikā — the Prābhākara systematic manual"
+    author: "Śālikanātha Miśra"
+    language: sanskrit
+    edition: "GRETIL e-text with Jayapurī Nārāyaṇabhaṭṭa's Nyāyasiddhi, input by the Sansknet project. Print: Chowkhamba / Banaras Hindu University."
+    url: https://gretil.sub.uni-goettingen.de/gretil/corpustei/sa_zAlikanAthamizra-prakaraNapaJcikA-comm.xml
+    url_print: https://archive.org/details/in.ernet.dli.2015.383225
+    script: transliteration
+    text_layer: unicode
+    license: public-domain
+    status: found-partial
+    coverage: "GRETIL: PRAKARAṆA 1 ONLY, of the work's several. Print: complete."
+    verified_how: "Downloaded the TEI file (368 KB) and read the header, which states plainly: 'Prakarana 1'."
+    notes: >
+      The most tractable Prābhākara primary text and the natural first target if anyone
+      ever translates this school. GRETIL's header warns the text is not proof-read and
+      word boundaries are not consistently marked (converted from a custom Devanāgarī
+      encoding) — usable for search, not for citation without checking against print.
+    date_logged: 2026-08-01
+
+  # -------------------------------------------------------------------------
+  # VIDHI / ARTHAVĀDA — the classifier
+  # -------------------------------------------------------------------------
+  - node_path: sources/darshana/mimamsa/vidhi-arthavada
+    tier: mula
+    work: "MS 1.2.1–18 — the arthavāda adhikaraṇas"
+    author: "Jaimini, with Śabara and Kumārila"
+    language: sanskrit
+    edition: "sūtra: GRETIL Basu text. bhāṣya: GRETIL Pohlus text. English: Jha GOS 66 and Jha Tantravārttika Vol. I."
+    url: https://gretil.sub.uni-goettingen.de/gretil/corpustei/sa_jaimini-mImAMsAsUtra-1-7-comm.xml
+    url_english_bhasya: https://archive.org/details/shabarabhasyavol032868mbp
+    url_english_varttika: https://archive.org/details/in.ernet.dli.2015.282920
+    script: transliteration
+    text_layer: unicode
+    license: public-domain
+    status: found-complete
+    coverage: >
+      Sanskrit sūtra 1.2.1–18: complete. Sanskrit bhāṣya: complete (inside GRETIL's adhy.
+      1–7 file). English bhāṣya: Jha GOS 66 pp. 51–64, with MS 1.2.7 at pp. 54–56. English
+      Tantravārttika: Jha Vol. I pp. 1–103. DCS tagged text: MS 1.2.1–53 complete.
+      SARIT TEI Tantravārttika: MS 1.2 complete AND MS 2.1.1–4, CC BY-SA 4.0.
+      EVERY LAYER OF THIS CLASSIFIER IS AVAILABLE, in Sanskrit and in English, machine-
+      readable and structurally addressable. Of all the nodes in this packet it is the
+      best-served.
+    verified_how: >
+      Extracted sūtras 1,2.1–18 from GRETIL and read them; extracted and read Śabara's
+      bhāṣya on 1,2.7 in Sanskrit; located the English in Jha vol. I by reading the pāda
+      heading ("PĀDA II. Authority of the Arthavāda.") and mapping sūtra numbers to printed
+      page numbers across the pāda; confirmed DCS carries 1.2.1–53 by filename enumeration.
+    notes: >
+      THIS IS WHERE THE DISTINCTION IS TECHNICALLY ARGUED, not merely mentioned. The brief
+      asked for that specifically. See summary.vidhi_arthavada for the sūtra text, the
+      pūrvapakṣa, the siddhānta and the operational test derived from them.
+      RELATED LOCI, both needed if the classifier is to be built properly:
+        · MS 2.1.1–4 — what an injunction IS. 2.1.1: `bhāvārthāḥ karmaśabdās tebhyaḥ kriyā
+          pratīyetaiṣa hy artho vidhīyate`. This is where Bhāṭṭa (bhāvanā) and Prābhākara
+          (niyoga) diverge, and where Kataoka's lost GRETIL file would have helped.
+        · MS 1.2.10 `guṇavādas tu` — the doctrine that an arthavāda whose literal sense
+          contradicts perception is figurative. This is the sharp end of the classifier and
+          the place a careless reader does the most damage.
+      The FIVEFOLD classification a modern reader usually meets — vidhi, mantra, nāmadheya,
+      niṣedha, arthavāda — is NOT Jaimini's. It is the later manuals' (Arthasaṃgraha,
+      Mīmāṃsānyāyaprakāśa) systematisation. Attribute it correctly: it is `native_posthoc`
+      in exactly the sense the project's schema means, and the schema is right to flag it.
+    date_logged: 2026-08-01
+
+  # -------------------------------------------------------------------------
+  # MANUALS — the tractable entry points
+  # -------------------------------------------------------------------------
+  - node_path: sources/darshana/mimamsa/manuals/arthasamgraha
+    tier: manual
+    work: "Arthasaṃgraha — an elementary treatise on Mīmāṃsā"
+    author: "Laugākṣi Bhāskara"
+    language: sanskrit-and-english
+    edition: "The Arthasaṃgraha: An Elementary Treatise on Mīmāṃsā, ed. and tr. George Thibaut, Benares Sanskrit Series, Benares, 1882"
+    url: https://archive.org/details/in.ernet.dli.2015.311136
+    url_alt: https://archive.org/details/in.ernet.dli.2015.486806
+    script: devanagari-unicode
+    text_layer: scanned-no-text
+    license: public-domain
+    status: found-complete
+    coverage: "complete — the Arthasaṃgraha is a short manual, and Thibaut's edition carries text plus English translation and notes"
+    verified_how: >
+      Archive.org metadata (title, 1882, Benares) confirmed across four separate uploads of
+      the same edition. The OCR text layer was checked and found UNUSABLE — the scan has
+      been OCR'd with a Devanāgarī model applied to Latin text, producing garbage. Recorded
+      as `scanned-no-text` for that reason.
+    notes: >
+      THE SHORTEST ROUTE INTO THE TECHNICAL VOCABULARY, and the one to hand someone before
+      they open Śabara. Covers the fivefold classification of Vedic sentences (vidhi ·
+      mantra · nāmadheya · niṣedha · arthavāda) and the six means of viniyoga, both in a
+      few pages each.
+      Numerous Sanskrit commentaries exist and are on Archive.org: Rāmeśvara Śivayogī's
+      Arthasaṃgraha-kaumudī, Gokhale's 1932 edition, Gajendragadkar's 1934 edition.
+      OCR CAVEAT: several of these DLI-sourced scans have the same wrong-script OCR
+      problem. Read the page images; do not trust the text layer. This is a recurring
+      hazard across the DLI corpus and is worth a general note in the protocol.
+    date_logged: 2026-08-01
+
+  - node_path: sources/darshana/mimamsa/manuals/mimamsa-nyaya-prakasha
+    tier: manual
+    work: "Mīmāṃsānyāyaprakāśa (Āpadevī)"
+    author: "Āpadeva, ed. and tr. Franklin Edgerton"
+    language: sanskrit-and-english
+    edition: "The Mīmāṃsā Nyāya Prakāśa, or Āpadevī: A Treatise on the Mīmāṃsā System by Āpadeva, ed. and tr. Franklin Edgerton, Yale University Press / Oxford University Press, 1929"
+    url: https://archive.org/details/mimamsanyayaprakashaapadevifranklinedgertonoup1929_202003_520_e
+    url_alt: https://archive.org/details/mimamsanyayaprakashaapadevifranklinedgertonsatgurupublications_202003_236_m
+    script: roman
+    text_layer: scanned-no-text
+    license: public-domain
+    status: found-complete
+    coverage: "complete — the Āpadevī is a compact manual; Edgerton gives text, translation and a substantial introduction"
+    verified_how: >
+      Archive.org metadata confirms Edgerton, 1929, OUP, and the item is flagged CC0 by its
+      uploader. The OCR text layer was downloaded and found unusable (same wrong-script
+      failure as the Arthasaṃgraha scans) — hence `scanned-no-text`. The presence of the
+      English translation is asserted from the edition's known character and its title, NOT
+      from reading the scan; flagged as such rather than overclaimed.
+    license_reasoning: >
+      Published 1929. US copyright in 1929 publications expired 1 January 2025. Public
+      domain in the US on the bright-line rule — no chain of reasoning needed, unlike the
+      Jha volumes.
+    notes: >
+      Alongside the Arthasaṃgraha, the standard compact entry point to Mīmāṃsā technical
+      method, and Edgerton's introduction is a genuine piece of scholarship in its own
+      right. Both manuals give the six means of viniyoga and the fivefold sentence
+      classification in a form a non-specialist can hold in mind.
+      Many Sanskrit-only editions exist (Vasudev Shastri Abhyankar, BORI 1937; Kāśī SS 25,
+      1949; Nirnaya Sagar 1943) if a clean Devanāgarī text is wanted.
+      IF SOMEONE NEEDS ONE BOOK TO START: this or Thibaut's Arthasaṃgraha, then Jha's
+      Śābarabhāṣya on 3.3.14. Not the Ślokavārttika.
+    date_logged: 2026-08-01
+
+  - node_path: sources/darshana/mimamsa/manuals/jaiminiya-nyayamala-vistara
+    tier: manual
+    work: "Jaiminīyanyāyamālāvistara — verse summary of every adhikaraṇa of the Mīmāṃsāsūtra"
+    author: "Mādhava (Mādhavācārya)"
+    language: sanskrit
+    edition: "ed. Theodor Goldstücker, Bibliotheca Indica, 1865 (completed after his death). Also ed. Gaṅgādhar Bāpūrāo Kāle, Ānandāśrama Sanskrit Series 24, Poona 1892; ed. A. Ramanatha Shastri, Kāśī Sanskrit Series 126, 1937."
+    url: https://gretil.sub.uni-goettingen.de/gretil/corpustei/sa_mAdhava-jaiminIyanyAyamAlAvistara.xml
+    url_print: https://archive.org/details/jaiminiyanyayamalamadhavacharyaed.theodorgoldstucker1865_202003_691_J
+    script: transliteration
+    text_layer: unicode
+    license: public-domain
+    status: found-partial
+    coverage: "GRETIL: ADHYĀYA 1 ONLY, of 12. Print (Goldstücker 1865, ĀnSS 24 1892): complete."
+    verified_how: "Downloaded the GRETIL TEI file (552 KB) and read the header, which states 'ADHYAYA 1'. Print editions located via Archive.org (22 hits on the title)."
+    notes: >
+      STRUCTURALLY THE MOST USEFUL SECONDARY SANSKRIT TEXT IN THE PACKET, and undervalued.
+      Mādhava gives, for every adhikaraṇa of all 12 adhyāyas: the viṣaya (topic), the
+      saṃśaya (doubt), the pūrvapakṣa, the siddhānta and the reason — in verse, with his
+      own prose commentary. That is an adjudication-procedure index to the whole sūtra
+      corpus. For a project that wants to APPLY the method rather than study its history,
+      this is arguably the right reference work.
+      GRETIL has only adhyāya 1, so adhikaraṇa 3.3.7 (the six-fold ordering) is NOT in the
+      machine-readable portion. The print editions have it.
+      K.L. Sarkar's 1905 lectures quote the Nyāyamālāvistara repeatedly — evidence that it
+      was the working reference for exactly this kind of applied use.
+    date_logged: 2026-08-01
+
+  - node_path: sources/darshana/mimamsa/manuals/shastradipika
+    tier: subcommentary
+    work: "Śāstradīpikā"
+    author: "Pārthasārathi Miśra"
+    language: sanskrit
+    edition: "GRETIL e-text, input by the Sansknet project. Print: Nirnaya Sagar, and Chowkhamba."
+    url: https://gretil.sub.uni-goettingen.de/gretil/corpustei/sa_pArthasArathimizra-zAstradIpikA.xml
+    url_print: https://archive.org/details/in.ernet.dli.2015.383250
+    script: transliteration
+    text_layer: unicode
+    license: public-domain
+    status: found-partial
+    coverage: "GRETIL: MS 1,1.1–23 ONLY. Print: complete."
+    verified_how: "Downloaded the GRETIL file (241 KB) and read the header: 'Parthasarathi Misra: Sastradipika (Jaimini's Mimamsasutra 1,1.1-23)'."
+    notes: >
+      An independent commentary on the whole sūtra corpus and one of the standard Bhāṭṭa
+      textbooks. The machine-readable portion is tiny (23 sūtras) and is again confined to
+      the epistemology behind the project's firewall. GRETIL's header warns the text is not
+      proof-read and lacks word boundaries.
+    date_logged: 2026-08-01
+
+  - node_path: sources/darshana/mimamsa/lexicon/mimamsa-kosha
+    tier: lexicon
+    work: "Mīmāṃsākośa — encyclopaedic dictionary of Mīmāṃsā terms, 7 volumes"
+    author: "ed. Svāmī Kevalānanda Sarasvatī"
+    language: sanskrit
+    edition: "Prājña Pāṭhaśālā Maṇḍala, Wai, 7 vols, 1952–1966"
+    url: https://archive.org/details/peud-mimamsa-kosha-part-1-edited-by-kevalananda-saraswa
+    url_all_volumes: >
+      Vols 1–7 are on Archive.org under two upload families: 'mimamsakosavolumeN...' (giving
+      the alphabetic range each volume covers: 1=a, 2=ā–u, 3=u–j, 4=j–ṇ, 5=p–b, 6=bh–v,
+      7=v–h) and 'peud/…/bcpg/dlzc/qjqw-mimamsa-kosha-part-N-edited-by-kevalananda-saraswa'.
+    script: devanagari-unicode
+    text_layer: scanned-no-text
+    license: public-domain
+    status: found-complete
+    coverage: "all 7 volumes, a–h, located"
+    verified_how: "Archive.org search on 'mimamsa kosha / mimamsakosa' returned 11 items resolving to a complete set of 7 volumes across two upload families; alphabetic ranges read from the titles."
+    notes: >
+      THE REFERENCE WORK TO OWN IF THE PROJECT BUILDS A MĪMĀṂSĀ TERM TABLE. It collects,
+      under each technical term, the passages from across the Mīmāṃsā literature that
+      define and use it — so entries for śruti, liṅga, vākya, prakaraṇa, sthāna and
+      samākhyā gather the primary attestations in one place, with sources.
+      Sanskrit only, scans only, no index in a machine-readable form. Its value is as a
+      lookup for a Sanskrit-reading collaborator, not as an ingestible dataset.
+    date_logged: 2026-08-01
+
+  # -------------------------------------------------------------------------
+  # SECONDARY LITERATURE
+  # -------------------------------------------------------------------------
+  - node_path: sources/darshana/mimamsa/secondary/mccrea-hierarchical-organization
+    tier: secondary
+    work: "The Hierarchical Organization of Language in Mīmāṃsā Interpretive Theory"
+    author: "Lawrence J. McCrea"
+    language: english
+    edition: "Journal of Indian Philosophy, vol. 28, nos. 5–6 (December 2000), pp. 429–459. Springer. DOI 10.1023/a:1017527826104"
+    url: https://doi.org/10.1023/a:1017527826104
+    script: roman
+    text_layer: unicode
+    license: copyright-link-only
+    status: found-complete
+    coverage: "the six-fold ordering, as its explicit subject"
+    verified_how: >
+      Crossref bibliographic lookup returned the record with author, journal, volume,
+      issue, page range, date and DOI — verified metadata, not recalled. The DOI I first
+      guessed was WRONG and returned 404; the correct one is above. Recorded because it is
+      exactly the kind of error this protocol exists to prevent.
+    notes: >
+      THE MODERN SCHOLARLY ACCOUNT OF THE SIX-FOLD ORDERING, and the single most relevant
+      secondary item in this packet. The title is literally the project's adjudication rule.
+      IN COPYRIGHT. Springer. LINK ONLY — do not host. Access via a university library,
+      institutional Springer subscription, or by writing to the author (McCrea is at
+      Cornell). Interlibrary loan will get a scan for personal reading.
+      If only one modern paper is read on this topic, it should be this one, alongside
+      Jha's sixteen pages of Śabara.
+    date_logged: 2026-08-01
+
+  - node_path: sources/darshana/mimamsa/secondary/sarkar-mimansa-rules-of-interpretation
+    tier: secondary
+    work: "The Mīmāṃsā Rules of Interpretation as Applied to Hindu Law"
+    author: "Kisori Lal Sarkar"
+    language: english
+    edition: "Tagore Law Lectures, 1905. Calcutta."
+    url: https://archive.org/details/dli.calcutta.10171
+    script: roman
+    text_layer: unicode
+    license: public-domain
+    status: found-complete
+    coverage: >
+      Lecture II, pp. 77–168, is a systematic English treatment of all six principles.
+      Section II introduces them; Section III treats each separately, including "Sthāna
+      Principle defined and explained. Its identity with Krama" and "Samākhyā principle";
+      Section IV is titled "The relative force of Śruti, Liṅga, Vākya &c." and works
+      through the whole ranking with illustrations.
+    verified_how: >
+      Downloaded the OCR text (938 KB, and unlike the DLI Sanskrit scans it OCR'd CLEANLY
+      because the book is in English) and read the printed table of contents for Lecture II
+      section by section, transcribing the section headings above.
+    notes: >
+      THE MOST PRACTICALLY USEFUL ENGLISH SECONDARY SOURCE FOUND, and free. It is a working
+      lawyer's account of the six-fold ordering — written to be APPLIED to contested
+      textual interpretation in an adversarial setting, which is structurally the same
+      problem the project has. It compares the Mīmāṃsā rules to English canons of statutory
+      construction (Maxwell), quotes Laugākṣi, Āpadeva, Kumārila and Śabara side by side on
+      each term, and independently confirms the sthāna = krama identification.
+      1905, public domain, clean OCR, greppable. Of everything in this packet it is the
+      lowest-friction way for a non-Sanskritist to reach competence with the rule.
+      CAVEAT ON FRAMING: Sarkar's purpose is to apply Mīmāṃsā to HINDU LAW, so his
+      illustrations run heavily to Jīmūtavāhana and Vijñāneśvara on inheritance rather than
+      to Vedic ritual. The APPARATUS is faithfully reported; the EXAMPLES are from a
+      different domain. That is arguably a feature for this project — it is a demonstration
+      that the method transfers — but it must not be mistaken for exposition of Śabara's
+      own cases.
+    date_logged: 2026-08-01
+
+  - node_path: sources/darshana/mimamsa/secondary/jha-purva-mimamsa-in-its-sources
+    tier: secondary
+    work: "Pūrva-Mīmāṃsā in its Sources"
+    author: "Ganganatha Jha"
+    language: english
+    edition: "Banaras Hindu University, 1942 (2nd ed. 1964)"
+    url: https://archive.org/details/in.ernet.dli.2015.21804
+    url_alt: https://archive.org/details/purva-mimamsa-in-its-sources
+    script: roman
+    text_layer: unicode
+    license: public-domain
+    status: found-complete
+    coverage: "systematic account of the whole system, organised by topic and quoting the sources throughout"
+    verified_how: "Archive.org search returned seven separate uploads including both the 1942 first edition and the 1964 second; metadata confirms author, title and dates. Reviewed in The Journal of Philosophy 40 (1943): 585 — Crossref-verified."
+    notes: >
+      Jha's own synthesis, written after he had translated the entire literature. The
+      natural English companion to his translations, and it is organised the way a
+      practitioner would want — by doctrine, with the primary passages quoted.
+      Public domain on the same reasoning as his translations (see the GOS 66 record).
+      Also by Jha and relevant: *The Prābhākara School of Pūrva Mīmāṃsā*, 1911
+      (https://archive.org/details/dli.csl.4672) — currently the ONLY substantial English
+      account of Prabhākara's position, and therefore load-bearing given that the Bṛhatī is
+      untranslated.
+    date_logged: 2026-08-01
+
+  - node_path: sources/darshana/mimamsa/secondary/keith-karma-mimamsa
+    tier: secondary
+    work: "The Karma-Mīmāṃsā"
+    author: "Arthur Berriedale Keith"
+    language: english
+    edition: "The Heritage of India series, Association Press / Oxford University Press, 1921"
+    url: https://archive.org/details/karmamimamsa00keitrich
+    url_alt: https://archive.org/details/in.ernet.dli.2015.90445
+    script: roman
+    text_layer: unicode
+    license: public-domain
+    status: found-complete
+    coverage: "short survey of the whole system"
+    verified_how: "Archive.org metadata confirmed across a dozen uploads, all 1921."
+    notes: >
+      Brief, public domain, and the standard early-20th-century English survey. Keith is
+      reliable on structure and dismissive on philosophy; use it for orientation, not for
+      the technical apparatus. Superseded on method by Sarkar 1905 (which predates it) and
+      by McCrea 2000.
+    date_logged: 2026-08-01
+
+  - node_path: sources/darshana/mimamsa/secondary/modern-in-copyright
+    tier: secondary
+    work: "modern scholarship — link-only register"
+    author: various
+    language: english
+    edition: "see notes"
+    url: null
+    script: roman
+    text_layer: unicode
+    license: copyright-link-only
+    status: found-complete
+    coverage: "the items verified in this sweep; not exhaustive"
+    verified_how: >
+      Crossref bibliographic queries returning full metadata for each. OpenAlex was tried
+      first and returned nothing usable for these queries; Crossref carried them.
+      No open-access version was located for any item below — recorded as a negative
+      finding, not left unstated.
+    notes: >
+      ALL IN COPYRIGHT. LINK ONLY. Do not host. Rule 1.
+        · Lawrence McCrea, "The Hierarchical Organization of Language in Mīmāṃsā
+          Interpretive Theory", J. Indian Philosophy 28.5–6 (2000): 429–459.
+          DOI 10.1023/a:1017527826104. — THE paper on the six-fold ordering. Own record above.
+        · Elisa Freschi, *Duty, Language and Exegesis in Prābhākara Mīmāṃsā*, Brill, 2012.
+          DOI 10.1163/9789004230248. Chapter-level DOIs exist, incl. "Exhortation and Duty"
+          (pp. 45–62) and "Grammar and Exegesis" (pp. 129–135). — the modern Prābhākara
+          account, filling the hole left by the untranslated Bṛhatī.
+        · Francis X. Clooney, *Thinking Ritually: Rediscovering the Pūrva Mīmāṃsā of
+          Jaimini*, Vienna 1990; Brill reissue DOI 10.1163/9789004658882.
+        · Othmar Gächter, *Hermeneutics and Language in Pūrva Mīmāṃsā: A Study in Śābara
+          Bhāṣya*, Motilal Banarsidass, 1983. Reviewed by John Taber, Philosophy East and
+          West 35 (1985): 215, DOI 10.2307/1399055. — title is squarely on target.
+        · Dan Arnold, "Of Intrinsic Validity: A Study on the Relevance of Pūrva Mīmāṃsā",
+          Philosophy East and West 51.1 (2001): 26–53. DOI 10.1353/pew.2001.0002.
+        · Kei Kataoka & John Taber, *Meaning and Non-existence: Kumārila's Refutation of
+          Dignāga's Theory of Exclusion*, 2021. DOI 10.2307/j.ctv1zqdv3w — includes an
+          annotated translation of the Ślokavārttika Apohavāda chapter.
+      NOT VERIFIED IN THIS SWEEP, named in the brief, and to be checked by hand:
+        · K. Kunjunni Raja, *Indian Theories of Meaning*, Adyar Library, 1963 — note he is
+          also a named editor of the Ślokavārttika Tātparyaṭīkā (Madras), so he appears in
+          this packet on the primary-text side as well.
+        · Francis D'Sa, *Śabdaprāmāṇyam in Śabara and Kumārila*, Vienna, 1980.
+      The WebSearch budget for this session was exhausted before these two could be
+      confirmed. Recorded as unverified rather than asserted.
+    date_logged: 2026-08-01
+
+  # -------------------------------------------------------------------------
+  # NEGATIVE RESULTS — sources checked and empty
+  # -------------------------------------------------------------------------
+  - node_path: sources/darshana/mimamsa/_negative/sanskritdocuments
+    tier: null
+    work: "sanskritdocuments.org — Pūrva-Mīmāṃsā holdings"
+    author: null
+    language: null
+    edition: null
+    url: https://sanskritdocuments.org/
+    script: null
+    text_layer: null
+    license: null
+    status: not-found
+    coverage: "nil"
+    where_i_looked: >
+      https://sanskritdocuments.org/sanskrit/ (full main index, parsed for every link
+      matching mīmāṃsā / jaimini / darśana / śāstra / philosophy);
+      /sanskrit/doc_z_misc_major_works/ ; /sanskrit/z_misc_shaastra/ ;
+      /doc_z_misc_shaastra/ ; /sanskrit/vedanta/ .
+    notes: >
+      NO PŪRVA-MĪMĀṂSĀ AT ALL. The only string matches are unrelated: `tattvamImAMsA`
+      (a Vedānta work) and `shuddhAdvaitabrahmavidyAdhigamaprakAramImAMsA`. No Jaimini,
+      no Śabara, no Kumārila, no Prabhākara.
+      This is unsurprising in hindsight — sanskritdocuments' strength is stotra, Veda and
+      devotional literature, not technical śāstra — but it was worth establishing rather
+      than assuming. CLEAN NOT-FOUND. Do not re-sweep this source for Mīmāṃsā.
+    date_logged: 2026-08-01
+
+  - node_path: sources/darshana/mimamsa/_negative/muktabodha
+    tier: null
+    work: "Muktabodha Digital Library — Mīmāṃsā holdings"
+    author: null
+    language: null
+    edition: null
+    url: https://muktabodha-digital-library.org
+    script: null
+    text_layer: null
+    license: CC-BY-NC
+    status: not-found
+    coverage: "unknown — catalogue not reachable without an interactive browser"
+    where_i_looked: >
+      Probed per binding rule 11 rather than stopping at the rendered page.
+      muktabodha.org (200; the digital-library page links out rather than searching);
+      muktabodha-digital-library.org root (200, body is a Cloudflare Turnstile gate posting
+      to /turnstile/verify); twelve guessed API/metadata paths — /api/search, /api/works,
+      /api/books, /search, /catalog, /books.json, /wp-json, /opensearch, /oai, /OAI-PMH,
+      /sitemap.xml, /robots.txt — ALL 302 to /welcome, i.e. the gate is enforced
+      server-side across the whole path space, not cosmetically in the front end;
+      /about (200, UNGATED — the one thing that did open, and it was worth it);
+      the two GitHub data repositories the About page itself advertises,
+      github.com/muktabodha-v2/muktalib-v2-data and .../muktalib-v2-app (BOTH 404 to
+      anonymous requests — private or moved); muktalib5.org (no response);
+      muktalib7.org (no response — WRONG TLD, see below); muktalib7.com (200, body reads
+      "UNAUTHORIZED ACCESS").
+    notes: >
+      STILL NOT-FOUND, but the probing changed what is known and produced four facts that
+      were not visible from the rendered page:
+        1. THE LEGACY CATALOGUE IS muktalib7.COM, NOT .ORG. The .org host I first tried
+           does not resolve. The .com host is live and returns "UNAUTHORIZED ACCESS".
+           Anyone repeating this work should start from the correct hostname.
+        2. LICENCE IS KNOWN NOW: the E-Text Library is CC BY-NC 4.0, requiring credit to
+           Muktabodha Indological Research Institute. Texts with catalogue numbers I000##
+           were produced under an IFP agreement and require credit to both. The Gokarna
+           Vedic Collection is far more restrictive — "©2014, All Rights Reserved", view
+           online or download for private study only, no redistribution. CC BY-NC is
+           NOT compatible with unrestricted reuse; treat as link-only for anything the
+           project would publish.
+        3. THE DATA IS MEANT TO BE OPEN AND CURRENTLY IS NOT. Their About page advertises
+           a public data repository with a snapshot date of 2026-07-22 and web app
+           v0.10.1, and links it. Both links 404. This looks like a migration in progress
+           ("the legacy Digital Library site will remain online while we gradually migrate
+           the library's other collections to this new infrastructure"), not a policy of
+           closure. WORTH RE-CHECKING IN A FEW MONTHS — if muktalib-v2-data goes public,
+           the whole catalogue becomes bulk-queryable at once.
+        4. CROSS-PACKET: the DL holds a GOKARNA VEDIC COLLECTION of manuscript PDFs and an
+           IFP Paper Transcripts collection. Neither is Mīmāṃsā, both are squarely P2-c's
+           business. Flagging rather than pursuing.
+      I did NOT attempt to pass the Turnstile. Rule 11 asks for probing behind a JS front
+      end for APIs, endpoints and predictable URL patterns; it does not ask for defeating
+      an access control the operator has deliberately placed. The 302s establish that this
+      gate is a real access control, not a rendering artefact.
+      PRIOR PROBABILITY REMAINS LOW that Muktabodha holds Pūrva-Mīmāṃsā at all — the
+      collection is Śaiva and Tantric by design and its recent work is Śaiva (75 Śaiva
+      texts with IFP; a new Vīraśaiva collection).
+      RECOMMENDATION UNCHANGED: ten minutes in a browser, or one email to
+      info@muktabodha.org. Do not build automation against this.
+    date_logged: 2026-08-01
+
+  - node_path: sources/darshana/mimamsa/tantravarttika/sarit-tei
+    tier: varttika
+    work: "Tantravārttika — TEI-P5, structurally marked to adhyāya / pāda / adhikaraṇa / sūtra"
+    author: "Kumārila Bhaṭṭa; digital text prepared for SARIT by Andrew Ollett, data entry by SWIFT Information Technologies, Mumbai; project direction Sheldon Pollock"
+    language: sanskrit
+    edition: >
+      SARIT: Search and Retrieval of Indic Texts, 2016-03-28. Based on the FIRST edition of
+      the Tantravārttika in the Ānandāśrama Sanskrit Series 'Mīmāṃsādarśanam' (Pune), with
+      the corrections printed at the end of each volume integrated into the text as far as
+      possible. Notes are from Subbaśāstrī's edition unless otherwise stated. Funded by
+      NEH/DFG Bilateral Digital Humanities Programme, grants HG5004113 and HG-11232164.
+    url: https://github.com/sarit/SARIT-corpus/blob/master/kumarila-tantravarttika.xml
+    url_raw: https://raw.githubusercontent.com/sarit/SARIT-corpus/master/kumarila-tantravarttika.xml
+    script: devanagari-unicode
+    text_layer: unicode
+    license: CC-BY-SA
+    status: found-partial
+    coverage: >
+      MS 1.2, 1.3, 1.4, 2.1, 2.2, 2.3, 2.4 — i.e. Adhyāya 1 pādas 2–4 and the whole of
+      Adhyāya 2. DOES NOT REACH 3.3.14. 4.59 MB, 836 <div> elements.
+    verified_how: >
+      Downloaded the raw TEI from GitHub, read the teiHeader in full (source edition,
+      encoder, funder, licence), then walked every <div type=... n=...> element to build
+      the actual adhyāya/pāda coverage set rather than trusting the header. Explicitly
+      tested for a sūtra div at 3/3/14: ABSENT. Explicitly tested for and FOUND sūtra divs
+      at 1.2.1, 1.2.7, 2.1.1, 2.1.2 and 2.1.4, and read the Devanāgarī body text at 1.2.7
+      to confirm it is really Kumārila on the vāyavya-vākya and ekavākyatā.
+    notes: >
+      FOUND ONLY BECAUSE OF BINDING RULE 11, and it overturns a claim I had already written
+      into this file. SARIT's web application returns HTTP 502/400 and looks dead; the
+      corpus is nonetheless fully available as TEI-P5 on GitHub. A rendered page that will
+      not load is not an absent resource.
+      WHAT THIS CHANGES, concretely: a usable machine-readable Tantravārttika DOES exist.
+      It covers the ENTIRE vidhi/arthavāda pāda (MS 1.2.1–18) and the ENTIRE vidhi-definition
+      passage (MS 2.1.1–4) — the latter being exactly what GRETIL's dead Kataoka file would
+      have supplied. For the project's `vidhi`/`arthavāda` classifier this is now the best
+      digital source in existence: structurally addressable to the sūtra, in Unicode
+      Devanāgarī, under an explicit CC BY-SA 4.0 grant.
+      LICENSING IS UNUSUALLY CLEAN HERE and should be honoured as stated rather than
+      argued away under rule 9: SARIT declares "Copyright 2014-2018 SARIT, CC BY-SA 4.0".
+      The underlying Tantravārttika is of course public domain, but the TEI encoding and
+      structural markup are real original work, and CC BY-SA 4.0 is compatible with this
+      repository's own content licence. Attribute Andrew Ollett and SARIT by name (rule 10).
+      SCRIPT NOTE: Devanāgarī, not IAST — unlike every GRETIL file in this packet. Anything
+      that joins SARIT to GRETIL needs a transliteration step.
+      SARIT's known-issues note states that cRef attributes do not validate because no
+      canonical reference system was supplied. The div/@n hierarchy is sound and is what I
+      used; do not rely on cRef.
+      ONE FALSE FRIEND in the SARIT corpus: `pramanamimamsa-and-vrtti.xml` is Hemacandra's
+      *Pramāṇamīmāṃsā*, a JAIN work on logic. It is not Pūrva-Mīmāṃsā. Do not ingest it
+      under this node on a string match.
+    date_logged: 2026-08-01
+
+  - node_path: sources/darshana/mimamsa/_negative/gretil-dead-links
+    tier: null
+    work: "GRETIL — three indexed Mīmāṃsā files that 404"
+    author: null
+    language: null
+    edition: null
+    url: https://gretil.sub.uni-goettingen.de/gretil.html
+    script: null
+    text_layer: null
+    license: null
+    status: not-found
+    coverage: "three entries, nine URLs, all dead"
+    where_i_looked: >
+      Downloaded GRETIL's index page, extracted every corpustei link in the Mīmāṃsā
+      section, and issued a GET (not HEAD) against each of the three formats offered for
+      each entry.
+    notes: >
+      INDEXED BUT UNREACHABLE — all three formats (corpustei XML, transformations/html,
+      transformations/plaintext) return 404 for:
+        · sa_zabara-mImAMsAsUtrabhASya-1 — Somadeva Vasudeva's Śābarabhāṣya ad MS 1,1.1–5
+        · sa_kumArila-tantravArttika-2   — Kei Kataoka's Tantravārttika ad MS 2,1.2–4
+        · sa_khaNDadeva-bhATTadIpikA1-3  — Khaṇḍadeva's Bhāṭṭadīpikā with Prabhāvalī
+      The Kataoka file is the loss that matters: a critical edition of the passage where
+      vidhi is defined and where Bhāṭṭa and Prābhākara part company.
+      Seven other GRETIL Mīmāṃsā entries resolve normally and are recorded above. This is
+      a maintenance fault at GRETIL, not a licensing or scope decision. Worth an email to
+      gretil@sub.uni-goettingen.de; they are responsive and the files presumably exist.
+      Recorded here because a dead link in an authoritative index is exactly the kind of
+      thing a later collector would waste an hour rediscovering.
+    date_logged: 2026-08-01
+
+# ===========================================================================
+# HANDOFF
+# ===========================================================================
+
+handoff:
+  do_first: >
+    Read Jha, Śābara-Bhāṣya Vol. I (GOS 66), pp. 449–464, with the GRETIL Sanskrit of
+    MS 3.3.14 open alongside. Sixteen pages. That is the entire six-fold ordering, in the
+    original and in English, argued pair by pair with its own objections. The project's
+    note that this is "bounded and tractable" is now measured rather than hoped: this is
+    the bound.
+
+  do_second: >
+    Read MS 1.2.1–18 with Jha GOS 66 pp. 51–64. Fourteen pages. That is vidhi/arthavāda,
+    with the pūrvapakṣa that makes the distinction necessary and the ekavākyatā argument
+    that makes it operational.
+
+  do_not: >
+    Do not start with the Ślokavārttika, however well digitised it is. It is behind the
+    project's own firewall — it argues that the Veda is authorless, eternal and
+    intrinsically valid, which the project explicitly does not adopt. Its excellent digital
+    coverage is a trap for anyone browsing by availability rather than by need.
+
+  open_questions_for_bv:
+    - "DCS licence is undeclared (GitHub reports null). Hellwig's morphological annotation is original work and rule 9 does not cover it. Resolve before ingesting — ask him directly."
+    - "Bṛhatī adhyāyas 6–7 were not located. Unlocated volume, or genuine textual lacuna? Check the Madras University Sanskrit Series list before recording either."
+    - "Kunjunni Raja (1963) and D'Sa (1980) named in the brief but NOT verified here — search budget exhausted. Confirm by hand."
+    - "Three GRETIL files 404. Email gretil@sub.uni-goettingen.de; the Kataoka Tantravārttika is worth chasing."
+    - "Muktabodha's Turnstile gate is server-side across all paths, and their own advertised open-data GitHub repos (muktabodha-v2/muktalib-v2-data, -app) currently 404 mid-migration. Re-check in a few months, or email info@muktabodha.org. Low expected yield either way."
+    - "SARIT's web app is down (502/400) but its GitHub corpus is live and was harvested. If the app comes back it adds nothing this packet does not already have from GitHub."
+    - "SARIT's Tantravārttika stops at MS 2.4. Whether SARIT intends to extend it to adhyāya 3 (and therefore to 3.3.14) is unknown — worth asking Andrew Ollett, who encoded it."
+
+  a_note_on_the_firewall: >
+    Worth stating plainly for whoever picks this up. The method survives detachment from
+    the metaphysics better than one might fear, and the reason is internal to the texts:
+    Śabara never justifies the ordering by appeal to the Veda's authorlessness or
+    eternality. He justifies it by arthaviprakarṣa — remoteness from the meaning — which
+    is a claim about how EVIDENCE relates to CONCLUSIONS, not about the ontological status
+    of the evidence. śruti beats liṅga because hearing a word is closer to its meaning than
+    inferring from its denotative capacity. That argument runs on any corpus, sacred or
+    not. The firewall the project drew is not a compromise imposed on the material; it
+    falls along a seam the material already has.
