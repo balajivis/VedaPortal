@@ -19,3 +19,15 @@ node_modules
 *.mp4
 *.mov
 *.mkv
+.gstack/
+
+# Kashyap / SAKSI edition — retained locally for reading, never committed.
+# Publisher permission is student-printout-only; file is RC4-encrypted (copy:no).
+# Clean accented replacements: VedaWeb eichler.csv, Itranslator-2003, sanskritdocuments.org
+sources/vedas/rigveda/shakala/samhita/Entire Rig Veda Samhita.pdf
+
+# Fetched source scans — large PD page-image PDFs. Files stay local;
+# git tracks sources/_fetched/_manifest.yaml only (same pattern as recordings/).
+sources/_fetched/*
+!sources/_fetched/_manifest.yaml
+!sources/_fetched/README.md
