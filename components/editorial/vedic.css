@@ -1,0 +1,509 @@
+/* =========================================================================
+   Vedic reading layer — extends the editorial design system.
+
+   Kept in a SEPARATE file from editorial.css on purpose: editorial.css is
+   a vendored copy from class-platform and should stay diffable against
+   upstream. Everything Vedic lives here.
+
+   .vd-root must sit ON or INSIDE the element carrying vedicFontsClass.
+   ========================================================================= */
+
+.vd-root {
+  /* ---- Script faces. Each falls back to a system serif so a missing
+     className degrades to something readable rather than to Arial. ---- */
+  --vd-deva:      var(--vedic-devanagari, 'Noto Serif Devanagari'), 'Adishila', 'Siddhanta', 'Sanskrit 2003', serif;
+  --vd-tamil:     var(--vedic-tamil, 'Noto Serif Tamil'), serif;
+  --vd-malayalam: var(--vedic-malayalam, 'Noto Serif Malayalam'), serif;
+  --vd-kannada:   var(--vedic-kannada, 'Noto Serif Kannada'), serif;
+  --vd-grantha:   var(--vedic-grantha, 'Noto Sans Grantha'), serif;
+
+  /* ---- Tier (about MEANING) — maps to NodeTier in prisma/schema.prisma.
+     Deliberately NOT the same hues as status: a reader must never confuse
+     "the tradition disagrees" with "we haven't done the work". ---- */
+  --vd-settled:      var(--ed-ink-3);
+  --vd-multi:        var(--ed-teal);
+  --vd-contested:    var(--ed-accent);
+
+  /* ---- Status (about OUR COVERAGE) — maps to NodeStatus. Four steps,
+     deliberately cool-to-warm so progress reads at a glance. ---- */
+  --vd-enumerated:   var(--ed-muted-2);
+  --vd-sourced:      var(--ed-teal);
+  --vd-structured:   var(--ed-warn);
+  --vd-voiced:       var(--ed-good);
+
+  /* ---- Provenance / era badges (Corpus Schema §6) ---- */
+  --vd-emic:         var(--ed-good);
+  --vd-posthoc:      var(--ed-teal);
+  --vd-etic:         var(--ed-muted);
+  --vd-machine:      var(--ed-accent-2);
+}
+
+/* =========================================================================
+   MANTRA — the core reading atom.
+   ========================================================================= */
+
+.vd-mantra {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 14px 28px;
+  align-items: baseline;
+  margin: 26px 0 34px;
+  padding: 30px 0 24px;
+  border-top: 1px solid var(--ed-line);
+  border-bottom: 1px solid var(--ed-line-soft);
+}
+
+/* The Sanskrit line itself.
+
+   line-height is 2.05 and NOT negotiable downward: Vedic svara marks sit
+   BOTH above the headline (udatta, U+0951; the Vedic Extensions) and below
+   the baseline (anudatta, U+0952). At the 1.4-1.6 that suits Latin prose,
+   marks from adjacent lines collide and the text becomes unreadable
+   precisely where it matters most. */
+.vd-mantra-text {
+  /* flex-wrap so a hemistich break is a REAL row break: a danda closes the
+     line, rather than the text wrapping wherever the viewport ends. */
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: 0.34em;
+  row-gap: 0;
+  font-family: var(--vd-deva);
+  font-size: 41px;
+  line-height: 1.95;
+  color: var(--ed-ink);
+  font-feature-settings: normal;   /* never apply Latin ss01/onum to Indic */
+  font-variant-ligatures: normal;
+  text-rendering: optimizeLegibility;
+}
+.vd-mantra-text[data-script='iast'] {
+  font-family: var(--ed-serif);
+  font-size: 25px;
+  line-height: 1.75;
+  font-style: italic;
+}
+.vd-mantra-text[data-script='tamil']     { font-family: var(--vd-tamil); }
+.vd-mantra-text[data-script='malayalam'] { font-family: var(--vd-malayalam); }
+.vd-mantra-text[data-script='kannada']   { font-family: var(--vd-kannada); }
+.vd-mantra-text[data-script='grantha']   { font-family: var(--vd-grantha); }
+
+/* Clickable token. Underline is drawn with a background gradient rather
+   than text-decoration so it never runs through an anudatta mark. */
+.vd-token {
+  cursor: pointer;
+  border: 0;
+  padding: 0 1px;
+  background: linear-gradient(to top, var(--ed-line) 0 1px, transparent 1px) no-repeat;
+  background-position: 0 calc(100% - 2px);
+  background-size: 0% 1px;
+  transition: background-size .18s ease, color .18s ease;
+  font: inherit;
+  color: inherit;
+}
+.vd-token:hover,
+.vd-token[data-active='true'] {
+  background-size: 100% 1px;
+  color: var(--ed-accent);
+}
+.vd-token[data-machine-split='true'] {
+  /* Word boundary is a MODEL's guess, not the tradition's padapatha.
+     Corpus Schema: tag it, never let it pass as inherited. */
+  background-image: linear-gradient(to top, var(--ed-muted-2) 0 1px, transparent 1px);
+  background-size: 100% 1px;
+  opacity: .82;
+}
+
+/* Canonical address — immutable, right-aligned, monospace. */
+.vd-addr {
+  font-family: var(--ed-mono);
+  font-size: 11px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--ed-muted);
+  white-space: nowrap;
+}
+.vd-addr .recension { color: var(--ed-muted-2); }
+
+.vd-mantra-badges {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-top: 4px;
+}
+
+/* =========================================================================
+   BADGE — one visual grammar for every tag in the system.
+   ========================================================================= */
+
+.vd-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--ed-mono);
+  font-size: 9.5px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border: 1px solid currentColor;
+  color: var(--ed-muted);
+  white-space: nowrap;
+}
+.vd-badge[data-tier='settled']           { color: var(--vd-settled); }
+.vd-badge[data-tier='multi_traditional'] { color: var(--vd-multi); }
+.vd-badge[data-tier='contested']         { color: var(--vd-contested); border-width: 1.5px; }
+.vd-badge[data-status='enumerated'] { color: var(--vd-enumerated); border-style: dashed; }
+.vd-badge[data-status='sourced']    { color: var(--vd-sourced); }
+.vd-badge[data-status='structured'] { color: var(--vd-structured); }
+.vd-badge[data-status='voiced']     { color: var(--vd-voiced); }
+
+/* mantra_type — Corpus Schema §3. `opaque` is not a failure state; it is
+   the most honest field in the database, and it gets a visible mark. */
+.vd-badge[data-mantra-type='opaque'] {
+  color: var(--ed-accent);
+  border-style: dotted;
+}
+
+/* =========================================================================
+   APPARATUS — the tiered reading stack (Depth 2).
+   Rows never merge. Disagreement is a visible row, never an average.
+   ========================================================================= */
+
+.vd-apparatus { margin: 28px 0 8px; border-top: 1px solid var(--ed-line); }
+
+.vd-app-row {
+  display: grid;
+  grid-template-columns: 196px 1fr;
+  gap: 34px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--ed-line-soft);
+}
+@media (max-width: 900px) {
+  .vd-app-row { grid-template-columns: 1fr; gap: 8px; }
+}
+
+.vd-app-label {
+  font-family: var(--ed-mono);
+  font-size: 10px;
+  letter-spacing: var(--ed-eyebrow-tracking, .22em);
+  text-transform: uppercase;
+  color: var(--ed-muted);
+  padding-top: 4px;
+}
+.vd-app-label .era {
+  display: block;
+  margin-top: 5px;
+  color: var(--ed-muted-2);
+  letter-spacing: .12em;
+}
+
+.vd-app-body {
+  font-family: var(--ed-serif);
+  font-size: 16.5px;
+  line-height: 1.72;
+  color: var(--ed-ink-2);
+  max-width: 72ch;
+}
+.vd-app-row[data-lead='true'] .vd-app-body {
+  font-size: 19px;
+  line-height: 1.68;
+  color: var(--ed-ink);
+}
+.vd-app-body .deva {
+  font-family: var(--vd-deva);
+  font-size: 20px;
+  line-height: 1.95;
+}
+.vd-app-body p + p { margin-top: .7em; }
+
+/* A machine row is always visibly machine — marked IN the text, never in a
+   footer. Screenshots travel; disclaimers don't. */
+.vd-app-row[data-provenance='machine'] { background: var(--ed-paper-2); }
+.vd-app-row[data-provenance='machine'] .vd-app-body { color: var(--ed-ink-3); }
+
+.vd-confidence {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 10px;
+  font-family: var(--ed-mono);
+  font-size: 9.5px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--ed-muted);
+}
+.vd-confidence-track {
+  width: 74px; height: 3px;
+  background: var(--ed-line);
+  position: relative;
+}
+.vd-confidence-fill { position: absolute; inset: 0 auto 0 0; background: var(--ed-accent-2); }
+.vd-confidence[data-low='true'] .vd-confidence-fill { background: var(--ed-warn); }
+
+/* Contested: the divergence IS the finding, so it gets a rule, not a warning. */
+.vd-app-row[data-contested='true'] {
+  border-left: 2px solid var(--vd-contested);
+  padding-left: 20px;
+  margin-left: -22px;
+}
+/* Separate adjacent contested rows so two disagreeing traditions do not
+   merge into a single visual block. */
+.vd-app-row[data-contested='true'] + .vd-app-row[data-contested='true'] { margin-top: 6px; }
+
+/* =========================================================================
+   ENUMERATED — the honest empty state.
+   A confident overview on a hollow node teaches something false. This is
+   what a node that we merely know EXISTS is allowed to look like.
+   ========================================================================= */
+
+.vd-enumerated {
+  margin: 32px 0;
+  padding: 26px 28px;
+  border: 1px dashed var(--ed-line);
+  background: repeating-linear-gradient(
+    -45deg, transparent 0 9px, var(--ed-paper-2) 9px 10px
+  );
+}
+.vd-enumerated-label {
+  font-family: var(--ed-mono);
+  font-size: 10px;
+  letter-spacing: var(--ed-eyebrow-tracking, .22em);
+  text-transform: uppercase;
+  color: var(--ed-muted);
+  margin-bottom: 10px;
+}
+.vd-enumerated-claim {
+  font-family: var(--ed-serif);
+  font-style: italic;
+  font-size: 19px;
+  line-height: 1.55;
+  color: var(--ed-ink-2);
+}
+.vd-enumerated-note {
+  margin-top: 12px;
+  font-family: var(--ed-serif);
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--ed-muted);
+}
+
+/* =========================================================================
+   SCRIPT SWITCH
+   ========================================================================= */
+
+.vd-scripts {
+  display: flex; flex-wrap: wrap; gap: 2px;
+  margin: 0 0 6px;
+  border-bottom: 1px solid var(--ed-line-soft);
+}
+.vd-script-btn {
+  background: none; border: 0; cursor: pointer;
+  padding: 7px 12px 8px;
+  font-family: var(--ed-mono);
+  font-size: 10px; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--ed-muted);
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: color .18s, border-color .18s;
+}
+.vd-script-btn:hover { color: var(--ed-ink-2); }
+.vd-script-btn[aria-pressed='true'] { color: var(--ed-ink); border-bottom-color: var(--ed-accent); }
+.vd-script-btn[data-native='true'] { font-family: var(--vd-deva); font-size: 13px; letter-spacing: 0; text-transform: none; }
+
+/* =========================================================================
+   OCCURRENCES — word -> every attestation across sakhas.
+   ========================================================================= */
+
+.vd-occ {
+  margin: 20px 0 4px;
+  padding: 18px 20px;
+  background: var(--ed-paper-card);
+  border: 1px solid var(--ed-line-soft);
+}
+.vd-occ-head {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 16px;
+  padding-bottom: 12px; margin-bottom: 12px;
+  border-bottom: 1px solid var(--ed-line-soft);
+}
+.vd-occ-word { font-family: var(--vd-deva); font-size: 24px; line-height: 1.9; color: var(--ed-ink); }
+.vd-occ-count {
+  font-family: var(--ed-mono); font-size: 10px; letter-spacing: .16em;
+  text-transform: uppercase; color: var(--ed-muted); white-space: nowrap;
+}
+.vd-occ-list { display: flex; flex-direction: column; gap: 9px; }
+.vd-occ-item {
+  display: grid; grid-template-columns: 168px 1fr; gap: 18px;
+  align-items: baseline;
+  font-family: var(--ed-serif); font-size: 14.5px; color: var(--ed-ink-3);
+  text-decoration: none;
+}
+.vd-occ-item:hover .vd-occ-gloss { color: var(--ed-accent); }
+.vd-occ-item .vd-addr { font-size: 10px; }
+.vd-occ-gloss { transition: color .18s; }
+.vd-occ-empty {
+  font-family: var(--ed-serif); font-style: italic;
+  font-size: 14.5px; color: var(--ed-muted);
+}
+
+/* =========================================================================
+   PAGE FURNITURE — purpose-built, not borrowed.
+
+   editorial.css's .ed-hero is a CONTAINER grid (1fr auto) and .ed-runfoot is
+   position:sticky — both expect a page shell we are not using here. Using
+   them on a heading splits it into grid cells; using runfoot on a legend
+   pins it over the content. Hence these.
+   ========================================================================= */
+
+.vd-title {
+  font-family: var(--ed-serif);
+  font-weight: 400;
+  font-size: 46px;
+  line-height: 1.14;
+  letter-spacing: -0.012em;
+  color: var(--ed-ink);
+  margin: 6px 0 14px;
+}
+.vd-title em { font-style: italic; color: var(--ed-accent); }
+
+.vd-page-lede {
+  font-family: var(--ed-serif);
+  font-style: italic;
+  font-size: 19.5px;
+  line-height: 1.6;
+  color: var(--ed-ink-3);
+  max-width: 74ch;
+  margin: 0 0 6px;
+}
+
+.vd-eyebrow {
+  font-family: var(--ed-mono);
+  font-size: 10px;
+  letter-spacing: var(--ed-eyebrow-tracking, .22em);
+  text-transform: uppercase;
+  color: var(--ed-muted);
+}
+
+.vd-note {
+  font-family: var(--ed-serif);
+  font-size: 15.5px;
+  line-height: 1.7;
+  color: var(--ed-ink-3);
+  max-width: 78ch;
+  margin: 16px 0 0;
+}
+
+/* Badge legend — a static block in normal flow. */
+.vd-legend {
+  margin-top: 64px;
+  padding-top: 22px;
+  border-top: 1px solid var(--ed-line);
+}
+.vd-legend-label {
+  font-family: var(--ed-mono);
+  font-size: 10px;
+  letter-spacing: var(--ed-eyebrow-tracking, .22em);
+  text-transform: uppercase;
+  color: var(--ed-muted-2);
+  margin-bottom: 14px;
+}
+.vd-legend-row { display: flex; flex-wrap: wrap; gap: 10px; }
+
+/* Word gap belongs to presentation, not to the token data. A token is the
+   WORD; padapatha spacing is drawn here. Using a trailing space in the data
+   fails anyway — HTML collapses whitespace at inline element boundaries. */
+/* Spacing is the flex column-gap now; the old adjacency margin would
+   double it and would not apply across a danda. */
+
+/* Danda: structure, not a word. Lighter, not clickable, and it closes the line. */
+.vd-danda {
+  color: var(--ed-muted-2);
+  padding-left: 0.12em;
+}
+/* Zero-height full-width flex item = forced row break. */
+.vd-linebreak { flex-basis: 100%; height: 0; }
+
+/* Verse rows in a hymn index wrap normally — they are a preview, not the
+   metrical display — so keep those inline. */
+.vd-verse-line .vd-danda { color: var(--ed-muted-2); }
+
+/* =========================================================================
+   INDEX + NAVIGATION
+   ========================================================================= */
+
+.vd-index { margin: 30px 0 8px; border-top: 1px solid var(--ed-line); }
+
+.vd-index-row {
+  display: grid;
+  grid-template-columns: 46px 1fr auto;
+  gap: 20px;
+  align-items: baseline;
+  padding: 13px 6px 13px 0;
+  border-bottom: 1px solid var(--ed-line-soft);
+  text-decoration: none;
+  color: inherit;
+  transition: background .16s, padding-left .16s;
+}
+.vd-index-row:hover { background: var(--ed-paper-card); padding-left: 8px; }
+
+.vd-index-num {
+  font-family: var(--ed-mono);
+  font-size: 12px;
+  color: var(--ed-muted-2);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.vd-index-main { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.vd-index-title { font-family: var(--ed-serif); font-size: 17px; color: var(--ed-ink); }
+.vd-index-row:hover .vd-index-title { color: var(--ed-accent); }
+.vd-index-sub { font-family: var(--ed-serif); font-size: 13.5px; font-style: italic; color: var(--ed-muted); }
+.vd-index-meta {
+  font-family: var(--ed-mono); font-size: 10px; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--ed-muted-2); white-space: nowrap;
+}
+.vd-shift { font-family: var(--ed-mono); font-size: 10px; letter-spacing: .12em; color: var(--ed-accent-2); }
+
+/* Verse grid — many short rows, so lay them out in columns. */
+.vd-verses { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 0 34px; }
+.vd-verses .vd-index-row[data-held='false'] .vd-index-title { color: var(--ed-muted); }
+
+/* Ascription — devata and chandas with their verse ranges intact. */
+.vd-ascription {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 40px;
+  margin: 26px 0 8px; padding: 22px 0; border-top: 1px solid var(--ed-line);
+  border-bottom: 1px solid var(--ed-line-soft);
+}
+@media (max-width: 820px) { .vd-ascription { grid-template-columns: 1fr; gap: 22px; } }
+.vd-spanlist { list-style: none; padding: 0; margin: 10px 0 0; }
+.vd-spanlist li {
+  font-family: var(--ed-serif); font-size: 16px; line-height: 1.9; color: var(--ed-ink-2);
+}
+.vd-range {
+  font-family: var(--ed-mono); font-size: 10px; letter-spacing: .1em;
+  color: var(--ed-muted-2); margin-right: 10px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Prev / next — always crosses mandala and hymn boundaries. */
+.vd-prevnext {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 32px;
+  margin-top: 54px; padding-top: 22px; border-top: 1px solid var(--ed-line);
+}
+.vd-pn { text-decoration: none; display: flex; flex-direction: column; gap: 5px; }
+.vd-pn-dir {
+  font-family: var(--ed-mono); font-size: 10px; letter-spacing: var(--ed-eyebrow-tracking, .22em);
+  text-transform: uppercase; color: var(--ed-muted);
+}
+.vd-pn-label { font-family: var(--ed-serif); font-size: 19px; color: var(--ed-ink); transition: color .16s; }
+.vd-pn:hover .vd-pn-label { color: var(--ed-accent); }
+
+/* Verse rows on a hymn page — the text itself, not a status badge. */
+.vd-verse-row { align-items: start; }
+.vd-verse-line {
+  font-family: var(--vd-deva);
+  font-size: 21px;
+  line-height: 1.95;
+  color: var(--ed-ink-2);
+  display: block;
+}
+.vd-verse-row:hover .vd-verse-line { color: var(--ed-accent); }

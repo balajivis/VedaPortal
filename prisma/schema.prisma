@@ -267,3 +267,282 @@ model MantraLink {
 
   @@unique([fromMantraId, toMantraId, kind])
 }
+
+// ─────────────────────────────────────────────────────────────────────────────
+// THE READING LAYER
+//
+// The spine above answers "where does this text sit". This answers "what does
+// it say, who said so, and when".
+//
+// Three rules are enforced structurally, not by convention:
+//
+//   1. mantraType is REQUIRED; meaning is not. Not every mantra is supposed to
+//      mean something — stobhas are vocables, bijas are efficacious without
+//      lexical sense, and some hapax has never been securely construed by
+//      anyone. Make meaning required and the model confabulates exactly where
+//      the evidence is thinnest.
+//   2. tier (about MEANING) and attestation (about the TEXT) never merge.
+//      Collapse them and weak transmission masquerades as scholarly
+//      controversy.
+//   3. containerLayer and passageRegister never merge. In Krishna Yajurveda
+//      layer is a property of the PASSAGE, not the text — TS interleaves
+//      mantra and brahmana-type prose inside one prashna. A tree that says
+//      taittiriya/samhita/ and tags every passage `samhita` has encoded a
+//      Shukla-shaped falsehood on a Krishna text.
+// ─────────────────────────────────────────────────────────────────────────────
+
+enum MantraType {
+  SEMANTIC
+  STOBHA      // ha u, hoyi, auhova — Samavedic vocables. Not words.
+  BIJA        // efficacy without lexical sense
+  VYAHRITI
+  ARTHAVADA   // praise, NOT injunction. Conflating the two is the classic error.
+  OPAQUE      // nobody has securely construed this. The most honest value here.
+}
+
+// What a passage IS, independent of which text it physically lives in.
+enum PassageRegister {
+  MANTRA
+  VIDHI       // injunction — the operative core
+  ARTHAVADA   // supporting praise
+  BANDHU      // ritual act <-> cosmic fact. The corpus's own theory of meaning.
+  AKHYANA     // narrative deployed to justify procedure
+  VIVADA      // recorded disagreement, with named teachers. Pre-tagged
+              // multi_traditional nodes — we EXTRACT these, we do not construct them.
+}
+
+// Who says so. Most classification is post-hoc; that is not a defect. The
+// defect is only ever pretending otherwise.
+enum Provenance {
+  EMIC_INTEXT     // the text says so itself
+  EMIC_CURRENT    // the living tradition says so
+  NATIVE_POSTHOC  // a later native tradition (Mimamsa, Sayana, Shiksha)
+  MODERN_ETIC     // ours
+  MACHINE         // model-generated. Never promoted without verification.
+}
+
+// About the TEXT's transmission, orthogonal to tier.
+enum Attestation {
+  VIKRITI_VERIFIED  // krama/jata/ghana exist — the error-correcting code
+  SAMHITA_ONLY
+  PROSE_SINGLE      // prose cannot permute; no vikriti, weak korvai
+  RECONSTRUCTED
+}
+
+// Is the mantra's ritual home still alive? The third separation, made visible.
+enum ActStatus {
+  LIVE
+  ATTENUATED   // original rite rare; mantra re-homed (e.g. Rudram)
+  ORPHANED     // rite gone, mantra survives with no ritual home
+  NEVER_RITUAL
+  UNKNOWN      // we do not know. Say so.
+}
+
+// Loudness is doctrinal, not incidental — part of what the mantra IS.
+enum RecitationMode {
+  LOUD      // Hotr, projected
+  UPAMSHU   // Adhvaryu, low murmur, spoken INTO the act
+  SUNG      // Udgatr
+  MANASA    // mentally, unvoiced
+}
+
+enum Script {
+  DEVANAGARI
+  IAST
+  TAMIL
+  MALAYALAM
+  KANNADA
+  GRANTHA
+  SHARADA
+  ODIA
+}
+
+
+// A reading is anything said ABOUT a mantra. Translation and commentary are
+// the same shape — a dated, attributed claim — so they share a model and are
+// distinguished by kind. The apparatus UI is a list of these, in tier order.
+enum ReadingKind {
+  PADA_GLOSS
+  MORPHOLOGY
+  BHASHYA        // Sayana, Bhatta Bhaskara, Uvata…
+  NIRUKTA        // etymological
+  TRANSLATION
+  ACADEMIC_NOTE
+  MACHINE        // marked in the text, never in a footer
+}
+
+// ── The Anukramani triad ─────────────────────────────────────────────────────
+// The tradition's own labelled dataset: rsi, devata, chandas per hymn. Free,
+// native, and the validation set for clustering — if Sanskrit-space clusters
+// recover these devata assignments, the embedding captured something real,
+// verified with zero English.
+
+model Rishi {
+  id       String   @id @default(cuid())
+  name     String   @unique   // vaisvamitro madhucchandah
+  gotra    String?
+  family   String?            // Visvamitra, Vasistha, Bharadvaja…
+  note     String?  @db.Text
+  hymns    HymnAscription[]
+}
+
+model Devata {
+  id     String   @id @default(cuid())
+  name   String   @unique
+  note   String?  @db.Text
+  hymns  HymnAscription[]
+}
+
+model Chandas {
+  id            String  @id @default(cuid())
+  name          String  @unique  // gayatri, trishtubh, jagati…
+  padas         Int?
+  syllablesPada Int?
+  hymns         HymnAscription[]
+}
+
+// One hymn's ascription. Deliberately a join model and not three columns on
+// the hymn: devata and chandas SHIFT MID-HYMN, and the Anukramani records the
+// verse ranges where they do. verseFrom/verseTo carry that.
+model HymnAscription {
+  id        String   @id @default(cuid())
+  hymnPath  String                  // canonical path of the sukta/anuvaka
+  rishi     Rishi?   @relation(fields: [rishiId], references: [id])
+  rishiId   String?
+  devata    Devata?  @relation(fields: [devataId], references: [id])
+  devataId  String?
+  chandas   Chandas? @relation(fields: [chandasId], references: [id])
+  chandasId String?
+  verseFrom Int?
+  verseTo   Int?
+  // Which index this came from — Katyayana's Sarvanukramani, the Brhaddevata,
+  // or Geldner's headings. They disagree, and that disagreement is data.
+  authority String
+  source    Source?  @relation(fields: [sourceId], references: [id])
+  sourceId  String?
+
+  @@index([hymnPath])
+}
+
+// ── Text, per script and per patha ───────────────────────────────────────────
+// The same mantra in Devanagari, Tamil, Malayalam, Kannada, Grantha; and in
+// samhita / pada / krama / jata / ghana. Never synthesise a script a source
+// does not carry.
+
+model MantraText {
+  id       String  @id @default(cuid())
+  mantraId String
+  script   Script
+  patha    Patha   @default(SAMHITA)
+  text     String  @db.Text
+  accented Boolean @default(false)   // measured, never assumed
+  source   Source? @relation(fields: [sourceId], references: [id])
+  sourceId String?
+
+  tokens   Token[]
+
+  @@unique([mantraId, script, patha])
+  @@index([mantraId])
+}
+
+// One word of the padapatha. machineSplit is load-bearing: where no padapatha
+// survives (Katha, Kapisthala, Jaiminiya, Paippalada) the boundary is a model
+// decision with NO traditional checksum, and it must never render as inherited.
+model Token {
+  id           String     @id @default(cuid())
+  mantraText   MantraText @relation(fields: [mantraTextId], references: [id])
+  mantraTextId String
+  position     Int
+  surface      String
+  lemma        String?
+  morph        String?     // DCS tag or Paninian analysis
+  machineSplit Boolean     @default(false)
+  occurrences  Concordance[]
+
+  @@unique([mantraTextId, position])
+}
+
+// Word -> every attestation across sakhas. This relation is the point of the
+// whole database: divergence is only measurable where there is shared text.
+model Concordance {
+  id       String @id @default(cuid())
+  token    Token  @relation(fields: [tokenId], references: [id])
+  tokenId  String
+  lemma    String
+  mantraId String
+  note     String? @db.Text
+
+  @@index([lemma])
+  @@index([mantraId])
+}
+
+// ── Readings: translation, commentary, gloss, machine output ─────────────────
+
+model Reading {
+  id         String      @id @default(cuid())
+  mantraId   String
+  kind       ReadingKind
+  // Displayed label + dated tag: "Sayana" / "[TRAD-14c, ritual lens]"
+  label      String
+  era        String?
+  language   String      @default("en")
+  body       String      @db.Text
+  provenance Provenance
+  tier       NodeTier    @default(SETTLED)
+  // 0-1, machine rows only. Shown inline per verse, never in a preface.
+  confidence Float?
+  // One side of a live disagreement. Disagreement is a visible row, never an average.
+  contested  Boolean     @default(false)
+  author     Author?     @relation(fields: [authorId], references: [id])
+  authorId   String?
+  source     Source?     @relation(fields: [sourceId], references: [id])
+  sourceId   String?
+  createdAt  DateTime    @default(now())
+
+  @@index([mantraId, kind])
+}
+
+// A commentator, translator, or editor. Distinct from Rishi: a rsi is the
+// seer to whom a hymn is ascribed; an author wrote ABOUT it.
+model Author {
+  id       String    @id @default(cuid())
+  name     String    @unique   // Sayana, Bhatta Bhaskara Misra, Griffith, Jha
+  century  String?             // "14c", "1896"
+  lens     String?             // "ritual/viniyoga", "Victorian", "etymological"
+  note     String?   @db.Text
+  readings Reading[]
+}
+
+// The edition an artifact came from. Mirrors sources/**/_status.yaml so the
+// repo and the DB agree; `licence` is recorded because a registry that
+// ignores licences is not usable.
+model Source {
+  id         String  @id @default(cuid())
+  title      String
+  editor     String?
+  publisher  String?
+  year       String?
+  url        String?
+  script     Script?
+  licence    String?          // public-domain / CC-BY / all-rights-reserved…
+  accented   Boolean @default(false)
+  textLayer  String?          // unicode / legacy-encoding / scanned-no-text
+  notes      String? @db.Text
+
+  readings     Reading[]
+  mantraTexts  MantraText[]
+  ascriptions  HymnAscription[]
+  viniyogas    ViniyogaSource[]
+}
+
+// Bridge so a viniyoga claim can cite its receipts without changing the
+// existing Viniyoga model.
+model ViniyogaSource {
+  id         String @id @default(cuid())
+  viniyogaId String
+  source     Source @relation(fields: [sourceId], references: [id])
+  sourceId   String
+  note       String? @db.Text
+
+  @@unique([viniyogaId, sourceId])
+}
