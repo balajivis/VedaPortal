@@ -1,0 +1,46 @@
+# External recitation audio — LINKS ONLY, never downloaded.
+# Same rule as recordings/README.md: audio never enters git. This file records where
+# recitation exists and which node it belongs to, so the corpus can point at it.
+
+sources:
+  - provider: vedamu.org
+    url: "http://www.vedamu.org/VedicChanting.aspx"
+    crawled: 2026-08-01
+    terms: not stated on the page — LINK ONLY, do not mirror
+    format: zip archives of audio, with stated durations
+    node: yajurveda/krishna/taittiriya
+    note: >
+      The Sri Rudram set. Confirmed directly from the page markup. All seven are Krishna
+      Yajurveda / Taittiriya material, which is the project's anchor sakha.
+    files:
+      - { title: Namakam,        duration: "00:15:46", locus: "TS 4.5",  url: "http://www.vedamu.org/VedicChanting/297$Namakam.zip" }
+      - { title: Chamakam,       duration: "00:09:13", locus: "TS 4.7",  url: "http://www.vedamu.org/VedicChanting/298$Chamakam.zip" }
+      - { title: Manyu Suktam,   duration: "00:05:36", locus: "[verify]", url: "http://www.vedamu.org/VedicChanting/299$manu.zip" }
+      - { title: Purusha Suktam, duration: "00:07:12", locus: "RV 10.90 + YV/SV/AV recensions", url: "http://www.vedamu.org/VedicChanting/300$Purusha.zip" }
+      - { title: Sri Suktam,     duration: "00:06:09", locus: "[verify]", url: "http://www.vedamu.org/VedicChanting/301$Sris.zip" }
+      - { title: Mantra Pushpam, duration: "00:13:10", locus: "TA 1.22 [verify]", url: "http://www.vedamu.org/VedicChanting/302$Mpushp.zip" }
+      - { title: Laghunyasam,    duration: "00:03:11", locus: "[verify]", url: "http://www.vedamu.org/VedicChanting/1861$Laghu.zip" }
+
+    incomplete_crawl:
+      status: PARTIAL — recorded honestly rather than presented as complete
+      reason: >
+        The site navigates by ASP.NET TreeView __doPostBack, not by URL. Node ids are known
+        (s292 Rig Veda, s294 Krishna Yajurveda, s295 Sukla Yajurveda, s296 Samaveda,
+        s380 Atharvaveda), but posting them with the initial page's __VIEWSTATE returns the
+        default view unchanged — the five sections all came back byte-similar and carrying
+        the same seven Rudram zips. Traversal needs a chained session that carries each
+        response's VIEWSTATE into the next request, or a real browser.
+      consequence: >
+        The per-Veda sections almost certainly hold more material than the seven files above.
+        Treat this record as a FLOOR. Do not record "vedamu has only Rudram" anywhere —
+        that would be exactly the rendered-page false negative protocol rule 11 warns about.
+      next: browser-driven crawl, or chain VIEWSTATE across requests.
+
+  - provider: IGNCA Vedic Heritage
+    url: "https://vedicheritage.gov.in/"
+    node: multiple
+    note: >
+      191 Jaiminiya MP4s at /samhitas/samaveda-samhitas/jaiminiya-samhita-2/ (JS-injected,
+      invisible to scrapers, verified by direct HTTP) and 268 khanda-aligned Kausitaki
+      recitation files at /Kaushitaki_Brahmana/RVKB-{aa}.{kk}.mp4. See the shakha _status.yaml
+      audio: blocks.

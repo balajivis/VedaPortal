@@ -1,4 +1,17 @@
 import Link from 'next/link'
+
+/* Which vidyas have a real reading layer behind them. Absent = no link,
+   because a "read the text" button that leads nowhere is exactly the
+   confident-overview-on-a-hollow-node failure. */
+const CORPUS_READ: Record<string, { href: string; title: string; blurb: string; stat: string }> = {
+  rigveda: {
+    href: '/text/rv',
+    title: 'Ṛgveda Saṃhitā · Śākala',
+    blurb:
+      'Accented Devanāgarī for every ṛc, with the tradition’s own padapāṭha, the Anukramaṇī’s ṛṣi · devatā · chandas, and Griffith’s 1896 English alongside. Verse counts verified hymn-by-hymn against the Anukramaṇī.',
+    stat: '1,028 hymns · 10,552 ṛcs',
+  },
+}
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import { getVidya, getRelatedVidyas, getAllVidyas } from '@/content/vidyas'
@@ -74,6 +87,35 @@ export default async function VidyaDetailPage({
             <p className="text-xl text-zinc-300">{vidya.description}</p>
           </div>
         </div>
+
+        {/* Read the text — the crossing from map (dark) into text (editorial).
+            Only rendered where a corpus actually exists, so it never promises
+            a text we do not hold. */}
+        {CORPUS_READ[vidya.id] ? (
+          <section className="mb-8">
+            <Link
+              href={CORPUS_READ[vidya.id].href}
+              className="group block rounded-xl border border-amber-500/30 bg-amber-500/5 p-6 transition-colors hover:border-amber-400/60 hover:bg-amber-500/10"
+            >
+              <div className="flex items-baseline justify-between gap-6 flex-wrap">
+                <div>
+                  <div className="text-[11px] uppercase tracking-[0.2em] text-amber-400/80 mb-2">
+                    Read the text
+                  </div>
+                  <div className="text-2xl font-semibold text-zinc-100 group-hover:text-amber-300 transition-colors">
+                    {CORPUS_READ[vidya.id].title}
+                  </div>
+                  <p className="text-zinc-400 text-sm mt-2 max-w-2xl">
+                    {CORPUS_READ[vidya.id].blurb}
+                  </p>
+                </div>
+                <div className="text-amber-400 text-sm whitespace-nowrap">
+                  {CORPUS_READ[vidya.id].stat} <span className="ml-2">→</span>
+                </div>
+              </div>
+            </Link>
+          </section>
+        ) : null}
 
         {/* Full Description */}
         <section className="mb-8">
