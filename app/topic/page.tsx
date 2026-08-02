@@ -1,15 +1,54 @@
-import Link from 'next/link'
 import { topicList } from '@/lib/anukramani'
 import { Shell, Crumb } from '@/components/editorial/Shell'
+import { TopicSearch, type Row } from './TopicSearch'
 
-/* The index of topics. Split by KIND, because the two answer different
-   questions: a deity page asks "which hymns are addressed to this", a
-   concept page asks "everywhere this idea appears". Lumping them together
-   would bury the concepts under 213 deity names. */
+const MAND = ['', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X']
+
+/* A one-line reason to open a term, COMPUTED from the distribution rather
+   than written by hand. The useful signal is concentration: a word spread
+   evenly across ten maṇḍalas tells you little, while one that puts 60% of
+   itself in a single book is telling you something about that book. */
+function hookFor(t: ReturnType<typeof topicList>[number]): string | null {
+  const total = t.verses
+  if (t.devataOf.length >= 25) {
+    return `devatā of ${t.devataOf.length} sūktas — one of the most addressed in the corpus`
+  }
+  if (t.devataOf.length === 1) {
+    return `addressed in exactly one sūkta of 1,028 — RV ${t.devataOf[0]}`
+  }
+  if (total >= 40) {
+    const entries = Object.entries(t.byMandala).sort((a, b) => b[1] - a[1])
+    const [top, n] = entries[0]
+    const share = n / total
+    if (share >= 0.45) {
+      return `${Math.round(share * 100)}% of its ${total} verses fall in maṇḍala ${MAND[Number(top)]} alone`
+    }
+    const absent = Array.from({ length: 10 }, (_, i) => i + 1).filter(m => !t.byMandala[String(m)])
+    if (absent.length >= 3 && total >= 60) {
+      return `${total} verses, yet absent from maṇḍalas ${absent.map(m => MAND[m]).join(', ')}`
+    }
+  }
+  if (t.devataOf.length >= 2 && t.devataOf.length <= 4) {
+    return `only ${t.devataOf.length} sūktas are addressed to it`
+  }
+  if (total >= 300) return `${total} verses — a word the collection cannot do without`
+  return null
+}
+
 export default async function Page() {
   const all = topicList()
-  const deities = all.filter(t => t.kind === 'devata').sort((a, b) => b.devataOf.length - a.devataOf.length)
-  const concepts = all.filter(t => t.kind === 'concept').sort((a, b) => b.verses - a.verses).slice(0, 180)
+  const rows: Row[] = all
+    .map(t => ({
+      term: t.term,
+      kind: t.kind,
+      verses: t.verses,
+      suktas: t.devataOf.length,
+      gloss: t.gloss,
+      hook: hookFor(t),
+    }))
+    .sort((a, b) => (b.suktas - a.suktas) || (b.verses - a.verses))
+
+  const deities = rows.filter(r => r.kind === 'devata').length
 
   return (
     <Shell crumb={<Crumb parts={[{ label: 'Ṛgveda', href: '/text/rv' }, { label: 'topics' }]} />}>
@@ -17,42 +56,21 @@ export default async function Page() {
         <div className="vd-masthead-ref">index</div>
         <h1 className="vd-masthead-title">Follow a word through the whole Ṛgveda</h1>
         <div className="vd-masthead-meta">
-          <span><em>{deities.length} deities and persons</em></span>
+          <span><em>{deities} deities and persons</em></span>
           <span className="vd-masthead-dot">·</span>
-          <span><em>{all.length - deities.length} concepts</em></span>
+          <span><em>{rows.length - deities} concepts</em></span>
+          <span className="vd-masthead-dot">·</span>
+          <span><em>90,536 references</em></span>
         </div>
       </header>
 
-      <p className="tp-note tp-note-lead" style={{ maxWidth: '62ch', margin: '0 auto 40px' }}>
-        Every entry is built from the <strong>per-word morphology</strong>, so it indexes the
-        lemma rather than the written form: <span lang="sa">indrasya</span>,{' '}
+      <p className="tp-note tp-note-lead" style={{ maxWidth: '60ch', margin: '0 auto 26px', textAlign: 'center' }}>
+        Indexed by <strong>lemma</strong>, so <span lang="sa">indrasya</span>,{' '}
         <span lang="sa">indram</span> and <span lang="sa">indra-śatruḥ</span> all count as{' '}
-        <span lang="sa">indra</span>. A search over the Devanāgarī would find none of them.
+        <span lang="sa">indra</span> — a search over the Devanāgarī would find none of them.
       </p>
 
-      <section className="tp-section">
-        <div className="vd-app-label">deities and persons — by sūktas addressed to them</div>
-        <div className="tp-cloud">
-          {deities.map(t => (
-            <Link key={t.term} href={`/topic/${encodeURIComponent(t.term)}`} className="tp-chip">
-              <span lang="sa">{t.term}</span>
-              <span className="tp-chip-n">{t.devataOf.length}</span>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      <section className="tp-section">
-        <div className="vd-app-label">concepts — by verses they occur in</div>
-        <div className="tp-cloud">
-          {concepts.map(t => (
-            <Link key={t.term} href={`/topic/${encodeURIComponent(t.term)}`} className="tp-chip">
-              <span lang="sa">{t.term}</span>
-              <span className="tp-chip-n">{t.verses}</span>
-            </Link>
-          ))}
-        </div>
-      </section>
+      <TopicSearch rows={rows} />
     </Shell>
   )
 }

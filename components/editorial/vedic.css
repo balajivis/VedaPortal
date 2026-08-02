@@ -736,3 +736,51 @@
 }
 .tp-chip:hover { border-color: var(--ed-accent); color: var(--ed-accent); }
 .tp-chip-n { font-family: var(--ed-mono); font-size: 10px; color: var(--ed-muted-2); }
+
+/* ---- topic search ---- */
+.tp-search { position: relative; max-width: 620px; margin: 0 auto 46px; }
+.tp-input {
+  width: 100%; padding: 14px 16px;
+  font-family: var(--ed-serif); font-size: 18px; color: var(--ed-ink);
+  background: var(--ed-paper-2, transparent);
+  border: 0; border-bottom: 2px solid var(--ed-line);
+  outline: none;
+}
+.tp-input:focus { border-bottom-color: var(--ed-accent); }
+.tp-input::placeholder { color: var(--ed-muted-2); font-style: italic; }
+.tp-clear {
+  position: absolute; right: 4px; top: 50%; transform: translateY(-50%);
+  background: none; border: 0; cursor: pointer;
+  font-family: var(--ed-mono); font-size: 10px; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--ed-muted-2);
+}
+.tp-clear:hover { color: var(--ed-accent); }
+.tp-inline {
+  background: none; border: 0; padding: 0; cursor: pointer;
+  font-family: var(--ed-serif); font-size: inherit; font-style: italic;
+  color: var(--ed-accent); border-bottom: 1px dotted var(--ed-accent);
+}
+.tp-shuffle {
+  float: right; background: none; border: 0; cursor: pointer;
+  font-family: var(--ed-mono); font-size: 9px; letter-spacing: .16em;
+  text-transform: uppercase; color: var(--ed-muted-2);
+}
+.tp-shuffle:hover { color: var(--ed-accent); }
+.tp-picks {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(258px, 1fr));
+  gap: 1px; background: var(--ed-line-soft); margin-top: 18px;
+  border: 1px solid var(--ed-line-soft);
+}
+.tp-pick {
+  display: block; padding: 20px 22px; background: var(--ed-paper);
+  text-decoration: none; min-height: 108px;
+}
+.tp-pick:hover { background: color-mix(in srgb, var(--ed-accent) 5%, var(--ed-paper)); }
+.tp-pick-term {
+  display: block; font-family: var(--ed-serif); font-size: 25px;
+  color: var(--ed-ink); margin-bottom: 8px;
+}
+.tp-pick-hook {
+  display: block; font-family: var(--ed-serif); font-size: 14px;
+  font-style: italic; color: var(--ed-muted); line-height: 1.5;
+}
