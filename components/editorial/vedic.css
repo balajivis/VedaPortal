@@ -906,3 +906,4 @@ td.pr-num { font-family: var(--ed-mono) !important; font-size: 12px !important; 
   padding-bottom: 14px; border-bottom: 1px solid var(--ed-line-soft);
 }
 .pr-prov .tp-edited { margin-left: 0; margin-right: 6px; font-style: normal; }
+.fi-place { color: var(--ed-muted-2); font-style: italic; }
