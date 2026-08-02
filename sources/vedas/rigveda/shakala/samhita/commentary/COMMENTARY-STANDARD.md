@@ -87,6 +87,43 @@ hymn is to. Titles carrying the names are how the index becomes usable.
 ### `synthesis` — 450–650 words
 The hymn in **its own voice**, narrative, verse by verse.
 
+#### ⭐ REGISTER — the rule that governs the rest
+
+The Ṛgveda is scripture of a living faith **and** one of the oldest, largest and
+best-preserved poems of the ancient world. Write from inside that double standing. Do not
+fawn, do not invent cosmic significance the text does not claim — and do not adopt the
+Victorian outside lens either.
+
+The tell is whether the sentence *describes a hymn* or *says what the hymn says*:
+
+| ❌ outside, reporting on it | ✅ inside, saying it |
+|---|---|
+| "that is the premise the hymn opens on" | "Agni is asked to carry" |
+| "the reason the collection begins here" | "the Ṛgveda begins where contact begins" |
+| "the rite is not merely a symbol" | "what is poured into Agni reaches the gods" |
+| "a strange hymn, unlike anything around it" | say what it does; let the reader find it strange |
+| "the redactors placed this here" | (belongs in `disagreements`) |
+
+**Banned from the primary fields, allowed in `disagreements`:** *transactional*, *bargain*
+(except glossing *paṇi*), *cult*, *tribal*, *primitive*, *mythology*, *superstition*,
+*merely*, *nothing more than*, *naive*, *curious*, and every claim about dating, strata,
+redaction or "later addition". Those are real scholarly questions and the reader deserves
+them — **below**, under *how it has been read*, named to whoever holds them. They do not
+belong in the text a reciter reads first.
+
+Two things are NOT banned: **describing what a hymn asks for** — the hymns ask for cattle,
+sons, and victory, and saying so plainly is accurate, not reductive; and **recording that a
+reading is disputed**. What is banned is the sneer, the flinch, and the lecture.
+
+### `title`
+Titles obey the same rule. A title should sound like the hymn, not like a catalogue entry:
+
+- ❌ `Agni Given Every Title, Then Asked to Be a Father` — describes a hymn from outside
+- ✅ `Agni, Lord of the Yajña — Be to Us as a Father to His Son`
+
+Use the tradition's vocabulary (*yajña*, not "sacrifice"; *ṛta*, not "cosmic law"), and where
+the hymn ends on a request, let the title carry it.
+
 - **ZERO names.** No "Sāyaṇa notes", no "Wilson has", no "Griffith gives". Every
   attribution goes in `disagreements`. Name-dropping in the body is what makes a
   manual read like a seminar. *Check your draft: the words Sāyaṇa, Wilson and
