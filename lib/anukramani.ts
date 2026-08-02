@@ -521,6 +521,12 @@ export type SuktaNote = {
      read a philology paper. So: what the sūkta says, then where it lives in
      practice, and only then the textual apparatus. The scholarship is here
      to be trustworthy, not to be the point. */
+  /* `synthesis` is NARRATIVE — the sūkta in its own voice. No "Sāyaṇa
+     notes", no "Wilson has": a reciter should meet the hymn, not a
+     bibliography. Every attribution — the traditional commentary AND the
+     translators — goes in `disagreements`, rendered under "how it has been
+     read". Name-dropping in the body is what makes a manual read like a
+     seminar. */
   synthesis: string
   practice?: string
   disagreements?: string

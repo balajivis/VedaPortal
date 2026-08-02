@@ -117,7 +117,7 @@ function SuktaNoteBlock({ note }: { note: SuktaNote | null }) {
 
       {note.disagreements ? (
         <div className="vd-machine-split">
-          <div className="vd-app-label">where the witnesses differ</div>
+          <div className="vd-app-label">how it has been read</div>
           {note.disagreements.split(/\n{2,}/).filter(Boolean)
             .map((para, i) => <p key={i}>{emph(para)}</p>)}
         </div>
