@@ -787,24 +787,75 @@
 .tp-fullname { font-family: var(--ed-serif); font-size: 13px; font-style: italic;
   text-transform: none; letter-spacing: 0; color: var(--ed-muted); }
 
-/* ---- the sixteen ṛtviks ---- */
-.pr-grid { border-top: 1px solid var(--ed-line); }
+
+/* ========================= THE SIXTEEN ṚTVIKS ===========================
+   Group headings are SERIF and large. The mono eyebrow used elsewhere is
+   uppercased, and uppercasing mangles Ṛ — "hotṛ group" came out "hotR
+   GROUP". These are Sanskrit words and have to stay legible.
+   ======================================================================== */
+.pr-lede {
+  font-family: var(--ed-serif); font-size: 18.5px; line-height: 1.65;
+  color: var(--ed-ink-2); max-width: 64ch; margin: 0 auto 34px;
+}
+.pr-note {
+  font-family: var(--ed-serif); font-size: 16px; line-height: 1.65;
+  color: var(--ed-ink-3); max-width: 64ch; margin: 22px auto 0;
+}
+.pr-note-tight { margin: 10px 0 22px; max-width: 68ch; }
+
+.pr-tablewrap { overflow-x: auto; margin: 8px 0 4px; }
+.pr-table { width: 100%; border-collapse: collapse; }
+.pr-table th {
+  font-family: var(--ed-mono); font-size: 9.5px; letter-spacing: .16em;
+  text-transform: uppercase; color: var(--ed-muted-2);
+  text-align: left; padding: 0 14px 8px 0;
+  border-bottom: 1px solid var(--ed-line);
+  white-space: nowrap;
+}
+.pr-table td {
+  font-family: var(--ed-serif); font-size: 16.5px; color: var(--ed-ink-2);
+  padding: 13px 14px 13px 0; border-bottom: 1px solid var(--ed-line-soft);
+  vertical-align: baseline;
+}
+.pr-chief { font-size: 21px !important; color: var(--ed-ink) !important; }
+.pr-work { color: var(--ed-muted) !important; font-size: 15px !important; }
+.pr-num { text-align: right; white-space: nowrap; }
+td.pr-num { font-family: var(--ed-mono) !important; font-size: 12px !important; color: var(--ed-accent) !important; }
+
+.pr-section { margin: 56px 0 0; }
+.pr-heading {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 14px;
+  font-family: var(--ed-serif);
+  font-size: clamp(25px, 3.2vw, 33px);
+  font-weight: 600; line-height: 1.2; letter-spacing: -0.012em;
+  color: var(--ed-ink);
+  margin: 0 0 4px; padding-bottom: 10px;
+  border-bottom: 2px solid var(--ed-ink);
+}
+.pr-veda {
+  font-family: var(--ed-mono); font-size: 11px; letter-spacing: .18em;
+  text-transform: uppercase; color: var(--ed-accent);
+  font-weight: 400; margin-left: auto;
+}
+@media (max-width: 620px) { .pr-veda { margin-left: 0; } }
+
+.pr-grid { margin-top: 4px; }
 .pr-row {
-  display: grid; grid-template-columns: 190px 1fr 190px; gap: 18px;
-  padding: 12px 0; border-bottom: 1px solid var(--ed-line-soft);
+  display: grid; grid-template-columns: 200px 1fr 190px; gap: 20px;
+  padding: 13px 0; border-bottom: 1px solid var(--ed-line-soft);
   align-items: baseline;
 }
 @media (max-width: 820px) {
-  .pr-row { grid-template-columns: 1fr; gap: 3px; padding: 14px 0; }
+  .pr-row { grid-template-columns: 1fr; gap: 3px; padding: 15px 0; }
 }
-.pr-name { font-family: var(--ed-serif); font-size: 18px; color: var(--ed-ink); }
-.pr-gloss { font-family: var(--ed-serif); font-size: 14.5px; color: var(--ed-ink-3); }
+.pr-name { font-family: var(--ed-serif); font-size: 19.5px; color: var(--ed-ink); }
+.pr-gloss { font-family: var(--ed-serif); font-size: 15.5px; color: var(--ed-ink-3); }
 .pr-att {
   font-family: var(--ed-mono); font-size: 11px; color: var(--ed-muted);
   text-align: right;
 }
 @media (max-width: 820px) { .pr-att { text-align: left; } }
-.pr-att em { font-family: var(--ed-serif); font-size: 13px; font-style: italic; }
-/* Not named in the saṃhitā — set back, never struck through: the office is
+.pr-att em { font-family: var(--ed-serif); font-size: 13.5px; font-style: italic; }
+/* Not named in this saṃhitā — set back, never struck through. The office is
    not absent from the Veda, only from this portion of it. */
 .pr-unnamed .pr-name, .pr-unnamed .pr-gloss { color: var(--ed-muted); }
