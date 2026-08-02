@@ -87,16 +87,44 @@ function buildIds() {
 
 const sleep = ms => new Promise(r => setTimeout(r, ms))
 
+/* ⚠ A single ECONNRESET used to kill the whole run. The first attempt died
+   at 2,188 of 10,552 with an unhandled `fetch failed`, and the failure count
+   had been climbing before it — 2 fails by request 750, 30 by request 1,000
+   — which is wisdomlib throttling, not random noise. So: retry with backoff,
+   never throw, and slow down when the server starts refusing. A crawl that
+   drops one page is fine; one that dies at 20% is not. */
+let consecutiveFails = 0
+
 async function page(id) {
   const f = join(CACHE, `${id}.html`)
   if (existsSync(f)) return readFileSync(f, 'utf8')
   const url = `https://www.wisdomlib.org/hinduism/book/rig-veda-english-translation/d/doc${id}.html`
-  const res = await fetch(url, { headers: { 'user-agent': UA } })
-  const html = await res.text()
-  mkdirSync(CACHE, { recursive: true })
-  writeFileSync(f, html)
-  await sleep(DELAY_MS)
-  return html
+
+  for (let attempt = 1; attempt <= 4; attempt++) {
+    try {
+      const ctl = AbortSignal.timeout(30_000)
+      const res = await fetch(url, { headers: { 'user-agent': UA }, signal: ctl })
+      if (res.status === 429 || res.status >= 500) throw new Error(`HTTP ${res.status}`)
+      const html = await res.text()
+      mkdirSync(CACHE, { recursive: true })
+      writeFileSync(f, html)
+      consecutiveFails = 0
+      // Jitter so we are not a metronome, and back off globally if the
+      // server has been refusing us lately.
+      await sleep(DELAY_MS + Math.floor(Math.random() * 400))
+      return html
+    } catch (e) {
+      consecutiveFails++
+      if (attempt === 4) {
+        console.log(`    ⚠ giving up on doc${id} after 4 attempts (${e.message})`)
+        return null                       // skip, never throw
+      }
+      // 2s, 8s, 32s — plus extra if the server is clearly unhappy
+      const wait = 2000 * 4 ** (attempt - 1) + Math.min(consecutiveFails, 20) * 500
+      await sleep(wait)
+    }
+  }
+  return null
 }
 
 /* The translation sits between "English translation:" and "Details:". */
@@ -125,18 +153,32 @@ if (process.argv.includes('--anchor')) {
 }
 
 const ri = process.argv.indexOf('--range')
+/* Fetch in CORPUS order, not id-map insertion order. buildIds() walks
+   outward from the anchor (forward to 10.191, then backward to 1.1), so the
+   raw key order starts at mandala 9 and reaches mandala 1 last — which is
+   the opposite of useful when someone wants to look at RV 1.1.1. */
+const inCorpusOrder = [...ids.keys()].sort((a, b) => {
+  const [am, as_, av] = a.split('.').map(Number)
+  const [bm, bs, bv] = b.split('.').map(Number)
+  return am - bm || as_ - bs || av - bv
+})
 const wanted = ri > 0
-  ? [...ids.keys()].filter(k => { const p = k.split('.'); const ref = `${p[0]}.${p[1]}`
+  ? inCorpusOrder.filter(k => { const p = k.split('.'); const ref = `${p[0]}.${p[1]}`
       return ref === process.argv[ri + 1] || ref === process.argv[ri + 2] })
-  : [...ids.keys()]
+  : inCorpusOrder
 
 console.log(`  fetching ${wanted.length} verses (cache: ${CACHE}, ${DELAY_MS}ms pacing)`)
 const got = new Map()
+const START = Date.now()
 let fail = 0, n = 0
 for (const ref of wanted) {
-  const text = extract(await page(ids.get(ref)))
+  const html = await page(ids.get(ref))          // null when 4 attempts failed
+  const text = html ? extract(html) : null
   if (text) got.set(ref, text); else fail++
-  if (++n % 250 === 0) console.log(`    ${n}/${wanted.length}  ok=${got.size} fail=${fail}`)
+  if (++n % 250 === 0) {
+    const mins = (Date.now() - START) / 60000
+    console.log(`    ${n}/${wanted.length}  ok=${got.size} fail=${fail}  ${(n / mins).toFixed(0)}/min`)
+  }
 }
 console.log(`  retrieved : ${got.size}`)
 console.log(`  failed    : ${fail}`)
