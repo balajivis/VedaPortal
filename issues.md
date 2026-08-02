@@ -113,7 +113,19 @@ showing an empty chart. `bhāratī` has the same problem.
 
 ---
 
-## 6. `data/chunks.json` is 54.78 MB and in git
+## 6. Curated reference pages have no home in the navigation
+
+`/topic/priests` (the sixteen ṛtviks) exists and is reachable only if you know the URL. The
+topic index is a lemma search and cannot surface a hand-written page; a single link bolted to
+the front of it was removed as neither search nor a scheme.
+
+Needed: an organising schema for curated reference pages — priests, and whatever follows
+(metres, the ritual year, the śākhās). Probably a small set of named collections rather than
+a flat list.
+
+---
+
+## 7. `data/chunks.json` is 54.78 MB and in git
 
 Past GitHub's 50 MB recommendation; warns on every push. It is a generated search index and
 should probably not be tracked at all.
