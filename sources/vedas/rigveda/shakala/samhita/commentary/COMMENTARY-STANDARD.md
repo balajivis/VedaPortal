@@ -104,6 +104,31 @@ The tell is whether the sentence *describes a hymn* or *says what the hymn says*
 | "a strange hymn, unlike anything around it" | say what it does; let the reader find it strange |
 | "the redactors placed this here" | (belongs in `disagreements`) |
 
+#### Say dharma. Not religion, not mythology.
+
+These are not neutral words. **Religion** imports a category built to describe something
+else and makes the tradition one instance of a comparative genus. **Mythology** decides, in
+the act of naming, that the accounts are not true. **Pantheon**, **cult**, **belief system**,
+**the faith** carry the same freight. None of them belongs in a manual a practitioner reads.
+
+| ❌ | ✅ |
+|---|---|
+| Vedic religion is chiefly otherworldly | the Veda's dharma is chiefly otherworldly |
+| the household-scale religion of the Veda | the household-scale dharma of the Veda |
+| reconstruct the myth from these clauses | reconstruct the account from these clauses |
+| appears in the mythology as a Dānava | appears in the purāṇic accounts as a Dānava |
+| not the picture of a tidy pantheon | not a tidy ordering of the gods |
+| it does not need translating into religion | it does not need translating into doctrine |
+
+**Not banned:** *dharma*, *yajña*, *saṃskāra*, *śraddhā*, and the tradition's own vocabulary
+throughout; and naming a specific account as an account — "the account of Prajāpati and his
+daughter" is fine, "the Prajāpati myth" is not. Reporting that an outside reader holds a view
+is also fine, so long as it is attributed as such and not adopted.
+
+**Nor is yajña "fire worship."** Agni bears the offering; he is not its object, and the sūktas
+are explicit about it. "Fire worship" is how the tradition was described from outside in the
+nineteenth century. Write *the yajña — the offering made through fire*.
+
 #### No presupposed chronology. Anywhere in the primary fields.
 
 Do not write that a deity, word or practice **becomes**, **develops into**, **gives rise

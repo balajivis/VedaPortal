@@ -21,6 +21,7 @@ Audited across all 201 records, primary fields only:
 | outsider framing (`merely`, `the redactors`, `nothing more than`) | 20 | |
 | condescension (`strange`, `odd`, `curious`, `unlike anything`) | 13 | |
 | `superstition` | 1 | 1.53 |
+| `religion` / `mythology` / `pantheon` | 14 | **fixed** — rule now in the standard: say *dharma* |
 | developmental chronology (`later becomes`, `develops into`) | 26 raw | 6 real, now fixed; the rest are innocent English ("a throw not yet made") |
 
 **These cannot be fixed by substitution.** They need rewriting sentence by sentence, which
