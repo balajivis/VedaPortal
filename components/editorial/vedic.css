@@ -868,3 +868,16 @@ td.pr-num { font-family: var(--ed-mono) !important; font-size: 12px !important; 
   border-left: 2px solid var(--ed-line);
 }
 .vd-verse-block em[lang="sa"] { color: var(--ed-ink-3); }
+
+/* The written analysis on a topic page. Sits between the counted chart and
+   the backlinks: where the word falls, then what it carries, then every
+   place it occurs. */
+.tp-analysis p {
+  font-family: var(--ed-serif); font-size: 17px; line-height: 1.68;
+  color: var(--ed-ink-2); max-width: 66ch; margin: 14px 0 0;
+}
+.tp-machine {
+  font-family: var(--ed-mono); font-size: 8.5px; letter-spacing: .16em;
+  text-transform: uppercase; color: var(--ed-paper);
+  background: var(--ed-muted); padding: 2px 6px; margin-left: 10px;
+}

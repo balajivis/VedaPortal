@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { topic, topicList, hymn, names } from '@/lib/anukramani'
+import { topic, topicList, topicNote } from '@/lib/anukramani'
 import { Shell, Crumb } from '@/components/editorial/Shell'
 
 /* =========================================================================
@@ -26,6 +26,31 @@ export async function generateStaticParams() {
     .sort((a, b) => (b.devataOf.length - a.devataOf.length) || (b.verses - a.verses))
     .slice(0, 60)
     .map(t => ({ term: encodeURIComponent(t.term) }))
+}
+
+/* Same inline markup as the sūkta notes: **bold**, *term*, {{topic}},
+   [[1.32]] and [text](/path). Kept in sync deliberately — a reader should
+   not meet two different link conventions in one corpus. */
+function inline(text: string, key = 'x'): React.ReactNode[] {
+  const RE = /(\*\*[^*\n]+\*\*|\*[^*\n]+\*|\{\{[^}]+\}\}|\[\[[\d.]+\]\]|\[[^\]\n]+\]\([^)\s]+\))/g
+  return text.split(RE).map((part, i) => {
+    const k = `${key}-${i}`
+    if (part.startsWith('**') && part.endsWith('**') && part.length > 4)
+      return <strong key={k}>{inline(part.slice(2, -2), k)}</strong>
+    if (part.startsWith('*') && part.endsWith('*') && part.length > 2)
+      return <em key={k} lang="sa">{inline(part.slice(1, -1), k)}</em>
+    if (part.startsWith('{{') && part.endsWith('}}')) {
+      const x = part.slice(2, -2).trim()
+      return <Link key={k} href={`/topic/${encodeURIComponent(x)}`} className="vd-topic" lang="sa">{x}</Link>
+    }
+    const md = /^\[([^\]]+)\]\(([^)\s]+)\)$/.exec(part)
+    if (md) return <Link key={k} href={md[2]} className="vd-xref">{inline(md[1], k)}</Link>
+    if (part.startsWith('[[') && part.endsWith(']]')) {
+      const r = part.slice(2, -2)
+      return <Link key={k} href={`/text/rv/${r}`} className="vd-xref">RV {r}</Link>
+    }
+    return <span key={k}>{part}</span>
+  })
 }
 
 function Bars({ byMandala }: { byMandala: Record<string, number> }) {
@@ -62,6 +87,7 @@ export default async function Page({ params }: { params: Promise<{ term: string 
   const { term } = await params
   const t = topic(decodeURIComponent(term))
   if (!t) notFound()
+  const analysis = topicNote(t.term)
 
   /* Group the devatā sūktas by maṇḍala so a run like "M9 has 114 of them"
      is visible rather than buried in a flat list of 273 links. */
@@ -135,6 +161,18 @@ export default async function Page({ params }: { params: Promise<{ term: string 
             miss most of these.
           </p>
         </section>
+        ) : null}
+
+        {analysis ? (
+          <section className="tp-section tp-analysis">
+            <div className="vd-app-label">
+              what the word carries
+              <span className="tp-machine">machine-written</span>
+            </div>
+            {analysis.split('\n\n').filter(Boolean).map((p, i) => (
+              <p key={i}>{inline(p, `a${i}`)}</p>
+            ))}
+          </section>
         ) : null}
 
         {t.rsiOf?.length ? (
