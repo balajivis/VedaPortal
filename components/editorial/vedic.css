@@ -657,3 +657,12 @@
   font-family: var(--ed-mono); font-size: 9.5px; letter-spacing: .16em;
   text-transform: uppercase; color: var(--ed-muted-2);
 }
+
+/* Cross-reference to another sūkta. Underlined in the accent so it reads as
+   a door rather than a citation. */
+.vd-xref {
+  color: var(--ed-accent); text-decoration: none;
+  border-bottom: 1px solid color-mix(in srgb, var(--ed-accent) 40%, transparent);
+  white-space: nowrap;
+}
+.vd-xref:hover { border-bottom-color: var(--ed-accent); }

@@ -85,12 +85,20 @@ function PrevNext({ prev, next }: { prev: { href: string; label: string } | null
    the model could not see. Project rule: AI generates, tradition verifies. */
 /* Sanskrit terms are written *term* in the note source. Render them as
    emphasis rather than leaking asterisks into the page. */
+/* Sanskrit terms are written *term*; sūkta references [[3.59]] become links.
+   Cross-references are the point of a corpus this size — a claim about one
+   hymn is worth far more when the reader can go straight to the other. */
 function emph(text: string) {
-  return text.split(/(\*[^*\n]+\*)/g).map((part, i) =>
-    part.startsWith('*') && part.endsWith('*') && part.length > 2
-      ? <em key={i} lang="sa">{part.slice(1, -1)}</em>
-      : <Fragment key={i}>{part}</Fragment>
-  )
+  return text.split(/(\*[^*\n]+\*|\[\[[\d.]+\]\])/g).map((part, i) => {
+    if (part.startsWith('[[') && part.endsWith(']]')) {
+      const ref = part.slice(2, -2)
+      return <Link key={i} href={`/text/rv/${ref}`} className="vd-xref">RV {ref}</Link>
+    }
+    if (part.startsWith('*') && part.endsWith('*') && part.length > 2) {
+      return <em key={i} lang="sa">{part.slice(1, -1)}</em>
+    }
+    return <Fragment key={i}>{part}</Fragment>
+  })
 }
 
 function SuktaNoteBlock({ note }: { note: SuktaNote | null }) {
