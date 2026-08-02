@@ -1,0 +1,74 @@
+# The 18 Mahāvidyās — source-text coverage.
+#
+# The taxonomy is INHERITED, not invented (see content/vidyas.ts and CLAUDE.md). This file records
+# what source material actually stands behind each node, so the library page shows the corpus
+# rather than the map of it. The Vedas render from sources/vedas/**/_status.yaml; this covers the
+# other fourteen.
+#
+# `state` uses the same honesty rule as the śākhā status enum:
+#   none      — nothing held or identified. The entire claim.
+#   partial   — some of it, or adjacent apparatus rather than the text itself
+#   sourced   — editions identified
+#   held      — files on disk
+# The gaps are data. 12 of 18 stood empty on 2026-08-01; do not paper over the ones still empty.
+
+categories:
+  - id: vedas
+    name: Core Sacred Texts
+    sanskrit: चतुर्वेद
+    accent: amber
+    vidyas:
+      - { id: rigveda,     name: Ṛgveda,      state: held, note: "See the śākhā view — Śākala sourced across all layers; Bāṣkala lost but for the Khilāni." }
+      - { id: yajurveda,   name: Yajurveda,   state: held, note: "Taittirīya is the anchor śākhā. Kāṇva is the one living branch still unsourced." }
+      - { id: samaveda,    name: Sāmaveda,    state: held, note: "Kauthuma sourced; Jaiminīya is the priority recording target and its gāna carries no notation at all." }
+      - { id: atharvaveda, name: Atharvaveda, state: held, note: "Śaunaka accented in two independent encodings; Paippalāda complete at 20 kāṇḍas, unaccented." }
+
+  - id: vedangas
+    name: Vedic Disciplines
+    sanskrit: वेदाङ्ग
+    accent: emerald
+    vidyas:
+      - id: shiksha
+        name: Śikṣā
+        state: partial
+        note: "Prātiśākhyas sourced for Ṛk, Taittirīya, Atharvan and Sāma — but those are the per-śākhā phonetic specs, not the Śikṣā texts themselves."
+        highlight: "Taittirīya Prātiśākhya 24.5 names exactly three accent qualities — svarita, udātta, nīcatva. That settles the accent-class question for the anchor śākhā from its own specification."
+      - { id: vyakarana, name: Vyākaraṇa, state: none, note: "Pāṇini's Aṣṭādhyāyī, Patañjali's Mahābhāṣya, the Kāśikā. NOT HELD — and the Mahābhāṣya is the text the Kanchi bodha framing quotes: 'knowledge of the Vedas is complete only when the meaning is learnt.'" }
+      - { id: chandas,   name: Chandas,   state: partial, note: "38 chandas labels via the mirrored Anukramaṇī. Piṅgala's Chandaḥśāstra absent." }
+      - { id: nirukta,   name: Nirukta,   state: held, note: "GRETIL complete — all 14 adhyāyas, 1,1 → 14,37, TEI-XML + HTML, CC-BY-SA. Sarup's edition PD. ⚠ The NIGHAṆṬU still has no machine-readable text anywhere: five short chapters, a named input to the meaning layer, the highest value-per-hour transcription target in the corpus." }
+      - { id: jyotisha,  name: Jyotiṣa,   state: none, note: "Vedāṅga Jyotiṣa (Lagadha). Not held." }
+      - { id: kalpa,     name: Kalpa,     state: held, note: "Śrauta, Gṛhya and Śulba sūtras across all four Vedas. Ṛk and Atharvan are machine-readable on GRETIL; Tokunaga's Āśvalāyana Śrauta carries inline ritual-position labels. Āpastamba — the Taittirīya's own tradition — Sanskrit from GRETIL, English born-digital." }
+
+  - id: upavedas
+    name: Applied Sciences
+    sanskrit: उपवेद
+    accent: sky
+    vidyas:
+      - id: ayurveda
+        name: Āyurveda
+        state: none
+        note: "Caraka, Suśruta, Vāgbhaṭa. Not held. DECIDED 2026-08-01: acquire and display the source texts with a disclaimer — the text is scholarship, the claim is the problem."
+        guardrail: "Bhasmas and rasa-śāstra carry documented lead, mercury and arsenic poisoning. Display as historical document, never as instruction: no dosage, no procedure as actionable steps, no medical claim on any family-facing surface. The notice sits inline per passage, not in a footer — screenshots travel, disclaimers don't."
+      - { id: dhanurveda,    name: Dhanurveda,    state: partial, note: "dhanurveda.itx held (ITRANS romanised, 29 KB). The Dhanurveda-saṃhitā and Agni Purāṇa 249–252 not yet sourced." }
+      - { id: gandharvaveda, name: Gāndharvaveda, state: none, note: "Nāṭyaśāstra, Saṅgīta-ratnākara. Not held." }
+      - { id: arthashastra,  name: Arthaśāstra,   state: none, note: "Kauṭalya. Not held — but present on SARIT as TEI-P5, CC-BY-SA-3.0. Reach it at github.com/sarit/SARIT-corpus; the web app is broken." }
+
+  - id: darshanas
+    name: Foundational Wisdom
+    sanskrit: दर्शन
+    accent: purple
+    vidyas:
+      - { id: purana, name: Purāṇa, state: partial, note: "Bhāgavata only, of eighteen. The Mahābhārata and Vālmīki Rāmāyaṇa are held under smṛti. This is the STORIES ON-RAMP — no svara, no recension hell, no translation minefield — and it is meant to bring families in the door long before the mantra layer is ready." }
+      - { id: nyaya,  name: Nyāya,  state: none, note: "Gautama's Nyāyasūtra, Vātsyāyana. Not held — Nyāyamañjarī is on SARIT." }
+      - id: mimamsa
+        name: Mīmāṃsā
+        state: sourced
+        note: "Jaimini's sūtras, the Śābara-bhāṣya, Kumārila's Ślokavārttika and Tantravārttika, and Prabhākara's Bṛhatī — both sides of the school split. Ganganatha Jha's English is public domain and essentially one man's life's work."
+        highlight: "The adjudication rule has a citable primary locus: Mīmāṃsāsūtra 3.3.14, verified three independent ways. śruti · liṅga · vākya · prakaraṇa · sthāna · samākhyā. ⚠ The Bṛhatī has never been translated into English — so a project that reads only what is translated will silently become a Bhāṭṭa project."
+      - { id: dharmashastra, name: Dharmaśāstra, state: sourced, note: "Manu (SARIT TEI + GRETIL + Bühler SBE 25), the four Dharmasūtras, Nārada and Bṛhaspati, Yājñavalkya with the Mitākṣarā — SARIT carries Vijñāneśvara's commentary itself, no scan needed. Parāśara with Mādhava's commentary is the best-OCR item fetched: the text Vidyasagar used to force the orthodoxy to argue against its own śāstra." }
+
+other_holdings:
+  - { area: Smṛti, note: "Mahābhārata (5,818 pp), Vālmīki Rāmāyaṇa 1933 Sanskrit (1,162 pp), Bhāgavata Purāṇa, Bhagavad Gītā. 66% of the search index is the Mahābhārata — the on-ramp is loaded, it is simply not yet wired to anything." }
+  - { area: Shlokas, note: "Viṣṇusahasranāma." }
+  - { area: Manuscripts, note: "A register, not texts: 87,207 Veda records queryable at Kritisampada with no auth, 65,672 at IGNCA with śākhā in the titles, NGMCP and Qalamos via Solr and OAI-PMH. ⚠ Śākhā is absent from the modern databases but stated routinely in printed catalogues — Adyar names manuscripts for every śākhā this repo records as empty." }
+  - { area: Unattributed, note: "unorganised-collection/ — nothing ships from it. Attribution work moves files out." }

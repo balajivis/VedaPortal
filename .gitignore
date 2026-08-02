@@ -31,3 +31,8 @@ sources/vedas/rigveda/shakala/samhita/Entire Rig Veda Samhita.pdf
 sources/_fetched/*
 !sources/_fetched/_manifest.yaml
 !sources/_fetched/README.md
+
+# Commentary staging. Agents write one record per sūkta here and the merge
+# step folds them into commentary-mandala-N.json; the loose files are
+# intermediate and several agents write concurrently.
+sources/vedas/rigveda/shakala/samhita/commentary/_pending/

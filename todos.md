@@ -25,8 +25,14 @@ Aligned to [PROJECT-VISION.md](PROJECT-VISION.md). Ordered — depth over breadt
 
 ## Backlog — source texts for the 18 Mahāvidyās
 
-The library's taxonomy is inherited and correct, but **12 of the 18 nodes have no source text
-behind them.** Status as of 2026-08-01:
+The library's taxonomy is inherited and correct, but most nodes have no source text behind them.
+
+> **⚠ The live coverage table is `sources/_library.yaml`, rendered at `/sources`.** It is the
+> single source of truth and it moves — Mīmāṃsā and Dharmaśāstra went from empty to sourced on
+> 2026-08-01. The table below is the snapshot that opened the work; **read the YAML for current
+> state**, and amend it there, not here.
+
+Snapshot as of 2026-08-01 (6 nodes with nothing at all; several partial):
 
 | # | Vidyā | Source text | State |
 |---|---|---|---|

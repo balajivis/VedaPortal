@@ -131,6 +131,16 @@ print(f'chars={len(t)} devanagari={dev} svara={acc} digits={dig}')"; done
 > A book's first forty pages are title, series, preface and contents — the least representative
 > pages in it. **Judge on the body.**
 
+> ### ⚠ And measure the SIDECAR, not only the PDF.
+>
+> All three *Vedic Variants* PDFs report **40 chars over 40 pages** — dead by any reading. Their
+> Archive.org sidecar `_djvu.txt` is real and complete. Measuring the PDF alone would have logged
+> the whole set as `scanned-no-text`.
+>
+> **Always check `<id>_djvu.txt`, `_hocr.html` and `_abbyy.gz` before recording a text-layer
+> verdict.** hOCR is worth preferring anyway: it carries page, line and word bounding boxes that
+> `_djvu.txt` discards — which is what makes marginal labels recoverable at all.
+
 | Reading | Means | `text_layer` |
 |---|---|---|
 | devanagari high, svara high | accented Unicode — **the target** | `unicode` |
