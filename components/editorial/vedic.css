@@ -859,3 +859,12 @@ td.pr-num { font-family: var(--ed-mono) !important; font-size: 12px !important; 
 /* Not named in this saṃhitā — set back, never struck through. The office is
    not absent from the Veda, only from this portion of it. */
 .pr-unnamed .pr-name, .pr-unnamed .pr-gloss { color: var(--ed-muted); }
+
+/* A verse block in a note: Devanāgarī, then IAST, then the reading. Set as
+   one paragraph with real line breaks so the three stay together. */
+.vd-verse-block {
+  margin: 1.5em 0 !important;
+  padding-left: 18px;
+  border-left: 2px solid var(--ed-line);
+}
+.vd-verse-block em[lang="sa"] { color: var(--ed-ink-3); }

@@ -93,7 +93,7 @@ function PrevNext({ prev, next }: { prev: { href: string; label: string } | null
      {{soma}}   link to the topic page
      [[1.32]]   link to that sūkta                                        */
 function inline(text: string, key = 'x'): React.ReactNode[] {
-  const RE = /(\*\*[^*\n]+\*\*|\*[^*\n]+\*|\{\{[^}]+\}\}|\[\[[\d.]+\]\])/g
+  const RE = /(\*\*[^*\n]+\*\*|\*[^*\n]+\*|\{\{[^}]+\}\}|\[\[[\d.]+\]\]|\[[^\]\n]+\]\([^)\s]+\))/g
   return text.split(RE).map((part, i) => {
     const k = `${key}-${i}`
     if (part.startsWith('**') && part.endsWith('**') && part.length > 4) {
@@ -110,6 +110,10 @@ function inline(text: string, key = 'x'): React.ReactNode[] {
         </Link>
       )
     }
+    const md = /^\[([^\]]+)\]\(([^)\s]+)\)$/.exec(part)
+    if (md) {
+      return <Link key={k} href={md[2]} className="vd-xref">{inline(md[1], k)}</Link>
+    }
     if (part.startsWith('[[') && part.endsWith(']]')) {
       const r = part.slice(2, -2)
       return <Link key={k} href={`/text/rv/${r}`} className="vd-xref">RV {r}</Link>
@@ -118,6 +122,19 @@ function inline(text: string, key = 'x'): React.ReactNode[] {
   })
 }
 const emph = (t: string) => inline(t)
+
+/* A paragraph may carry internal line breaks — the verse blocks stack
+   Devanāgarī, then IAST, then the prose. Collapsing those to one run makes
+   the Sanskrit unreadable, so a single \n becomes a real break. */
+function para(text: string, key: string) {
+  const lines = text.split('\n')
+  return lines.map((l, i) => (
+    <Fragment key={`${key}-l${i}`}>
+      {i > 0 ? <br /> : null}
+      {inline(l, `${key}-l${i}`)}
+    </Fragment>
+  ))
+}
 
 function SuktaNoteBlock({ note }: { note: SuktaNote | null }) {
   if (!note) return null
@@ -131,7 +148,11 @@ function SuktaNoteBlock({ note }: { note: SuktaNote | null }) {
       </div>
       <div className="vd-machine-body">
         {(note.synthesis ?? note.text ?? '').split(/\n{2,}/)
-          .filter(Boolean).map((para, i) => <p key={i}>{emph(para)}</p>)}
+          .filter(Boolean).map((p, i) => (
+            <p key={i} className={/^\*\*\d+\.\*\*/.test(p) ? 'vd-verse-block' : undefined}>
+              {para(p, `s${i}`)}
+            </p>
+          ))}
       </div>
       {note.practice ? (
         <div className="vd-machine-living">
