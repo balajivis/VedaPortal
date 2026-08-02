@@ -236,34 +236,24 @@ export default async function Page({ params }: { params: Promise<{ ref?: string[
             know, and it was previously a small label in a two-column grid. The
             address and the suggested title sit together beneath it; ṛṣi and
             chandas run italic below, as apparatus rather than headline. */}
+        {/* The TITLE is the headline. The devatā cannot be — there are
+            hundreds of Agni sūktas and naming the deity distinguishes none of
+            them from each other. What distinguishes a sūkta is what it does,
+            so the description leads and the ascription (devatā · chandas ·
+            ṛṣi) runs together beneath as one apparatus line. */}
         <header className="vd-masthead">
-          {/* ⚠ Show EVERY devatā, not just the first. RV 1.3 is addressed to
-              four in turn; heading it "aśvinau" asserts something false, and
-              it is the same flattening the maṇḍala index refuses. The type
-              scale steps down as the list grows so four names still fit. */}
-          <h1 className={`vd-devata-head vd-devata-${Math.min(dv.length, 4)}`} lang="sa">
-            {dv.map((d, i) => (
-              <Fragment key={i}>
-                {i > 0 ? <span className="vd-devata-join"> · </span> : null}
-                {d.name}
-              </Fragment>
-            ))}
+          <div className="vd-masthead-ref">RV {h.ref}</div>
+          <h1 className="vd-masthead-title">
+            {note?.title ?? <span className="vd-untitled">{dv.map(d => d.name).join(' · ')}</span>}
           </h1>
-          <div className="vd-masthead-line">
-            <span className="vd-masthead-ref">RV {h.ref}</span>
-            {note?.title ? (
-              <>
-                <span className="vd-masthead-sep">·</span>
-                <span className="vd-masthead-title" title="machine-suggested">{note.title}</span>
-              </>
-            ) : null}
-          </div>
           <div className="vd-masthead-meta">
-            <em>{h.rishi || 'ṛṣi not recorded'}</em>
+            <span><span className="vd-meta-key">devatā</span> <em lang="sa">{dv.map(d => d.name).join(' · ')}</em></span>
             <span className="vd-masthead-dot">·</span>
-            <em lang="sa">{ch.map(c => c.name).join(', ')}</em>
+            <span><span className="vd-meta-key">chandas</span> <em lang="sa">{ch.map(c => c.name).join(', ')}</em></span>
             <span className="vd-masthead-dot">·</span>
-            <em>{h.verses} ṛcs</em>
+            <span><span className="vd-meta-key">ṛṣi</span> <em>{h.rishi || 'not recorded'}</em></span>
+            <span className="vd-masthead-dot">·</span>
+            <span><em>{h.verses} ṛcs</em></span>
           </div>
           {(dv.length > 1 || ch.length > 1) ? (
             <div className="vd-masthead-shift">

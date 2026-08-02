@@ -618,34 +618,7 @@
    chandas run italic below, apparatus rather than headline.
    ========================================================================= */
 .vd-masthead { text-align: center; margin: 4px 0 34px; }
-.vd-devata-head {
-  font-family: var(--ed-deva, var(--ed-serif));
-  font-size: clamp(38px, 7vw, 62px);
-  font-weight: 400; line-height: 1.06;
-  letter-spacing: -0.012em;
-  color: var(--ed-ink); margin: 0 0 14px;
-  text-transform: lowercase;
-}
-.vd-masthead-line {
-  display: flex; flex-wrap: wrap; justify-content: center;
-  align-items: baseline; gap: 11px;
-}
-.vd-masthead-ref {
-  font-family: var(--ed-mono); font-size: 13px; letter-spacing: .14em;
-  text-transform: uppercase; color: var(--ed-accent);
-}
 .vd-masthead-sep { color: var(--ed-line); }
-.vd-masthead-title {
-  font-family: var(--ed-serif); font-size: 21px; font-style: italic;
-  color: var(--ed-ink-2); border-bottom: 1px dotted var(--ed-line);
-  cursor: help;
-}
-.vd-masthead-meta {
-  margin-top: 13px;
-  font-family: var(--ed-serif); font-size: 14.5px;
-  color: var(--ed-muted); display: flex; flex-wrap: wrap;
-  justify-content: center; gap: 9px;
-}
 .vd-masthead-dot { color: var(--ed-line); font-style: normal; }
 .vd-masthead-shift {
   margin-top: 11px; display: flex; flex-direction: column; gap: 3px;
@@ -655,8 +628,31 @@
 
 /* Devatā heading scales down as the list grows — a four-deity hymn still
    names all four rather than being flattened to its first. */
-.vd-devata-1 { font-size: clamp(38px, 7vw, 62px); }
 .vd-devata-2 { font-size: clamp(32px, 5.6vw, 48px); }
-.vd-devata-3 { font-size: clamp(27px, 4.6vw, 39px); }
 .vd-devata-4 { font-size: clamp(23px, 3.8vw, 33px); line-height: 1.22; }
 .vd-devata-join { color: var(--ed-line); font-style: normal; }
+
+/* Masthead, title-led. The description is the headline; the ascription runs
+   together beneath, because devatā alone distinguishes no Agni sūkta from
+   the several hundred others addressed to Agni. */
+.vd-masthead-ref {
+  font-family: var(--ed-mono); font-size: 11px; letter-spacing: .22em;
+  text-transform: uppercase; color: var(--ed-accent); margin-bottom: 10px;
+}
+.vd-masthead-title {
+  font-family: var(--ed-serif);
+  font-size: clamp(28px, 4.6vw, 44px);
+  font-weight: 400; line-height: 1.16; letter-spacing: -0.011em;
+  color: var(--ed-ink); margin: 0 auto; max-width: 22ch;
+  text-wrap: balance;
+}
+.vd-untitled { font-style: italic; color: var(--ed-muted); }
+.vd-masthead-meta {
+  margin-top: 17px;
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 9px;
+  font-family: var(--ed-serif); font-size: 14.5px; color: var(--ed-muted);
+}
+.vd-meta-key {
+  font-family: var(--ed-mono); font-size: 9.5px; letter-spacing: .16em;
+  text-transform: uppercase; color: var(--ed-muted-2);
+}
