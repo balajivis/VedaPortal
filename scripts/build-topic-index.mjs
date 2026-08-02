@@ -156,7 +156,26 @@ for (const [name, refs] of devata) {
 /* A term earns a page if it is a devatā, or is marked in a note, or is a
    common enough lemma to be worth following. Everything else would make the
    index unusable rather than useful. */
-const FLOOR = 25
+/* ⚠ FREQUENCY IS NOT IMPORTANCE. A floor of 25 dropped `bharata` (10
+   verses — the people who give the country its name), and with it pūru 21,
+   turvaśa 20, yadu 16, druhyu 6 and divodāsa 18: most of the five peoples
+   and several of the kings the hymns are actually about. Meanwhile it kept
+   ordinary vocabulary that happens to be common.
+
+   So the floor is now low, and a term ALSO earns a page if its gloss looks
+   like a proper noun — the morphology capitalises those (`bharata` glosses
+   as "Bharata; Bhārata; … actor"), which is a far better signal of "a
+   reader would want to follow this" than a count. */
+const FLOOR = 8
+
+/** Does the gloss read like a name rather than a common noun? */
+function looksProper(gloss) {
+  if (!gloss) return false
+  const senses = gloss.split(';').map(x => x.trim()).filter(Boolean)
+  if (!senses.length) return false
+  const capped = senses.filter(x => /^[A-ZĀĪŪṚṜḶṄÑṬḌṆŚṢ]/.test(x)).length
+  return capped / senses.length >= 0.4
+}
 const topics = new Map()
 const consider = new Set([
   ...lemma.keys(),
@@ -168,7 +187,10 @@ for (const t of consider) {
   const l = lemma.get(t)
   const dv = [...new Set(devataByLemma.get(t) ?? [])]
   const inc = incoming.get(t) ?? []
-  const worth = dv.length > 0 || inc.length > 0 || (l && l.count >= FLOOR)
+  const worth = dv.length > 0
+    || inc.length > 0
+    || (l && l.count >= FLOOR)
+    || (l && looksProper(l.gloss) && l.count >= 3)
   if (!worth) continue
   /* KIND decides what the page leads with. A deity's backlinks are the
      sūktas addressed to it; a concept has none of those, and its backlink
