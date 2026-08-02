@@ -641,9 +641,10 @@
 }
 .vd-masthead-title {
   font-family: var(--ed-serif);
-  font-size: clamp(28px, 4.6vw, 44px);
-  font-weight: 400; line-height: 1.16; letter-spacing: -0.011em;
-  color: var(--ed-ink); margin: 0 auto; max-width: 22ch;
+  font-size: clamp(34px, 5.8vw, 58px);
+  font-weight: 400; line-height: 1.06;
+  letter-spacing: -0.022em;
+  color: var(--ed-ink); margin: 0 auto; max-width: 17ch;
   text-wrap: balance;
 }
 .vd-untitled { font-style: italic; color: var(--ed-muted); }
