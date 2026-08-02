@@ -196,13 +196,22 @@ export default async function Page({ params }: { params: Promise<{ ref?: string[
           {hymns.map(h => (
             <Link key={h.ref} href={`/text/rv/${h.ref}`} className="vd-index-row">
               <span className="vd-index-num">{h.sukta}</span>
+              {/* Same title the sūkta page uses. A maṇḍala of 191 hymns listed
+                  by deity is 191 rows reading "agniḥ" — the list becomes
+                  unscannable precisely where scanning is the point. Where no
+                  note exists yet the deity list is the honest fallback. */}
               <span className="vd-index-main">
                 <span className="vd-index-title">
-                  {names(h.devataRaw)[0] ?? '—'}
-                  {shifts(h.devataRaw) ? <span className="vd-shift"> +{names(h.devataRaw).length - 1} more</span> : null}
+                  {suktaNote(m, h.sukta)?.title ?? (
+                    <span className="vd-untitled">
+                      {names(h.devataRaw).join(' · ')}
+                    </span>
+                  )}
                 </span>
                 <span className="vd-index-sub">
-                  {h.rishi || <em>ṛṣi not recorded in the source</em>} · {names(h.chandasRaw).join(', ')}
+                  <span lang="sa">{names(h.devataRaw).join(' · ')}</span>
+                  {' · '}{names(h.chandasRaw).join(', ')}
+                  {' · '}{h.rishi || <em>ṛṣi not recorded</em>}
                 </span>
               </span>
               <span className="vd-index-meta">{h.verses} ṛcs</span>
