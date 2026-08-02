@@ -36,6 +36,31 @@ A note that reads like a seminar has failed even if every sentence in it is true
 
 Paragraphs are separated by `\n\n`. `*term*` renders as italic Sanskrit.
 `[[3.59]]` renders as a link to that sūkta — use it whenever you name another hymn.
+`{{soma}}` renders as a link to that **topic page**, which lists every occurrence of
+the term across all ten maṇḍalas plus every note that mentions it. Mark a term this
+way the FIRST time it appears in each field, when it is a thing a reader would want
+to follow up: deities (`{{agni}}`, `{{sarasvatī}}`), peoples and persons
+(`{{bharata}}`, `{{pūru}}`, `{{dasyu}}`), rivers (`{{sindhu}}`), substances
+(`{{soma}}`), and load-bearing concepts (`{{ṛta}}`, `{{dhī}}`, `{{yajña}}`,
+`{{brahman}}`, `{{vāja}}`). Use the bare lemma, lowercase, in IAST — the same form
+the morphology files use. Do not mark every occurrence; once per field is enough.
+
+## ⭐ Use Sāyaṇa's own gloss, not only Wilson
+
+`samhita/commentary/sayana/sayana-mandala-N.json` holds **4,122 verse-addressed
+glosses** of the Ṛgveda-bhāṣya. Read them for every verse that has one. Wilson is a
+19th-century Englishman's rendering *of* Sāyaṇa; where the gloss itself exists, that
+is the tradition's own voice and it is closer to the source than the translation.
+
+- Where Sāyaṇa gives a derivation, a ritual detail, a citation of the Nirukta or a
+  Brāhmaṇa, or names a legend — that is first-rate material. Use it.
+- Where Sāyaṇa and Wilson diverge (it happens — Wilson compresses, and occasionally
+  mis-renders), **follow Sāyaṇa** and record the divergence in `disagreements`.
+- Coverage is uneven: maṇḍala 1 has a gloss on 933 of 2,006 verses. Absence means
+  *not in this witness*, never *Sāyaṇa was silent*. Do not say he was silent.
+- His positions still belong in `disagreements`, not in `synthesis` — the zero-names
+  rule is unchanged. What changes is that the *substance* of the synthesis should be
+  informed by him rather than by Wilson alone.
 
 ## The four fields
 
