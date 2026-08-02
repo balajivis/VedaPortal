@@ -586,3 +586,37 @@ export function sayanaCount(m: number, s: number): number {
   }
   return (t[String(s)] ?? []).filter(x => typeof x === 'string' && x.trim()).length
 }
+
+/* -------------------------------------------------------------------------
+   Topic index — built from the per-word morphology, so it indexes LEMMAS
+   rather than surface strings. See scripts/build-topic-index.mjs.
+   ------------------------------------------------------------------------- */
+export type Topic = {
+  term: string
+  /* 'devata' — backlinks are the sūktas addressed to it.
+     'concept' — no devatā list exists, so the VERSE OCCURRENCES are the
+     backlink set, and the page must lead with them. */
+  kind: 'devata' | 'concept'
+  gloss: string | null
+  verses: number
+  byMandala: Record<string, number>
+  refs: string[]
+  devataOf: string[]
+  incoming: { ref: string; title: string | null }[]
+}
+
+let TOPICS: Record<string, Topic> | null = null
+function allTopics(): Record<string, Topic> {
+  if (!TOPICS) {
+    TOPICS = loadJson<Record<string, Topic>>(
+      join(process.cwd(), 'sources/vedas/rigveda/shakala/apparatus/topics'), 'topics.json'
+    )
+  }
+  return TOPICS
+}
+export function topic(term: string): Topic | null {
+  return allTopics()[term.toLowerCase()] ?? null
+}
+export function topicList(): Topic[] {
+  return Object.values(allTopics())
+}

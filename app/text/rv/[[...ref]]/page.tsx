@@ -89,7 +89,15 @@ function PrevNext({ prev, next }: { prev: { href: string; label: string } | null
    Cross-references are the point of a corpus this size — a claim about one
    hymn is worth far more when the reader can go straight to the other. */
 function emph(text: string) {
-  return text.split(/(\*[^*\n]+\*|\[\[[\d.]+\]\])/g).map((part, i) => {
+  return text.split(/(\*[^*\n]+\*|\[\[[\d.]+\]\]|\{\{[^}]+\}\})/g).map((part, i) => {
+    if (part.startsWith('{{') && part.endsWith('}}')) {
+      const t = part.slice(2, -2).trim()
+      return (
+        <Link key={i} href={`/topic/${encodeURIComponent(t)}`} className="vd-topic" lang="sa">
+          {t}
+        </Link>
+      )
+    }
     if (part.startsWith('[[') && part.endsWith(']]')) {
       const ref = part.slice(2, -2)
       return <Link key={i} href={`/text/rv/${ref}`} className="vd-xref">RV {ref}</Link>

@@ -666,3 +666,73 @@
   white-space: nowrap;
 }
 .vd-xref:hover { border-bottom-color: var(--ed-accent); }
+
+/* ========================= TOPIC PAGES ================================== */
+.tp-gloss {
+  font-family: var(--ed-serif); font-size: 17px; font-style: italic;
+  color: var(--ed-muted); max-width: 44ch; margin: 12px auto 0; line-height: 1.55;
+}
+.tp-section { margin: 46px 0; }
+.tp-note {
+  font-family: var(--ed-serif); font-size: 13.5px; color: var(--ed-muted);
+  line-height: 1.6; margin-top: 14px; max-width: 62ch;
+}
+.tp-note-lead { margin: 0 0 18px; font-size: 15px; color: var(--ed-ink-3); }
+
+/* maṇḍala distribution — the shape is the finding */
+.tp-bars {
+  display: flex; align-items: flex-end; gap: 10px;
+  height: 132px; margin-top: 16px;
+  padding-bottom: 4px; border-bottom: 1px solid var(--ed-line);
+}
+.tp-bar-col {
+  flex: 1; display: flex; flex-direction: column; align-items: center;
+  gap: 5px; text-decoration: none; height: 100%;
+}
+.tp-bar-track {
+  flex: 1; width: 100%; display: flex; align-items: flex-end;
+  background: color-mix(in srgb, var(--ed-muted-2) 6%, transparent);
+}
+.tp-bar-fill { width: 100%; background: var(--ed-accent); min-height: 1px; }
+.tp-bar-col:hover .tp-bar-fill { background: var(--ed-ink); }
+.tp-bar-n, .tp-bar-m {
+  font-family: var(--ed-mono); font-size: 10px; color: var(--ed-muted-2);
+}
+.tp-bar-m { color: var(--ed-muted); letter-spacing: .08em; }
+
+.tp-mrow {
+  display: grid; grid-template-columns: 128px 1fr; gap: 16px;
+  padding: 11px 0; border-bottom: 1px solid var(--ed-line-soft);
+  align-items: baseline;
+}
+@media (max-width: 760px) { .tp-mrow { grid-template-columns: 1fr; gap: 5px; } }
+.tp-mlabel {
+  font-family: var(--ed-mono); font-size: 10px; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--ed-muted-2);
+}
+.tp-mcount { color: var(--ed-accent); margin-left: 5px; }
+.tp-reflist { display: flex; flex-wrap: wrap; gap: 4px 9px; }
+.tp-ref {
+  font-family: var(--ed-mono); font-size: 12px; color: var(--ed-ink-3);
+  text-decoration: none; border-bottom: 1px solid transparent;
+}
+.tp-ref:hover { color: var(--ed-accent); border-bottom-color: var(--ed-accent); }
+.tp-verses .tp-ref { font-size: 11.5px; color: var(--ed-muted); }
+
+/* A topic mark in note prose. Dotted rather than solid, to read as "there
+   is more behind this word" rather than as a citation. */
+.vd-topic {
+  color: var(--ed-ink); font-style: italic; text-decoration: none;
+  border-bottom: 1px dotted var(--ed-accent);
+}
+.vd-topic:hover { color: var(--ed-accent); border-bottom-style: solid; }
+
+.tp-cloud { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 16px; }
+.tp-chip {
+  display: inline-flex; align-items: baseline; gap: 6px;
+  padding: 5px 10px; border: 1px solid var(--ed-line);
+  font-family: var(--ed-serif); font-size: 15px;
+  color: var(--ed-ink-2); text-decoration: none;
+}
+.tp-chip:hover { border-color: var(--ed-accent); color: var(--ed-accent); }
+.tp-chip-n { font-family: var(--ed-mono); font-size: 10px; color: var(--ed-muted-2); }
