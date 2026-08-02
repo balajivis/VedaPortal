@@ -19,7 +19,7 @@ import { vedicFontsClass } from '@/components/editorial/vedic-fonts'
 import { Enumerated, Badge, CanonicalAddress, Mantra, Apparatus } from '@/components/editorial/vedic-blocks'
 import {
   allHymns, mandala, hymn, neighbours, verseNeighbours,
-  names, spans, shifts, FAMILY, CANONICAL, verseText, hymnText, displayTokens, translations, padapatha, metre, padas, canonMetre, wilson, grammar, suktaNote, sayana,
+  names, spans, shifts, FAMILY, CANONICAL, verseText, hymnText, displayTokens, translations, padapatha, metre, padas, canonMetre, wilson, grammar, suktaNote, mandalaNote, sayana,
   type SuktaNote,
 } from '@/lib/anukramani'
 import RV_3_53_12 from '@/lib/rv-3-53-12'
@@ -83,31 +83,41 @@ function PrevNext({ prev, next }: { prev: { href: string; label: string } | null
 /* The only model-written prose a reader sees. Rendered set apart, labelled
    at the TOP (not in a footer nobody reads), and stating in the body what
    the model could not see. Project rule: AI generates, tradition verifies. */
-/* Sanskrit terms are written *term* in the note source. Render them as
-   emphasis rather than leaking asterisks into the page. */
-/* Sanskrit terms are written *term*; sūkta references [[3.59]] become links.
-   Cross-references are the point of a corpus this size — a claim about one
-   hymn is worth far more when the reader can go straight to the other. */
-function emph(text: string) {
-  return text.split(/(\*[^*\n]+\*|\[\[[\d.]+\]\]|\{\{[^}]+\}\})/g).map((part, i) => {
+/* Inline markup in note prose. Four forms, and they NEST — a bold lead-in
+   can contain a {{topic}} and a [[1.32]], which the first version got wrong:
+   it split on the emphasis span first, so anything inside one was never
+   parsed and rendered as literal braces. So spans recurse.
+
+     **text**   strong
+     *term*     italic Sanskrit
+     {{soma}}   link to the topic page
+     [[1.32]]   link to that sūkta                                        */
+function inline(text: string, key = 'x'): React.ReactNode[] {
+  const RE = /(\*\*[^*\n]+\*\*|\*[^*\n]+\*|\{\{[^}]+\}\}|\[\[[\d.]+\]\])/g
+  return text.split(RE).map((part, i) => {
+    const k = `${key}-${i}`
+    if (part.startsWith('**') && part.endsWith('**') && part.length > 4) {
+      return <strong key={k}>{inline(part.slice(2, -2), k)}</strong>
+    }
+    if (part.startsWith('*') && part.endsWith('*') && part.length > 2) {
+      return <em key={k} lang="sa">{inline(part.slice(1, -1), k)}</em>
+    }
     if (part.startsWith('{{') && part.endsWith('}}')) {
       const t = part.slice(2, -2).trim()
       return (
-        <Link key={i} href={`/topic/${encodeURIComponent(t)}`} className="vd-topic" lang="sa">
+        <Link key={k} href={`/topic/${encodeURIComponent(t)}`} className="vd-topic" lang="sa">
           {t}
         </Link>
       )
     }
     if (part.startsWith('[[') && part.endsWith(']]')) {
-      const ref = part.slice(2, -2)
-      return <Link key={i} href={`/text/rv/${ref}`} className="vd-xref">RV {ref}</Link>
+      const r = part.slice(2, -2)
+      return <Link key={k} href={`/text/rv/${r}`} className="vd-xref">RV {r}</Link>
     }
-    if (part.startsWith('*') && part.endsWith('*') && part.length > 2) {
-      return <em key={i} lang="sa">{part.slice(1, -1)}</em>
-    }
-    return <Fragment key={i}>{part}</Fragment>
+    return <Fragment key={k}>{part}</Fragment>
   })
 }
+const emph = (t: string) => inline(t)
 
 function SuktaNoteBlock({ note }: { note: SuktaNote | null }) {
   if (!note) return null
@@ -202,6 +212,7 @@ export default async function Page({ params }: { params: Promise<{ ref?: string[
       <Shell crumb={<Crumb parts={[{ label: 'Ṛgveda', href: '/text/rv' }, { label: `Maṇḍala ${m}` }]} />}>
         <div className="vd-eyebrow">{FAMILY[m]}</div>
         <h1 className="vd-title">Maṇḍala <em>{m}.</em></h1>
+        {mandalaNote(m) ? <SuktaNoteBlock note={mandalaNote(m)} /> : null}
         <p className="vd-page-lede">
           {hymns.length} hymns · {hymns.reduce((a, h) => a + h.verses, 0)} ṛcs.
           Each row carries the Anukramaṇī’s own ascription. Where a deity or metre

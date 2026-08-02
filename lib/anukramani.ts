@@ -620,3 +620,21 @@ export function topic(term: string): Topic | null {
 export function topicList(): Topic[] {
   return Object.values(allTopics())
 }
+
+/* -------------------------------------------------------------------------
+   MAṆḌALA-LEVEL notes. Same shape as a sūkta note, one level up — because
+   the books differ from one another in kind, not only in content, and a
+   reader who arrives at maṇḍala 1 should learn what KIND of book it is
+   before reading 191 hymns of it.
+   ------------------------------------------------------------------------- */
+let MANDALA_NOTES: Record<string, SuktaNote> | null = null
+
+export function mandalaNote(m: number): SuktaNote | null {
+  if (!MANDALA_NOTES) {
+    MANDALA_NOTES = loadJson<Record<string, SuktaNote>>(
+      join(process.cwd(), 'sources/vedas/rigveda/shakala/samhita/commentary'),
+      'mandala-overview.json'
+    )
+  }
+  return MANDALA_NOTES[String(m)] ?? null
+}
