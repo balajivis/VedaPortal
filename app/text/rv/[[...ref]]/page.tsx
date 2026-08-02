@@ -18,7 +18,7 @@ import { vedicFontsClass } from '@/components/editorial/vedic-fonts'
 import { Enumerated, Badge, CanonicalAddress, Mantra, Apparatus } from '@/components/editorial/vedic-blocks'
 import {
   allHymns, mandala, hymn, neighbours, verseNeighbours,
-  names, spans, shifts, FAMILY, CANONICAL, verseText, hymnText, displayTokens, translations, padapatha, metre, padas, canonMetre,
+  names, spans, shifts, FAMILY, CANONICAL, verseText, hymnText, displayTokens, translations, padapatha, metre, padas, canonMetre, wilson, grammar,
 } from '@/lib/anukramani'
 import RV_3_53_12 from '@/lib/rv-3-53-12'
 
@@ -250,6 +250,8 @@ export default async function Page({ params }: { params: Promise<{ ref?: string[
   const trs = translations(m, s, v)
   const pada = padapatha(m, s, v)
   const met = metre(m, s, v)
+  const wil = wilson(m, s, v)
+  const gram = grammar(m, s, v)
   // Metrical lineation: break by pada where the verse actually scans.
   // Where it does not, fall back to danda hemistichs rather than forcing a
   // shape the text does not have.
@@ -328,6 +330,48 @@ export default async function Page({ params }: { params: Promise<{ ref?: string[
           ),
         }] : []),
       ]} />
+
+      {wil ? (
+        <Apparatus rows={[{
+          label: 'Wilson',
+          era: '[MOD-1866 · follows Sāyaṇa]',
+          provenance: 'native_posthoc' as const,
+          lead: true,
+          body: (
+            <>
+              <p>{wil}</p>
+              <p style={{ fontSize: 13.5, color: 'var(--ed-muted)', marginTop: 8 }}>
+                Wilson translates <strong>following Sāyaṇa throughout</strong> — so this is the
+                traditional 14th-century reading rendered into English, not an independent
+                Victorian one. Set it against Griffith below.
+              </p>
+            </>
+          ),
+        }]} />
+      ) : null}
+
+      {gram ? (
+        <Apparatus rows={[{
+          label: 'word by word',
+          era: `[${gram.length} words]`,
+          provenance: 'modern_etic' as const,
+          body: (
+            <div className="vd-grammar">
+              <div className="vd-gram-head">
+                <span>form</span><span>lemma</span><span>morphology</span><span>sense</span>
+              </div>
+              {gram.map((w, i) => (
+                <div key={i} className="vd-gram-row">
+                  <span className="vd-gram-surface" lang="sa">{w.surface}</span>
+                  <span className="vd-gram-lemma" lang="sa">{w.lemma ?? '—'}</span>
+                  <span className="vd-gram-morph">{w.morph ?? ''}</span>
+                  <span className="vd-gram-gloss">{w.gloss ?? ''}</span>
+                </div>
+              ))}
+            </div>
+          ),
+        }]} />
+      ) : null}
 
       {trs.length ? (
         <Apparatus rows={trs.map(t => ({

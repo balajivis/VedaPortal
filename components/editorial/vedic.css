@@ -507,3 +507,39 @@
   display: block;
 }
 .vd-verse-row:hover .vd-verse-line { color: var(--ed-accent); }
+
+/* =========================================================================
+   WORD GRAMMAR — surface < lemma, morphology, gloss.
+   Verse-addressed, so it can sit beside the mantra rather than in a
+   separate concordance.
+   ========================================================================= */
+.vd-grammar { margin: 4px 0 0; }
+.vd-gram-row {
+  display: grid;
+  grid-template-columns: minmax(120px, 1fr) minmax(110px, 1fr) minmax(150px, 1.3fr) 2fr;
+  gap: 18px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--ed-line-soft);
+  align-items: baseline;
+}
+.vd-gram-row:last-child { border-bottom: 0; }
+@media (max-width: 900px) {
+  .vd-gram-row { grid-template-columns: 1fr 1fr; gap: 6px 14px; }
+}
+.vd-gram-surface { font-family: var(--ed-serif); font-size: 16px; font-style: italic; color: var(--ed-ink); }
+.vd-gram-lemma   { font-family: var(--ed-serif); font-size: 15px; color: var(--ed-accent); }
+.vd-gram-lemma::before { content: '‹ '; color: var(--ed-muted-2); }
+.vd-gram-morph {
+  font-family: var(--ed-mono); font-size: 10px; letter-spacing: .06em;
+  text-transform: uppercase; color: var(--ed-muted); line-height: 1.5;
+}
+.vd-gram-gloss { font-family: var(--ed-serif); font-size: 14px; color: var(--ed-ink-3); line-height: 1.55; }
+.vd-gram-head {
+  display: grid;
+  grid-template-columns: minmax(120px, 1fr) minmax(110px, 1fr) minmax(150px, 1.3fr) 2fr;
+  gap: 18px; padding-bottom: 7px; margin-bottom: 2px;
+  border-bottom: 1px solid var(--ed-line);
+  font-family: var(--ed-mono); font-size: 9px; letter-spacing: .2em;
+  text-transform: uppercase; color: var(--ed-muted-2);
+}
+@media (max-width: 900px) { .vd-gram-head { display: none; } }
