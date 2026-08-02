@@ -114,7 +114,30 @@ showing an empty chart. `bhāratī` has the same problem.
 
 ---
 
-## 6. Curated reference pages have no home in the navigation
+## 6. Levels of priestly vocabulary must not be flattened
+
+**Fixed in RV 1.1 and /topic/priests; audit the rest.**
+
+*Ṛtvij*, *hotṛ* and *purohita* were written as three parallel "offices", and as "three of the
+sixteen priests". Both are wrong. They sit at different levels:
+
+| term | what it is |
+|---|---|
+| **ṛtvij** | the GENERAL word for an officiant — covers all sixteen, is not one of them |
+| **hotṛ** | a particular office among the sixteen, and the Ṛgveda's own |
+| **purohita** | not among the sixteen at all — a position of PRECEDENCE, the one placed in front; the household or royal chaplain |
+
+So RV 1.1.1 places Agni in the rite at three levels at once: an officiant at all, that
+specific officiant, and the one at their head. Saying "three of the sixteen" collapses a
+real distinction the verse is making.
+
+Not yet audited: every other note that names these terms together, and the `hotṛ`,
+`ṛtvij` and `purohita` topic pages, which have no written analysis yet and should carry
+this distinction when they get one.
+
+---
+
+## 7. Curated reference pages have no home in the navigation
 
 `/topic/priests` (the sixteen ṛtviks) exists and is reachable only if you know the URL. The
 topic index is a lemma search and cannot surface a hand-written page; a single link bolted to
@@ -126,7 +149,7 @@ a flat list.
 
 ---
 
-## 7. `data/chunks.json` is 54.78 MB and in git
+## 8. `data/chunks.json` is 54.78 MB and in git
 
 Past GitHub's 50 MB recommendation; warns on every push. It is a generated search index and
 should probably not be tracked at all.

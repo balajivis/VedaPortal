@@ -164,10 +164,14 @@ export default async function Page() {
       <section className="pr-section">
         <h2 className="pr-heading"><span>Where a reader meets them first</span></h2>
         <p className="pr-note pr-note-tight">
-          The opening line of the collection names three offices at once.{' '}
-          <Link href="/text/rv/1.1.1" className="vd-xref">RV 1.1.1</Link> calls Agni{' '}
-          <em lang="sa">purohitam</em>, placed in front; <em lang="sa">ṛtvijam</em>, who
-          officiates in due season; and <em lang="sa">hotāram</em>, who calls and pours. And{' '}
+          The opening line of the collection places Agni in the rite at three levels at once —
+          and only one of the three is among the sixteen.{' '}
+          <Link href="/text/rv/1.1.1" className="vd-xref">RV 1.1.1</Link> calls him{' '}
+          <em lang="sa">ṛtvijam</em>, which is the general word for an officiant and covers
+          all sixteen; <em lang="sa">hotāram</em>, which is a particular office among them;
+          and <em lang="sa">purohitam</em>, placed in front — a position of precedence rather
+          than a seventeenth office, the chaplain who stands at the head of a household&rsquo;s
+          or a king&rsquo;s rites. And{' '}
           <Link href="/text/rv/2.5" className="vd-xref">RV 2.5</Link> gives Agni the offices in
           turn — <em lang="sa">potā</em>, <em lang="sa">neṣṭā</em>, <em lang="sa">ṛtvij</em> —
           so a single hymn holds much of what the Saṃhitā names.
