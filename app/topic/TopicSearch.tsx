@@ -5,7 +5,7 @@ import { useEffect, useMemo, useState } from 'react'
 
 export type Row = {
   term: string
-  kind: 'devata' | 'concept'
+  kind: 'devata' | 'concept' | 'rsi'
   verses: number
   suktas: number
   gloss: string | null
@@ -35,6 +35,13 @@ const FOLD: Record<string, string> = {
 function fold(s: string) {
   return s.toLowerCase().replace(/[^\x00-\x7F]/g, ch => FOLD[ch] ?? ch)
     .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+}
+
+/* Same rule in the list: a ṛṣi is shown with his title. */
+export function label(r: Row) {
+  if (r.kind !== 'rsi') return r.term
+  const stem = r.term.replace(/ā$/, 'as').replace(/ḥ$/, '')
+  return `${stem.charAt(0).toUpperCase()}${stem.slice(1)} Ṛṣi`
 }
 
 export function TopicSearch({ rows }: { rows: Row[] }) {
@@ -113,11 +120,11 @@ export function TopicSearch({ rows }: { rows: Row[] }) {
               {hits.map(r => (
                 <Link key={r.term} href={`/topic/${encodeURIComponent(r.term)}`} className="vd-index-row">
                   <span className="vd-index-main">
-                    <span className="vd-index-title" lang="sa">{r.term}</span>
+                    <span className="vd-index-title" lang="sa">{label(r)}</span>
                     {r.gloss ? <span className="vd-index-sub">{r.gloss.slice(0, 110)}</span> : null}
                   </span>
                   <span className="vd-index-meta">
-                    {r.suktas ? `devatā of ${r.suktas}` : `${r.verses} verses`}
+                    {r.kind === 'rsi' ? `ṛṣi of ${r.suktas}` : r.suktas ? `devatā of ${r.suktas}` : `${r.verses} verses`}
                   </span>
                 </Link>
               ))}
@@ -143,7 +150,7 @@ export function TopicSearch({ rows }: { rows: Row[] }) {
           <div className="tp-picks">
             {(picks ?? []).map(r => (
               <Link key={r.term} href={`/topic/${encodeURIComponent(r.term)}`} className="tp-pick">
-                <span className="tp-pick-term" lang="sa">{r.term}</span>
+                <span className="tp-pick-term" lang="sa">{label(r)}</span>
                 <span className="tp-pick-hook">{r.hook}</span>
               </Link>
             ))}

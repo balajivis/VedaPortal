@@ -104,6 +104,36 @@ for (let m = 1; m <= 10; m++) {
   }
 }
 
+/* ---- 2b. ṚṢIS, from the Anukramaṇī ----
+   A third kind of topic. A reader meeting RV 1.1 wants to know who
+   Madhucchandas was and what else he composed; the Anukramaṇī names a ṛṣi
+   for every sūkta and nothing was reading it. The strings carry patronymics
+   — `vaiśvāmitro madhucchandāḥ` is Madhucchandas son of Viśvāmitra — so the
+   page is keyed on the personal name and the full string is kept. */
+const rsi = new Map()
+for (let m = 1; m <= 10; m++) {
+  const lines = readFileSync(join(SRC, `apparatus/anukramani/Mandala_${m}.txt`), 'utf8')
+    .split('\n').map(l => l.trim()).filter(Boolean)
+  for (const line of (/^[0-9]/.test(lines[0]) ? lines : lines.slice(1))) {
+    const p = line.split('.')
+    if (!/^\d+$/.test(p[0])) continue
+    const parts = []; let d = 0, cur = ''
+    for (const ch of p.slice(2).join('.')) {
+      if (ch === '(') d++; else if (ch === ')') d--
+      if (ch === '.' && d === 0) { parts.push(cur); cur = '' } else cur += ch
+    }
+    parts.push(cur)
+    const raw = (parts[0] ?? '').trim()
+    if (!raw || /^\(/.test(raw)) continue          // skip per-verse split ascriptions
+    const words = raw.toLowerCase().split(/\s+/)
+    const name = words[words.length - 1].replace(/ḥ$/, '')
+    if (!name) continue
+    if (!rsi.has(name)) rsi.set(name, { full: new Set(), refs: [] })
+    rsi.get(name).full.add(raw)
+    rsi.get(name).refs.push(`${m}.${p[0]}`)
+  }
+}
+
 /* ---- 3b. function words ----
    ⚠ The morphology tags Sanskrit pronouns as "noun" — `yad`, `tvad`, `mad`
    all come back `noun, nominative, singular`. So part of speech cannot do
@@ -181,6 +211,7 @@ const consider = new Set([
   ...lemma.keys(),
   ...devataByLemma.keys(),
   ...incoming.keys(),
+  ...rsi.keys(),
 ])
 for (const t of consider) {
   if (STOP.has(t)) continue
@@ -188,6 +219,7 @@ for (const t of consider) {
   const dv = [...new Set(devataByLemma.get(t) ?? [])]
   const inc = incoming.get(t) ?? []
   const worth = dv.length > 0
+    || rsi.has(t)
     || inc.length > 0
     || (l && l.count >= FLOOR)
     || (l && looksProper(l.gloss) && l.count >= 3)
@@ -196,10 +228,13 @@ for (const t of consider) {
      sūktas addressed to it; a concept has none of those, and its backlink
      set is the verse occurrences — so for `ṛta` or `dhī` that list is the
      substance of the page, not an appendix. */
-  const kind = dv.length ? 'devata' : 'concept'
+  const rs = rsi.get(t)
+  const kind = rs ? 'rsi' : (dv.length ? 'devata' : 'concept')
   topics.set(t, {
     term: t,
     kind,
+    rsiOf: rs ? [...new Set(rs.refs)] : [],
+    rsiNames: rs ? [...rs.full] : [],
     gloss: l?.gloss ?? null,
     verses: l?.count ?? 0,
     byMandala: l?.byMandala ?? {},
@@ -220,6 +255,7 @@ console.log(`  marked in notes      : ${incoming.size}`)
 console.log(`  topics that are devatā of at least one sūkta: ${[...topics.values()].filter(t => t.devataOf.length).length}`)
 const deities = [...topics.values()].filter(t => t.kind === 'devata')
 const concepts = [...topics.values()].filter(t => t.kind === 'concept')
+console.log(`  ṛṣis                 : ${[...topics.values()].filter(t => t.kind === 'rsi').length}`)
 console.log(`  deities/persons      : ${deities.length}`)
 console.log(`  concepts             : ${concepts.length}`)
 console.log(`  total refs stored    : ${[...topics.values()].reduce((a, t) => a + t.refs.length, 0).toLocaleString()}`)

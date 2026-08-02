@@ -9,6 +9,14 @@ const MAND = ['', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X']
    evenly across ten maṇḍalas tells you little, while one that puts 60% of
    itself in a single book is telling you something about that book. */
 function hookFor(t: ReturnType<typeof topicList>[number]): string | null {
+  if (t.kind === 'rsi') {
+    const n = t.rsiOf?.length ?? 0
+    if (!n) return null
+    const books = new Set((t.rsiOf ?? []).map(r => r.split('.')[0]))
+    if (n >= 40) return `composed ${n} sūktas — one of the largest bodies in the collection`
+    if (books.size > 1) return `${n} sūktas across ${books.size} maṇḍalas`
+    return `composed ${n} sūktas, all in maṇḍala ${[...books][0]}`
+  }
   const total = t.verses
   if (t.devataOf.length >= 25) {
     return `devatā of ${t.devataOf.length} sūktas — one of the most addressed in the corpus`
@@ -42,13 +50,14 @@ export default async function Page() {
       term: t.term,
       kind: t.kind,
       verses: t.verses,
-      suktas: t.devataOf.length,
+      suktas: t.kind === 'rsi' ? (t.rsiOf?.length ?? 0) : t.devataOf.length,
       gloss: t.gloss,
       hook: hookFor(t),
     }))
     .sort((a, b) => (b.suktas - a.suktas) || (b.verses - a.verses))
 
   const deities = rows.filter(r => r.kind === 'devata').length
+  const rsis = rows.filter(r => r.kind === 'rsi').length
 
   return (
     <Shell crumb={<Crumb parts={[{ label: 'Ṛgveda', href: '/text/rv' }, { label: 'topics' }]} />}>
@@ -58,7 +67,9 @@ export default async function Page() {
         <div className="vd-masthead-meta">
           <span><em>{deities} deities and persons</em></span>
           <span className="vd-masthead-dot">·</span>
-          <span><em>{rows.length - deities} concepts</em></span>
+          <span><em>{rsis} ṛṣis</em></span>
+          <span className="vd-masthead-dot">·</span>
+          <span><em>{rows.length - deities - rsis} concepts</em></span>
           <span className="vd-masthead-dot">·</span>
           <span><em>90,536 references</em></span>
         </div>

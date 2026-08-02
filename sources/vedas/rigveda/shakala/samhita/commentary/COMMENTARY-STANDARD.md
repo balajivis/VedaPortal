@@ -172,6 +172,12 @@ the hymn ends on a request, let the title carry it.
   not "the dawn goddess", **Soma**, **Indra**, **Varuṇa**. Use "the fire" only where
   the hymn genuinely means the physical fire on the hearth rather than the god — and
   even then prefer *the āhavanīya*, *the hearth fire*, or simply Agni.
+- **A ṛṣi is named with his title and his name capitalised.** Write **Madhucchandas Ṛṣi**,
+  **Viśvāmitra Ṛṣi**, **Dīrghatamas Ṛṣi** — not "madhucchandas", not "the seer
+  Madhucchandas", not the bare Anukramaṇī string. These are persons, and the tradition does
+  not refer to them without the title. Where the patronymic matters, give it in prose —
+  *Madhucchandas Ṛṣi, son of Viśvāmitra* — rather than transliterating
+  `vaiśvāmitro madhucchandāḥ` at the reader.
 - **Do not gloss a proper noun.** Write *Agni*, not "Agni, the fire" or "Agni, god of
   fire". Write *Vāyu*, not "Vāyu, the wind"; *Uṣas*, not "Uṣas, the dawn". The reader
   knows who these are, and re-explaining a name every time it appears is the written

@@ -49,6 +49,15 @@ function Bars({ byMandala }: { byMandala: Record<string, number> }) {
   )
 }
 
+/* A ṛṣi is a person and the tradition does not name one without his title.
+   The index key is the bare Anukramaṇī stem (`madhucchandā`, visarga
+   stripped for matching); what a reader sees is *Madhucchandas Ṛṣi*. */
+function displayName(t: { term: string; kind: string }) {
+  if (t.kind !== 'rsi') return t.term
+  const stem = t.term.replace(/ā$/, 'as').replace(/ḥ$/, '')
+  return `${stem.charAt(0).toUpperCase()}${stem.slice(1)} Ṛṣi`
+}
+
 export default async function Page({ params }: { params: Promise<{ term: string }> }) {
   const { term } = await params
   const t = topic(decodeURIComponent(term))
@@ -77,14 +86,20 @@ export default async function Page({ params }: { params: Promise<{ term: string 
     <Shell crumb={<Crumb parts={[
       { label: 'Ṛgveda', href: '/text/rv' },
       { label: 'topics', href: '/topic' },
-      { label: t.term },
+      { label: displayName(t) },
     ]} />}>
         <header className="vd-masthead">
-          <div className="vd-masthead-ref">topic</div>
-          <h1 className="vd-masthead-title" lang="sa">{t.term}</h1>
+          <div className="vd-masthead-ref">{t.kind === 'rsi' ? 'ṛṣi' : t.kind === 'devata' ? 'devatā' : 'topic'}</div>
+          <h1 className="vd-masthead-title" lang="sa">{displayName(t)}</h1>
           {t.gloss ? <p className="tp-gloss">{t.gloss}</p> : null}
           <div className="vd-masthead-meta">
-            <span><em>{t.verses.toLocaleString()} verses</em></span>
+            {t.verses > 0 ? <span><em>{t.verses.toLocaleString()} verses</em></span> : null}
+            {t.rsiOf?.length ? (
+              <>
+                <span className="vd-masthead-dot">·</span>
+                <span><em>ṛṣi of {t.rsiOf.length} sūktas</em></span>
+              </>
+            ) : null}
             {t.devataOf.length ? (
               <>
                 <span className="vd-masthead-dot">·</span>
@@ -120,6 +135,33 @@ export default async function Page({ params }: { params: Promise<{ term: string 
             miss most of these.
           </p>
         </section>
+        ) : null}
+
+        {t.rsiOf?.length ? (
+          <section className="tp-section">
+            <div className="vd-app-label">
+              sūktas composed by this ṛṣi
+              {t.rsiNames?.length ? (
+                <span className="tp-fullname"> — {t.rsiNames.join(' · ')}</span>
+              ) : null}
+            </div>
+            {(() => {
+              const g = new Map<number, string[]>()
+              for (const r of t.rsiOf) {
+                const mm = Number(r.split('.')[0])
+                if (!g.has(mm)) g.set(mm, [])
+                g.get(mm)!.push(r)
+              }
+              return [...g.entries()].sort((a, b) => a[0] - b[0]).map(([mm, refs]) => (
+                <div key={mm} className="tp-mrow">
+                  <span className="tp-mlabel">maṇḍala {mm} <span className="tp-mcount">{refs.length}</span></span>
+                  <span className="tp-reflist">
+                    {refs.map(r => <Link key={r} href={`/text/rv/${r}`} className="tp-ref">{r}</Link>)}
+                  </span>
+                </div>
+              ))
+            })()}
+          </section>
         ) : null}
 
         {t.devataOf.length ? (

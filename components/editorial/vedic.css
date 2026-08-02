@@ -784,3 +784,5 @@
   display: block; font-family: var(--ed-serif); font-size: 14px;
   font-style: italic; color: var(--ed-muted); line-height: 1.5;
 }
+.tp-fullname { font-family: var(--ed-serif); font-size: 13px; font-style: italic;
+  text-transform: none; letter-spacing: 0; color: var(--ed-muted); }

@@ -596,7 +596,13 @@ export type Topic = {
   /* 'devata' — backlinks are the sūktas addressed to it.
      'concept' — no devatā list exists, so the VERSE OCCURRENCES are the
      backlink set, and the page must lead with them. */
-  kind: 'devata' | 'concept'
+  /* 'rsi'     — a composer; backlinks are the sūktas he made.
+     'devata'  — backlinks are the sūktas addressed to him.
+     'concept' — no such list exists, so the VERSE OCCURRENCES are the
+                 backlink set and the page leads with them. */
+  kind: 'devata' | 'concept' | 'rsi'
+  rsiOf?: string[]
+  rsiNames?: string[]
   gloss: string | null
   verses: number
   byMandala: Record<string, number>
