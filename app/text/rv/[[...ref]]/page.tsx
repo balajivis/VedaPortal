@@ -80,6 +80,26 @@ function PrevNext({ prev, next }: { prev: { href: string; label: string } | null
   )
 }
 
+/* The Anukramaṇī gives the ṛṣi lowercase and in sandhi — `vaiśvāmitro
+   madhucchandāḥ`. The prose of the notes calls him *Madhucchandas Ṛṣi*, and
+   a reader had no way to see those were the same person.
+
+   Two changes only, and both are mechanical:
+     · capitalise each name — they are proper nouns
+     · a word-final `-āḥ` is the nominative of an `-as` stem, so
+       madhucchandāḥ → Madhucchandas, purūravāḥ → Purūravas
+
+   NOT done: appending "Ṛṣi". The field is already labelled `ṛṣi`, and the
+   ascriptions are not all ṛṣis — Indra, Urvaśī, Saramā and the Paṇis all
+   stand in this column as speakers of dialogue hymns. Suffixing every one
+   would state something false about 30-odd sūktas to tidy the rest. Verse
+   ranges — `(1-3)indraḥ,(4-6)aditiḥ` — are preserved untouched. */
+function rsiDisplay(raw: string): string {
+  if (!raw) return ''
+  return raw.replace(/[a-zāīūṛṝḷḹṃḥṅñṭḍṇśṣ]+/gi, w =>
+    (/āḥ$/.test(w) ? `${w.slice(0, -2)}as` : w).replace(/^./, c => c.toUpperCase()))
+}
+
 /* The only model-written prose a reader sees. Rendered set apart, labelled
    at the TOP (not in a footer nobody reads), and stating in the body what
    the model could not see. Project rule: AI generates, tradition verifies. */
@@ -179,13 +199,15 @@ function SuktaNoteBlock({ note }: { note: SuktaNote | null }) {
           {note.sources?.length ? <> Drawn from {note.sources.join('; ')}.</> : null}{' '}
           Sāyaṇa is held here as an English digest of the Ṛgveda-bhāṣya, not as his Sanskrit.
           Points where the witnesses disagree are set out under <em>how it has been read</em>{' '}
-          rather than resolved.
+          rather than resolved. <Link href="/standards" className="vd-xref">How these notes are
+          written</Link>.
         </p>
       ) : (
         <p className="vd-machine-foot">
           Written from the two English translations only — this model did not read the
           Sanskrit, and no traditional scholar has reviewed it. Treat it as orientation,
-          not as a reading.
+          not as a reading. <Link href="/standards" className="vd-xref">How these notes are
+          written</Link>.
         </p>
       )}
     </section>
@@ -273,7 +295,7 @@ export default async function Page({ params }: { params: Promise<{ ref?: string[
                 <span className="vd-index-sub">
                   <span lang="sa">{names(h.devataRaw).join(' · ')}</span>
                   {' · '}{names(h.chandasRaw).join(', ')}
-                  {' · '}{h.rishi || <em>ṛṣi not recorded</em>}
+                  {' · '}{rsiDisplay(h.rishi) || <em>ṛṣi not recorded</em>}
                 </span>
               </span>
               <span className="vd-index-meta">{h.verses} ṛcs</span>
@@ -322,7 +344,7 @@ export default async function Page({ params }: { params: Promise<{ ref?: string[
             <span className="vd-masthead-dot">·</span>
             <span><span className="vd-meta-key">chandas</span> <em lang="sa">{ch.map(c => c.name).join(', ')}</em></span>
             <span className="vd-masthead-dot">·</span>
-            <span><span className="vd-meta-key">ṛṣi</span> <em>{h.rishi || 'not recorded'}</em></span>
+            <span><span className="vd-meta-key">ṛṣi</span> <em>{rsiDisplay(h.rishi) || 'not recorded'}</em></span>
             <span className="vd-masthead-dot">·</span>
             <span><em>{h.verses} ṛcs</em></span>
           </div>
@@ -399,7 +421,7 @@ export default async function Page({ params }: { params: Promise<{ ref?: string[
   return (
     <Shell crumb={crumb}>
       <div className="vd-eyebrow">
-        ṛṣi {h.rishi || '— not recorded'} · devatā {dv?.name ?? '—'} · {ch?.name ?? '—'}
+        ṛṣi {rsiDisplay(h.rishi) || '— not recorded'} · devatā {dv?.name ?? '—'} · {ch?.name ?? '—'}
       </div>
       <h1 className="vd-title">RV <em>{key}.</em></h1>
 

@@ -15,6 +15,30 @@ be the point.
 
 A note that reads like a seminar has failed even if every sentence in it is true.
 
+## ⭐ We give voice to many traditions and adjudicate between none
+
+The Ṛgveda is read by several living traditions and by scholars who disagree with all
+of them. **All of them get a voice here. None of them gets the verdict.** This is not
+neutrality for its own sake — it is the only honest way to make one manual serve
+practitioners who do not read alike.
+
+| tradition | reads the Veda as | how it enters the notes |
+|---|---|---|
+| **Mīmāṃsā** | injunction — a mantra means what it does in the yajña | chiefly through Sāyaṇa, whose bhāṣya is written from inside it; his ritual detail, derivations and Brāhmaṇa citations are first-rate material |
+| **Vedānta** | knowledge — the saṃhitā read toward the upaniṣads | named and attributed, never adopted; the schools differ sharply among themselves and that is left standing |
+| **Devotional** | address — someone is being spoken to, by name | this is the register of the primary text. The hymn says what it says, with nothing interposed |
+| **Academic, insider** | Aurobindo's psychological reading, Dayānanda, Kapālī Śāstrī, modern Indian scholarship | a reading among readings — not privileged for being traditional, not discounted for it |
+| **Academic, outsider** | philology and the European translations; strata, redaction, dating | two translations held verse by verse; chronological argument goes under `disagreements`, named |
+
+Practical consequences, all of which are already rules below: **zero names in the
+primary fields** and all attribution in `disagreements`; a genuine ambiguity is kept
+rather than resolved; and where two witnesses diverge, that divergence is usually the
+most informative thing available. Out of scope by decision: adjudicating the
+civilizational and origins debate, or producing legitimacy for any camp in it.
+
+The reader-facing statement of all this is `app/standards/page.tsx`, served at
+`/standards`. **The two must not drift.** Change one, change the other.
+
 ## Record shape
 
 ```json

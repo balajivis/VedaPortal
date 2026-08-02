@@ -14,8 +14,33 @@ Promoted so far:
 
 | record | reviewed |
 |---|---|
-| RV 1.1 | 2026-08-02 — title, context paragraph, register, the ṛtvij/hotṛ/purohita levels |
+| RV 1.1 | 2026-08-02 — title, context paragraph, register, the ṛtvij/hotṛ/purohita levels; **re-read end to end the same day** (below) |
 | `/topic/priests` | 2026-08-02 — framing, table, typography, the three-levels correction |
+| `/standards` | 2026-08-02 — the public statement of the editorial standard |
+
+**The RV 1.1 whole-document pass** found six things that reading fields separately had
+missed, which is the argument for doing it this way on every promotion:
+
+1. **A rendering defect, not a prose one.** `para()` turns every single `\n` into a `<br>`,
+   and the prose of ṛcs 3, 5, 6, 8 and 9 was hard-wrapped in the JSON. Half the verses
+   rendered with breaks mid-sentence and half did not. Verse blocks are now **exactly three
+   lines** — Devanāgarī, IAST, prose — and that invariant is worth asserting in a check.
+   Audited corpus-wide: RV 1.1 is the only record with verse blocks, so nothing else is hit.
+2. **"The Veda opens at the fire and closes at the fire"** — the naming rule says Agni. In
+   the flagship record, in the first paragraph.
+3. **One sentence in three places.** "Eight ṛcs name what he does. The ninth asks only that
+   he be close" stood in the synthesis, at ṛc 9, and in *where it lives*. Kept at ṛc 9.
+4. **Two ṛcs carried no reading at all** — 3 and 7 were translation only, against the
+   every-verse-carries rule. ṛc 3 now runs deepest in the sūkta.
+5. **I broke the zero-names rule while fixing something else** — attributing Sāyaṇa at ṛc 4
+   and the translators at ṛc 3 read as exactly the seminar the rule exists to prevent. Both
+   moved to *how it has been read*.
+6. **The masthead contradicted the prose.** The note says *Madhucchandas Ṛṣi*; the masthead
+   printed the raw Anukramaṇī string `vaiśvāmitro madhucchandāḥ`, and a reader had no way to
+   see they were the same person. `rsiDisplay()` now capitalises and resolves `-āḥ` → `-as`
+   corpus-wide. It deliberately does **not** append "Ṛṣi": Indra, Urvaśī, Saramā and the
+   Paṇis stand in that column as speakers of dialogue hymns, and suffixing every entry would
+   state something false about thirty-odd sūktas to tidy the rest.
 
 Still machine: 190 sūkta notes in maṇḍala 1, 10 in maṇḍala 2, the maṇḍala 1 overview, and the
 seven topic analyses (yajña, adhvara, ṛta, rayi, poṣa, yaśas, aṅgiras).
@@ -180,13 +205,17 @@ this distinction when they get one.
 
 ## 7. Curated reference pages have no home in the navigation
 
-`/topic/priests` (the sixteen ṛtviks) exists and is reachable only if you know the URL. The
-topic index is a lemma search and cannot surface a hand-written page; a single link bolted to
-the front of it was removed as neither search nor a scheme.
+**Partly addressed.** `/standards` is now linked from the provenance footer of every sūkta
+note — which is the right door for it, since that is where a reader is already asking who
+wrote this. `/topic/priests` and `/topic/fires` are still reachable only from the RV 1.1 note
+and from each other, not from anywhere a reader would look first.
 
-Needed: an organising schema for curated reference pages — priests, and whatever follows
-(metres, the ritual year, the śākhās). Probably a small set of named collections rather than
-a flat list.
+The topic index is a lemma search and cannot surface a hand-written page; a single link
+bolted to the front of it was removed as neither search nor a scheme.
+
+Needed: an organising schema for curated reference pages — standards, priests, fires, and
+whatever follows (metres, the ritual year, the śākhās). Probably a small set of named
+collections rather than a flat list.
 
 ---
 
