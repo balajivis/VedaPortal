@@ -881,3 +881,11 @@ td.pr-num { font-family: var(--ed-mono) !important; font-size: 12px !important; 
   text-transform: uppercase; color: var(--ed-paper);
   background: var(--ed-muted); padding: 2px 6px; margin-left: 10px;
 }
+
+/* An edited note. Accent rather than the muted machine grey — the claim is
+   different, so the mark must be. */
+.vd-edited-tag {
+  font-family: var(--ed-mono); font-size: 9px; letter-spacing: .2em;
+  text-transform: uppercase; color: var(--ed-paper);
+  background: var(--ed-accent); padding: 3px 7px;
+}

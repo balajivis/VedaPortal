@@ -267,6 +267,24 @@ checked in the padapāṭha, not inferred from the English. Two real traps alrea
 a regex missed `ṛtāvṛdhau` because of the macron, and `dadhiṣva` was nearly counted
 as a *dhī* form when it is from √dhā. When a claim rests on a form, look at it.
 
+## Provenance: `machine` and `edited`
+
+Every record carries a `kind`, and the badge and footnote key off it. **A note must never
+claim review it has not had.**
+
+| `kind` | badge | means |
+|---|---|---|
+| `machine` | machine-written | drafted, unreviewed. The footnote says the model did not read the Sanskrit and no traditional scholar has seen it. |
+| `edited` | edited & reviewed | a human has read it against the sources and revised it, **and is named** in `editor` with a `reviewed` date. |
+
+Promote a record to `edited` only when that is true of *that record*. It is not a project-wide
+status and does not travel to neighbouring sūktas.
+
+**State the sources precisely.** Sāyaṇa is held here as an **English digest** of the
+Ṛgveda-bhāṣya spliced into wisdomlib's Wilson text — not as his Sanskrit. A note that says
+"drawn from Sāyaṇa's Sanskrit commentary" claims a source we do not have. List what was
+actually used, in `sources`.
+
 ## Honesty rules — these are not negotiable
 
 1. **AI generates, tradition verifies.** Nothing here is a verified reading. Never

@@ -535,7 +535,14 @@ export type SuktaNote = {
   practice?: string
   disagreements?: string
   text?: string
-  kind: 'machine'
+  /* 'machine' — drafted and unreviewed. 'edited' — a human has read it
+     against the sources and revised it, and is named. The badge and the
+     footnote both key off this; a note must never claim review it has not
+     had. */
+  kind: 'machine' | 'edited'
+  editor?: string
+  reviewed?: string
+  sources?: string[]
   model: string
   generated: string
   witnesses: string[]

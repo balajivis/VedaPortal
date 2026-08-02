@@ -141,9 +141,13 @@ function SuktaNoteBlock({ note }: { note: SuktaNote | null }) {
   return (
     <section className="vd-machine">
       <div className="vd-machine-head">
-        <span className="vd-machine-tag">machine-written</span>
+        <span className={note.kind === 'edited' ? 'vd-edited-tag' : 'vd-machine-tag'}>
+          {note.kind === 'edited' ? 'edited & reviewed' : 'machine-written'}
+        </span>
         <span className="vd-machine-meta">
-          {note.model} · {note.generated} · from Wilson + Griffith
+          {note.kind === 'edited'
+            ? <>reviewed by {note.editor} · {note.reviewed}</>
+            : <>{note.model} · {note.generated} · from Wilson + Griffith</>}
         </span>
       </div>
       <div className="vd-machine-body">
@@ -169,11 +173,21 @@ function SuktaNoteBlock({ note }: { note: SuktaNote | null }) {
             .map((para, i) => <p key={i}>{emph(para)}</p>)}
         </div>
       ) : null}
-      <p className="vd-machine-foot">
-        Written from the two English translations only — this model did not read the
-        Sanskrit, and no traditional scholar has reviewed it. Treat it as orientation,
-        not as a reading.
-      </p>
+      {note.kind === 'edited' ? (
+        <p className="vd-machine-foot">
+          Read against the sources and revised by hand.
+          {note.sources?.length ? <> Drawn from {note.sources.join('; ')}.</> : null}{' '}
+          Sāyaṇa is held here as an English digest of the Ṛgveda-bhāṣya, not as his Sanskrit.
+          Points where the witnesses disagree are set out under <em>how it has been read</em>{' '}
+          rather than resolved.
+        </p>
+      ) : (
+        <p className="vd-machine-foot">
+          Written from the two English translations only — this model did not read the
+          Sanskrit, and no traditional scholar has reviewed it. Treat it as orientation,
+          not as a reading.
+        </p>
+      )}
     </section>
   )
 }
