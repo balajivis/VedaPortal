@@ -172,6 +172,12 @@ the hymn ends on a request, let the title carry it.
   not "the dawn goddess", **Soma**, **Indra**, **Varuṇa**. Use "the fire" only where
   the hymn genuinely means the physical fire on the hearth rather than the god — and
   even then prefer *the āhavanīya*, *the hearth fire*, or simply Agni.
+- **Link a ṛṣi from his own name, not from a parenthesis.** The `{{term}}` mark prints the
+  index KEY, which for a ṛṣi is the bare Anukramaṇī stem (`madhucchandā`) and not what a
+  reader should see. Writing "Madhucchandas Ṛṣi ({{madhucchandā}})" leaves the machinery
+  showing. Use a link instead — `[Madhucchandas Ṛṣi](/topic/madhucchandā)` — so the name
+  itself is the door. `{{term}}` stays right for deities and concepts, where the key and the
+  display name are the same word.
 - **A ṛṣi is named with his title and his name capitalised.** Write **Madhucchandas Ṛṣi**,
   **Viśvāmitra Ṛṣi**, **Dīrghatamas Ṛṣi** — not "madhucchandas", not "the seer
   Madhucchandas", not the bare Anukramaṇī string. These are persons, and the tradition does
