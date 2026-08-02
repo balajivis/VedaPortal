@@ -610,3 +610,53 @@
   color: var(--ed-ink-2); margin: 8px 0 0;
 }
 .vd-machine-living p:first-of-type { margin-top: 4px; }
+
+/* =========================================================================
+   SŪKTA MASTHEAD. The devatā is the heading — it is what a reader wants
+   first, and it used to sit as a small label in a two-column grid. The
+   canonical address and the suggested title share a line beneath it; ṛṣi and
+   chandas run italic below, apparatus rather than headline.
+   ========================================================================= */
+.vd-masthead { text-align: center; margin: 4px 0 34px; }
+.vd-devata-head {
+  font-family: var(--ed-deva, var(--ed-serif));
+  font-size: clamp(38px, 7vw, 62px);
+  font-weight: 400; line-height: 1.06;
+  letter-spacing: -0.012em;
+  color: var(--ed-ink); margin: 0 0 14px;
+  text-transform: lowercase;
+}
+.vd-masthead-line {
+  display: flex; flex-wrap: wrap; justify-content: center;
+  align-items: baseline; gap: 11px;
+}
+.vd-masthead-ref {
+  font-family: var(--ed-mono); font-size: 13px; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--ed-accent);
+}
+.vd-masthead-sep { color: var(--ed-line); }
+.vd-masthead-title {
+  font-family: var(--ed-serif); font-size: 21px; font-style: italic;
+  color: var(--ed-ink-2); border-bottom: 1px dotted var(--ed-line);
+  cursor: help;
+}
+.vd-masthead-meta {
+  margin-top: 13px;
+  font-family: var(--ed-serif); font-size: 14.5px;
+  color: var(--ed-muted); display: flex; flex-wrap: wrap;
+  justify-content: center; gap: 9px;
+}
+.vd-masthead-dot { color: var(--ed-line); font-style: normal; }
+.vd-masthead-shift {
+  margin-top: 11px; display: flex; flex-direction: column; gap: 3px;
+  font-family: var(--ed-mono); font-size: 10px; letter-spacing: .06em;
+  text-transform: uppercase; color: var(--ed-muted-2);
+}
+
+/* Devatā heading scales down as the list grows — a four-deity hymn still
+   names all four rather than being flattened to its first. */
+.vd-devata-1 { font-size: clamp(38px, 7vw, 62px); }
+.vd-devata-2 { font-size: clamp(32px, 5.6vw, 48px); }
+.vd-devata-3 { font-size: clamp(27px, 4.6vw, 39px); }
+.vd-devata-4 { font-size: clamp(23px, 3.8vw, 33px); line-height: 1.22; }
+.vd-devata-join { color: var(--ed-line); font-style: normal; }

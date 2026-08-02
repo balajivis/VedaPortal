@@ -225,33 +225,55 @@ export default async function Page({ params }: { params: Promise<{ ref?: string[
     const { prev, next } = neighbours(m, s)
     const dv = spans(h.devataRaw)
     const ch = spans(h.chandasRaw)
+    const note = suktaNote(m, s)
     return (
       <Shell crumb={<Crumb parts={[
         { label: 'Ṛgveda', href: '/text/rv' },
         { label: `Maṇḍala ${m}`, href: `/text/rv/${m}` },
         { label: `Sūkta ${s}` },
       ]} />}>
-        <div className="vd-eyebrow">
-          ṛṣi {h.rishi || '— not recorded'} · {h.verses} ṛcs
-        </div>
-        <h1 className="vd-title">RV <em>{h.ref}.</em></h1>
-
-        <div className="vd-ascription">
-          <div>
-            <div className="vd-app-label">devatā{dv.length > 1 ? <span className="era">shifts mid-hymn</span> : null}</div>
-            <ul className="vd-spanlist">
-              {dv.map((d, i) => <li key={i}><span className="vd-range">{d.range ?? 'all'}</span> {d.name}</li>)}
-            </ul>
+        {/* The devatā is the heading: it is the first thing a reader wants to
+            know, and it was previously a small label in a two-column grid. The
+            address and the suggested title sit together beneath it; ṛṣi and
+            chandas run italic below, as apparatus rather than headline. */}
+        <header className="vd-masthead">
+          {/* ⚠ Show EVERY devatā, not just the first. RV 1.3 is addressed to
+              four in turn; heading it "aśvinau" asserts something false, and
+              it is the same flattening the maṇḍala index refuses. The type
+              scale steps down as the list grows so four names still fit. */}
+          <h1 className={`vd-devata-head vd-devata-${Math.min(dv.length, 4)}`} lang="sa">
+            {dv.map((d, i) => (
+              <Fragment key={i}>
+                {i > 0 ? <span className="vd-devata-join"> · </span> : null}
+                {d.name}
+              </Fragment>
+            ))}
+          </h1>
+          <div className="vd-masthead-line">
+            <span className="vd-masthead-ref">RV {h.ref}</span>
+            {note?.title ? (
+              <>
+                <span className="vd-masthead-sep">·</span>
+                <span className="vd-masthead-title" title="machine-suggested">{note.title}</span>
+              </>
+            ) : null}
           </div>
-          <div>
-            <div className="vd-app-label">chandas{ch.length > 1 ? <span className="era">shifts mid-hymn</span> : null}</div>
-            <ul className="vd-spanlist">
-              {ch.map((c, i) => <li key={i}><span className="vd-range">{c.range ?? 'all'}</span> {c.name}</li>)}
-            </ul>
+          <div className="vd-masthead-meta">
+            <em>{h.rishi || 'ṛṣi not recorded'}</em>
+            <span className="vd-masthead-dot">·</span>
+            <em lang="sa">{ch.map(c => c.name).join(', ')}</em>
+            <span className="vd-masthead-dot">·</span>
+            <em>{h.verses} ṛcs</em>
           </div>
-        </div>
+          {(dv.length > 1 || ch.length > 1) ? (
+            <div className="vd-masthead-shift">
+              {dv.length > 1 ? <span>devatā shifts: {dv.map(d => `${d.range ?? 'all'} ${d.name}`).join(' · ')}</span> : null}
+              {ch.length > 1 ? <span>chandas shifts: {ch.map(c => `${c.range ?? 'all'} ${c.name}`).join(' · ')}</span> : null}
+            </div>
+          ) : null}
+        </header>
 
-        <SuktaNoteBlock note={suktaNote(m, s)} />
+        <SuktaNoteBlock note={note} />
 
         <div className="vd-index">
           {hymnText(m, s).map((text, i) => (

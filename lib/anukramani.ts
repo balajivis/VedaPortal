@@ -527,6 +527,10 @@ export type SuktaNote = {
      translators — goes in `disagreements`, rendered under "how it has been
      read". Name-dropping in the body is what makes a manual read like a
      seminar. */
+  /* A short suggested title. The Anukramaṇī gives no hymn titles — these are
+     ours, and machine-made, so they are offered next to the address rather
+     than in place of it. RV 1.1 is the canonical name; the title is a handle. */
+  title?: string
   synthesis: string
   practice?: string
   disagreements?: string
