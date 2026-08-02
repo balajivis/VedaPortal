@@ -516,7 +516,13 @@ export type SuktaNote = {
      EMBEDS these notes and clusters them by subject: a note that is mostly
      about translators clusters by "translation dispute" rather than by
      theme, so only `synthesis` should go into the vector. */
+  /* Order matters and is the whole design. A reciter opens this page to
+     understand what they are saying and why it bears on their life — not to
+     read a philology paper. So: what the sūkta says, then where it lives in
+     practice, and only then the textual apparatus. The scholarship is here
+     to be trustworthy, not to be the point. */
   synthesis: string
+  practice?: string
   disagreements?: string
   text?: string
   kind: 'machine'

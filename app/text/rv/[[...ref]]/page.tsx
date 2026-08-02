@@ -107,6 +107,14 @@ function SuktaNoteBlock({ note }: { note: SuktaNote | null }) {
         {(note.synthesis ?? note.text ?? '').split(/\n{2,}/)
           .filter(Boolean).map((para, i) => <p key={i}>{emph(para)}</p>)}
       </div>
+      {note.practice ? (
+        <div className="vd-machine-living">
+          <div className="vd-app-label">where it lives</div>
+          {note.practice.split(/\n{2,}/).filter(Boolean)
+            .map((para, i) => <p key={i}>{emph(para)}</p>)}
+        </div>
+      ) : null}
+
       {note.disagreements ? (
         <div className="vd-machine-split">
           <div className="vd-app-label">where the witnesses differ</div>
