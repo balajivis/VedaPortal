@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { topicList } from '@/lib/anukramani'
 import { Shell, Crumb } from '@/components/editorial/Shell'
 import { TopicSearch, type Row } from './TopicSearch'
@@ -80,6 +81,19 @@ export default async function Page() {
         <span lang="sa">indram</span> and <span lang="sa">indra-śatruḥ</span> all count as{' '}
         <span lang="sa">indra</span> — a search over the Devanāgarī would find none of them.
       </p>
+
+      <section className="tp-section">
+        <div className="vd-app-label">reference</div>
+        <div className="tp-picks">
+          <Link href="/topic/priests" className="tp-pick">
+            <span className="tp-pick-term">The Sixteen Ṛtviks</span>
+            <span className="tp-pick-hook">
+              four chief priests, three assistants each, one group per Veda — with what the
+              Ṛgveda Saṃhitā names and what its brāhmaṇa carries
+            </span>
+          </Link>
+        </div>
+      </section>
 
       <TopicSearch rows={rows} />
     </Shell>
