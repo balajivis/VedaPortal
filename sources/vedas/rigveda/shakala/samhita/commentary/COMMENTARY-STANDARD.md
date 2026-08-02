@@ -104,6 +104,34 @@ The tell is whether the sentence *describes a hymn* or *says what the hymn says*
 | "a strange hymn, unlike anything around it" | say what it does; let the reader find it strange |
 | "the redactors placed this here" | (belongs in `disagreements`) |
 
+#### No presupposed chronology. Anywhere in the primary fields.
+
+Do not write that a deity, word or practice **becomes**, **develops into**, **gives rise
+to**, or is a **precursor of** anything. Do not call one part of the corpus *earlier* or
+*later* than another, and do not treat the Ṛgveda as the origin from which the rest grew.
+The tradition does not hold the Vedas in chronological sequence, and a reader who does not
+either will find the framing not merely wrong but discourteous.
+
+The failure is usually also a factual one. "For a deity who becomes Śiva, the Ṛgvedic base
+is very small" was written of Rudra — but Rudra is sparse in the **Ṛgveda Saṃhitā** and
+abundant in the **Yajurveda**, where the Śatarudriya is among the largest single addresses
+to any deity in the Veda. The honest statement is about **distribution across the corpus**,
+not development in time:
+
+> ❌ For a deity who becomes Śiva, the Ṛgvedic base is very small.
+> ✅ Rudra is addressed by three sūktas in the whole Ṛgveda. That says something about the
+>   Ṛgveda's distribution, not about Rudra: the Yajurveda gives him the Śatarudriya, recited
+>   daily as the Rudram. Where a deity stands in one saṃhitā is not the measure of where he
+>   stands in the Veda.
+
+Where continuity is real, **show it in the words** rather than asserting a line of descent:
+RV 1.114.8 *mā nas toke tanaye…* is carried in the Rudram, and anyone who has heard the
+Rudram has heard that verse. That is a fact about recitation, checkable, and it needs no
+theory of development to be worth saying.
+
+Academic chronology — strata, redaction, relative dating — is a real body of scholarship and
+the reader deserves it. It goes under **`disagreements`**, named to whoever holds it.
+
 **Banned from the primary fields, allowed in `disagreements`:** *transactional*, *bargain*
 (except glossing *paṇi*), *cult*, *tribal*, *primitive*, *mythology*, *superstition*,
 *merely*, *nothing more than*, *naive*, *curious*, and every claim about dating, strata,
