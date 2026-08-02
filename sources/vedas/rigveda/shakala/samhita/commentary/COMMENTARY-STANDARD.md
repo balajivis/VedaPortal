@@ -82,6 +82,13 @@ The hymn in **its own voice**, narrative, verse by verse.
   not "the dawn goddess", **Soma**, **Indra**, **Varuṇa**. Use "the fire" only where
   the hymn genuinely means the physical fire on the hearth rather than the god — and
   even then prefer *the āhavanīya*, *the hearth fire*, or simply Agni.
+- **Do not gloss a proper noun.** Write *Agni*, not "Agni, the fire" or "Agni, god of
+  fire". Write *Vāyu*, not "Vāyu, the wind"; *Uṣas*, not "Uṣas, the dawn". The reader
+  knows who these are, and re-explaining a name every time it appears is the written
+  equivalent of talking slowly. Unpack a name **only** where the etymology is itself
+  the point being made — e.g. *ṛtvij* as *ṛtu* + √yaj, because the claim is about
+  timeliness. Ordinary epithets (*hotā*, *purohita*, *citrabhānu*) are still glossed
+  once, since those are descriptions rather than names.
 - **Look for the spine.** The best notes find the thing running underneath: *dhī*
   threading RV 1.3 from v2 to v12; `indra ā yāhi` opening three consecutive verses;
   *ṛta* three times in one line of 1.2.8. Read the padapāṭha to find these — they are
