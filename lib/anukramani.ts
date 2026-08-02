@@ -439,3 +439,63 @@ export function padas(text: string, lengths: number[] | null): string[] | null {
   out.push(text.slice(start).trim())
   return out.filter(Boolean)
 }
+
+/* -------------------------------------------------------------------------
+   Wilson's translation + per-word grammar, from wisdomlib.
+   Wilson renders FOLLOWING SAYANA, so this is the traditional reading in
+   English. The grammar is verse-addressed — which DCS is not.
+   Both are PARTIAL while the crawl runs; absence means not-yet-fetched.
+   ------------------------------------------------------------------------- */
+const GRAM_DIR = join(process.cwd(), 'sources/vedas/rigveda/shakala/apparatus/grammar')
+const WIL_CACHE = new Map<number, Record<string, string[]>>()
+const GRAM_CACHE = new Map<number, Record<string, GrammarWord[][]>>()
+
+export type GrammarWord = { surface: string; lemma?: string; morph?: string; gloss?: string }
+
+function loadJson<T>(dir: string, file: string): T {
+  try { return JSON.parse(readFileSync(join(dir, file), 'utf8')) } catch { return {} as T }
+}
+
+export function wilson(m: number, s: number, v: number): string | null {
+  let t = WIL_CACHE.get(m)
+  if (!t) {
+    t = loadJson<Record<string, string[]>>(TR_DIR, `wilson-mandala-${m}.json`)
+    WIL_CACHE.set(m, t)
+  }
+  return t[String(s)]?.[v - 1] ?? null
+}
+
+export function grammar(m: number, s: number, v: number): GrammarWord[] | null {
+  let t = GRAM_CACHE.get(m)
+  if (!t) {
+    t = loadJson<Record<string, GrammarWord[][]>>(GRAM_DIR, `grammar-mandala-${m}.json`)
+    GRAM_CACHE.set(m, t)
+  }
+  return t[String(s)]?.[v - 1] ?? null
+}
+
+/* -------------------------------------------------------------------------
+   Address concordance — mandala.sukta.rc <-> astaka.adhyaya.varga.rc.
+   The Rgveda has two divisions of the same sequential text; Wilson and the
+   marginal varga labels in the scans use the astaka one. Validated as a
+   strict superset of our 10,552 verses.
+   ------------------------------------------------------------------------- */
+let CONC: Map<string, { ashtaka: string; anuvaka: string }> | null = null
+
+export function addressSystems(m: number, s: number, v: number) {
+  if (!CONC) {
+    CONC = new Map()
+    try {
+      const tsv = readFileSync(
+        join(process.cwd(), 'sources/vedas/rigveda/shakala/apparatus/concordance/rv_ashtaka_mandala_concordance.tsv'),
+        'utf8'
+      )
+      for (const line of tsv.split('\n').slice(1)) {
+        const [ms, ashtaka, anuvaka] = line.split('\t')
+        if (ms) CONC.set(ms.trim(), { ashtaka: (ashtaka ?? '').trim(), anuvaka: (anuvaka ?? '').trim() })
+      }
+    } catch { /* absent */ }
+  }
+  const key = `${String(m).padStart(2, '0')}.${String(s).padStart(3, '0')}.${String(v).padStart(2, '0')}`
+  return CONC.get(key) ?? null
+}
