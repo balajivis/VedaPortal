@@ -172,6 +172,11 @@ the hymn ends on a request, let the title carry it.
   not "the dawn goddess", **Soma**, **Indra**, **Varuṇa**. Use "the fire" only where
   the hymn genuinely means the physical fire on the hearth rather than the god — and
   even then prefer *the āhavanīya*, *the hearth fire*, or simply Agni.
+- **An inflected form links from itself.** `{{dhī}}` prints the lemma — so a sentence that
+  says *dhiyā* would show "dhī" instead. Where the text carries an inflected or compound
+  form, link it and keep the surface shape: `[*dhiyā*](/topic/dhī)`,
+  `[*namo bharantaḥ*](/topic/namas)`, `[*svastaye*](/topic/svasti)`. `{{term}}` is for the
+  bare lemma only.
 - **Link a ṛṣi from his own name, not from a parenthesis.** The `{{term}}` mark prints the
   index KEY, which for a ṛṣi is the bare Anukramaṇī stem (`madhucchandā`) and not what a
   reader should see. Writing "Madhucchandas Ṛṣi ({{madhucchandā}})" leaves the machinery
