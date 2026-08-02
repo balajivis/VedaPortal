@@ -47,8 +47,26 @@ function translation(L) {
     if (/^(Details|Ṛṣi|Rishi|Devatā|Chandas|Svara|Sanskrit text|\[Rigveda)/i.test(L[k])) break
     out.push(L[k])
   }
-  return out.join(' ').replace(/\s+/g, ' ').replace(/^[“"]|[”"]$/g, '').trim() || null
+  const joined = out.join(' ').replace(/\s+/g, ' ').trim()
+  /* ⭐ SAYANA IS IN HERE. wisdomlib splices Sayana's Rgveda-bhasya into the
+     Wilson text inline — "… wealth.” Commentary by Sayana: Rgveda-bhasya
+     Agni = purohita, the priest who superintends family rites; …". That is
+     the 14th-century commentary itself, verse-addressed, arriving free with a
+     crawl that was aimed at the translation. It was NOT found by the Poona
+     OCR alignment, which scored 31.9% and stalled.
+     Translation and commentary are different KINDS of witness and must not
+     be stored as one blob: Wilson is a rendering, Sayana is an argument. */
+  const cut = joined.search(/[“"]?\s*Commentary by S[āa]ya[ṇn]a\s*:/i)
+  if (cut < 0) return { translation: strip(joined), sayana: null }
+  const head = joined.slice(0, cut)
+  const tail = joined.slice(cut)
+    .replace(/^[“"]?\s*Commentary by S[āa]ya[ṇn]a\s*:\s*/i, '')
+    .replace(/^[ṚR][gG]veda-bh[āa][ṣs]ya\s*/i, '')
+    .trim()
+  return { translation: strip(head), sayana: tail || null }
 }
+
+const strip = t => t.replace(/^[“"]|[”"]$/g, '').trim() || null
 
 /* Grammar entries look like:
      ete            <- surface
@@ -87,7 +105,7 @@ function grammar(L) {
 
 if (!existsSync(CACHE)) { console.error('  no cache at ' + CACHE); process.exit(1) }
 const files = readdirSync(CACHE).filter(f => f.endsWith('.html'))
-const T = new Map(), G = new Map()
+const T = new Map(), G = new Map(), S = new Map()
 let noRef = 0
 for (const f of files) {
   const html = readFileSync(join(CACHE, f), 'utf8')
@@ -95,20 +113,27 @@ for (const f of files) {
   if (!ref) { noRef++; continue }
   const L = lines(html)
   const key = `${ref.m}.${ref.s}.${ref.v}`
-  const t = translation(L); if (t) T.set(key, t)
+  const t = translation(L)
+  if (t?.translation) T.set(key, t.translation)
+  if (t?.sayana) S.set(key, t.sayana)
   const g = grammar(L);     if (g) G.set(key, g)
 }
 console.log(`  cached pages      : ${files.length}`)
 console.log(`  not a verse page  : ${noRef}  (sukta/mandala headers)`)
 console.log(`  translations      : ${T.size}`)
 console.log(`  grammar sets      : ${G.size}`)
+console.log(`  ⭐ SĀYAṆA glosses  : ${S.size}   (spliced inline by wisdomlib — free with this crawl)`)
 console.log(`  coverage of 10552 : ${(T.size / 10552 * 100).toFixed(1)}%`)
 
-mkdirSync(OUT_T, { recursive: true }); mkdirSync(OUT_G, { recursive: true })
+const OUT_S = 'sources/vedas/rigveda/shakala/samhita/commentary/sayana'
+mkdirSync(OUT_T, { recursive: true }); mkdirSync(OUT_G, { recursive: true }); mkdirSync(OUT_S, { recursive: true })
 for (let m = 1; m <= 10; m++) {
   const t = {}, g = {}
   for (const [k, v] of T) { const [a, s, i] = k.split('.').map(Number); if (a === m) ((t[s] ??= []))[i - 1] = v }
   for (const [k, v] of G) { const [a, s, i] = k.split('.').map(Number); if (a === m) ((g[s] ??= []))[i - 1] = v }
+  const y = {}
+  for (const [k, v] of S) { const [a, s, i] = k.split('.').map(Number); if (a === m) ((y[s] ??= []))[i - 1] = v }
+  writeFileSync(join(OUT_S, `sayana-mandala-${m}.json`), JSON.stringify(y), 'utf8')
   writeFileSync(join(OUT_T, `wilson-mandala-${m}.json`), JSON.stringify(t), 'utf8')
   writeFileSync(join(OUT_G, `grammar-mandala-${m}.json`), JSON.stringify(g), 'utf8')
 }

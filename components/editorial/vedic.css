@@ -543,3 +543,57 @@
   text-transform: uppercase; color: var(--ed-muted-2);
 }
 @media (max-width: 900px) { .vd-gram-head { display: none; } }
+
+/* =========================================================================
+   MACHINE NOTE. Deliberately set apart from the apparatus rows: this is the
+   only prose in the reader a model wrote, and it must not be mistaken for a
+   sourced reading. Hatched ground + dashed rule, the same visual language
+   `.vd-enumerated` uses for "this is not yet the real thing".
+   ========================================================================= */
+.vd-machine {
+  border: 1px dashed var(--ed-line);
+  border-left: 2px solid var(--ed-muted-2);
+  background:
+    repeating-linear-gradient(135deg,
+      transparent, transparent 9px,
+      color-mix(in srgb, var(--ed-muted-2) 5%, transparent) 9px,
+      color-mix(in srgb, var(--ed-muted-2) 5%, transparent) 10px);
+  padding: 20px 24px;
+  margin: 30px 0 8px;
+}
+.vd-machine-head {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px;
+  margin-bottom: 12px;
+}
+.vd-machine-tag {
+  font-family: var(--ed-mono); font-size: 9px; letter-spacing: .2em;
+  text-transform: uppercase; color: var(--ed-paper);
+  background: var(--ed-muted); padding: 3px 7px;
+}
+.vd-machine-meta {
+  font-family: var(--ed-mono); font-size: 10px; letter-spacing: .04em;
+  color: var(--ed-muted-2);
+}
+.vd-machine-body {
+  font-family: var(--ed-serif); font-size: 16.5px; line-height: 1.72;
+  color: var(--ed-ink-2);
+}
+.vd-machine-body p { margin: 0 0 0.85em; }
+.vd-machine-body p:last-child { margin-bottom: 0; }
+.vd-machine-foot {
+  margin-top: 14px; padding-top: 10px;
+  border-top: 1px solid var(--ed-line-soft);
+  font-family: var(--ed-serif); font-size: 13px; font-style: italic;
+  color: var(--ed-muted);
+}
+
+/* The disagreement register, set apart from the synthesis: a learner should
+   get the reading first and the dispute second, not the other way round. */
+.vd-machine-split {
+  margin-top: 18px; padding-top: 15px;
+  border-top: 1px solid var(--ed-line);
+}
+.vd-machine-split p {
+  font-family: var(--ed-serif); font-size: 15px; line-height: 1.68;
+  color: var(--ed-ink-3); margin: 8px 0 0;
+}

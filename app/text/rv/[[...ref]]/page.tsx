@@ -1,3 +1,4 @@
+import { Fragment } from 'react'
 /* =========================================================================
    Rgveda reading routes. One catch-all serves three depths:
 
@@ -18,7 +19,8 @@ import { vedicFontsClass } from '@/components/editorial/vedic-fonts'
 import { Enumerated, Badge, CanonicalAddress, Mantra, Apparatus } from '@/components/editorial/vedic-blocks'
 import {
   allHymns, mandala, hymn, neighbours, verseNeighbours,
-  names, spans, shifts, FAMILY, CANONICAL, verseText, hymnText, displayTokens, translations, padapatha, metre, padas, canonMetre, wilson, grammar,
+  names, spans, shifts, FAMILY, CANONICAL, verseText, hymnText, displayTokens, translations, padapatha, metre, padas, canonMetre, wilson, grammar, suktaNote,
+  type SuktaNote,
 } from '@/lib/anukramani'
 import RV_3_53_12 from '@/lib/rv-3-53-12'
 
@@ -75,6 +77,49 @@ function PrevNext({ prev, next }: { prev: { href: string; label: string } | null
         ) : null}
       </div>
     </nav>
+  )
+}
+
+/* The only model-written prose a reader sees. Rendered set apart, labelled
+   at the TOP (not in a footer nobody reads), and stating in the body what
+   the model could not see. Project rule: AI generates, tradition verifies. */
+/* Sanskrit terms are written *term* in the note source. Render them as
+   emphasis rather than leaking asterisks into the page. */
+function emph(text: string) {
+  return text.split(/(\*[^*\n]+\*)/g).map((part, i) =>
+    part.startsWith('*') && part.endsWith('*') && part.length > 2
+      ? <em key={i} lang="sa">{part.slice(1, -1)}</em>
+      : <Fragment key={i}>{part}</Fragment>
+  )
+}
+
+function SuktaNoteBlock({ note }: { note: SuktaNote | null }) {
+  if (!note) return null
+  return (
+    <section className="vd-machine">
+      <div className="vd-machine-head">
+        <span className="vd-machine-tag">machine-written</span>
+        <span className="vd-machine-meta">
+          {note.model} · {note.generated} · from Wilson + Griffith
+        </span>
+      </div>
+      <div className="vd-machine-body">
+        {(note.synthesis ?? note.text ?? '').split(/\n{2,}/)
+          .filter(Boolean).map((para, i) => <p key={i}>{emph(para)}</p>)}
+      </div>
+      {note.disagreements ? (
+        <div className="vd-machine-split">
+          <div className="vd-app-label">where the witnesses differ</div>
+          {note.disagreements.split(/\n{2,}/).filter(Boolean)
+            .map((para, i) => <p key={i}>{emph(para)}</p>)}
+        </div>
+      ) : null}
+      <p className="vd-machine-foot">
+        Written from the two English translations only — this model did not read the
+        Sanskrit, and no traditional scholar has reviewed it. Treat it as orientation,
+        not as a reading.
+      </p>
+    </section>
   )
 }
 
@@ -198,6 +243,8 @@ export default async function Page({ params }: { params: Promise<{ ref?: string[
           </div>
         </div>
 
+        <SuktaNoteBlock note={suktaNote(m, s)} />
+
         <div className="vd-index">
           {hymnText(m, s).map((text, i) => (
             <Link key={i} href={`/text/rv/${h.ref}.${i + 1}`} className="vd-index-row vd-verse-row">
@@ -294,20 +341,39 @@ export default async function Page({ params }: { params: Promise<{ ref?: string[
           label: 'chandas',
           era: met.stated ? `[TRAD · Anukramaṇī: ${met.stated}]` : undefined,
           provenance: 'emic_intext' as const,
-          contested: !!(met.stated && canonMetre(met.stated) !== met.computed),
+          contested: !!(met.stated && (canonMetre(met.stated) !== met.computed || met.delta !== 0)),
           body: (
             <>
+              {/* Two different claims, from two different sources. Never render them as one
+                  line: the count is ours and measured, the shape is the tradition's and
+                  canonical. Showing "23 syllables · 8+8+8" states a contradiction as a fact. */}
               <p>
-                <strong>{met.syllables} syllables</strong>
-                {met.padaLengths ? <> · {met.padaLengths.join('+')}</> : null}
+                <strong>{met.syllables} akṣaras</strong> counted in the saṃhitā-pāṭha
                 {padaLines ? <> · displayed by pāda</> : null}
               </p>
-              {met.stated && canonMetre(met.stated) !== met.computed ? (
+              {met.padaLengths ? (
+                <p style={{ marginTop: 4 }}>
+                  <em>{canonMetre(met.stated)}</em> wants {met.padaLengths.join('+')} ={' '}
+                  {met.padaLengths.reduce((a, b) => a + b, 0)}
+                </p>
+              ) : null}
+              {met.delta !== 0 || canonMetre(met.stated) !== met.computed ? (
                 <p style={{ marginTop: 8 }}>
-                  The Anukramaṇī states <em>{met.stated}</em>; counted as{' '}
-                  <em>{met.computed}</em> — {met.delta > 0 ? '+' : ''}{met.delta} syllables.
-                  The saṃhitā-pāṭha as transmitted is metrically short in thousands of
-                  places, because vowels written contracted must be restored to scan.
+                  {canonMetre(met.stated) !== met.computed ? (
+                    <>The Anukramaṇī states <em>{met.stated}</em>; the count is nearest{' '}
+                    <em>{met.computed}</em>. </>
+                  ) : null}
+                  {met.delta !== 0 ? (
+                    <>Short by {Math.abs(met.delta)} {Math.abs(met.delta) === 1 ? 'syllable' : 'syllables'}
+                    {met.delta > 0 ? ' (long, in fact)' : ''}. </>
+                  ) : null}
+                  <strong>This is expected, and it is not an error in the text.</strong> Vedic
+                  metre cannot be counted from the saṃhitā-pāṭha: sandhi contracts vowels the
+                  metre requires separate — <em>viśvāni abhi</em> is written{' '}
+                  <em>viśvāny abhi</em> and loses a syllable. Measured corpus-wide, only 29.9% of
+                  ṛcs scan from the saṃhitā-pāṭha and 32.5% from the padapāṭha, so neither
+                  transmitted text yields the metre. That is what a metrically restored edition
+                  (van Nooten &amp; Holland) is for, and we do not yet hold one.
                   <strong> Recorded as a disagreement, not resolved.</strong>
                 </p>
               ) : null}

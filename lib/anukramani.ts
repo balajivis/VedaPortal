@@ -499,3 +499,38 @@ export function addressSystems(m: number, s: number, v: number) {
   const key = `${String(m).padStart(2, '0')}.${String(s).padStart(3, '0')}.${String(v).padStart(2, '0')}`
   return CONC.get(key) ?? null
 }
+
+/* -------------------------------------------------------------------------
+   Sūkta orientation notes — MACHINE-GENERATED, never a verified reading.
+   Generated from Wilson + Griffith only; the model never saw the Sanskrit.
+   Rendered behind a machine badge. See commentary/PROVENANCE.md.
+   ------------------------------------------------------------------------- */
+const COMM_DIR = join(process.cwd(), 'sources/vedas/rigveda/shakala/samhita/commentary')
+const COMM_CACHE = new Map<number, Record<string, SuktaNote>>()
+
+export type SuktaNote = {
+  /* Split deliberately. `synthesis` is what the sūkta SAYS — the reading a
+     learner needs, weighted toward Wilson because Wilson follows Sāyaṇa and
+     so carries the tradition's own sense. `disagreements` is where the
+     witnesses part company. They are separate fields because the next stage
+     EMBEDS these notes and clusters them by subject: a note that is mostly
+     about translators clusters by "translation dispute" rather than by
+     theme, so only `synthesis` should go into the vector. */
+  synthesis: string
+  disagreements?: string
+  text?: string
+  kind: 'machine'
+  model: string
+  generated: string
+  witnesses: string[]
+  saw_sanskrit: boolean
+}
+
+export function suktaNote(m: number, s: number): SuktaNote | null {
+  let t = COMM_CACHE.get(m)
+  if (!t) {
+    t = loadJson<Record<string, SuktaNote>>(COMM_DIR, `commentary-mandala-${m}.json`)
+    COMM_CACHE.set(m, t)
+  }
+  return t[String(s)] ?? null
+}
