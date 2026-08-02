@@ -214,6 +214,14 @@ the hymn ends on a request, let the title carry it.
   not refer to them without the title. Where the patronymic matters, give it in prose —
   *Madhucchandas Ṛṣi, son of Viśvāmitra* — rather than transliterating
   `vaiśvāmitro madhucchandāḥ` at the reader.
+- **Write *devas*, not *gods*.** The English word carries Greco-Roman freight the Sanskrit
+  does not, and the same rule applies as to *Viśvedevāḥ*: do not translate away a word the
+  reader already has. Nor *divinity* — *devān* is accusative **plural** and is the thing Agni
+  carries; an abstract singular cannot be conveyed, and RV [[1.1]].5 sets *devo devebhiḥ*,
+  singular beside plural, in one line. The tradition's own statement of the unity is
+  *ekaṃ sad viprā bahudhā vadanti* at RV 1.164.46 — it belongs where the text makes it, not
+  imported into verses that do not.
+  Leave Wilson's and Griffith's wording alone inside quotations.
 - **Do not gloss a proper noun.** Write *Agni*, not "Agni, the fire" or "Agni, god of
   fire". Write *Vāyu*, not "Vāyu, the wind"; *Uṣas*, not "Uṣas, the dawn". The reader
   knows who these are, and re-explaining a name every time it appears is the written

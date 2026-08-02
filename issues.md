@@ -26,6 +26,25 @@ have found.
 
 ---
 
+## 0b. "gods" → "devas" across the rest of the corpus
+
+Done in RV 1.1 only, deliberately — scalpel, not sweep. The rule is in the standard.
+
+Still to do: the other 200 sūkta notes, the maṇḍala 1 overview, the topic analyses and
+`/topic/priests`. It is a string replace **plus judgment** in three places:
+
+- **singular vs plural** — RV 1.1.5 is *devo devebhiḥ*, "the deva comes bringing the devas".
+  A blind replace produced "the god comes, bringing the devas" and lost the pairing.
+- **quotations** — Wilson's and Griffith's wording must stay theirs inside quotes.
+- ***deva* as a common noun** — some verses use it of Agni himself ("the god who is ṛtvij"),
+  where "deva" reads oddly in English apposition.
+
+Related and not yet written: the **deva topic page** should carry the question of whether the
+devas are many or one, with 1.164.46 quoted and the readings named rather than resolved.
+That is where "divinity" properly belongs.
+
+---
+
 ## 1. Register: the primary text still reads from outside the tradition
 
 **Status: rule written, worked examples done (RV 1.1, 1.114), holistic pass NOT done.**
