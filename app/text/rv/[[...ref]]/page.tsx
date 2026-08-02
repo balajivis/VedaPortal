@@ -19,7 +19,7 @@ import { vedicFontsClass } from '@/components/editorial/vedic-fonts'
 import { Enumerated, Badge, CanonicalAddress, Mantra, Apparatus } from '@/components/editorial/vedic-blocks'
 import {
   allHymns, mandala, hymn, neighbours, verseNeighbours,
-  names, spans, shifts, FAMILY, CANONICAL, verseText, hymnText, displayTokens, translations, padapatha, metre, padas, canonMetre, wilson, grammar, suktaNote,
+  names, spans, shifts, FAMILY, CANONICAL, verseText, hymnText, displayTokens, translations, padapatha, metre, padas, canonMetre, wilson, grammar, suktaNote, sayana,
   type SuktaNote,
 } from '@/lib/anukramani'
 import RV_3_53_12 from '@/lib/rv-3-53-12'
@@ -336,6 +336,7 @@ export default async function Page({ params }: { params: Promise<{ ref?: string[
   const met = metre(m, s, v)
   const wil = wilson(m, s, v)
   const gram = grammar(m, s, v)
+  const say = sayana(m, s, v)
   // Metrical lineation: break by pada where the verse actually scans.
   // Where it does not, fall back to danda hemistichs rather than forcing a
   // shape the text does not have.
@@ -447,6 +448,25 @@ export default async function Page({ params }: { params: Promise<{ ref?: string[
                 Wilson translates <strong>following Sāyaṇa throughout</strong> — so this is the
                 traditional 14th-century reading rendered into English, not an independent
                 Victorian one. Set it against Griffith below.
+              </p>
+            </>
+          ),
+        }]} />
+      ) : null}
+
+      {say ? (
+        <Apparatus rows={[{
+          label: 'Sāyaṇa',
+          era: '[c. 1360 · Ṛgveda-bhāṣya]',
+          provenance: 'native_posthoc' as const,
+          body: (
+            <>
+              <p>{say}</p>
+              <p style={{ fontSize: 13.5, color: 'var(--ed-muted)', marginTop: 8 }}>
+                The commentary Wilson translates from — so the rendering above and this
+                gloss are one witness, seen at two removes. Sāyaṇa wrote under
+                Vijayanagara patronage and his bhāṣya is the reading most of the
+                tradition inherited.
               </p>
             </>
           ),

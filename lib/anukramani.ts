@@ -550,3 +550,39 @@ export function suktaNote(m: number, s: number): SuktaNote | null {
   }
   return t[String(s)] ?? null
 }
+
+/* -------------------------------------------------------------------------
+   Sāyaṇa's Ṛgveda-bhāṣya, verse-addressed.
+
+   Recovered as inline text inside the wisdomlib pages — the content-anchored
+   alignment against the Poona OCR scored 31.9% and was abandoned; this
+   arrived as a string split. It is the 14th-century commentary itself, and
+   it is the tradition's own voice on the verse, so it renders as its own
+   apparatus row rather than being folded into a translation.
+
+   ⚠ Coverage is PARTIAL and uneven — wisdomlib splices a gloss only where
+   its Wilson text carries one, so roughly half the verses of maṇḍala 1 have
+   none. Absence here means "not in this witness", never "Sāyaṇa was silent".
+   ------------------------------------------------------------------------- */
+const SAY_DIR = join(process.cwd(), 'sources/vedas/rigveda/shakala/samhita/commentary/sayana')
+const SAY_CACHE = new Map<number, Record<string, (string | null)[]>>()
+
+export function sayana(m: number, s: number, v: number): string | null {
+  let t = SAY_CACHE.get(m)
+  if (!t) {
+    t = loadJson<Record<string, (string | null)[]>>(SAY_DIR, `sayana-mandala-${m}.json`)
+    SAY_CACHE.set(m, t)
+  }
+  const x = t[String(s)]?.[v - 1]
+  return typeof x === 'string' && x.trim() ? x : null
+}
+
+/** How many verses of a sūkta carry a gloss — so the page can say so. */
+export function sayanaCount(m: number, s: number): number {
+  let t = SAY_CACHE.get(m)
+  if (!t) {
+    t = loadJson<Record<string, (string | null)[]>>(SAY_DIR, `sayana-mandala-${m}.json`)
+    SAY_CACHE.set(m, t)
+  }
+  return (t[String(s)] ?? []).filter(x => typeof x === 'string' && x.trim()).length
+}
