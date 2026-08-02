@@ -111,6 +111,7 @@ for (let m = 1; m <= 10; m++) {
    — `vaiśvāmitro madhucchandāḥ` is Madhucchandas son of Viśvāmitra — so the
    page is keyed on the personal name and the full string is kept. */
 const rsi = new Map()
+const rsiRaw = []
 for (let m = 1; m <= 10; m++) {
   const lines = readFileSync(join(SRC, `apparatus/anukramani/Mandala_${m}.txt`), 'utf8')
     .split('\n').map(l => l.trim()).filter(Boolean)
@@ -125,13 +126,41 @@ for (let m = 1; m <= 10; m++) {
     parts.push(cur)
     const raw = (parts[0] ?? '').trim()
     if (!raw || /^\(/.test(raw)) continue          // skip per-verse split ascriptions
-    const words = raw.toLowerCase().split(/\s+/)
-    const name = words[words.length - 1].replace(/ḥ$/, '')
-    if (!name) continue
-    if (!rsi.has(name)) rsi.set(name, { full: new Set(), refs: [] })
-    rsi.get(name).full.add(raw)
-    rsi.get(name).refs.push(`${m}.${p[0]}`)
+    rsiRaw.push([raw, `${m}.${p[0]}`])
   }
+}
+
+/* ⚠ The last-word heuristic works for `bārhaspatyo bharadvājaḥ` and fails for
+   `maitrāvaruṇirvasiṣṭhaḥ`, which the Anukramaṇī writes as ONE token — so
+   Vasiṣṭha, composer of 103 sūktas and the largest body in the collection,
+   was not keyed at all. Fix without a curated list: take the personal names
+   that the SPACED strings yield, then look for those same names as the tail
+   of an unspaced one. The data supplies its own vocabulary. */
+const personal = new Set()
+for (const [raw] of rsiRaw) {
+  const w = raw.toLowerCase().split(/\s+/)
+  if (w.length > 1) personal.add(w[w.length - 1].replace(/ḥ$/, ''))
+}
+/* Spaced strings alone are not enough: neither `maitrāvaruṇirvasiṣṭhaḥ` nor
+   `maitrāvaruṇiragastyaḥ` ever appears spaced, so Vasiṣṭha (103 sūktas) and
+   Agastya (24) had no candidate to match. The MORPHOLOGY carries both as
+   lemmas — the corpus names its own composers — so that is the vocabulary. */
+for (const L of lemma.keys()) if (L.length >= 5) personal.add(L)
+function keyFor(raw) {
+  const w = raw.toLowerCase().split(/\s+/)
+  const last = w[w.length - 1].replace(/ḥ$/, '')
+  if (w.length > 1) return last
+  for (const nm of personal) {
+    if (nm.length >= 5 && last.endsWith(nm)) return nm     // maitrāvaruṇir+vasiṣṭha
+  }
+  return last
+}
+for (const [raw, ref] of rsiRaw) {
+  const k = keyFor(raw)
+  if (!k) continue
+  if (!rsi.has(k)) rsi.set(k, { full: new Set(), refs: [] })
+  rsi.get(k).full.add(raw)
+  rsi.get(k).refs.push(ref)
 }
 
 /* ---- 3b. function words ----
