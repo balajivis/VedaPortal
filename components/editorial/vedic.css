@@ -889,3 +889,20 @@ td.pr-num { font-family: var(--ed-mono) !important; font-size: 12px !important; 
   text-transform: uppercase; color: var(--ed-paper);
   background: var(--ed-accent); padding: 3px 7px;
 }
+.tp-edited {
+  font-family: var(--ed-mono); font-size: 8.5px; letter-spacing: .16em;
+  text-transform: uppercase; color: var(--ed-paper);
+  background: var(--ed-accent); padding: 2px 6px; margin-left: 10px;
+}
+.tp-prov {
+  font-family: var(--ed-serif); font-size: 13px; font-style: italic;
+  color: var(--ed-muted); max-width: 66ch;
+  margin-top: 16px !important; padding-top: 10px;
+  border-top: 1px solid var(--ed-line-soft);
+}
+.pr-prov {
+  font-family: var(--ed-serif); font-size: 13px; font-style: italic;
+  color: var(--ed-muted); max-width: 64ch; margin: 0 auto 26px;
+  padding-bottom: 14px; border-bottom: 1px solid var(--ed-line-soft);
+}
+.pr-prov .tp-edited { margin-left: 0; margin-right: 6px; font-style: normal; }

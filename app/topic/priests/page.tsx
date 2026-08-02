@@ -89,6 +89,14 @@ export default async function Page() {
         </div>
       </header>
 
+      <p className="pr-prov">
+        <span className="tp-edited">edited &amp; reviewed</span>{' '}
+        Reviewed by Balaji Viswanathan, 2026-08-02. Attestations counted from the padapāṭha of
+        all ten maṇḍalas; the sixteen-fold arrangement is the śrauta one. Where an office is
+        not named in the Ṛgveda Saṃhitā it is named in the brāhmaṇa portion of the same Veda —
+        this page reports which portion carries it, and makes no claim about age.
+      </p>
+
       <p className="pr-lede">
         A full śrauta yajña is served by sixteen officiants. They are named across the Veda as
         a whole: the <strong>saṃhitā</strong> is its mantra portion and the{' '}

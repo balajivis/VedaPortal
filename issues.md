@@ -4,6 +4,28 @@ Things known to be wrong or unfinished, with enough detail to act on later. Newe
 
 ---
 
+## 0. The standing goal: retire the machine label, one record at a time
+
+Every note carries `kind: machine | edited`. **Machine is the default and the honest one** —
+a record is promoted only when a human has read it against the sources and is named, with a
+date and a source list. It does not travel to neighbours.
+
+Promoted so far:
+
+| record | reviewed |
+|---|---|
+| RV 1.1 | 2026-08-02 — title, context paragraph, register, the ṛtvij/hotṛ/purohita levels |
+| `/topic/priests` | 2026-08-02 — framing, table, typography, the three-levels correction |
+
+Still machine: 190 sūkta notes in maṇḍala 1, 10 in maṇḍala 2, the maṇḍala 1 overview, and the
+seven topic analyses (yajña, adhvara, ṛta, rayi, poṣa, yaśas, aṅgiras).
+
+The intent is not to relabel in bulk. Each promotion should be **a deeper pass**, not a
+signature — the RV 1.1 pass produced four corrections that no amount of relabelling would
+have found.
+
+---
+
 ## 1. Register: the primary text still reads from outside the tradition
 
 **Status: rule written, worked examples done (RV 1.1, 1.114), holistic pass NOT done.**

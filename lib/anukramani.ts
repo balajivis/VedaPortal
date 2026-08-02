@@ -655,10 +655,21 @@ export function mandalaNote(m: number): SuktaNote | null {
 /* A written analysis of a term, where one exists. Distinct from the counted
    data on the topic page: the chart says where the word falls, this says
    what it carries. Machine-written, same discipline as the sūkta notes. */
-let TOPIC_NOTES: Record<string, string> | null = null
-export function topicNote(term: string): string | null {
+export type TopicNote = {
+  text: string
+  /* Same two-value provenance the sūkta notes use. A page must never claim
+     review it has not had, and `edited` is promoted one record at a time. */
+  kind: 'machine' | 'edited'
+  model?: string
+  generated?: string
+  editor?: string
+  reviewed?: string
+  sources?: string[]
+}
+let TOPIC_NOTES: Record<string, TopicNote> | null = null
+export function topicNote(term: string): TopicNote | null {
   if (!TOPIC_NOTES) {
-    TOPIC_NOTES = loadJson<Record<string, string>>(
+    TOPIC_NOTES = loadJson<Record<string, TopicNote>>(
       join(process.cwd(), 'sources/vedas/rigveda/shakala/apparatus/topics'), 'topic-notes.json'
     )
   }

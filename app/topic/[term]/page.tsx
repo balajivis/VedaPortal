@@ -167,11 +167,21 @@ export default async function Page({ params }: { params: Promise<{ term: string 
           <section className="tp-section tp-analysis">
             <div className="vd-app-label">
               what the word carries
-              <span className="tp-machine">machine-written</span>
+              <span className={analysis.kind === 'edited' ? 'tp-edited' : 'tp-machine'}>
+                {analysis.kind === 'edited' ? 'edited & reviewed' : 'machine-written'}
+              </span>
             </div>
-            {analysis.split('\n\n').filter(Boolean).map((p, i) => (
+            {analysis.text.split('\n\n').filter(Boolean).map((p, i) => (
               <p key={i}>{inline(p, `a${i}`)}</p>
             ))}
+            <p className="tp-prov">
+              {analysis.kind === 'edited'
+                ? <>Read against the sources and revised by hand — reviewed by {analysis.editor}
+                    {analysis.reviewed ? <>, {analysis.reviewed}</> : null}.
+                    {analysis.sources?.length ? <> Drawn from {analysis.sources.join('; ')}.</> : null}</>
+                : <>Written from the counted distribution and the apparatus; not yet read
+                    against the sources by hand.</>}
+            </p>
           </section>
         ) : null}
 
