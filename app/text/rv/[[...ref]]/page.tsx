@@ -170,6 +170,14 @@ function SuktaNoteBlock({ note }: { note: SuktaNote | null }) {
             : <>{note.model} · {note.generated} · from Wilson + Griffith</>}
         </span>
       </div>
+      {/* THREE LENSES, stacked. Each panel is written for a different reader,
+          and labelling them is what lets a reader skip to their own — the
+          practitioner does not want the philology and the philologist does not
+          want to be told what sandhyāvandana is. See /standards. */}
+      <div className="vd-app-label vd-lens-label">
+        the sūkta
+        <span className="vd-lens-for">for a reader coming to it fresh</span>
+      </div>
       <div className="vd-machine-body">
         {(note.synthesis ?? note.text ?? '').split(/\n{2,}/)
           .filter(Boolean).map((p, i) => (
@@ -180,7 +188,10 @@ function SuktaNoteBlock({ note }: { note: SuktaNote | null }) {
       </div>
       {note.practice ? (
         <div className="vd-machine-living">
-          <div className="vd-app-label">where it lives</div>
+          <div className="vd-app-label vd-lens-label">
+            where it lives
+            <span className="vd-lens-for">for the practitioner</span>
+          </div>
           {note.practice.split(/\n{2,}/).filter(Boolean)
             .map((para, i) => <p key={i}>{emph(para)}</p>)}
         </div>
@@ -188,7 +199,10 @@ function SuktaNoteBlock({ note }: { note: SuktaNote | null }) {
 
       {note.disagreements ? (
         <div className="vd-machine-split">
-          <div className="vd-app-label">how it has been read</div>
+          <div className="vd-app-label vd-lens-label">
+            how it has been read
+            <span className="vd-lens-for">scholarship, language, and where the witnesses disagree</span>
+          </div>
           {note.disagreements.split(/\n{2,}/).filter(Boolean)
             .map((para, i) => <p key={i}>{emph(para)}</p>)}
         </div>

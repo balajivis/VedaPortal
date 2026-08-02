@@ -15,6 +15,46 @@ be the point.
 
 A note that reads like a seminar has failed even if every sentence in it is true.
 
+## ⭐⭐ THE THREE LENSES — the architecture everything else serves
+
+A sūkta page is **three lenses on one hymn, stacked top to bottom, written for three
+different readers.** This is the governing structure. A sentence in the wrong lens is a
+defect even when it is true, well written and correctly attributed.
+
+| | lens | the reader | register |
+|---|---|---|---|
+| **top** | masthead + `synthesis` | **the curious learner**, who may know very little about the Vedas | gentle and contextual. Somewhat neutral, but conveying the grandeur of what this is. Terms are introduced, never assumed. |
+| **middle** | `practice` — *where it lives* | **the practitioner**, often orthodox, who seeks connection and authentic guidance and looks to the Ṛgveda for it | strongly Hindu vocabulary, deeply connective to observance. Names the sampradāyas. |
+| **bottom** | `disagreements` — *how it has been read* | **the analytical reader** — linguistic, historical, comparative | analytical, not religious. Dry, and allowed to be slightly irreverent. |
+
+### What each lens must NOT contain
+
+- **Lens 1 carries no grammatical apparatus.** No case names, no verbal roots, no
+  "subjunctive", no discussion of which reading the accusative permits. This is the most
+  frequent failure and it is seductive, because the grammar is often where the best finding
+  is. The finding still belongs — in lens 3. Lens 1 says what the hymn *says*.
+- **Lens 2 carries no Western scholarship.** Not Wilson, not Griffith, not Eggeling, not
+  Geldner, not an SBE volume number. A practitioner reading for guidance is stopped cold by a
+  nineteenth-century translator's name in the middle of a paragraph about sandhyāvandana.
+  Where a source we hold is in fact an English rendering, **say so in lens 3** — the caveat is
+  owed, but it is owed there.
+- **Lens 3 is the only place any of that appears**, and the only place the grammar is worked.
+  Scholarly vocabulary that is banned above — strata, redaction, relative dating, and the
+  outside categories — is permitted here **as the scholars' own**, attributed, not adopted.
+
+### What lens 2 SHOULD reach for
+
+The whole dharmic corpus, wherever it speaks to the sūkta at hand: the Brāhmaṇas and
+Upaniṣads, the **Bhagavad Gītā**, the dharmaśāstra, the sampradāyas — **Mīmāṃsā**,
+**Vedānta**, **Ārya Samāj**, the devotional lineages — and living observance: the
+pañca-mahāyajñas, sandhyāvandana, the saṃskāras, agnihotra and havan, the āśramas.
+
+Cite them for **where they stand on a question, never as a development of it** — the
+no-chronology rule is not suspended because the text is post-saṃhitā. And **where the wider
+tradition presses back, say so.** RV 1.1 asks for wealth, and the Gītā calls a yajña offered
+with an eye on its fruit *rājasa* (17.11–12). A practitioner has met that objection already;
+answering it honestly is the service, and hiding it is what makes a manual untrustworthy.
+
 ## ⭐ We give voice to many traditions and adjudicate between none
 
 The Ṛgveda is read by several living traditions and by scholars who disagree with all
@@ -118,6 +158,13 @@ best-preserved poems of the ancient world. Write from inside that double standin
 fawn, do not invent cosmic significance the text does not claim — and do not adopt the
 Victorian outside lens either.
 
+**This rule holds across all three lenses; what varies is intensity, not stance.** Lens 1 is
+welcoming rather than devotional — it is opening a door for someone who may know nothing, and
+grandeur is conveyed by what the collection *is*, not by adjectives. Lens 2 is where the
+religious register properly belongs and should be unmistakable. Lens 3 may be dry and
+slightly irreverent, but irreverence is aimed at **readings, editors and translators** — never
+at the text, the devas or the people who recite them.
+
 The tell is whether the sentence *describes a hymn* or *says what the hymn says*:
 
 | ❌ outside, reporting on it | ✅ inside, saying it |
@@ -158,6 +205,18 @@ nineteenth century. Write *the yajña — the offering made through fire*.
 Do not write that a deity, word or practice **becomes**, **develops into**, **gives rise
 to**, or is a **precursor of** anything. Do not call one part of the corpus *earlier* or
 *later* than another, and do not treat the Ṛgveda as the origin from which the rest grew.
+
+**This includes the four Vedas themselves. The Ṛgveda is the FIRST of the four, not the
+oldest of them.** "Oldest" smuggles in a chronological ordering that is unproven and that the
+tradition does not hold — the four are not four dated documents. *First* is the tradition's
+own ordering and is simply true. This was caught in the opening sentence of RV 1.1, written
+the same day the rule above was codified, which is a fair measure of how easy it is to miss.
+
+Where a claim of antiquity is genuinely wanted — and it is, because the standing of this text
+is part of what a newcomer needs — make it about **continuous recitation**, where the claim
+is strong and checkable, and make it flatly rather than hedging: *the oldest poem anywhere
+still recited today from memory, in the same words*. Not "among the oldest". The hedge buys
+nothing and reads as apology.
 The tradition does not hold the Vedas in chronological sequence, and a reader who does not
 either will find the framing not merely wrong but discourteous.
 
@@ -201,10 +260,15 @@ Titles obey the same rule. A title should sound like the hymn, not like a catalo
 Use the tradition's vocabulary (*yajña*, not "sacrifice"; *ṛta*, not "cosmic law"), and where
 the hymn ends on a request, let the title carry it.
 
-- **ZERO names.** No "Sāyaṇa notes", no "Wilson has", no "Griffith gives". Every
-  attribution goes in `disagreements`. Name-dropping in the body is what makes a
+- **ZERO names in lens 1.** No "Sāyaṇa notes", no "Wilson has", no "Griffith gives".
+  Every such attribution goes to lens 3. Name-dropping in the body is what makes a
   manual read like a seminar. *Check your draft: the words Sāyaṇa, Wilson and
-  Griffith must not appear.*
+  Griffith must not appear in `synthesis`.*
+  **Lens 2 is different**, and this is the one place the rule relaxes: naming the
+  **sampradāyas and their ācāryas** — Mīmāṃsā, Vedānta, Ārya Samāj, Svāmī Dayānanda —
+  and citing the dharmic corpus by name and verse (Gītā 4.28, Taittirīya Up. 1.11) is
+  exactly what a practitioner came for. It is *Western* scholarship that is barred
+  there, not attribution as such.
 - **Every verse carries.** The commonest failure is spending three paragraphs on
   verses 1 and 9 and disposing of 2–8 in a clause. If a hymn has 12 verses, a reader
   should finish knowing what each of the 12 did.

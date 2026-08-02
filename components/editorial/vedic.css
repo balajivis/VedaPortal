@@ -198,6 +198,32 @@
   letter-spacing: .12em;
 }
 
+/* THE THREE LENSES. Each panel of a note is written for a different reader,
+   so each is labelled with WHO it is for — that is what lets a practitioner
+   skip the philology and a philologist skip the orientation. The "for …"
+   drops out of uppercase mono deliberately: it is a plain-language aside,
+   not another eyebrow competing with the label above it. */
+.vd-lens-label {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--ed-rule, rgba(0, 0, 0, .1));
+  padding-bottom: 7px;
+  margin-bottom: 14px;
+}
+.vd-lens-for {
+  font-family: var(--ed-serif);
+  font-size: 12.5px;
+  font-style: italic;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--ed-muted-2);
+}
+/* The first lens sits directly under the provenance badge, which already
+   supplies the gap. */
+.vd-machine-head + .vd-lens-label { margin-top: 18px; }
+
 .vd-app-body {
   font-family: var(--ed-serif);
   font-size: 16.5px;

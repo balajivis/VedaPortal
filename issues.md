@@ -51,6 +51,45 @@ have found.
 
 ---
 
+## 0a. THE THREE LENSES — every note needs re-lensing
+
+**The governing architecture, set 2026-08-02.** A sūkta page is three panels written for
+three different readers, and **a sentence in the wrong lens is a defect even when it is
+true**. Full statement in `COMMENTARY-STANDARD.md` and at `/standards`.
+
+| lens | field | reader | register |
+|---|---|---|---|
+| 1 | `synthesis` | the curious learner | gentle, contextual, conveys the grandeur. **No grammar apparatus.** |
+| 2 | `practice` | the practitioner | strongly Hindu, sampradāyas named, wider dharmic corpus. **No Western scholarship.** |
+| 3 | `disagreements` | the analytical reader | analytical, dry, slightly irreverent. The **only** home of Wilson, Griffith, Eggeling and the grammar. |
+
+Done: **RV 1.1 only.** Both failure modes were live in it and both were mine — the ṛc 3
+case-arc (accusative → nominative → instrumental → vocative) had been written straight into
+lens 1, and Eggeling with an SBE volume number sat in the middle of lens 2, where it stops a
+practitioner cold. Both moved to lens 3, which is where they are genuinely good.
+
+**Still to do: every other record.** Two greps, run across all 201 records 2026-08-02:
+
+```
+lens 1 must not match:  accusative|nominative|instrumental|vocative|subjunctive|√|cognate|genitive|locative
+lens 2 must not match:  Wilson|Griffith|Eggeling|Geldner|SBE|Müller|Macdonell
+```
+
+| check | hits |
+|---|---|
+| grammar apparatus in lens 1 | **17** — 1.5, 1.7, 1.14, 1.16, 1.17, 1.19, 1.20, 1.28, 1.29, 1.30, 1.48, 1.55, + 5 more |
+| Western scholarship in lens 2 | **0** |
+
+Smaller than expected, and the reason is that the machine drafts were written from the two
+English translations and never had the morphology to leak in the first place. The 17 are
+mostly hand-additions. **The greps are necessary and nowhere near sufficient**: they cannot
+see a lens-1 paragraph that merely *reads* like a seminar without using a case name, and
+they cannot see what is missing from lens 2 at all. Lens 2 needs the wider corpus actively
+brought **in** — Gītā, Upaniṣads, dharmaśāstra, the sampradāyas — and no grep reports an
+absence.
+
+---
+
 ## 0b. "gods" → "devas" across the rest of the corpus
 
 Done in RV 1.1 only, deliberately — scalpel, not sweep. The rule is in the standard.

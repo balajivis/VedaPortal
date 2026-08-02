@@ -39,7 +39,7 @@ const VOICES: Voice[] = [
   {
     name: 'The devotional reading', sanskrit: 'भक्ति',
     reads: 'The hymn as address. Someone is being spoken to, by name, and the register of the reciter at sandhyā is not the register of a commentator at a desk.',
-    here: 'This is the register of the primary text on every sūkta page. The hymn is allowed to say what it says, in its own voice, without a layer of explanation between the reader and it.',
+    here: 'This is the register of the second lens, where it belongs and where it should be unmistakable. The first lens stays welcoming rather than devotional — it is opening a door for someone who may know nothing yet.',
   },
   {
     name: 'Academic — insider',
@@ -53,28 +53,41 @@ const VOICES: Voice[] = [
   },
 ]
 
-type Field = { label: string; what: string; register: string }
+type Lens = {
+  n: string
+  label: string
+  reader: string
+  holds: string
+  register: string
+  never: string
+}
 
-const FIELDS: Field[] = [
+/* The governing architecture. A sentence in the wrong lens is a defect even
+   when it is true, well written and correctly attributed. */
+const LENSES: Lens[] = [
   {
-    label: 'the title',
-    what: 'What this sūkta does, in one line.',
-    register: 'The hymn’s own voice. Never a catalogue entry, and never an image the text does not supply.',
+    n: 'first',
+    label: 'the sūkta',
+    reader: 'The curious learner, who may know very little about the Vedas and has come to find out what this is.',
+    holds: 'The hymn end to end, verse by verse, with the Sanskrit beside the English — and the context needed to enter it: what a maṇḍala is, who the ṛṣi was, where the sūkta stands in the collection.',
+    register: 'Gentle and contextual. Terms are introduced, never assumed. Somewhat neutral in stance, while conveying the grandeur of what this actually is.',
+    never: 'No grammatical apparatus — no case names, no verbal roots, no “subjunctive”, no weighing of what an accusative permits. That is often where the best finding is, and the finding still belongs. It belongs in the third lens.',
   },
   {
-    label: 'the reading',
-    what: 'The sūkta end to end, verse by verse, with the Sanskrit beside the English.',
-    register: 'Inside the tradition. No translator is named here — not Sāyaṇa, not Wilson, not Griffith. Attribution belongs below, and name-dropping in the body is what makes a manual read like a seminar.',
-  },
-  {
+    n: 'second',
     label: 'where it lives',
-    what: 'Why the hymn bears on a life now — observance, saṃskāra, sandhyā, the vocabulary a reciter already carries.',
-    register: 'Described, never performed. Counted facts from the corpus are the strongest material available; invented ritual claims are the worst.',
+    reader: 'The practitioner, often orthodox, who seeks connection and authentic guidance and looks to the Ṛgveda and the other Vedas for it.',
+    holds: 'How the sūkta bears on a life being lived now: the pañca-mahāyajñas, sandhyāvandana, the saṃskāras, agnihotra and havan, the āśramas — and the wider dharmic corpus wherever it speaks to the same question, the Brāhmaṇas and Upaniṣads, the Bhagavad Gītā, the dharmaśāstra.',
+    register: 'Strongly Hindu vocabulary, deeply connective to practice. The sampradāyas are named — Mīmāṃsā, Vedānta, Ārya Samāj — and read side by side without one being made the answer.',
+    never: 'No Western scholarship. Not Wilson, not Griffith, not Eggeling, not an SBE volume number. A reader following a paragraph on sandhyāvandana is stopped cold by a nineteenth-century translator’s name. Where a source we hold is in fact an English rendering, that caveat is owed — and it is owed in the third lens.',
   },
   {
+    n: 'third',
     label: 'how it has been read',
-    what: 'Every place the witnesses diverge, quoted briefly so the difference is visible.',
-    register: 'All attribution lives here, and so does everything banned above — strata, dating, redaction, the outside lens. The reader deserves them; they do not belong in the text a reciter reads first.',
+    reader: 'The analytical reader — linguistic, historical, comparative — and anyone who wants to know how far the ground under the first two lenses actually holds.',
+    holds: 'The grammar worked out; every divergence between the witnesses, quoted; comparative philology; what this edition actually holds versus what it would like to hold; strata, redaction and relative dating, named to whoever argues them.',
+    register: 'Analytical, not religious. Dry, and allowed to be slightly irreverent — at readings, editors and translators. Never at the text, the devas, or the people who recite them.',
+    never: 'Nothing is barred here. This is the only lens where Wilson, Griffith and Eggeling appear at all, and the only one where the grammar is worked.',
   },
 ]
 
@@ -89,6 +102,8 @@ const REGISTER: [string, string][] = [
   ['the gods, or divinity', 'the devas'],
   ['Agni, the god of fire', 'Agni'],
   ['vaiśvāmitro madhucchandāḥ', 'Madhucchandas Ṛṣi, son of Viśvāmitra'],
+  ['the oldest of the four Vedas', 'the first of the four Vedas'],
+  ['among the oldest poems still recited', 'the oldest poem still recited'],
 ]
 
 export default async function Page() {
@@ -122,6 +137,70 @@ export default async function Page() {
         working version editors and agents follow is{' '}
         <code>COMMENTARY-STANDARD.md</code>; this page is what a reader is owed about it.
       </p>
+
+      <section className="pr-section">
+        <h2 className="pr-heading">
+          <span>Three lenses on one hymn</span>
+          <span className="pr-veda">the governing structure</span>
+        </h2>
+        <p className="pr-note pr-note-tight">
+          A sūkta page is three panels stacked top to bottom, and they are{' '}
+          <strong>written for three different readers</strong>. This is the architecture
+          everything else on this page serves. It is also the mechanism that lets one manual
+          hold traditions that do not read alike — nobody is asked to read past material
+          addressed to somebody else.
+        </p>
+        <p className="pr-note pr-note-tight">
+          <strong>A sentence in the wrong lens is a defect even when it is true</strong>, well
+          written and correctly attributed. That is the whole discipline, and it is broken
+          constantly: philology drifts up into the first lens because that is where the best
+          finding often is, and a translator’s name drifts into the second because the source
+          had to be credited somewhere.
+        </p>
+        <div className="pr-tablewrap">
+          <table className="pr-table">
+            <thead>
+              <tr>
+                <th>lens</th>
+                <th>written for</th>
+                <th>what it holds</th>
+                <th>register</th>
+              </tr>
+            </thead>
+            <tbody>
+              {LENSES.map(l => (
+                <tr key={l.label}>
+                  <td className="pr-chief">
+                    {l.label}
+                    <br />
+                    <span style={{ fontWeight: 400, opacity: 0.6 }}>{l.n}</span>
+                  </td>
+                  <td className="pr-work">{l.reader}</td>
+                  <td>{l.holds}</td>
+                  <td>{l.register}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <div className="pr-grid" style={{ marginTop: 28 }}>
+          {LENSES.map(l => (
+            <div key={l.label} className="pr-row">
+              <span className="pr-name">what {l.label} must not carry</span>
+              <span className="pr-gloss" style={{ gridColumn: 'span 2' }}>{l.never}</span>
+            </div>
+          ))}
+        </div>
+        <p className="pr-note">
+          The worked example is <Link href="/text/rv/1.1" className="vd-xref">RV 1.1</Link> —
+          read it against this page. Where the two disagree, the page is wrong. And where the
+          wider tradition presses back on a sūkta, the second lens says so rather than
+          smoothing it: RV 1.1 asks for wealth, and the Gītā calls a yajña offered with an eye
+          on its fruit <em lang="sa">rājasa</em>. A practitioner has met that objection
+          already. Answering it honestly is the service; hiding it is what makes a manual
+          untrustworthy.
+        </p>
+      </section>
 
       <section className="pr-section">
         <h2 className="pr-heading">
@@ -168,50 +247,13 @@ export default async function Page() {
 
       <section className="pr-section">
         <h2 className="pr-heading">
-          <span>Four fields, four registers</span>
-          <span className="pr-veda">every sūkta page</span>
-        </h2>
-        <p className="pr-note pr-note-tight">
-          Each sūkta note is four fields, and the separation between them is the mechanism
-          that lets many traditions share one page. Scholarship makes the notes trustworthy;
-          it is never allowed to become the point.
-        </p>
-        {/* A table, not pr-grid: .pr-att is sized for "248 verses · 1.1.1" and
-            renders long prose as unreadable mono in a squeezed third column. */}
-        <div className="pr-tablewrap">
-          <table className="pr-table">
-            <thead>
-              <tr>
-                <th>field</th>
-                <th>what it holds</th>
-                <th>the register it is written in</th>
-              </tr>
-            </thead>
-            <tbody>
-              {FIELDS.map(f => (
-                <tr key={f.label}>
-                  <td className="pr-chief">{f.label}</td>
-                  <td className="pr-work">{f.what}</td>
-                  <td>{f.register}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        <p className="pr-note">
-          The worked example is <Link href="/text/rv/1.1" className="vd-xref">RV 1.1</Link> —
-          read it against this page. Where the two disagree, the page is wrong.
-        </p>
-      </section>
-
-      <section className="pr-section">
-        <h2 className="pr-heading">
           <span>Register</span>
           <span className="pr-veda">the rule that governs the rest</span>
         </h2>
         <p className="pr-note pr-note-tight">
-          The Ṛgveda is scripture of a living faith <em>and</em> one of the oldest, largest and
-          best-preserved poems of the ancient world. The notes are written from inside that
+          The Ṛgveda is scripture of a living faith <em>and</em> the oldest poem anywhere still
+          recited today from memory, in the same words — and among the largest and
+          best-preserved of the ancient world. The notes are written from inside that
           double standing: no fawning, no cosmic significance the text does not claim, and not
           the nineteenth-century outside lens either. The tell is whether a sentence
           <em> describes a hymn</em> or <em>says what the hymn says</em>.
