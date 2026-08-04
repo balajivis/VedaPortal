@@ -339,6 +339,16 @@ the hymn ends on a request, let the title carry it.
   the point being made — e.g. *ṛtvij* as *ṛtu* + √yaj, because the claim is about
   timeliness. Ordinary epithets (*hotā*, *purohita*, *citrabhānu*) are still glossed
   once, since those are descriptions rather than names.
+- **⭐ Do not read intent into ordinary grammar.** Before claiming a poet *placed* a word,
+  check where that word normally sits. RV 1.2.9 was written up as putting *naḥ* second "and
+  making the two of them ours before it even gives their names" — but *naḥ* is an enclitic
+  and stands in second position in **597 of the 1,906 verses that carry it (31.3%)**, its
+  commonest slot by far. That is Wackernagel's law, not the ṛṣi. The claim was false, and
+  the sentence had gone convoluted trying to carry it — which is the reliable tell. **A
+  reader saying "I don't understand this part" is usually right about more than the
+  wording.** Word order, sandhi and enclitic placement all need a corpus count before they
+  can bear an interpretation; the tools are here, so run it.
+
 - **Look for the spine.** The best notes find the thing running underneath: *dhī*
   threading RV 1.3 from v2 to v12; `indra ā yāhi` opening three consecutive verses;
   *ṛta* three times in one line of 1.2.8. Read the padapāṭha to find these — they are
