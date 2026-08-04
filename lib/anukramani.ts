@@ -547,6 +547,15 @@ export type SuktaNote = {
   generated: string
   witnesses: string[]
   saw_sanskrit: boolean
+  /* Per-ṛc readings, keyed by verse number as a string. These live ON the
+     verse — printed under its Sanskrit in the sūkta listing, and leading the
+     ṛc page — rather than stacked inside the opening commentary, where a
+     reader had to scroll past all nine to reach the text itself.
+
+     `iast` is our transliteration of the saṃhitā line; the Devanāgarī is
+     deliberately NOT stored here. The corpus already holds it, accented, and
+     a second copy would drift from the first. */
+  verse_notes?: Record<string, { iast: string; note: string }>
 }
 
 export function suktaNote(m: number, s: number): SuktaNote | null {
@@ -556,6 +565,11 @@ export function suktaNote(m: number, s: number): SuktaNote | null {
     COMM_CACHE.set(m, t)
   }
   return t[String(s)] ?? null
+}
+
+/** The reading for one ṛc, or null where none has been written yet. */
+export function verseNote(m: number, s: number, v: number) {
+  return suktaNote(m, s)?.verse_notes?.[String(v)] ?? null
 }
 
 /* -------------------------------------------------------------------------

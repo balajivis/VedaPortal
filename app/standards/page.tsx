@@ -104,6 +104,9 @@ const REGISTER: [string, string][] = [
   ['vaiśvāmitro madhucchandāḥ', 'Madhucchandas Ṛṣi, son of Viśvāmitra'],
   ['the oldest of the four Vedas', 'the first of the four Vedas'],
   ['among the oldest poems still recited', 'the oldest poem still recited'],
+  ['the chief priest of the yajña (purohita)', 'he is purohita of the yajña, placed in front'],
+  ['with the mind held on you (dhiyā)', 'dhiyā, with the mind held on you'],
+  ['the oblation, the sacrifice, the Lord', 'the havis, the yajña, Agni'],
 ]
 
 export default async function Page() {
@@ -290,6 +293,20 @@ export default async function Page() {
           <em lang="sa">yajña</em>, <em lang="sa">ṛta</em>, <em lang="sa">dhī</em>,{' '}
           <em lang="sa">rayi</em>, <em lang="sa">namas</em>. These are not glosses for a
           stranger; they are the words the reciter is already saying.
+        </p>
+        <p className="pr-note">
+          <strong>And the Sanskrit leads.</strong> A core term the reader already carries stays
+          in Sanskrit — <em lang="sa">agni</em>, <em lang="sa">deva</em>,{' '}
+          <em lang="sa">yajña</em>, <em lang="sa">purohita</em>, <em lang="sa">hotā</em>,{' '}
+          <em lang="sa">ṛta</em>, <em lang="sa">dhī</em>, <em lang="sa">namas</em>,{' '}
+          <em lang="sa">rayi</em>, <em lang="sa">ratna</em> — with the English behind it as
+          apposition rather than in front of it in a parenthesis, because that ordering drains
+          the punch out of the word being read. Each is <strong>linked to its own page</strong>,
+          which carries every occurrence of it across all ten maṇḍalas. That is what lets a note
+          decline to flatten <em lang="sa">purohita</em> into &ldquo;minister&rdquo;,{' '}
+          <em lang="sa">havis</em> into &ldquo;oblation&rdquo; or <em lang="sa">deva</em> into
+          &ldquo;god&rdquo;: the careful reader has somewhere to go, so the note does not have
+          to teach the word.
         </p>
         <p className="pr-note">
           <strong>Nor is the yajña &ldquo;fire worship.&rdquo;</strong> Agni bears the offering;

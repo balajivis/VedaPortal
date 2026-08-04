@@ -19,7 +19,7 @@ import { vedicFontsClass } from '@/components/editorial/vedic-fonts'
 import { Enumerated, Badge, CanonicalAddress, Mantra, Apparatus } from '@/components/editorial/vedic-blocks'
 import {
   allHymns, mandala, hymn, neighbours, verseNeighbours,
-  names, spans, shifts, FAMILY, CANONICAL, verseText, hymnText, displayTokens, translations, padapatha, metre, padas, canonMetre, wilson, grammar, suktaNote, mandalaNote, sayana,
+  names, spans, shifts, FAMILY, CANONICAL, verseText, hymnText, displayTokens, translations, padapatha, metre, padas, canonMetre, wilson, grammar, suktaNote, verseNote, mandalaNote, sayana,
   type SuktaNote,
 } from '@/lib/anukramani'
 import RV_3_53_12 from '@/lib/rv-3-53-12'
@@ -372,18 +372,42 @@ export default async function Page({ params }: { params: Promise<{ ref?: string[
 
         <SuktaNoteBlock note={note} />
 
+        {/* The reading for each ṛc sits UNDER its own Sanskrit, not stacked in
+            the opening commentary — a reader following the hymn should meet
+            the note where the verse is.
+
+            The row can no longer be one big <Link>: the notes contain links
+            of their own and an <a> inside an <a> is invalid. So the number
+            and the Sanskrit line carry the link, and the note sits outside
+            it. Rows with no note keep the whole-row target. */}
         <div className="vd-index">
-          {hymnText(m, s).map((text, i) => (
-            <Link key={i} href={`/text/rv/${h.ref}.${i + 1}`} className="vd-index-row vd-verse-row">
-              <span className="vd-index-num">{i + 1}</span>
-              <span className="vd-index-main">
-                <span className="vd-verse-line" lang="sa">{text}</span>
-              </span>
-              <span className="vd-index-meta">
-                {ch.find(c => !c.range || inRange(c.range, i + 1))?.name ?? ''}
-              </span>
-            </Link>
-          ))}
+          {hymnText(m, s).map((text, i) => {
+            const vn = note?.verse_notes?.[String(i + 1)] ?? null
+            const href = `/text/rv/${h.ref}.${i + 1}`
+            const metre = ch.find(c => !c.range || inRange(c.range, i + 1))?.name ?? ''
+            if (!vn) {
+              return (
+                <Link key={i} href={href} className="vd-index-row vd-verse-row">
+                  <span className="vd-index-num">{i + 1}</span>
+                  <span className="vd-index-main">
+                    <span className="vd-verse-line" lang="sa">{text}</span>
+                  </span>
+                  <span className="vd-index-meta">{metre}</span>
+                </Link>
+              )
+            }
+            return (
+              <div key={i} className="vd-index-row vd-verse-row vd-verse-annotated">
+                <Link href={href} className="vd-index-num">{i + 1}</Link>
+                <span className="vd-index-main">
+                  <Link href={href} className="vd-verse-line" lang="sa">{text}</Link>
+                  <span className="vd-verse-iast" lang="sa">{vn.iast}</span>
+                  <span className="vd-verse-note">{inline(vn.note, `vn${i}`)}</span>
+                </span>
+                <span className="vd-index-meta">{metre}</span>
+              </div>
+            )
+          })}
         </div>
 
         <PrevNext
@@ -427,6 +451,7 @@ export default async function Page({ params }: { params: Promise<{ ref?: string[
   const wil = wilson(m, s, v)
   const gram = grammar(m, s, v)
   const say = sayana(m, s, v)
+  const vnote = verseNote(m, s, v)
   // Metrical lineation: break by pada where the verse actually scans.
   // Where it does not, fall back to danda hemistichs rather than forcing a
   // shape the text does not have.
@@ -438,6 +463,22 @@ export default async function Page({ params }: { params: Promise<{ ref?: string[
         ṛṣi {rsiDisplay(h.rishi) || '— not recorded'} · devatā {dv?.name ?? '—'} · {ch?.name ?? '—'}
       </div>
       <h1 className="vd-title">RV <em>{key}.</em></h1>
+
+      {/* The reading for THIS ṛc, ahead of the text — the same note printed
+          under the verse in the sūkta listing, so a reader who follows a link
+          from there lands on what they were already reading. */}
+      {vnote ? (
+        <section className="vd-rc-note">
+          <div className="vd-app-label vd-lens-label">
+            the ṛc
+            <span className="vd-lens-for">
+              from the reading of <Link href={`/text/rv/${m}.${s}`} className="vd-xref">RV {m}.{s}</Link>
+            </span>
+          </div>
+          <p className="vd-rc-iast" lang="sa">{vnote.iast}</p>
+          <p className="vd-rc-prose">{inline(vnote.note, 'rc')}</p>
+        </section>
+      ) : null}
 
       {text ? (
         <Mantra

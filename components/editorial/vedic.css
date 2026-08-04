@@ -224,6 +224,53 @@
    supplies the gap. */
 .vd-machine-head + .vd-lens-label { margin-top: 18px; }
 
+/* PER-ṚC READINGS, printed under the verse they belong to.
+
+   An annotated row is a block of reading, not an index line, so it drops the
+   baseline grid alignment and the hover-slide that suit a scannable list —
+   both read as twitchy under a paragraph. */
+.vd-verse-annotated {
+  align-items: start;
+  padding: 20px 6px 22px 0;
+}
+.vd-verse-annotated:hover { background: none; padding-left: 0; }
+.vd-verse-annotated .vd-verse-line { text-decoration: none; color: inherit; }
+.vd-verse-annotated .vd-verse-line:hover { color: var(--ed-accent, inherit); }
+.vd-verse-annotated .vd-index-num { text-decoration: none; }
+
+.vd-verse-iast {
+  font-family: var(--ed-serif);
+  font-style: italic;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--ed-muted-2);
+  margin-top: 5px;
+}
+.vd-verse-note {
+  font-family: var(--ed-serif);
+  font-size: 15px;
+  line-height: 1.62;
+  margin-top: 9px;
+  max-width: 68ch;
+}
+
+/* The same reading, leading its own ṛc page. */
+.vd-rc-note { margin: 26px 0 34px; }
+.vd-rc-iast {
+  font-family: var(--ed-serif);
+  font-style: italic;
+  font-size: 14px;
+  color: var(--ed-muted-2);
+  margin: 0 0 10px;
+}
+.vd-rc-prose {
+  font-family: var(--ed-serif);
+  font-size: 16px;
+  line-height: 1.66;
+  margin: 0;
+  max-width: 68ch;
+}
+
 .vd-app-body {
   font-family: var(--ed-serif);
   font-size: 16.5px;

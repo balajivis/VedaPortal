@@ -272,6 +272,28 @@ the hymn ends on a request, let the title carry it.
 - **Every verse carries.** The commonest failure is spending three paragraphs on
   verses 1 and 9 and disposing of 2–8 in a clause. If a hymn has 12 verses, a reader
   should finish knowing what each of the 12 did.
+- **⭐ SANSKRIT FORWARD, and the link does the explaining.** In `verse_notes` especially,
+  the Sanskrit term **leads** and the English is apposition behind it. The old shape put it
+  the wrong way round and the punch drained out:
+
+  | ❌ English leads, term in a parenthesis | ✅ term leads, English supports, link goes deeper |
+  |---|---|
+  | the chief priest set at the head of the yajña (*purohita*) | he is [*purohita*](/topic/purohita) of the yajña, the one placed in front |
+  | with the mind held on you (*dhiyā*) | [*dhiyā*](/topic/dhī), with the mind held on you |
+  | the greatest giver of life's treasures (*ratnadhātama*) | he is [*ratnadhātama*](/topic/ratna), greatest giver of *ratna* |
+
+  **Never** *minister*, *oblation*, *sacrifice*, *god*, *fire-worship*, *the Lord* — these
+  flatten a word the reader already owns into a word from somebody else's tradition. A core
+  term most Hindus already carry stays in Sanskrit: *agni*, *deva*, *yajña*, *purohita*,
+  *hotā*, *ṛtvij*, *ṛta*, *dhī*, *namas*, *rayi*, *poṣa*, *yaśas*, *ratna*, *svasti*,
+  *pitṛ*, *adhvara*, *kavi*, *kratu*, *satya*, *śravas*, *vīra*.
+
+  Gloss lightly **once**, in apposition, then use the term bare. And **link it** — the topic
+  page carries every occurrence across all ten maṇḍalas, so a careful reader has somewhere
+  to go and the note does not have to teach the word. Check the lemma exists in
+  `apparatus/topics/topics.json` before linking; a link to a page that 404s is worse than
+  no link.
+
 - **Keep the Sanskrit** where a Hindu reader already has the vocabulary — *purohita*,
   *hotā*, *ṛtvij*, *yajña*, *ṛta*, *dhī*, *namas*, *kratu*, *dakṣa*, *rayi*, *vāja*,
   *barhis*, *svasti*. These are not glosses for a stranger; they are the words the
