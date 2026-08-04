@@ -36,3 +36,6 @@ sources/_fetched/*
 # step folds them into commentary-mandala-N.json; the loose files are
 # intermediate and several agents write concurrently.
 sources/vedas/rigveda/shakala/samhita/commentary/_pending/
+
+# TypeScript incremental build cache — regenerated on every typecheck
+*.tsbuildinfo
