@@ -104,6 +104,9 @@ const REGISTER: [string, string][] = [
   ['vaiśvāmitro madhucchandāḥ', 'Madhucchandas Ṛṣi, son of Viśvāmitra'],
   ['the oldest of the four Vedas', 'the first of the four Vedas'],
   ['among the oldest poems still recited', 'the oldest poem still recited'],
+  ['the last three ṛcs are the strangest and the best', 'the last three ṛcs are the strangest'],
+  ['that is worth pausing on', '(say the thing that makes them pause)'],
+  ['one more thing, worth being curious about', 'these names are not found only in India'],
   ['the chief priest of the yajña (purohita)', 'he is purohita of the yajña, placed in front'],
   ['with the mind held on you (dhiyā)', 'dhiyā, with the mind held on you'],
   ['the oblation, the sacrifice, the Lord', 'the havis, the yajña, Agni'],
@@ -293,6 +296,20 @@ export default async function Page() {
           <em lang="sa">yajña</em>, <em lang="sa">ṛta</em>, <em lang="sa">dhī</em>,{' '}
           <em lang="sa">rayi</em>, <em lang="sa">namas</em>. These are not glosses for a
           stranger; they are the words the reciter is already saying.
+        </p>
+        <p className="pr-note">
+          <strong>An explorer points; a fawner rates.</strong> Two habits let devotional excess
+          back in without using a devotional word. The first is <strong>rating</strong> — a
+          verdict the reader must take on trust. &ldquo;The strangest&rdquo; is a claim, and the
+          sentences after it have to earn it; &ldquo;the best&rdquo; is a score nothing can
+          earn. The second is <strong>curating the response</strong> — &ldquo;this is worth
+          pausing on&rdquo;, &ldquo;a fascinating detail&rdquo; — which narrates the editor&rsquo;s
+          own reasoning at a reader who did not ask for it. Both were on this site and both were
+          cut. The rule is to name the thing and stop: a fourteenth-century BCE treaty tablet
+          swears by Mitra, Varuṇa, Indra and the Nāsatyas, three of whom are the devas of{' '}
+          <Link href="/text/rv/1.2" className="vd-xref">RV 1.2</Link> and the fourth of whom
+          opens <Link href="/text/rv/1.3" className="vd-xref">RV 1.3</Link>. That needs no
+          adjective.
         </p>
         <p className="pr-note">
           <strong>And the Sanskrit leads.</strong> A core term the reader already carries stays

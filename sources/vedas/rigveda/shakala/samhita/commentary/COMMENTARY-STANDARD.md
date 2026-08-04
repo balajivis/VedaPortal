@@ -175,6 +175,33 @@ The tell is whether the sentence *describes a hymn* or *says what the hymn says*
 | "a strange hymn, unlike anything around it" | say what it does; let the reader find it strange |
 | "the redactors placed this here" | (belongs in `disagreements`) |
 
+#### ⭐ Point, do not rate. An explorer points; a fawner rates.
+
+Two habits let the fawning back in through the side door, and both are easy to miss because
+neither uses a devotional word.
+
+**Ratings** — a verdict the reader is asked to accept on trust. *"The last three ṛcs are the
+strangest **and the best**."* **Strangest** is a claim, and the sentences after it substantiate
+it; **best** is a score, and nothing can substantiate it. Cut the score, keep the claim. The
+material earns the enthusiasm — it does not need it pre-awarded. Same for *finest*,
+*remarkable*, *extraordinary*, *beautiful*.
+
+**Curating the reader's response** — telling them what to feel instead of giving them cause to
+feel it. *"That is worth pausing on."* *"One more thing, which belongs here only because it is
+worth being curious about."* Both were in RV 1.1 and 1.2, and both are the writer narrating his
+own editorial reasoning at a reader who did not ask for it.
+
+The model is already on the page. The Mitanni paragraph of [[1.2]] lays down four names, notes
+that three are in this sūkta and the fourth opens the next, and stops. It never says *fascinating*.
+The pattern does the work — and that paragraph's own lead-in was the lapse, which is how quietly
+this one arrives.
+
+> ❌ One more thing, which belongs here only because it is worth being curious about. A treaty tablet from Ḫattuša…
+> ✅ These names are not found only in India. A treaty tablet from Ḫattuša…
+
+Trust the reader's curiosity the way the soma paragraph trusts it: name the thing, say it is not
+explained for several hundred sūktas, and let them feel the pull without being told it is there.
+
 #### Say dharma. Not religion, not mythology.
 
 These are not neutral words. **Religion** imports a category built to describe something
