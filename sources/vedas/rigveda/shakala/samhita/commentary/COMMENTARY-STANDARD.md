@@ -369,6 +369,32 @@ from the corpus itself** — these are the strongest thing available:
 Count such things yourself from `apparatus/anukramani/Mandala_*.txt`. Do not assert
 frequency without counting.
 
+**⭐ And count the WHOLE ascription, not the first span.** An Anukramaṇī line often reads
+`(1-3)vāyuḥ,(4-6)indravāyū,(7-9)mitrāvaruṇau`. Keying on `devataRaw.split(',')[0]` counts only
+the first block and silently drops every deva named later — which produced four wrong figures
+across RV 1.1 and 1.2 before it was caught: **Indra 242 (真 273), Agni 205 (真 223), the
+mitrāvaruṇau pair 36 (真 35)**, and a claim that Mitra has exactly one sūkta which needed
+qualifying (3.59 is his alone; 1.151.1 is a single ṛc before that sūkta hands over to the pair).
+
+Two rules follow, and the second is the one that matters:
+
+1. Match the deva **standalone in the whole ascription or in any span** —
+   `/(^|,)(\([\d,\-]+\))?<name>($|,)/` — and decide explicitly whether joint deities
+   (*indrāvaruṇā*, *indravāyū*) are in or out. State which.
+2. **Cross-check every count against `topic(name).devataOf.length`.** That index is built by a
+   different code path, so agreement is real corroboration and disagreement means one of them is
+   wrong. All three corrected figures now match it exactly. Had this been run the first time,
+   none of the four errors would have shipped.
+
+**Label what a number counts.** *Occurrences* and *verses* are different and a page that gives
+both without saying so reads as self-contradictory: *mitra* has **349 occurrences across 340
+verses**, because a few verses carry the word twice. Write the distinction out.
+
+**Say whose count it is.** These are our own, from the mirrored Anukramaṇī and the per-word
+morphology of all 10,552 verses — not from Grassmann or any secondary concordance. Put that in
+`sources` wherever counts are load-bearing, so a reader can tell what they would be checking
+against.
+
 **Do not invent ritual claims.** Agni as witness of the saṃskāras is fact; a specific
 liturgical sequence you are unsure of is not. No devotional register, no debunking
 register — describe.

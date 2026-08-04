@@ -113,7 +113,13 @@ function rsiDisplay(raw: string): string {
      {{soma}}   link to the topic page
      [[1.32]]   link to that sūkta                                        */
 function inline(text: string, key = 'x'): React.ReactNode[] {
-  const RE = /(\*\*[^*\n]+\*\*|\*[^*\n]+\*|\{\{[^}]+\}\}|\[\[[\d.]+\]\]|\[[^\]\n]+\]\([^)\s]+\))/g
+  /* Bold may CONTAIN other markup — `**[*dakṣa*](/topic/dakṣa) is …**` is a
+     linked italic term inside a bold lead-in, and it is common. The old
+     pattern was `\*\*[^*\n]+\*\*`, which forbade any `*` between the
+     delimiters, so that construction never matched as bold; the stray
+     asterisks then paired up wrongly and corrupted everything after them on
+     the line. Bold now matches anything up to the next `**`. */
+  const RE = /(\*\*(?:(?!\*\*)[^\n])+\*\*|\*[^*\n]+\*|\{\{[^}]+\}\}|\[\[[\d.]+\]\]|\[[^\]\n]+\]\([^)\s]+\))/g
   return text.split(RE).map((part, i) => {
     const k = `${key}-${i}`
     if (part.startsWith('**') && part.endsWith('**') && part.length > 4) {

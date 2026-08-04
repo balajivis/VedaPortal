@@ -90,6 +90,29 @@ absence.
 
 ---
 
+## 0c. A counting bug shipped four wrong figures — cross-check every count
+
+`devataRaw.split(',')[0]` keys on the FIRST devatā span only, so any deva named in a later
+span of an Anukramaṇī line was dropped. It produced, across the two most-read records:
+
+| claim | shipped | correct |
+|---|---:|---:|
+| Indra, sūktas as devatā | 242 | **273** |
+| Agni, sūktas as devatā | 205 | **223** |
+| mitrāvaruṇau, sūktas to the pair | 36 | **35** |
+| sūktas to Mitra alone | "exactly once" | 3.59 only as a whole sūkta; 1.151.1 is one ṛc |
+
+All four are fixed. **The cross-check that would have caught every one of them on day one is
+`topic(name).devataOf.length`** — a separately built index that now agrees exactly (273 / 223 /
+35). The rule is in COMMENTARY-STANDARD.md; nothing enforces it yet, and a script that
+recomputes every number appearing in a note would be the real fix.
+
+Also fixed: *mitra* was given as "349 occurrences" in one place and "340 verses" in another
+with nothing to reconcile them. It is 349 occurrences across 340 verses; some verses carry the
+word twice, and the pages now say so.
+
+---
+
 ## 0b. "gods" → "devas" across the rest of the corpus
 
 Done in RV 1.1 only, deliberately — scalpel, not sweep. The rule is in the standard.
@@ -204,6 +227,25 @@ affected note so no reader compares translations by verse number.
 **1.65–1.70 are not a defect.** Both translators merge pairs of ṛcs there because the metre
 is *virāṭ* — 5 English units for the tradition's 10. 1.149 is also virāṭ and is **not**
 halved, so the metre alone does not force it.
+
+---
+
+## 4b. Śunaḥśepa (RV 1.24–25) is cited liturgically without its flag
+
+[[1.2]]'s practice panel cites **RV 1.25.19, 1.24.11 and 1.25.1** as the Varuṇa portion of the
+evening sandhyāvandana — correct, and recorded from the editor's own daily practice. But those
+verses sit inside the **Śunaḥśepa** hymns, whose surrounding narrative (Aitareya Brāhmaṇa 7)
+is the near-sacrifice of a boy, and both sūktas are ascribed to *ājīgartiḥ śunaḥśepaḥ* — the
+boy himself.
+
+Citing them purely as liturgy is right for a practice panel and nothing there needs changing.
+But a reader who follows the link should not be ambushed. **When 1.24 and 1.25 are written,
+they must carry the narrative** — and the tier is a real question: the story is attested and
+not in dispute, so this is not `contested` in our sense. It is a case where the honest note is
+simply that the Saṃhitā verses are a plea to Varuṇa for release and the Brāhmaṇa supplies the
+occasion.
+
+Flagged by an external audit of the 1.2 page, and correctly.
 
 ---
 
